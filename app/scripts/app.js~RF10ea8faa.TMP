@@ -1,0 +1,25 @@
+/*global define */
+define(['modules/DeckModule', 'ui/ui', 'mediator'], function (Deck, ui, mediator) {
+    'use strict';
+
+    var deck;
+
+    deck = new Deck();
+
+
+    //Events
+    mediator.subscribe('game.deal', function(){
+        Deck.deal();
+    });
+
+    return {
+    	init: function(){
+        	//setups cards
+            deck.create();
+            deck.shuffle();
+            //console.log(deck.drawOne());
+            //setup board
+            ui.init(deck);
+    	}
+    }
+});

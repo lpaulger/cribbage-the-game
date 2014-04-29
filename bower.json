@@ -1,0 +1,11 @@
+{
+  "name": "card-game",
+  "version": "0.0.0",
+  "dependencies": {
+    "requirejs": "~2.1.4",
+    "modernizr": "~2.6.2",
+    "jquery": "~2.1.0",
+    "mustache": "~0.8.1"
+  },
+  "devDependencies": {}
+}

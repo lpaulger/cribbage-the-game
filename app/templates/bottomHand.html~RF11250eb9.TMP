@@ -1,0 +1,8 @@
+{{#cards}}
+<li>
+  <a class="card rank-{{.value}} diams" href="#">
+    <span class="rank">{{.value}}</span>
+    <span class="suit">&diams;</span>
+  </a>
+</li>
+{{/cards}}
