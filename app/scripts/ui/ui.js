@@ -19,7 +19,7 @@ define(['jquery', 'mustache', 'mediator', 'ui/ui.dialog'], function ($, Mustache
       });
     },
     cutCards: function(hands){
-      $('#content').removeClass('rotateHand');
+      $('#player1 > .playingCards, #player2 > .playingCards').removeClass('rotateHand');
       $.ajax('templates/card.html').done(function(template){
         var rendered = Mustache.render(template, {card: hands.topHand}), selected = [];
         $('#player2').html(rendered);
@@ -32,7 +32,6 @@ define(['jquery', 'mustache', 'mediator', 'ui/ui.dialog'], function ($, Mustache
       });
     },
     dealHands: function(hands){
-      $('#content').addClass('rotateHand');
       $.ajax('templates/topHand.html').done(function(template){
         var rendered = Mustache.render(template, {cards: hands.topHand});
         $('#player2').html(rendered);
@@ -47,6 +46,8 @@ define(['jquery', 'mustache', 'mediator', 'ui/ui.dialog'], function ($, Mustache
       $.ajax('templates/bottomHand.html').done(function(template){
         var rendered = Mustache.render(template, {cards: hands.bottomHand}), selected = [];
         $('#player1').html(rendered);
+        $('#player1 > .playingCards, #player2 > .playingCards').addClass('rotateHand');
+
         $('#bottomHand li a').each(function(index, ele){
           $(ele).bind('click', function(){
 
@@ -64,9 +65,12 @@ define(['jquery', 'mustache', 'mediator', 'ui/ui.dialog'], function ($, Mustache
             //   selected.push(ele);
             //   $(ele).addClass('selected');
             // }
+
             console.log(hands.bottomHand[index]);
           });
         });
+
+        Mediator.publish('ui.dealHands.done');
       });
     }
   }

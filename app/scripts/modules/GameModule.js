@@ -6,18 +6,18 @@ define(['ui/ui', 'ui/ui.dialog', 'mediator'], function (ui, uiDialog, mediator) 
       dealer: ''
     };
 
-    function cutCards(){
-      deck.shuffle();
-      player1.hand = deck.cut();
-      player2.hand = deck.cut();
-      ui.cutCards({topHand: player2.hand, bottomHand: player1.hand});
-    };
-
     //Events
     mediator.subscribe('game.cut', function(){
+      function cutCards(){
+        deck.shuffle();
+        player1.hand = deck.cut();
+        player2.hand = deck.cut();
+        ui.cutCards({topHand: player2.hand, bottomHand: player1.hand});
+      };
+
       do {
         cutCards();
-        setTimeout(function(){
+        mediator.subscribe('ui.cutCards.complete', function(){
           if(player1.hand.value == player2.hand.value){
             uiDialog.alert('it\'s a tie! cut again');
           } else if(player1.hand.value < player2.hand.value){
@@ -29,7 +29,7 @@ define(['ui/ui', 'ui/ui.dialog', 'mediator'], function (ui, uiDialog, mediator) 
             state.dealer = player1;
             mediator.publish('game.deal');
           }
-        }, 500);
+        });
       } while(player1.hand.value === player2.hand.value);
     });
 
@@ -42,13 +42,9 @@ define(['ui/ui', 'ui/ui.dialog', 'mediator'], function (ui, uiDialog, mediator) 
       player2.hand = hands.topHand;
 
       ui.dealHands(hands);
-
-      setTimeout(function(){
-        mediator.publish('game.deal.done');
-      }, 500);
     });
 
-    mediator.subscribe('game.deal.done', function(){
+    mediator.subscribe('ui.dealHands.done', function(){
       if(state.dealer == player1) uiDialog.alert('place 2 cards in your crib');
       else uiDialog.alert('select 2 cards for the opponents crib');
     });

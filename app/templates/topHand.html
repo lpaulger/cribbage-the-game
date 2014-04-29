@@ -1,5 +1,14 @@
-<ul id="topHand" class="hand rotateHand">
-{{#cards}}
-<li class="card back">*</li>
-{{/cards}}
-</ul>
+<div class="playingCards">
+  <ul id="topHand" class="hand">
+  {{#cards}}
+    <li class="card back">*</li>
+  {{/cards}}
+  </ul>
+</div>
+<div id="topHandCrib" class="playingCards">
+  <ul class="hand">
+  {{#cribs.cards}}
+    <li class="card back">*</li>
+  {{/cribs.cards}}
+  </ul>
+</div>

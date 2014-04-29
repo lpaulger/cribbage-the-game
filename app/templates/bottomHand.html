@@ -1,10 +1,19 @@
-<ul id="bottomHand" class="hand rotateHand">
-{{#cards}}
-<li>
-  <a class="card rank-{{name}} {{suit}}" href="#">
-    <span class="rank">{{name}}</span>
-    <span class="suit">&{{suit}};</span>
-  </a>
-</li>
-{{/cards}}
-</ul>
+<div class="playingCards">
+  <ul id="bottomHand" class="hand">
+  {{#cards}}
+    <li>
+      <a class="card rank-{{name}} {{suit}}" href="#">
+        <span class="rank">{{name}}</span>
+        <span class="suit">&{{suit}};</span>
+      </a>
+    </li>
+  {{/cards}}
+  </ul>
+</div>
+<div id="bottomHandCrib" class="playingCards">
+  <ul class="hand">
+  {{#cribs.cards}}
+    <li class="card back">*</li>
+  {{/cribs.cards}}
+  </ul>
+</div>
