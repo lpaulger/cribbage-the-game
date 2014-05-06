@@ -8,31 +8,21 @@ define(['ui/ui', 'ui/ui.dialog', 'mediator'], function (ui, uiDialog, mediator) 
 
     //Events
     mediator.subscribe('game.cut', function(){
-      function cutCards(){
-        deck.shuffle();
-        player1.hand = deck.cut();
-        player2.hand = deck.cut();
-        ui.cutCards({topHand: player2.hand, bottomHand: player1.hand});
-      };
-
-      do {
-        cutCards();
-        mediator.subscribe('ui.cutCards.complete', function(){
-          if(player1.hand.value == player2.hand.value){
-            uiDialog.alert('it\'s a tie! cut again');
-          } else if(player1.hand.value < player2.hand.value){
-            uiDialog.alert('player2 won the cut :(');
-            state.dealer = player2;
-            mediator.publish('game.deal');
-          } else {
-            uiDialog.alert('you won the cut!');
-            state.dealer = player1;
-            mediator.publish('game.deal');
-          }
-        });
-      } while(player1.hand.value === player2.hand.value);
+      deck.shuffle();
+      player1.hand = deck.cut();
+      player2.hand = deck.cut();
+      mediator.publish('ui.cutCards', {topHand: player2.hand, bottomHand: player1.hand});
     });
 
+    mediator.subscribe('ui.cutCards.complete', function(){
+      if(player1.hand.value < player2.hand.value){
+        state.dealer = player2;
+      } else {
+        state.dealer = player1;
+      }
+      mediator.publish('game.deal');
+    });
+    
     mediator.subscribe('game.deal', function(){
       deck.create();
       deck.shuffle();
@@ -49,6 +39,15 @@ define(['ui/ui', 'ui/ui.dialog', 'mediator'], function (ui, uiDialog, mediator) 
       else uiDialog.alert('select 2 cards for the opponents crib');
     });
 
+    mediator.subscribe('ui.hand.select.card', function(index){
+      console.log(player1.hand[index]);
+    });
+
+
+
+
+
+    
     return function Game(options){
       deck = options.deck;
       player1 = options.player1;
