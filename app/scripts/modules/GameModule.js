@@ -39,15 +39,6 @@ define(['ui/ui', 'ui/ui.dialog', 'mediator'], function (ui, uiDialog, mediator) 
       else uiDialog.alert('select 2 cards for the opponents crib');
     });
 
-    mediator.subscribe('ui.hand.select.card', function(index){
-      console.log(player1.hand[index]);
-    });
-
-
-
-
-
-    
     return function Game(options){
       deck = options.deck;
       player1 = options.player1;

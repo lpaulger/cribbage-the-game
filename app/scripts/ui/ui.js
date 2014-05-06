@@ -56,17 +56,38 @@ define(['jquery', 'mustache', 'mediator', 'ui/ui.dialog'], function ($, Mustache
     },
     dealHands: function(hands){
       $.when($.ajax('templates/topHand.html'), $.ajax('templates/bottomHand.html')).done(function(templateTop, templateBottom){
+        var selectedCards = [], selectedIndex;
+
         var rendered = Mustache.render(templateTop[0], {cards: hands.topHand});
         $('#player2').html(rendered);
         rendered = Mustache.render(templateBottom[0], {cards: hands.bottomHand});
         $('#player1').html(rendered);
         $('#player1 > .playingCards, #player2 > .playingCards').addClass('rotateHand');
+        $('.controls').show();
+        
+        $('.controls button').bind('click', function(){
+          console.log(selectedCards);
+        });
 
         $('#bottomHand li a').each(function(index, ele){
           $(ele).bind('click', function(){
-            rendered = Mustache.render(template, {card: hands.topHand});
-            $('#bottomHandCrib ul').html(rendered);
-            Mediator.publish('ui.hand.select.card', index);
+            
+            if(selectedCards.length > 1 && selectedCards.indexOf(index) == -1) {
+              //remove first card add new
+              $($('#bottomHand li a')[selectedCards[0]]).removeClass('selected');
+              $(this).addClass('selected');
+              selectedCards.splice(0, 1);
+              selectedCards.push(index);
+              
+            } else if(selectedCards.indexOf(index) !== -1){
+              //already selected
+              $(this).removeClass('selected');
+              selectedCards.splice(selectedCards.indexOf(index), 1);
+            } else {
+              //add
+              selectedCards.push(index);
+              $(this).addClass('selected');
+            }
           });
         });
 
