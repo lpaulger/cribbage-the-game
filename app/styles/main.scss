@@ -16,6 +16,17 @@ body {
 #content{
   background: #b48484;
   overflow: hidden;
+  position: relative;
+}
+
+#messageContainer {
+  position: absolute;
+  list-style: none;
+  background-color: rgba(0,0,0,0.3);
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  z-index: 1;
 }
 
 .player {

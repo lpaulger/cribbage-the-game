@@ -35,8 +35,8 @@ define(['ui/ui', 'ui/ui.dialog', 'mediator'], function (ui, uiDialog, mediator) 
     });
 
     mediator.subscribe('ui.dealHands.done', function(){
-      if(state.dealer == player1) uiDialog.alert('place 2 cards in your crib');
-      else uiDialog.alert('select 2 cards for the opponents crib');
+      if(state.dealer == player1) uiDialog.alert('place 2 cards in your crib', false);
+      else uiDialog.alert('select 2 cards for the opponents crib', false);
     });
 
     return function Game(options){

@@ -2,10 +2,9 @@ define(['jquery', 'mustache', 'mediator', 'ui/ui.dialog'], function ($, Mustache
   'use strict';
 
   Mediator.subscribe('ui.init.complete', function(){
+    uiDialog.alert('Welcome to Cribbage, Click the Deck to start.');
     $('#deck').bind('click', function(){
-      if(uiDialog.confirm('Start Game?')){
-        Mediator.publish('game.cut');
-      };
+      Mediator.publish('game.cut');
     });
   });
 
@@ -25,10 +24,10 @@ define(['jquery', 'mustache', 'mediator', 'ui/ui.dialog'], function ($, Mustache
         Mediator.publish('game.cut');
       } else if(hands.bottomHand.value < hands.topHand.value){
         uiDialog.alert('player2 won the cut :(');
-        Mediator.publish('ui.cutCards.complete', hands);
+        setTimeout(function(){Mediator.publish('ui.cutCards.complete', hands);}, 2000);
       } else {
         uiDialog.alert('you won the cut!');
-        Mediator.publish('ui.cutCards.complete', hands);
+        setTimeout(function(){Mediator.publish('ui.cutCards.complete', hands);}, 2000);
       }
     });
   });
@@ -66,6 +65,7 @@ define(['jquery', 'mustache', 'mediator', 'ui/ui.dialog'], function ($, Mustache
         $('.controls').show();
         
         $('.controls button').bind('click', function(){
+          uiDialog.clear();
           console.log(selectedCards);
         });
 
