@@ -16,7 +16,71 @@
         <!-- endbuild -->
     </head>
     <body>
-    <div id="content"></div>
+    <div id="content">
+      <ul id="messageContainer"></ul>
+        <div id="player2" class="player">
+          <div class="playingCards">
+            <ul id="topHand" class="hand"></ul>
+          </div>
+          <div id="topHandCrib" class="playingCards">
+            <ul class="hand"></ul>
+          </div>
+        </div>
+        <div class="playingCards">
+          <ul id="deck" class="deck">
+            <li class="card back">*</li>
+            <li class="card back">*</li>
+            <li class="card back">*</li>
+            <li class="card back">*</li>
+            <li class="card back">*</li>
+            <li class="card back">*</li>
+            <li class="card back">*</li>
+          </ul>
+          <div class="controls" style="display:none">
+              <button>GO</button>
+          </div>
+        </div>
+      <div id="player1" class="player">
+        <div class="playingCards">
+          <ul id="bottomHand" class="hand"></ul>
+        </div>
+        <div id="bottomHandCrib" class="playingCards">
+          <ul class="hand"></ul>
+        </div>
+      </div>
+    </div>
+    <script id="visibleHandTemplate" type="x-tmpl-mustache">
+      {{#cards}}
+        <li>
+          <a class="card rank-{{name}} {{suit}}">
+            <span class="rank">{{name}}</span>
+            <span class="suit">&{{suit}};</span>
+          </a>
+        </li>
+      {{/cards}}
+    </script>
+    <script id="cribTemplate" type="x-tmpl-mustache">
+      {{#cribs.cards}}
+        <li class="card back">*</li>
+      {{/cribs.cards}}
+    </script>
+    <script id="hiddenHandTemplate" type="x-tmpl-mustache">
+      {{#cards}}
+        <li class="card back">*</li>
+      {{/cards}}
+    </script>
+    <script id="cardTemplate" type="x-tmpl-mustache">
+      <div class="playingCards">
+        <ul class="hand single-card">
+          <li>
+            <a class="card rank-{{card.name}} {{card.suit}}" href="#">
+              <span class="rank">{{card.name}}</span>
+              <span class="suit">&{{card.suit}};</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </script>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
