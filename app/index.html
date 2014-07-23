@@ -23,7 +23,7 @@
             <ul id="topHand" class="hand"></ul>
           </div>
           <div id="topHandCrib" class="playingCards">
-            <ul class="hand"></ul>
+            <ul class="crib hand"></ul>
           </div>
         </div>
         <div class="playingCards">
@@ -36,23 +36,21 @@
             <li class="card back">*</li>
             <li class="card back">*</li>
           </ul>
-          <div class="controls" style="display:none">
-              <button>GO</button>
-          </div>
+          <div id="controls"></div>
         </div>
       <div id="player1" class="player">
         <div class="playingCards">
           <ul id="bottomHand" class="hand"></ul>
         </div>
         <div id="bottomHandCrib" class="playingCards">
-          <ul class="hand"></ul>
+          <ul class="crib hand"></ul>
         </div>
       </div>
     </div>
     <script id="visibleHandTemplate" type="x-tmpl-mustache">
       {{#cards}}
         <li>
-          <a class="card rank-{{name}} {{suit}}">
+          <a class="card rank-{{name}} {{suit}} {{selected}}">
             <span class="rank">{{name}}</span>
             <span class="suit">&{{suit}};</span>
           </a>
@@ -60,9 +58,9 @@
       {{/cards}}
     </script>
     <script id="cribTemplate" type="x-tmpl-mustache">
-      {{#cribs.cards}}
+      {{#cards}}
         <li class="card back">*</li>
-      {{/cribs.cards}}
+      {{/cards}}
     </script>
     <script id="hiddenHandTemplate" type="x-tmpl-mustache">
       {{#cards}}
@@ -80,6 +78,9 @@
           </li>
         </ul>
       </div>
+    </script>
+    <script id="controlsTemplate" type="x-tmpl-mustache">
+    <button style="display:{{display}}">{{text}}</button>
     </script>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>

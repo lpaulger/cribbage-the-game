@@ -32,9 +32,20 @@ body {
 .player {
   height: 8em;
   margin-bottom: 1.7em;
+  position: relative;
+
+  .playingCards {
+    position: absolute;
+  }
+  .playingCards:first-child{
+    left:0;
+  }
+  .playingCards:last-child{
+    right: 110px;
+  }
 }
 
-.controls {
+#controls {
   position: absolute;
   right: 10px;
   top: 50%;
