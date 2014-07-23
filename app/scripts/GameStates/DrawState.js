@@ -1,8 +1,8 @@
 define(['GameStates/BaseState'],function(BaseState){
   function DrawState(game){
-    BaseState.call(this, game);
+    BaseState.call(this, game, 'Draw');
   }
-  
+
   DrawState.prototype = Object.create(BaseState.prototype);
   DrawState.prototype.constructor = DrawState;
 
@@ -27,7 +27,7 @@ define(['GameStates/BaseState'],function(BaseState){
     if(typeof this.game.$cribOwner == "function" ) return this.game.$cribOwner;
     this.game.$messages = [this.game.$cribOwner.name + ' won.'];
 
-    return this.game.deal.bind(this.game);//state transfer
+    return this.game.transitionTo('Deal');
   };
 
   return DrawState;

@@ -1,11 +1,24 @@
 define(['modules/DeckModule', 'modules/PlayerModule'],function(Deck, Player){
-  function BaseState(game){
+  function BaseState(game, name){
     this.game = game;
+    this.name = name;
   };
 
-  BaseState.prototype.deck = function() {};
+  BaseState.prototype.init = function() {
+    console.log('base init');
+  };
 
-  BaseState.prototype.selectCard = function() {};
+  BaseState.prototype.deck = function() {
+    console.log('base deck');
+  };
+
+  BaseState.prototype.selectCard = function() {
+    console.log('base selectCard');
+  };
+
+  BaseState.prototype.action = function() {
+    console.log('base action');
+  };
 
   return BaseState;
 });

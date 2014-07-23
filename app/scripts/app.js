@@ -6,7 +6,7 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
       this.$autoContinueTimer = 2000;
 
       this.$game = new Game();
-
+      this.$activeState = this.$game.$state;
       this.getTemplates();
       this.getElements();
       this.bindEvents();
@@ -17,6 +17,8 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
       this.$hiddenHandTemplate = $('#hiddenHandTemplate').html();
       this.$cardTemplate = $('#cardTemplate').html();//NOT USED?
       this.$cribTemplate = $('#cribTemplate').html();
+      this.$hiddenDeckTemplate = $('#hiddenDeckTemplate').html();
+      this.$visibleDeckTemplate = $('#visibleDeckTemplate').html();
       this.$messageTemplate = '{{#messages}}<li>{{.}}</li>{{/messages}}';
       this.$controlsTemplate = $('#controlsTemplate').html();
     },
@@ -38,24 +40,21 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
       this.$controls.off('click', 'button');
     },
     bindEvents: function(){
+
       var _state = this.$game.$state;
+
       this.$deckEl.on('click', function(){
           this.render(_state.deck());
       }.bind(this));
+
       this.$player1Hand.on('click', 'li', this.selectCard.bind(this));
+
       this.$controls.on('click', 'button', function(e){
-        this.render(this.$game.$action());
+        this.render(_state.action());
       }.bind(this));
     },
-    continueTimer: function(continueToFunction){
-      this.unbindEvents();
-      var self = this;
-      setTimeout(function(){
-        self.bindEvents();
-        self.render(continueToFunction());
-      }, this.$autoContinueTimer);
-    },
     render: function(nextAction){
+
       this.$messagesEl.html(mustache.render(this.$messageTemplate, {messages: this.$game.$messages}));
 
       this.$player1Hand.html(mustache.render(
@@ -70,16 +69,27 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
 
       this.$player2Crib.html(mustache.render(this.$cribTemplate, {cards: this.$game.$player2.crib}));
 
+      this.$deckEl.html(mustache.render(
+        this.$game.$showTopCard ? this.$visibleDeckTemplate : this.$hiddenDeckTemplate,
+      {card: this.$game.topCard}));
+
       this.$controls.html(mustache.render(this.$controlsTemplate, {
-        text: this.$game.$actionText, display: this.$game.$action ? 'block' : 'none'
+        text: this.$game.$actionText, display: this.$game.$actionText ? 'block' : 'none'
       }));
 
-      nextAction ? this.continueTimer(nextAction): undefined;
+      if(this.$activeState !== this.$game.$state){
+        this.$activeState = this.$game.$state;
+        this.unbindEvents();
+        setTimeout(function(){
+          this.bindEvents();
+          this.render(this.$activeState.init());
+        }.bind(this), this.$autoContinueTimer);
+      };
     },
     selectCard: function(event){
       var index = $(this.$player1Hand).find('li').index(event.currentTarget);
       var card = $(event.currentTarget).find('a');
-      this.render(this.$game.selectCard({index: index, card: card, event:event}));
+      this.render(this.$game.$state.selectCard({index: index, card: card, event:event}));
     }
   }
 });

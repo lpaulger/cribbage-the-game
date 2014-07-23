@@ -10,7 +10,6 @@ define([], function () {
 
     Player.prototype.placeCardsInCrib = function(cribOwner) {
       function removeFromHand(card){
-        console.log(this.hand[this.hand.indexOf(card)]);
         cribOwner.crib.push(this.hand.splice(this.hand.indexOf(card), 1));
       }
       if(this.cardsForCrib.length === 2){

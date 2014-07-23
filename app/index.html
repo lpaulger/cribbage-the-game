@@ -27,15 +27,7 @@
           </div>
         </div>
         <div class="playingCards">
-          <ul id="deck" class="deck">
-            <li class="card back">*</li>
-            <li class="card back">*</li>
-            <li class="card back">*</li>
-            <li class="card back">*</li>
-            <li class="card back">*</li>
-            <li class="card back">*</li>
-            <li class="card back">*</li>
-          </ul>
+          <ul id="deck" class="deck"></ul>
           <div id="controls"></div>
         </div>
       <div id="player1" class="player">
@@ -80,7 +72,30 @@
       </div>
     </script>
     <script id="controlsTemplate" type="x-tmpl-mustache">
-    <button style="display:{{display}}">{{text}}</button>
+      <button style="display:{{display}}">{{text}}</button>
+    </script>
+    <script id="hiddenDeckTemplate" type="x-tmpl-mustache">
+      <li class="card back">*</li>
+      <li class="card back">*</li>
+      <li class="card back">*</li>
+      <li class="card back">*</li>
+      <li class="card back">*</li>
+      <li class="card back">*</li>
+      <li class="card back">*</li>
+    </script>
+    <script id="visibleDeckTemplate" type="x-tmpl-mustache">
+      <li class="card back">*</li>
+      <li class="card back">*</li>
+      <li class="card back">*</li>
+      <li class="card back">*</li>
+      <li class="card back">*</li>
+      <li class="card back">*</li>
+      <li class="card">
+        <a class="card rank-{{card.name}} {{card.suit}}" href="#">
+          <span class="rank">{{card.name}}</span>
+          <span class="suit">&{{card.suit}};</span>
+        </a>
+      </li>
     </script>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
