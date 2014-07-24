@@ -50,10 +50,13 @@ define(['GameStates/BaseState', 'modules/DeckModule'],function(BaseState, Deck){
   };
 
   CribState.prototype.action = function() {
-    this.game.$player1.placeCardsInCrib(this.game.$cribOwner);
-    this.game.$player2.placeCardsInCrib(this.game.$cribOwner);
-
-    return this.game.transitionTo('PrePlay');
+    if(this.game.$player1.cardsForCrib.length === 2){
+      this.game.$player1.placeCardsInCrib(this.game.$cribOwner);
+      this.game.$player2.placeCardsInCrib(this.game.$cribOwner);
+      return this.game.transitionTo('PrePlay');
+    } else {
+      this.game.$messages = ['Please select two cards for ' + this.game.$cribOwner.possesive + ' crib.'];
+    }
   };
 
   return CribState;

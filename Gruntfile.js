@@ -1,8 +1,10 @@
 // Generated on 2014-04-25 using generator-mobile 1.0.0-alpha.1
 'use strict';
 var LIVERELOAD_PORT = 35729;
-var lrSnippet = require('connect-livereload')({port: LIVERELOAD_PORT});
-var mountFolder = function (connect, dir) {
+var lrSnippet = require('connect-livereload')({
+    port: LIVERELOAD_PORT
+});
+var mountFolder = function(connect, dir) {
     return connect.static(require('path').resolve(dir));
 };
 
@@ -12,7 +14,7 @@ var mountFolder = function (connect, dir) {
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
     // show elapsed time at the end
     require('time-grunt')(grunt);
     // load all grunt tasks
@@ -28,14 +30,6 @@ module.exports = function (grunt) {
         yeoman: yeomanConfig,
         // TODO: Make this conditional
         watch: {
-            coffee: {
-                files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
-                tasks: ['coffee:dist']
-            },
-            coffeeTest: {
-                files: ['test/spec/{,*/}*.coffee'],
-                tasks: ['coffee:test']
-            },
             compass: {
                 files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
                 tasks: ['compass:server']
@@ -52,7 +46,7 @@ module.exports = function (grunt) {
                 ]
             }
         },
-        
+
         connect: {
             options: {
                 port: 9000,
@@ -61,7 +55,7 @@ module.exports = function (grunt) {
             },
             livereload: {
                 options: {
-                    middleware: function (connect) {
+                    middleware: function(connect) {
                         return [
                             lrSnippet,
                             mountFolder(connect, '.tmp'),
@@ -72,7 +66,7 @@ module.exports = function (grunt) {
             },
             test: {
                 options: {
-                    middleware: function (connect) {
+                    middleware: function(connect) {
                         return [
                             mountFolder(connect, '.tmp'),
                             mountFolder(connect, 'test')
@@ -82,7 +76,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 options: {
-                    middleware: function (connect) {
+                    middleware: function(connect) {
                         return [
                             mountFolder(connect, yeomanConfig.dist)
                         ];
@@ -112,7 +106,7 @@ module.exports = function (grunt) {
         browser_sync: {
             dev: {
                 bsFiles: {
-                    src : '<%= yeoman.app %>/styles/style.css'
+                    src: '<%= yeoman.app %>/styles/style.css'
                 },
                 options: {
                     watchTask: false,
@@ -142,32 +136,13 @@ module.exports = function (grunt) {
                 'test/spec/{,*/}*.js'
             ]
         },
-        mocha: {
-            all: {
-                options: {
-                    run: true,
-                    urls: ['http://localhost:<%= connect.options.port %>/index.html']
-                }
-            }
-        },
-        coffee: {
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= yeoman.app %>/scripts',
-                    src: '{,*/}*.coffee',
-                    dest: '.tmp/scripts',
-                    ext: '.js'
-                }]
-            },
-            test: {
-                files: [{
-                    expand: true,
-                    cwd: 'test/spec',
-                    src: '{,*/}*.coffee',
-                    dest: '.tmp/spec',
-                    ext: '.js'
-                }]
+        karma: {
+            unit: {
+                configFile: 'karma.conf.js',
+                runnerPort: 9999,
+                singleRun: true,
+                browsers: ['PhantomJS'],
+                logLevel: 'ERROR'
             }
         },
         compass: {
@@ -229,7 +204,7 @@ module.exports = function (grunt) {
             }
         },
 
-        
+
 
         useminPrepare: {
             options: {
@@ -321,15 +296,12 @@ module.exports = function (grunt) {
         },
         concurrent: {
             server: [
-                'coffee:dist',
                 'compass:server'
             ],
             test: [
-                'coffee',
                 'compass'
             ],
             dist: [
-                'coffee',
                 'compass:dist',
                 'imagemin',
                 'svgmin',
@@ -346,12 +318,12 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('server', function (target) {
+    grunt.registerTask('server', function(target) {
         grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
         grunt.task.run(['serve:' + target]);
     });
 
-    grunt.registerTask('serve', function (target) {
+    grunt.registerTask('serve', function(target) {
         if (target === 'dist') {
             return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
         }
@@ -369,7 +341,7 @@ module.exports = function (grunt) {
         'clean:server',
         'concurrent:test',
         'connect:test',
-        'mocha'
+        'karma'
     ]);
 
     grunt.registerTask('build', [
@@ -390,5 +362,5 @@ module.exports = function (grunt) {
         'test',
         'build'
     ]);
-    
+
 };

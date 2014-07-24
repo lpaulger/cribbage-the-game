@@ -3,5 +3,7 @@ dist
 .tmp
 .sass-cache
 app/bower_components
+test/bower_components
+coverage
 
 *.TMP

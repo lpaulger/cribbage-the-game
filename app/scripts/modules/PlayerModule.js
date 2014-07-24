@@ -12,12 +12,10 @@ define([], function () {
       function removeFromHand(card){
         cribOwner.crib.push(this.hand.splice(this.hand.indexOf(card), 1));
       }
-      if(this.cardsForCrib.length === 2){
+      if (this.cardsForCrib.length === 2) {
         this.cardsForCrib.forEach(removeFromHand.bind(this));
         this.cardsForCrib = [];
-      } else {
-        this.$messages = ['Please select two cards for ' + cribOwner.possesive + ' crib.'];
-      }
+      };
     };
 
     return Player;
