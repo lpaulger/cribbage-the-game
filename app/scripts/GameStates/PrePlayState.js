@@ -10,11 +10,13 @@ define(['GameStates/BaseState', 'modules/DeckModule'],function(BaseState, Deck){
   PrePlayState.prototype.init = function(){
     if(gm.$cribOwner !== gm.$player1)
       this.game.$messages = ['Reveal Top Card'];
-
+    else 
+      this.game.$messages = ['They will reveal top card'];
   };
 
-  PrePlayState.prototype.deck = function() {
-    console.log('Reveal Top Card');
+  PrePlayState.prototype.deck = function(cardIndex) {
+    console.log(gm.$deck.selectOne(cardIndex));
+    gm.transitionTo('Play', true);
   };
 
   PrePlayState.prototype.selectCard = function(options) {

@@ -1,7 +1,6 @@
 define(
-  ['modules/DeckModule', 'modules/PlayerModule', 'modules/PlayerAiModule', 'GameStates/DrawState',
-   'GameStates/DealState', 'GameStates/CribState', 'GameStates/PrePlayState'],
-  function(Deck, Player, PlayerAi, DrawState, DealState, CribState, PrePlayState){
+  ['modules/DeckModule', 'modules/PlayerModule', 'modules/PlayerAiModule', 'GameStates/StateManager'],
+  function(Deck, Player, PlayerAi, StateManager){
 
   function Game(){
     this.$deck = new Deck();
@@ -11,14 +10,17 @@ define(
     this.$player2HandVisible = true;
     this.$cribOwner;
     this.$messages = ['Welcome Click the Deck to Play'];
-    this.$states = [new DrawState(this), new DealState(this), new CribState(this), new PrePlayState(this)]
+    this.$states = StateManager(this);
     this.$state = this.$states[0];
   }
 
-  Game.prototype.transitionTo = function (stateName) {
+  Game.prototype.transitionTo = function (stateName, shouldWait) {
+    this.$await = shouldWait || false;
     this.$state = this.$states.filter(function(state){
       return state.name == stateName;
     })[0];
+    if(!this.$state) 
+      throw new Error("State Not Found");
   };
 
   Game.prototype.compareCards = function() {

@@ -59,5 +59,10 @@ define(['modules/CardModule'], function (Card) {
     }
   };
 
+  Deck.prototype.selectOne = function(index) {
+    var selected = this.cards.splice(index, 1);
+    return this.cards.push(selected);
+  };
+
   return Deck;
 });

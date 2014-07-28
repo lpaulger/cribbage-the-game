@@ -26,10 +26,10 @@
             <ul class="crib hand"></ul>
           </div>
         </div>
-        <div class="playingCards">
-          <ul id="deck" class="deck"></ul>
-          <div id="controls"></div>
+        <div id="deck" class="playingCards">
+          <ul class="deck"></ul>
         </div>
+        <div id="controls"></div>
       <div id="player1" class="player">
         <div class="playingCards">
           <ul id="bottomHand" class="hand"></ul>
@@ -74,28 +74,37 @@
     <script id="controlsTemplate" type="x-tmpl-mustache">
       <button style="display:{{display}}">{{text}}</button>
     </script>
+    <script id="hiddenStraitDeckTemplate" type="x-tmpl-mustache">
+      <ul class="deck strait">
+        {{#deck.cards}}
+          <li><a class="card back">*</a></li>
+        {{/deck.cards}}
+      </ul>
+    </script>
     <script id="hiddenDeckTemplate" type="x-tmpl-mustache">
-      <li class="card back">*</li>
-      <li class="card back">*</li>
-      <li class="card back">*</li>
-      <li class="card back">*</li>
-      <li class="card back">*</li>
-      <li class="card back">*</li>
-      <li class="card back">*</li>
+      <ul class="deck">
+        <li class="card back">*</li>
+        <li class="card back">*</li>
+        <li class="card back">*</li>
+        <li class="card back">*</li>
+        <li class="card back">*</li>
+        <li class="card back">*</li>
+        <li class="card back">*</li>
+      </ul>
     </script>
     <script id="visibleDeckTemplate" type="x-tmpl-mustache">
-      <li class="card back">*</li>
-      <li class="card back">*</li>
-      <li class="card back">*</li>
-      <li class="card back">*</li>
-      <li class="card back">*</li>
-      <li class="card back">*</li>
-      <li class="card">
-        <a class="card rank-{{card.name}} {{card.suit}}" href="#">
+      <ul class="deck">
+        <li class="card back">*</li>
+        <li class="card back">*</li>
+        <li class="card back">*</li>
+        <li class="card back">*</li>
+        <li class="card back">*</li>
+        <li class="card back">*</li>
+        <li class="card rank-{{card.name}} {{card.suit}}">
           <span class="rank">{{card.name}}</span>
           <span class="suit">&{{card.suit}};</span>
-        </a>
-      </li>
+        </li>
+      </ul>
     </script>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>

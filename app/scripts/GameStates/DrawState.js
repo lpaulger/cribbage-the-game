@@ -27,7 +27,7 @@ define(['GameStates/BaseState'],function(BaseState){
     if(typeof this.game.$cribOwner == "function" ) return this.game.$cribOwner;
     this.game.$messages = [this.game.$cribOwner.name + ' won.'];
 
-    return this.game.transitionTo('Deal');
+    return this.game.transitionTo('Deal', true);
   };
 
   return DrawState;

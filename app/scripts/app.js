@@ -19,6 +19,7 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
       this.$cribTemplate = $('#cribTemplate').html();
       this.$hiddenDeckTemplate = $('#hiddenDeckTemplate').html();
       this.$visibleDeckTemplate = $('#visibleDeckTemplate').html();
+      this.$hiddenStraitDeckTemplate = $('#hiddenStraitDeckTemplate').html();
       this.$messageTemplate = '{{#messages}}<li>{{.}}</li>{{/messages}}';
       this.$controlsTemplate = $('#controlsTemplate').html();
     },
@@ -43,8 +44,10 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
 
       var _state = this.$game.$state;
 
-      this.$deckEl.on('click', function(){
-          this.render(_state.deck());
+      this.$deckEl.on('click', function(e){
+          var cardIndex = $($(e.currentTarget).children("ul")[0]).children("li").children("a").index(e.target);
+          $(e.target).addClass("selected");
+          this.render(_state.deck(cardIndex));
       }.bind(this));
 
       this.$player1Hand.on('click', 'li', this.selectCard.bind(this));
@@ -52,6 +55,13 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
       this.$controls.on('click', 'button', function(e){
         this.render(_state.action());
       }.bind(this));
+    },
+    getDeckTemplate: function(){
+      if(this.$game.$state.name == 'PrePlay') return this.$hiddenStraitDeckTemplate;
+      if(!this.$game.$showTopCard) return this.$hiddenDeckTemplate;
+      if(this.$game.$showTopCard) return this.$visibleDeckTemplate;
+
+      throw new Error('Undefined Deck Template');
     },
     render: function(nextAction){
 
@@ -70,8 +80,8 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
       this.$player2Crib.html(mustache.render(this.$cribTemplate, {cards: this.$game.$player2.crib}));
 
       this.$deckEl.html(mustache.render(
-        this.$game.$showTopCard ? this.$visibleDeckTemplate : this.$hiddenDeckTemplate,
-      {card: this.$game.topCard}));
+        this.getDeckTemplate(),
+      {deck: this.$game.$deck, card: this.$game.topCard}));
 
       this.$controls.html(mustache.render(this.$controlsTemplate, {
         text: this.$game.$actionText, display: this.$game.$actionText ? 'block' : 'none'
@@ -79,11 +89,18 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
 
       if(this.$activeState !== this.$game.$state){
         this.$activeState = this.$game.$state;
-        this.unbindEvents();
-        setTimeout(function(){
+
+        if(this.$game.$await){
+          this.unbindEvents();
+          setTimeout(function(){
+            this.bindEvents();
+            this.render(this.$activeState.init());
+          }.bind(this), this.$autoContinueTimer);
+        } else {
+          this.unbindEvents();
           this.bindEvents();
           this.render(this.$activeState.init());
-        }.bind(this), this.$autoContinueTimer);
+        }
       };
     },
     selectCard: function(event){
