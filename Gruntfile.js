@@ -139,9 +139,9 @@ module.exports = function(grunt) {
         karma: {
             unit: {
                 configFile: 'karma.conf.js',
-                runnerPort: 9999,
+                runnerPort: 9090,
                 singleRun: true,
-                browsers: ['PhantomJS'],
+                browsers: ['Chrome'],
                 logLevel: 'ERROR'
             }
         },
