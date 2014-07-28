@@ -4,9 +4,18 @@ define(['modules/PlayerModule'], function(Player) {
     'use strict';
 
     describe("PlayerModule", function() {
-      var _deck, _player, _cribOwner, _hands;
+      var _deck, card, _player, _cribOwner, _hands;
       beforeEach(function(){
-        _deck = new Deck();
+        card = {
+          value: 'val',
+          suit: 'suit',
+          name: 'name'
+        };
+        _deck = jasmine.createSpyObj('Deck', ['shuffle', 'cut', 'deal']);
+        _deck.deal.and.returnValue({
+          topHand: [card, card, card, card, card, card],
+          bottomHand: [card, card, card, card, card, card]
+        });
         _player = new Player('test', 'tests');
       })
 
@@ -24,7 +33,6 @@ define(['modules/PlayerModule'], function(Player) {
         _player, _cribOwner, _hands;
         beforeEach(function(){
           _cribOwner = new Player('cOwner', 'cOwner\'s');
-
           _hands = _deck.deal();
           _player.hand = _hands.bottomHand;
         });
@@ -42,13 +50,13 @@ define(['modules/PlayerModule'], function(Player) {
         });
 
         describe("if 1 card selected", function(){
-          
+
           beforeEach(function(){
             _player.cardsForCrib.push(_player.hand[0]);
           });
 
           it("should not put cards in crib owners crib", function() {
-            
+
             _player.placeCardsInCrib(_cribOwner);
 
             expect(_player.cardsForCrib.length).toBe(1);
@@ -57,7 +65,7 @@ define(['modules/PlayerModule'], function(Player) {
         });
 
         describe("if 2 cards selected", function(){
-          
+
           beforeEach(function(){
             _player.cardsForCrib.push(_player.hand[0]);
             _player.cardsForCrib.push(_player.hand[1]);

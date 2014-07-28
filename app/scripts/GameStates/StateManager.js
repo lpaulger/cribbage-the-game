@@ -1,4 +1,4 @@
-define(['GameStates/DrawState', 'GameStates/DealState', 'GameStates/CribState', 'GameStates/PrePlayState'],
+define(['gameStates/DrawState', 'gameStates/DealState', 'gameStates/CribState', 'gameStates/PrePlayState'],
   function (DrawState, DealState, CribState, PrePlayState) {
 
     function StateManager(game){

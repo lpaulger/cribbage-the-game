@@ -1,4 +1,4 @@
-define(['GameStates/BaseState'],function(BaseState){
+define(['gameStates/BaseState'],function(BaseState){
   function DrawState(game){
     BaseState.call(this, game, 'Draw');
   }

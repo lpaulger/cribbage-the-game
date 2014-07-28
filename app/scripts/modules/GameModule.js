@@ -1,5 +1,5 @@
 define(
-  ['modules/DeckModule', 'modules/PlayerModule', 'modules/PlayerAiModule', 'GameStates/StateManager'],
+  ['modules/DeckModule', 'modules/PlayerModule', 'modules/PlayerAiModule', 'gameStates/StateManager'],
   function(Deck, Player, PlayerAi, StateManager){
 
   function Game(){
@@ -19,8 +19,8 @@ define(
     this.$state = this.$states.filter(function(state){
       return state.name == stateName;
     })[0];
-    if(!this.$state) 
-      throw new Error("State Not Found");
+    if(!this.$state)
+      throw new Error("State '" + stateName + "' Not Found");
   };
 
   Game.prototype.compareCards = function() {
