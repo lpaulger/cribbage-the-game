@@ -25,7 +25,7 @@ define(['gameStates/BaseState', 'modules/DeckModule'],function(BaseState, Deck){
   };
 
   function sortByValue(a,b){
-    return a.value > b.value;
+    return a.faceValue > b.faceValue;
   }
 
   return DealState;

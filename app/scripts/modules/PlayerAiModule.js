@@ -20,9 +20,11 @@ define(['modules/PlayerModule'], function (Player) {
 
   PlayerAi.prototype.playCard = function() {
     var index = Math.floor(Math.random() * this.hand.length);
-    if(this.hand.length == 0)
+    if(this.evaluatePlayableCards().length == 0 || this.hand.length == 0)
       return this.announceGo();
-    return this.play.push(this.hand.splice(index, 1)[0])
+    var card = this.hand.splice(index, 1)[0];
+    this.scores.evaluateCard(this, card);
+    return this.play.push(card);
   };
 
 

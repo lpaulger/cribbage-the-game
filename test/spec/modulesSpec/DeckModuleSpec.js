@@ -1,9 +1,9 @@
 /* global describe, it */
 
-define(['modules/DeckModule', 'modules/CardModule'], function(Deck, Card) {
+define(['modules/DeckModule'], function(Deck) {
   'use strict';
-  var _deck, Card;
-  
+  var _deck;
+
   describe("DeckModule", function(){
     beforeEach(function(){
 

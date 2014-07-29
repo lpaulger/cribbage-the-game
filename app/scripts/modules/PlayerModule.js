@@ -7,6 +7,7 @@ define(['modules/ScoresSingleton'], function (Scores) {
       this.play = [];
       this.crib = [];
       this.cardsForCrib = [];
+      this.score = 0;
       this.scores = Scores.getInstance();
     }
 
@@ -25,12 +26,17 @@ define(['modules/ScoresSingleton'], function (Scores) {
     };
 
     Player.prototype.playCard = function(index) {
-      console.log(this.hand[index]);
-      return this.play.push(this.hand.splice(index, 1)[0])
+      var card = this.hand.splice(index, 1)[0];
+      this.scores.evaluateCard(this, card);
+      return this.play.push(card);
+    };
+
+    Player.prototype.evaluatePlayableCards = function () {
+      return this.scores.evaluatePlayableCards(this);
     };
 
     Player.prototype.announceGo = function(){
-      console.log('GO');
+      console.log(this.name + ' announces GO!');
     }
 
     return Player;

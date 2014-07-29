@@ -9,10 +9,10 @@ define(['gameStates/BaseState'],function(BaseState){
 
   PlayState.prototype.init = function(){
     gm.$showTopCard = true;
-    
+    gm.$actionText = undefined;
     setCurrentPlayer();
 
-    if(gm.currentPlayer == gm.$player2) 
+    if(gm.currentPlayer == gm.$player2)
       processAiTurn.call(this);
 
     gm.$messages = [gm.$player1.possesive + ' turn'];
@@ -41,6 +41,13 @@ define(['gameStates/BaseState'],function(BaseState){
     gm.currentPlayer = gm.$player2;
     gm.currentPlayer.playCard();
     gm.currentPlayer = gm.$player1;
+    setAction();
+  }
+
+  function setAction(){
+    var playableCards = gm.$player1.evaluatePlayableCards();
+    if(playableCards.length == 0)
+      gm.$actionText = 'Go!';
   }
 
 
