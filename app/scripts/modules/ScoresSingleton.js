@@ -17,12 +17,13 @@ define([],function(){
       currentCards: [],
       evaluateCard: function(player, card) {
         console.log(player.name + ': ' + card.value)
-        this.runningValue += card.value;
-        evaluatePoints(this.runningValue, player);
         if(exceeds31(this.runningValue, card)){
           throw new Error('Exceeds 31');
         }
-        console.log(this.currentTableRunningValue);
+        this.runningValue += card.value;
+        
+        evaluatePoints(this.runningValue, player);
+        console.log('runningTotal: ' + this.runningValue);
         return this.currentCards.push(card);
       },
       evaluatePlayableCards: function(player){
