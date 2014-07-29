@@ -3,9 +3,8 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
 
   return {
     init: function(){
-      this.$autoContinueTimer = 2000;
-
-      this.$game = new Game();
+      this.$autoContinueTimer = 1000;
+      this.$game = gm = new Game();
       this.$activeState = this.$game.$state;
       this.getTemplates();
       this.getElements();
@@ -14,6 +13,7 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
     },
     getTemplates: function(){
       this.$visibleHandTemplate = $('#visibleHandTemplate').html();
+      this.$playTemplate = $('#playTemplate').html();
       this.$hiddenHandTemplate = $('#hiddenHandTemplate').html();
       this.$cardTemplate = $('#cardTemplate').html();//NOT USED?
       this.$cribTemplate = $('#cribTemplate').html();
@@ -25,11 +25,12 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
     },
     getElements: function(){
       this.$deckEl = $('#deck');
-
       this.$player1El = $('#player1');
       this.$player2El = $('#player2');
       this.$player1Hand = $('#bottomHand');
       this.$player2Hand = $('#topHand');
+      this.$player1Play = $('#bottomPlay');
+      this.$player2Play = $('#topPlay');
       this.$player1Crib = $('#player1 .crib');
       this.$player2Crib = $('#player2 .crib');
       this.$controls = $('#controls');
@@ -63,8 +64,7 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
 
       throw new Error('Undefined Deck Template');
     },
-    render: function(nextAction){
-
+    render: function(){
       this.$messagesEl.html(mustache.render(this.$messageTemplate, {messages: this.$game.$messages}));
 
       this.$player1Hand.html(mustache.render(
@@ -72,16 +72,20 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
         {cards: this.$game.$player1.hand}));
 
       this.$player1Crib.html(mustache.render(this.$cribTemplate, {cards: this.$game.$player1.crib}));
+      
+      this.$player1Play.html(mustache.render(this.$playTemplate, {cards: this.$game.$player1.play}));
 
       this.$player2Hand.html(mustache.render(
         this.$game.$player2HandVisible ? this.$visibleHandTemplate : this.$hiddenHandTemplate,
         {cards: this.$game.$player2.hand}));
 
       this.$player2Crib.html(mustache.render(this.$cribTemplate, {cards: this.$game.$player2.crib}));
+      
+      this.$player2Play.html(mustache.render(this.$playTemplate, {cards: this.$game.$player2.play}));
 
       this.$deckEl.html(mustache.render(
         this.getDeckTemplate(),
-      {deck: this.$game.$deck, card: this.$game.topCard}));
+      {deck: gm.$deck, card: gm.topCard}));
 
       this.$controls.html(mustache.render(this.$controlsTemplate, {
         text: this.$game.$actionText, display: this.$game.$actionText ? 'block' : 'none'

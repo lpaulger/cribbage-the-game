@@ -1,6 +1,7 @@
 define(['gameStates/BaseState', 'modules/DeckModule'],function(BaseState, Deck){
   function CribState(game){
     BaseState.call(this, game, 'Crib');
+    gm = this.game;
   }
 
   CribState.prototype = Object.create(BaseState.prototype);
@@ -17,6 +18,12 @@ define(['gameStates/BaseState', 'modules/DeckModule'],function(BaseState, Deck){
   CribState.prototype.selectCard = function(options) {
     var selectedCards = this.game.$player1.cardsForCrib;
     var _hand = this.game.$player1.hand;
+
+    if(isAlreadySelected.apply(this))
+      removeCard.apply(this);
+    else if(hasTwoCards())
+      replaceOldCard.apply(this);
+    else addNewCard.apply(this);
 
     function replaceOldCard(){
       _hand[_hand.indexOf(selectedCards[0])].selected = '';
@@ -42,20 +49,15 @@ define(['gameStates/BaseState', 'modules/DeckModule'],function(BaseState, Deck){
     function isAlreadySelected(){
       return selectedCards.indexOf(_hand[options.index]) !== -1;
     }
-    if(isAlreadySelected.apply(this))
-      removeCard.apply(this);
-    else if(hasTwoCards())
-      replaceOldCard.apply(this);
-    else addNewCard.apply(this);
   };
 
   CribState.prototype.action = function() {
-    if(this.game.$player1.cardsForCrib.length === 2){
-      this.game.$player1.placeCardsInCrib(this.game.$cribOwner);
-      this.game.$player2.placeCardsInCrib(this.game.$cribOwner);
+    if(gm.$player1.cardsForCrib.length === 2){
+      gm.$player1.placeCardsInCrib(gm.$cribOwner);
+      gm.$player2.placeCardsInCrib(gm.$cribOwner);
       return this.game.transitionTo('PrePlay');
     } else {
-      this.game.$messages = ['Please select two cards for ' + this.game.$cribOwner.possesive + ' crib.'];
+      gm.$messages = ['Please select two cards for ' + gm.$cribOwner.possesive + ' crib.'];
     }
   };
 

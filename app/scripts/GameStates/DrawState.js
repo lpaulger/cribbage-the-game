@@ -13,7 +13,7 @@ define(['gameStates/BaseState'],function(BaseState){
       return this.game.$player1;
     } else {
       this.game.$messages = ['it was a tie'];
-      return this.deck.bind(this);
+      return this.game.transitionTo('Draw', true);
     }
   };
 

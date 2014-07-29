@@ -22,7 +22,7 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
       describe("init", function () {
         describe("if Player is CribOwner", function () {
           beforeEach(function () {
-            _player = _cribOwner = {hand:[]};
+            _player = _cribOwner = {hand:[], selectOneFromDeck: function(){}};
             _setup();
           });
 
@@ -35,7 +35,7 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
 
         describe("if Player is not CribOwner", function () {
           beforeEach(function () {
-            _cribOwner = {name: 'Robo'};
+            _cribOwner = {name: 'Robo', selectOneFromDeck: function(){}};
             _player = {name: 'User'};
             _setup();
           });
@@ -55,7 +55,7 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
         });
         
         it("should transitionTo 'Play' state", function () {
-          expect(_game.transitionTo).toHaveBeenCalledWith('Play', true);
+          expect(_game.transitionTo).toHaveBeenCalledWith('Play', false);
         });
       });
     });

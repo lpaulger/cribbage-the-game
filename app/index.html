@@ -22,6 +22,9 @@
           <div class="playingCards">
             <ul id="topHand" class="hand"></ul>
           </div>
+          <div class="playingCards">
+            <ul id="topPlay" class="hand play"></ul>
+          </div>
           <div id="topHandCrib" class="playingCards">
             <ul class="crib hand"></ul>
           </div>
@@ -34,6 +37,9 @@
         <div class="playingCards">
           <ul id="bottomHand" class="hand"></ul>
         </div>
+        <div class="playingCards">
+            <ul id="bottomPlay" class="hand play"></ul>
+          </div>
         <div id="bottomHandCrib" class="playingCards">
           <ul class="crib hand"></ul>
         </div>
@@ -105,6 +111,16 @@
           <span class="suit">&{{card.suit}};</span>
         </li>
       </ul>
+    </script>
+    <script id="playTemplate" type="x-tmpl-mustache">
+      {{#cards}}
+        <li>
+          <a class="card rank-{{name}} {{suit}}">
+            <span class="rank">{{name}}</span>
+            <span class="suit">&{{suit}};</span>
+          </a>
+        </li>
+      {{/cards}}
     </script>
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>

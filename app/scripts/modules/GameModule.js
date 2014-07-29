@@ -23,16 +23,5 @@ define(
       throw new Error("State '" + stateName + "' Not Found");
   };
 
-  Game.prototype.compareCards = function() {
-    if(this.$player1.hand.value < this.$player2.hand.value){
-      return this.$player2;
-    } else if(this.$player1.hand.value > this.$player2.hand.value){
-      return this.$player1;
-    } else {
-      this.$messages = ['it was a tie'];
-      return this.draw.bind(this);
-    }
-  };
-
   return Game;
 });

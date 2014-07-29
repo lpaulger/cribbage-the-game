@@ -34,6 +34,11 @@ body {
   margin-bottom: 1.7em;
   position: relative;
 
+  .play {
+    left: 5em;
+    @extend .noSelectedState;
+  }
+
   .playingCards {
     position: absolute;
   }
@@ -43,6 +48,14 @@ body {
   .playingCards:last-child{
     right: 110px;
   }
+}
+
+#topPlay {
+  top: 8em;
+}
+
+#bottomPlay {
+  bottom: 8em;
 }
 
 #controls {

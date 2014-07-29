@@ -11,7 +11,7 @@ define(['modules/PlayerModule'], function(Player) {
           suit: 'suit',
           name: 'name'
         };
-        _deck = jasmine.createSpyObj('Deck', ['shuffle', 'cut', 'deal']);
+        _deck = jasmine.createSpyObj('Deck', ['shuffle', 'cut', 'deal', 'selectOne']);
         _deck.deal.and.returnValue({
           topHand: [card, card, card, card, card, card],
           bottomHand: [card, card, card, card, card, card]
@@ -80,6 +80,16 @@ define(['modules/PlayerModule'], function(Player) {
             expect(_player.cardsForCrib.length).toBe(0);
             expect(_cribOwner.crib.length).toBe(2);
           });
+        });
+      });
+
+      describe("selectOneFromDeck", function(){
+        beforeEach(function(){
+          _deck.selectOne.and.returnValue(card);
+        });
+
+        it("should return the card for selected index", function(){
+          expect(_player.selectOneFromDeck(_deck, 2)).toEqual(card);
         });
       });
     });

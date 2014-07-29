@@ -31,8 +31,9 @@ define(['modules/CardModule'], function (Card) {
   };
 
   Deck.prototype.selectOne = function(index) {
-    var selected = this.cards.splice(index, 1);
-    return this.cards.push(selected);
+    var selected = this.cards.splice(index, 1)[0];
+    this.cards.push(selected);
+    return selected;
   };
 
   function createDeck(deckType){
@@ -46,15 +47,6 @@ define(['modules/CardModule'], function (Card) {
     }
   };
 
-
-  function createSuit (type) {
-    var suit = [];
-    for (var i = 1; i < 14; i++) {
-      suit.push(new Card(i, type));
-    };
-    return suit;
-  };
-
   function create52 () {
   	var cards = [];
 
@@ -64,6 +56,14 @@ define(['modules/CardModule'], function (Card) {
     cards = cards.concat(createSuit('spades'));
 
     return cards;
+  };
+
+  function createSuit (type) {
+    var suit = [];
+    for (var i = 1; i < 14; i++) {
+      suit.push(new Card(i, type));
+    };
+    return suit;
   };
 
   return Deck;

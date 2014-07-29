@@ -42,6 +42,16 @@
 .playingCards a.card.selected {
     bottom: 1em;
 }
+
+.noSelectedState {
+    a.card:hover,  a.card:active,  a.card:focus,
+    label.card:hover,
+    strong .card,
+    a.card.selected {
+       bottom: 0em;
+    }
+}
+
 .playingCards label.card {
     cursor: pointer;
 }
