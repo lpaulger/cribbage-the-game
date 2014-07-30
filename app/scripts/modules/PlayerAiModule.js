@@ -1,6 +1,7 @@
 define(['modules/PlayerModule'], function (Player) {
   function PlayerAi(name, possesive){
     Player.call(this, name, possesive);
+    logic = this.playLogic;
   }
 
   PlayerAi.prototype = Object.create(Player.prototype);
@@ -13,20 +14,26 @@ define(['modules/PlayerModule'], function (Player) {
     }
   };
 
-  PlayerAi.prototype.selectOneFromDeck = function(deck) {
-    var index = Math.floor(Math.random() * deck.cards.length);
-    return deck.selectOne(index);
-  };
-
   PlayerAi.prototype.playCard = function() {
-    var index = Math.floor(Math.random() * this.hand.length);
-    if(this.evaluatePlayableCards().length == 0 || this.hand.length == 0)
+    if(!logic.hasPlayableCards(this))
       return this.announceGo();
-    var card = this.hand.splice(index, 1)[0];
-    this.scores.evaluateCard(this, card);
-    return this.play.push(card);
-  };
 
+    var _tempHand = this.hand.slice();
+        
+
+    try{
+      var index = Math.floor(Math.random() * logic.playableCards(this).length);
+      var randomCard = logic.playableCards(this)[index];
+      index = this.hand.indexOf(randomCard);
+      
+      var card = _tempHand.splice(index, 1)[0];
+      logic.evaluateCard(this, card);
+      this.hand.splice(index, 1)[0];
+      return card;
+    } catch(e){
+      throw e;
+    }
+  };
 
   return PlayerAi;
 });

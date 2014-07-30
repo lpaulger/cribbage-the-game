@@ -1,13 +1,14 @@
 define(['gameStates/BaseState', 'modules/DeckModule'],function(BaseState, Deck){
   function DealState(game){
     BaseState.call(this, game, 'Deal');
+    gm = this.game;
   }
 
   DealState.prototype = Object.create(BaseState.prototype);
   DealState.prototype.constructor = DealState;
 
   DealState.prototype.init = function(){
-    this.game.$player2HandVisible = false;
+    this.game.$player2HandVisible = gm.options.showOpponentsHand;
     this.game.$deck = new Deck();
     this.game.$deck.shuffle();
     var hands = this.game.$deck.deal();

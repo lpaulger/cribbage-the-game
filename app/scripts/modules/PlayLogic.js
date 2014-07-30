@@ -3,30 +3,56 @@ define([],function(){
   var instance;
 
   function init() {
-    function evaluatePoints(runningTotal, player){
-      if(runningTotal == 15)
-        player.score += 2;
-    }
+    
     function exceeds31(runningTotal, card){
-      return ((runningTotal + card.value) > 31);
+      return(runningTotal + card.value) > 31;
     }
     function evaluatePair(){}
     function evaluateRun(){}
+
+    var currentCards = [];
     return {
+      
+
       runningValue: 0,
-      currentCards: [],
+
+
+      getPlayedCards: function(){
+        return currentCards;
+      },
+      resetRunningValue: function(){
+        this.runningValue = 0;
+      },
+      evaluateHisHeels: function(player, card){
+        if(card.faceValue == 11)
+          player.score += 2;
+      },
+      isCardPlayable: function(player, card){
+        console.log(player.name + ': ' + card.value)
+        if(!this.hasPlayableCards(player)) {
+          return false;
+        } else if(exceeds31(this.runningValue, card)){
+          return false;
+        }
+
+        return true;
+      },
       evaluateCard: function(player, card) {
         console.log(player.name + ': ' + card.value)
-        if(exceeds31(this.runningValue, card)){
+        if(!this.hasPlayableCards(player)) {
+          throw new Error('No Playable Cards');
+        } else if(exceeds31(this.runningValue, card)){
           throw new Error('Exceeds 31');
         }
+
         this.runningValue += card.value;
         
         evaluatePoints(this.runningValue, player);
         console.log('runningTotal: ' + this.runningValue);
-        return this.currentCards.push(card);
+        return currentCards.push(card);
       },
-      evaluatePlayableCards: function(player){
+
+      playableCards: function(player){
         var playableCards = [];
         player.hand.forEach(function(card){
           if(card.value < (31 - this.runningValue))
@@ -34,6 +60,10 @@ define([],function(){
         }.bind(this))
 
         return playableCards;
+      },
+
+      hasPlayableCards: function(player){
+        return (this.playableCards(player).length > 0);
       }
     };
   };

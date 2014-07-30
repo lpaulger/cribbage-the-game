@@ -23,31 +23,38 @@ define(['gameStates/BaseState'],function(BaseState){
   };
 
   PlayState.prototype.selectCard = function(options) {
-    gm.currentPlayer.playCard(options.index);
-    processAiTurn.call(this);
+    try {
+      gm.currentPlayer.playCard(options.index);
+      gm.currentPlayer = gm.$player2;
+    } catch(e) {
+      throw e;
+    }
+    gm.transitionTo('Play', true);
   };
 
   PlayState.prototype.action = function() {
-
+    gm.currentPlayer.announceGo();
   };
 
   function setCurrentPlayer(){
-    (gm.$cribOwner == gm.$player1) ?
-      gm.currentPlayer = gm.$player2 :
-      gm.currentPlayer = gm.$player1
+    if(!gm.currentPlayer){
+      (gm.$cribOwner == gm.$player1) ?
+        gm.currentPlayer = gm.$player2 :
+        gm.currentPlayer = gm.$player1
+    }
   }
 
   function processAiTurn(){
-    gm.currentPlayer = gm.$player2;
-    gm.currentPlayer.playCard();
+    var response = gm.currentPlayer.playCard();
     gm.currentPlayer = gm.$player1;
-    setAction();
+    setAction(response);
   }
 
-  function setAction(){
-    var playableCards = gm.$player1.evaluatePlayableCards();
-    if(playableCards.length == 0)
-      gm.$actionText = 'Go!';
+  function setAction(response){
+    gm.$messages = [response];
+    if(!gm.$player1.hasPlayableCards())//player has no playable cards
+      gm.$messages.push('Press \'Go!\''); gm.$actionText = 'Go!';
+    //tableScore at 31
   }
 
 

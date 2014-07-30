@@ -29,15 +29,23 @@ body {
   z-index: 1;
 }
 
+#table {
+  position: relative;
+  height: 8em;
+  margin: 0 0 1.5em 0;
+}
+
+#play {
+  position: absolute;
+  top: 0;
+  left: 5em;
+  @extend .noSelectedState;
+}
+
 .player {
   height: 8em;
   margin-bottom: 1.7em;
   position: relative;
-
-  .play {
-    left: 5em;
-    @extend .noSelectedState;
-  }
 
   .playingCards {
     position: absolute;

@@ -55,7 +55,8 @@ define(['gameStates/BaseState', 'modules/DeckModule'],function(BaseState, Deck){
     if(gm.$player1.cardsForCrib.length === 2){
       gm.$player1.placeCardsInCrib(gm.$cribOwner);
       gm.$player2.placeCardsInCrib(gm.$cribOwner);
-      return this.game.transitionTo('PrePlay');
+
+      this.game.transitionTo('PrePlay');
     } else {
       gm.$messages = ['Please select two cards for ' + gm.$cribOwner.possesive + ' crib.'];
     }

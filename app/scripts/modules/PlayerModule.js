@@ -1,14 +1,14 @@
-define(['modules/ScoresSingleton'], function (Scores) {
+define(['modules/PlayLogic', 'modules/boardManager'], function (PlayLogic, Board) {
     'use strict';
+    var _boardManager = Board.getInstance();
     function Player(name, possesive){
       this.name = name;
       this.possesive = possesive;
       this.hand = [];
-      this.play = [];
       this.crib = [];
       this.cardsForCrib = [];
       this.score = 0;
-      this.scores = Scores.getInstance();
+      this.playLogic = PlayLogic.getInstance();
     }
 
     Player.prototype.placeCardsInCrib = function(cribOwner) {
@@ -22,21 +22,33 @@ define(['modules/ScoresSingleton'], function (Scores) {
     };
 
     Player.prototype.selectOneFromDeck = function(deck, cardIndex) {
-      return deck.selectOne(cardIndex);
+      var card = deck.selectOne(cardIndex);
+      this.playLogic.evaluateHisHeels(this, card);
+      return card;
     };
 
     Player.prototype.playCard = function(index) {
-      var card = this.hand.splice(index, 1)[0];
-      this.scores.evaluateCard(this, card);
-      return this.play.push(card);
+      var _tempHand = this.hand.slice();
+
+      var card = _tempHand.splice(index, 1)[0];
+      if(this.playLogic.isCardPlayable(this, card)){
+        _boardManager.playCard(card);
+        this.hand.splice(index, 1)[0];
+      } else if(!this.hasPlayableCards()){
+        gm.$messages = ['No PlayableCards, Press \'Go!\''];
+      } else {
+        gm.$messages = ['Try another card'];
+      }
     };
 
-    Player.prototype.evaluatePlayableCards = function () {
-      return this.scores.evaluatePlayableCards(this);
+    Player.prototype.hasPlayableCards = function () {
+      return this.playLogic.hasPlayableCards(this);
     };
 
     Player.prototype.announceGo = function(){
-      console.log(this.name + ' announces GO!');
+      //checkPlayableCards
+      //if hasPlayableCards == false playLogic.proceedWithGo
+      return this.name + ' announces GO!';
     }
 
     return Player;

@@ -25,6 +25,9 @@ define(['gameStates/BaseState'],function(BaseState){
     this.game.$player2.hand = this.game.$deck.cut();
     this.game.$cribOwner = compareCards.call(this);
     if(typeof this.game.$cribOwner == "function" ) return this.game.$cribOwner;
+    if(!this.game.$cribOwner){
+      console.log(this.game);
+    }
     this.game.$messages = [this.game.$cribOwner.name + ' won.'];
 
     return this.game.transitionTo('Deal', true);

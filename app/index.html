@@ -18,28 +18,30 @@
     <body>
     <div id="content">
       <ul id="messageContainer"></ul>
-        <div id="player2" class="player">
-          <div class="playingCards">
-            <ul id="topHand" class="hand"></ul>
-          </div>
-          <div class="playingCards">
-            <ul id="topPlay" class="hand play"></ul>
-          </div>
-          <div id="topHandCrib" class="playingCards">
-            <ul class="crib hand"></ul>
-          </div>
+      <div id="player2" class="player">
+        <div class="playingCards">
+          <ul id="topHand" class="hand"></ul>
         </div>
+        <div id="topHandCrib" class="playingCards">
+          <ul class="crib hand"></ul>
+        </div>
+      </div>
+      <div id="table">
         <div id="deck" class="playingCards">
           <ul class="deck"></ul>
         </div>
+        <div id="play" class="playingCards">
+          <ul class="hand play"></ul>
+        </div>
         <div id="controls"></div>
+      </div>
       <div id="player1" class="player">
         <div class="playingCards">
           <ul id="bottomHand" class="hand"></ul>
         </div>
         <div class="playingCards">
-            <ul id="bottomPlay" class="hand play"></ul>
-          </div>
+          <ul id="bottomPlay" class="hand play"></ul>
+        </div>
         <div id="bottomHandCrib" class="playingCards">
           <ul class="crib hand"></ul>
         </div>
@@ -64,18 +66,6 @@
       {{#cards}}
         <li class="card back">*</li>
       {{/cards}}
-    </script>
-    <script id="cardTemplate" type="x-tmpl-mustache">
-      <div class="playingCards">
-        <ul class="hand single-card">
-          <li>
-            <a class="card rank-{{card.name}} {{card.suit}}" href="#">
-              <span class="rank">{{card.name}}</span>
-              <span class="suit">&{{card.suit}};</span>
-            </a>
-          </li>
-        </ul>
-      </div>
     </script>
     <script id="controlsTemplate" type="x-tmpl-mustache">
       <button style="display:{{display}}">{{text}}</button>

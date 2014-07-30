@@ -11,6 +11,9 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
             $messages: ['default'],
             $player1: _player,
             $cribOwner: _cribOwner,
+            $deck: {
+              cards: []
+            },
             transitionTo: function(state, animate){}
           };
 

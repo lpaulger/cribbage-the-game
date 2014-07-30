@@ -1,4 +1,4 @@
-define(['modules/CardModule'], function(Card) {
+define(['dataStructures/Card'], function(Card) {
   'use strict';
   describe("Card", function () {
     var _card;

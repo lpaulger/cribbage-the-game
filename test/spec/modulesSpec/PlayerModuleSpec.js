@@ -4,12 +4,13 @@ define(['modules/PlayerModule'], function(Player) {
     'use strict';
 
     describe("PlayerModule", function() {
-      var _deck, card, _player, _cribOwner, _hands;
+      var _deck, card, _player, _cribOwner, _hands, _playLogic;
       beforeEach(function(){
         card = {
-          value: 'val',
-          suit: 'suit',
-          name: 'name'
+          faceValue: 10,
+          value: 10,
+          suit: 'hearts',
+          name: '10'
         };
         _deck = jasmine.createSpyObj('Deck', ['shuffle', 'cut', 'deal', 'selectOne']);
         _deck.deal.and.returnValue({
@@ -90,6 +91,29 @@ define(['modules/PlayerModule'], function(Player) {
 
         it("should return the card for selected index", function(){
           expect(_player.selectOneFromDeck(_deck, 2)).toEqual(card);
+        });
+      });
+
+      describe("playCard", function(){
+        beforeEach(function(){
+          _hands = _deck.deal();
+          _player.hand = _hands.bottomHand;
+          spyOn(_player.playLogic, "evaluateCard").and.callThrough();
+        })
+        describe("and card is valid", function(){
+          
+          it("should evaluate the card successfully", function(){
+            expect(_player.playLogic.evaluateCard.calls.count()).toEqual(0);
+            _player.playCard(2);
+            expect(_player.playLogic.evaluateCard.calls.count()).toEqual(1);
+          })
+        })
+        describe("and card is not valid", function(){
+          beforeEach(function(){
+            _player.playCard(1);
+            _player.playCard(2);
+            _player.playCard(3);
+          });
         });
       });
     });

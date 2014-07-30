@@ -1,20 +1,29 @@
 define(
-  ['modules/DeckModule', 'modules/PlayerModule', 'modules/PlayerAiModule', 'gameStates/StateManager'],
-  function(Deck, Player, PlayerAi, StateManager){
+  ['modules/DeckModule', 'modules/PlayerModule', 'modules/PlayerAiModule', 'gameStates/StateRegistry', 'modules/BoardManager'],
+  function(Deck, Player, PlayerAi, StateRegistry, BoardManager){
 
-  function Game(){
+  function Game(options){
+    this.options = options;
     this.$deck = new Deck();
     this.$player1 = new Player('You', 'your');
     this.$player2 = new PlayerAi('Roboto', 'his');
     this.$player1HandVisible = true;
     this.$player2HandVisible = true;
     this.$cribOwner;
+
+    this.$playedCards = BoardManager.getInstance().playedCards;
+    this.$tableCount = BoardManager.getInstance().currentPlayedValue;
     this.$messages = ['Welcome Click the Deck to Play'];
-    this.$states = StateManager(this);
+    this.$states = StateRegistry(this);
     this.$state = this.$states[0];
+    this.$forceRender = false;
   }
 
   Game.prototype.transitionTo = function (stateName, shouldWait) {
+    console.log('active: ' + this.$state.name + ' - transitionTo: ' + stateName)
+    if(this.$state.name === stateName){
+      this.$forceRender = true;
+    }
     this.$await = shouldWait || false;
     this.$state = this.$states.filter(function(state){
       return state.name == stateName;

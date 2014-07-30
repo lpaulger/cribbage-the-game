@@ -12,7 +12,8 @@ define(['gameStates/BaseState'],function(BaseState){
       this.game.$messages = ['Reveal Top Card'];
     else {
       this.game.$messages = ['They will reveal top card'];
-      gm.topCard = gm.$cribOwner.selectOneFromDeck(gm.$deck);
+      var index = Math.floor(Math.random() * gm.$deck.cards.length);
+      gm.topCard = gm.$cribOwner.selectOneFromDeck(gm.$deck, index);
       gm.transitionTo('Play', true);
     }
 

@@ -3,8 +3,11 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
 
   return {
     init: function(){
+      this.options = {
+        showOpponentsHand: true
+      }
       this.$autoContinueTimer = 1000;
-      this.$game = gm = new Game();
+      this.$game = gm = new Game(this.options);
       this.$activeState = this.$game.$state;
       this.getTemplates();
       this.getElements();
@@ -15,7 +18,6 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
       this.$visibleHandTemplate = $('#visibleHandTemplate').html();
       this.$playTemplate = $('#playTemplate').html();
       this.$hiddenHandTemplate = $('#hiddenHandTemplate').html();
-      this.$cardTemplate = $('#cardTemplate').html();//NOT USED?
       this.$cribTemplate = $('#cribTemplate').html();
       this.$hiddenDeckTemplate = $('#hiddenDeckTemplate').html();
       this.$visibleDeckTemplate = $('#visibleDeckTemplate').html();
@@ -24,17 +26,18 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
       this.$controlsTemplate = $('#controlsTemplate').html();
     },
     getElements: function(){
-      this.$deckEl = $('#deck');
+      this.$messagesEl = $('#messageContainer');
+
       this.$player1El = $('#player1');
       this.$player2El = $('#player2');
       this.$player1Hand = $('#bottomHand');
       this.$player2Hand = $('#topHand');
-      this.$player1Play = $('#bottomPlay');
-      this.$player2Play = $('#topPlay');
       this.$player1Crib = $('#player1 .crib');
       this.$player2Crib = $('#player2 .crib');
+
+      this.$deckEl = $('#deck');
+      this.$play = $('#play .play');
       this.$controls = $('#controls');
-      this.$messagesEl = $('#messageContainer');
     },
     unbindEvents: function(){
       this.$deckEl.off('click');
@@ -73,38 +76,33 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
 
       this.$player1Crib.html(mustache.render(this.$cribTemplate, {cards: this.$game.$player1.crib}));
       
-      this.$player1Play.html(mustache.render(this.$playTemplate, {cards: this.$game.$player1.play}));
-
       this.$player2Hand.html(mustache.render(
         this.$game.$player2HandVisible ? this.$visibleHandTemplate : this.$hiddenHandTemplate,
         {cards: this.$game.$player2.hand}));
 
       this.$player2Crib.html(mustache.render(this.$cribTemplate, {cards: this.$game.$player2.crib}));
-      
-      this.$player2Play.html(mustache.render(this.$playTemplate, {cards: this.$game.$player2.play}));
 
       this.$deckEl.html(mustache.render(
         this.getDeckTemplate(),
       {deck: gm.$deck, card: gm.topCard}));
 
+      this.$play.html(mustache.render(this.$playTemplate, {cards: this.$game.$playedCards}));
+
       this.$controls.html(mustache.render(this.$controlsTemplate, {
         text: this.$game.$actionText, display: this.$game.$actionText ? 'block' : 'none'
       }));
+      
+      console.log('ForceRender: ' + this.$game.$forceRender);
 
-      if(this.$activeState !== this.$game.$state){
+      if(this.$game.$forceRender && !stateChanged.call(this)){
+        reRender.call(this);
+      }
+      this.$game.$forceRender = false;
+      //console.log('has changed: ' + (this.$activeState !== this.$game.$state))
+
+      if(stateChanged.call(this)){
         this.$activeState = this.$game.$state;
-
-        if(this.$game.$await){
-          this.unbindEvents();
-          setTimeout(function(){
-            this.bindEvents();
-            this.render(this.$activeState.init());
-          }.bind(this), this.$autoContinueTimer);
-        } else {
-          this.unbindEvents();
-          this.bindEvents();
-          this.render(this.$activeState.init());
-        }
+        reRender.call(this);
       };
     },
     selectCard: function(event){
@@ -112,5 +110,31 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
       var card = $(event.currentTarget).find('a');
       this.render(this.$game.$state.selectCard({index: index, card: card, event:event}));
     }
+  }
+
+  function stateChanged(){
+    return this.$activeState !== this.$game.$state
+  }
+
+  function reRender(){
+    if(this.$game.$await){
+      awaitRender.call(this);
+    } else {
+      nonAwaitRender.call(this);
+    }
+  }
+
+  function awaitRender(){
+    this.unbindEvents();
+    setTimeout(function(){
+      this.bindEvents();
+      this.render(this.$activeState.init());
+    }.bind(this), this.$autoContinueTimer);
+  }
+
+  function nonAwaitRender(){
+    this.unbindEvents();
+    this.bindEvents();
+    this.render(this.$activeState.init());
   }
 });

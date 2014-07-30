@@ -31,29 +31,6 @@ define(['modules/PlayerAiModule'], function(PlayerAi) {
         _playerAi.placeCardsInCrib(_cribOwner);
         expect(_cribOwner.crib.length).toEqual(2);
       });
-    })
-
-    describe("selectOneFromDeck", function(){
-      var requestedIndex, first, second;
-      beforeEach(function(){
-        _deck.selectOne = function(val){
-          requestedIndex = val;
-          return card;
-        }
-        spyOn(_deck, "selectOne").and.callThrough();
-      })
-      
-      it("should select a random index from the crib", function(){
-        _playerAi.selectOneFromDeck(_deck);
-        first = requestedIndex;
-        _playerAi.selectOneFromDeck(_deck);
-        second = requestedIndex;
-        expect(first).not.toEqual(second);
-      })
-
-      it("should return card", function(){
-        expect(_playerAi.selectOneFromDeck(_deck)).toEqual(card);
-      })
-    })
-  })
+    });
+  });
 });
