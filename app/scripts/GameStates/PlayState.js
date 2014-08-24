@@ -33,6 +33,7 @@ define(['gameStates/BaseState'],function(BaseState){
 
   PlayState.prototype.action = function() {
     gm.$messages = [gm.currentPlayer.announceGo()];
+    gm.currentPlayer = gm.$player2;
     gm.transitionTo('Play', true);
   };
 
