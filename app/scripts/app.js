@@ -75,7 +75,7 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
         {cards: this.$game.$player1.hand}));
 
       this.$player1Crib.html(mustache.render(this.$cribTemplate, {cards: this.$game.$player1.crib}));
-      
+
       this.$player2Hand.html(mustache.render(
         this.$game.$player2HandVisible ? this.$visibleHandTemplate : this.$hiddenHandTemplate,
         {cards: this.$game.$player2.hand}));
@@ -86,13 +86,13 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
         this.getDeckTemplate(),
       {deck: gm.$deck, card: gm.topCard}));
 
-      this.$play.html(mustache.render(this.$playTemplate, {cards: this.$game.$playedCards}));
+      this.$play.html(mustache.render(this.$playTemplate, {cards: this.$game.$board.playedCards}));
 
       this.$controls.html(mustache.render(this.$controlsTemplate, {
         text: this.$game.$actionText, display: this.$game.$actionText ? 'block' : 'none'
       }));
-      
-      console.log('ForceRender: ' + this.$game.$forceRender);
+
+      //console.log('ForceRender: ' + this.$game.$forceRender);
 
       if(this.$game.$forceRender && !stateChanged.call(this)){
         reRender.call(this);

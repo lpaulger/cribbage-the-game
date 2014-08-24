@@ -1,5 +1,5 @@
 define(
-  ['modules/DeckModule', 'modules/PlayerModule', 'modules/PlayerAiModule', 'gameStates/StateRegistry', 'modules/BoardManager'],
+  ['modules/DeckModule', 'modules/PlayerModule', 'modules/PlayerAiModule', 'gameStates/StateRegistry', 'modules/BoardModule'],
   function(Deck, Player, PlayerAi, StateRegistry, BoardManager){
 
   function Game(options){
@@ -10,9 +10,7 @@ define(
     this.$player1HandVisible = true;
     this.$player2HandVisible = true;
     this.$cribOwner;
-
-    this.$playedCards = BoardManager.getInstance().playedCards;
-    this.$tableCount = BoardManager.getInstance().currentPlayedValue;
+    this.$board = BoardManager.getInstance();
     this.$messages = ['Welcome Click the Deck to Play'];
     this.$states = StateRegistry(this);
     this.$state = this.$states[0];

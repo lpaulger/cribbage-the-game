@@ -1,9 +1,9 @@
-define([],function(){
+define(['modules/BoardModule'],function(Board){
    // Instance stores a reference to the Singleton
   var instance;
-
+  var _board = Board.getInstance();
   function init() {
-    
+
     function exceeds31(runningTotal, card){
       return(runningTotal + card.value) > 31;
     }
@@ -11,51 +11,34 @@ define([],function(){
     function evaluateRun(){}
 
     var currentCards = [];
+
     return {
-      
-
-      runningValue: 0,
-
-
       getPlayedCards: function(){
         return currentCards;
-      },
-      resetRunningValue: function(){
-        this.runningValue = 0;
       },
       evaluateHisHeels: function(player, card){
         if(card.faceValue == 11)
           player.score += 2;
       },
       isCardPlayable: function(player, card){
-        console.log(player.name + ': ' + card.value)
+        //console.log(player.name + ': ' + card.value)
         if(!this.hasPlayableCards(player)) {
+          console.log(player.name + ' has no playable cards')
           return false;
-        } else if(exceeds31(this.runningValue, card)){
+        }
+
+        if(exceeds31(_board.currentBoardValue, card)){
+          console.log(card.value + ' exceeds 31 at with current running value: ' + _board.currentBoardValue)
           return false;
         }
 
         return true;
       },
-      evaluateCard: function(player, card) {
-        console.log(player.name + ': ' + card.value)
-        if(!this.hasPlayableCards(player)) {
-          throw new Error('No Playable Cards');
-        } else if(exceeds31(this.runningValue, card)){
-          throw new Error('Exceeds 31');
-        }
-
-        this.runningValue += card.value;
-        
-        evaluatePoints(this.runningValue, player);
-        console.log('runningTotal: ' + this.runningValue);
-        return currentCards.push(card);
-      },
 
       playableCards: function(player){
         var playableCards = [];
         player.hand.forEach(function(card){
-          if(card.value < (31 - this.runningValue))
+          if(card.value <= (31 - _board.currentBoardValue))
             playableCards.push(card);
         }.bind(this))
 

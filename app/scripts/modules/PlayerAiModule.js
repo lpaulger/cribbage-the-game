@@ -1,4 +1,5 @@
-define(['modules/PlayerModule'], function (Player) {
+define(['modules/PlayerModule', 'modules/BoardModule'], function (Player, Board) {
+  var _board = Board.getInstance();
   function PlayerAi(name, possesive){
     Player.call(this, name, possesive);
     logic = this.playLogic;
@@ -15,23 +16,22 @@ define(['modules/PlayerModule'], function (Player) {
   };
 
   PlayerAi.prototype.playCard = function() {
-    if(!logic.hasPlayableCards(this))
-      return this.announceGo();
+    var player = this;
 
     var _tempHand = this.hand.slice();
-        
+    var selectedCard = this.hand.filter(function(card, index){
+      return logic.isCardPlayable(player, card);
+    })[0]
 
-    try{
-      var index = Math.floor(Math.random() * logic.playableCards(this).length);
-      var randomCard = logic.playableCards(this)[index];
-      index = this.hand.indexOf(randomCard);
-      
-      var card = _tempHand.splice(index, 1)[0];
-      logic.evaluateCard(this, card);
-      this.hand.splice(index, 1)[0];
-      return card;
-    } catch(e){
-      throw e;
+    if(selectedCard)
+    {
+      this.hand.splice(this.hand.indexOf(selectedCard), 1)[0];
+      _board.placeCard(selectedCard, player);
+      console.log('AI placed card');
+      return 'Your Turn.';
+    } else {
+      console.log('AI Did not place card');
+      return this.announceGo();
     }
   };
 

@@ -98,22 +98,11 @@ define(['modules/PlayerModule'], function(Player) {
         beforeEach(function(){
           _hands = _deck.deal();
           _player.hand = _hands.bottomHand;
-          spyOn(_player.playLogic, "evaluateCard").and.callThrough();
+
         })
-        describe("and card is valid", function(){
+
+        it("should put card on the board", function () {
           
-          it("should evaluate the card successfully", function(){
-            expect(_player.playLogic.evaluateCard.calls.count()).toEqual(0);
-            _player.playCard(2);
-            expect(_player.playLogic.evaluateCard.calls.count()).toEqual(1);
-          })
-        })
-        describe("and card is not valid", function(){
-          beforeEach(function(){
-            _player.playCard(1);
-            _player.playCard(2);
-            _player.playCard(3);
-          });
         });
       });
     });

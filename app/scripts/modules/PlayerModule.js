@@ -1,6 +1,6 @@
-define(['modules/PlayLogic', 'modules/boardManager'], function (PlayLogic, Board) {
+define(['modules/PlayLogic', 'modules/BoardModule'], function (PlayLogic, Board) {
     'use strict';
-    var _boardManager = Board.getInstance();
+    var _board = Board.getInstance();
     function Player(name, possesive){
       this.name = name;
       this.possesive = possesive;
@@ -29,15 +29,16 @@ define(['modules/PlayLogic', 'modules/boardManager'], function (PlayLogic, Board
 
     Player.prototype.playCard = function(index) {
       var _tempHand = this.hand.slice();
-
-      var card = _tempHand.splice(index, 1)[0];
+      var card = _tempHand.splice(index, 1)[0];//selectCardFromHand
       if(this.playLogic.isCardPlayable(this, card)){
-        _boardManager.playCard(card);
+        _board.placeCard(card, this);
         this.hand.splice(index, 1)[0];
       } else if(!this.hasPlayableCards()){
-        gm.$messages = ['No PlayableCards, Press \'Go!\''];
+        gm.$messages = ['No Playable Cards, Press \'Go!\''];
+        throw new Error('No Playable Cards')
       } else {
         gm.$messages = ['Try another card'];
+        throw new Error('Invalid Playable Card')
       }
     };
 
@@ -48,7 +49,12 @@ define(['modules/PlayLogic', 'modules/boardManager'], function (PlayLogic, Board
     Player.prototype.announceGo = function(){
       //checkPlayableCards
       //if hasPlayableCards == false playLogic.proceedWithGo
-      return this.name + ' announces GO!';
+      if(!this.hasPlayableCards()){
+        _board.announceGo(this);
+        return this.name + ' announces GO!';
+      } else {
+        return this.name + ' can go, you have playable cards.';
+      }
     }
 
     return Player;
