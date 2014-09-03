@@ -7,19 +7,8 @@ define(['modules/BoardModule'],function(Board){
     function exceeds31(runningTotal, card){
       return(runningTotal + card.value) > 31;
     }
-    function evaluatePair(){}
-    function evaluateRun(){}
-
-    var currentCards = [];
 
     return {
-      getPlayedCards: function(){
-        return currentCards;
-      },
-      evaluateHisHeels: function(player, card){
-        if(card.faceValue == 11)
-          player.score += 2;
-      },
       isCardPlayable: function(player, card){
         //console.log(player.name + ': ' + card.value)
         if(!this.hasPlayableCards(player)) {
@@ -40,7 +29,7 @@ define(['modules/BoardModule'],function(Board){
         player.hand.forEach(function(card){
           if(card.value <= (31 - _board.currentBoardValue))
             playableCards.push(card);
-        }.bind(this))
+        }.bind(this));
 
         return playableCards;
       },
@@ -49,7 +38,7 @@ define(['modules/BoardModule'],function(Board){
         return (this.playableCards(player).length > 0);
       }
     };
-  };
+  }
 
   return {
     // Get the Singleton instance if one exists

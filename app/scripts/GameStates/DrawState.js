@@ -24,14 +24,15 @@ define(['gameStates/BaseState'],function(BaseState){
     this.game.$player1.hand = this.game.$deck.cut();
     this.game.$player2.hand = this.game.$deck.cut();
     this.game.$cribOwner = compareCards.call(this);
-    if(typeof this.game.$cribOwner == "function" ) return this.game.$cribOwner;
+    if(typeof this.game.$cribOwner == "function" )
+      return this.game.$cribOwner;
     if(!this.game.$cribOwner){
       this.game.$messages = ['It was a Tie, draw again'];
+      return this.game.transitionTo('Draw', true);
     } else {
       this.game.$messages = [this.game.$cribOwner.name + ' won.'];
+      return this.game.transitionTo('Deal', true);
     }
-
-    return this.game.transitionTo('Deal', true);
   };
 
   return DrawState;

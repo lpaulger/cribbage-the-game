@@ -1,6 +1,6 @@
 define(
   ['modules/DeckModule', 'modules/PlayerModule', 'modules/PlayerAiModule', 'gameStates/StateRegistry', 'modules/BoardModule'],
-  function(Deck, Player, PlayerAi, StateRegistry, BoardManager){
+  function(Deck, Player, PlayerAi, StateRegistry, Board){
 
   function Game(options){
     this.options = options;
@@ -9,8 +9,7 @@ define(
     this.$player2 = new PlayerAi('Roboto', 'his');
     this.$player1HandVisible = true;
     this.$player2HandVisible = true;
-    this.$cribOwner;
-    this.$board = BoardManager.getInstance();
+    this.$board = Board.getInstance();
     this.$messages = ['Welcome Click the Deck to Play'];
     this.$states = StateRegistry(this);
     this.$state = this.$states[0];

@@ -1,9 +1,9 @@
 define(['modules/PlayLogic', 'modules/BoardModule'], function (PlayLogic, Board) {
     'use strict';
     var _board = Board.getInstance();
-    function Player(name, possesive){
+    function Player(name, possessive){
       this.name = name;
-      this.possesive = possesive;
+      this.possesive = possessive;
       this.hand = [];
       this.crib = [];
       this.cardsForCrib = [];
@@ -23,7 +23,6 @@ define(['modules/PlayLogic', 'modules/BoardModule'], function (PlayLogic, Board)
 
     Player.prototype.selectOneFromDeck = function(deck, cardIndex) {
       var card = deck.selectOne(cardIndex);
-      this.playLogic.evaluateHisHeels(this, card);
       return card;
     };
 
@@ -51,11 +50,12 @@ define(['modules/PlayLogic', 'modules/BoardModule'], function (PlayLogic, Board)
       //if hasPlayableCards == false playLogic.proceedWithGo
       if(!this.hasPlayableCards()){
         _board.announceGo(this);
-        return this.name + ' announces GO!';
+        gm.$messages = [this.name + ' announces GO!'];
       } else {
-        return this.name + ' can go, you have playable cards.';
+        gm.$messages = [this.name + ' can\'t go, you have playable cards.'];
+        throw new Error('Playable Cards');
       }
-    }
+    };
 
     return Player;
 });

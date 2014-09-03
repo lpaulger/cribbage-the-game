@@ -2,6 +2,8 @@ define(['gameStates/BaseState'],function(BaseState){
   function PlayState(game){
     BaseState.call(this, game, 'Play');
     gm = this.game;
+    p1 = gm.$player1;
+    p2 = gm.$player2;
   }
   var _toState = 'Play';
   PlayState.prototype = Object.create(BaseState.prototype);
@@ -9,11 +11,18 @@ define(['gameStates/BaseState'],function(BaseState){
 
   PlayState.prototype.init = function(){
     gm.$showTopCard = true;
-    gm.$actionText = undefined;
+    gm.$actionText = 'Go';
     setCurrentPlayer();
     setAction();
-    if(gm.currentPlayer == gm.$player2)
+    if(gm.currentPlayer == p2)
       processAiTurn.call(this);
+    else
+      gm.$messages = ['Select a card to play'];
+
+    if(isEndOfRound()){
+      gm.$messages = ['Round Over.'];
+
+    }
   };
 
   PlayState.prototype.deck = function(cardIndex) {
@@ -22,8 +31,9 @@ define(['gameStates/BaseState'],function(BaseState){
 
   PlayState.prototype.selectCard = function(options) {
     try {
-      gm.currentPlayer.playCard(options.index);
-      gm.currentPlayer = gm.$player2;
+      p1.playCard(options.index);
+      gm.currentPlayer = p2;
+      gm.$messages = ['Their Turn'];
     } catch(e) {
       //card not played
       console.log(e);
@@ -32,35 +42,49 @@ define(['gameStates/BaseState'],function(BaseState){
   };
 
   PlayState.prototype.action = function() {
-    gm.$messages = [gm.currentPlayer.announceGo()];
-    gm.currentPlayer = gm.$player2;
+    try {
+      p1.announceGo();
+      gm.currentPlayer = p2;
+      gm.$messages = ['Their Turn'];
+    } catch(e){
+      console.log(e);
+    }
+
     gm.transitionTo(_toState, true);
   };
 
   function setCurrentPlayer(){
     if(!gm.currentPlayer){
-      (gm.$cribOwner == gm.$player1) ?
-        gm.currentPlayer = gm.$player2 :
-        gm.currentPlayer = gm.$player1
+      (gm.$cribOwner == p1) ?
+        gm.currentPlayer = p2 :
+        gm.currentPlayer = p1
     }
   }
 
   function processAiTurn(){
-    gm.$messages = [gm.currentPlayer.playCard()];
-    gm.currentPlayer = gm.$player1;
+    try{
+      p2.playCard();
+      gm.currentPlayer = p1;
+    } catch(e){
+      console.log(e);
+    }
   }
 
   function setAction(){
-    if(gm.$player1.hand.length == 0 && gm.$player2.hand.length == 0){
+    if(isEndOfRound()){
       gm.$messages = ['Round Over!'];
       gm.$actionText = 'Ok';
       _toState = 'Count';
     }
-    else if(!gm.$player1.hasPlayableCards())
+    else if(!p1.hasPlayableCards())
     {
       gm.$messages = ['Press \'Go!\''];
       gm.$actionText = 'Go!';
     }
+  }
+
+  function isEndOfRound(){
+    return p1.hand.length == 0 && p2.hand.length == 0;
   }
 
   return PlayState;

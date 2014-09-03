@@ -18,20 +18,17 @@ define(['modules/PlayerModule', 'modules/BoardModule'], function (Player, Board)
   PlayerAi.prototype.playCard = function() {
     var player = this;
 
-    var _tempHand = this.hand.slice();
     var selectedCard = this.hand.filter(function(card, index){
       return logic.isCardPlayable(player, card);
-    })[0]
+    })[0];
 
     if(selectedCard)
     {
       this.hand.splice(this.hand.indexOf(selectedCard), 1)[0];
       _board.placeCard(selectedCard, player);
-      console.log('AI placed card');
-      return 'Your Turn.';
+      gm.$messages = ['Your Turn.'];
     } else {
-      console.log('AI Did not place card');
-      return this.announceGo();
+      this.announceGo();
     }
   };
 
