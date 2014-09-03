@@ -1,5 +1,5 @@
 /*global define */
-define(['dataStructures/Card'], function (Card) {
+define(['modules/CardModule'], function (Card) {
   'use strict';
 
   function Deck(options){

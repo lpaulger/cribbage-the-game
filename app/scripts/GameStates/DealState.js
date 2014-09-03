@@ -8,17 +8,17 @@ define(['gameStates/BaseState', 'modules/DeckModule'],function(BaseState, Deck){
   DealState.prototype.constructor = DealState;
 
   DealState.prototype.init = function(){
-    this.game.$player2HandVisible = gm.options.showOpponentsHand;
-    this.game.$deck = new Deck();
-    this.game.$deck.shuffle();
-    var hands = this.game.$deck.deal();
+    gm.$player2HandVisible = gm.options.showOpponentsHand;
+    gm.$deck = new Deck();
+    gm.$deck.shuffle();
+    var hands = gm.$deck.deal();
 
-    this.game.$player1.hand = hands.bottomHand.sort(sortByValue);
-    this.game.$player2.hand = hands.topHand.sort(sortByValue);
-    this.game.$messages = ['select two cards for ' + this.game.$cribOwner.possesive + ' crib'];
-    this.game.$actionText = "Select";
+    gm.$player1.hand = hands.bottomHand.sort(sortByValue);
+    gm.$player2.hand = hands.topHand.sort(sortByValue);
+    gm.$messages = ['select two cards for ' + gm.$cribOwner.possesive + ' crib'];
+    gm.$actionText = "Select";
 
-    return this.game.transitionTo('Crib');
+    return gm.transitionTo('Crib');
   };
 
   DealState.prototype.deck = function() {

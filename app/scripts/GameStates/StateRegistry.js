@@ -8,7 +8,7 @@ define(['gameStates/DrawState', 'gameStates/DealState', 'gameStates/CribState',
          new CribState(game),
          new PrePlayState(game),
          new PlayState(game)];
-    }
+    };
 
     return StateManager;
 });

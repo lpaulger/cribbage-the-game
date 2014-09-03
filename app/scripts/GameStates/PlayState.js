@@ -3,7 +3,7 @@ define(['gameStates/BaseState'],function(BaseState){
     BaseState.call(this, game, 'Play');
     gm = this.game;
   }
-
+  var _toState = 'Play';
   PlayState.prototype = Object.create(BaseState.prototype);
   PlayState.prototype.constructor = PlayState;
 
@@ -34,7 +34,7 @@ define(['gameStates/BaseState'],function(BaseState){
   PlayState.prototype.action = function() {
     gm.$messages = [gm.currentPlayer.announceGo()];
     gm.currentPlayer = gm.$player2;
-    gm.transitionTo('Play', true);
+    gm.transitionTo(_toState, true);
   };
 
   function setCurrentPlayer(){
@@ -51,13 +51,17 @@ define(['gameStates/BaseState'],function(BaseState){
   }
 
   function setAction(){
-    if(!gm.$player1.hasPlayableCards())
+    if(gm.$player1.hand.length == 0 && gm.$player2.hand.length == 0){
+      gm.$messages = ['Round Over!'];
+      gm.$actionText = 'Ok';
+      _toState = 'Count';
+    }
+    else if(!gm.$player1.hasPlayableCards())
     {
       gm.$messages = ['Press \'Go!\''];
       gm.$actionText = 'Go!';
     }
   }
-
 
   return PlayState;
 });
