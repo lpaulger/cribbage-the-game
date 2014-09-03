@@ -13,16 +13,12 @@ define(['gameStates/BaseState'],function(BaseState){
     gm.$showTopCard = true;
     gm.$actionText = 'Go';
     setCurrentPlayer();
-    setAction();
     if(gm.currentPlayer == p2)
       processAiTurn.call(this);
     else
       gm.$messages = ['Select a card to play'];
 
-    if(isEndOfRound()){
-      gm.$messages = ['Round Over.'];
-
-    }
+    setAction();
   };
 
   PlayState.prototype.deck = function(cardIndex) {
