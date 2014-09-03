@@ -7,6 +7,13 @@ define(['gameStates/PlayState'], function (PlayState) {
 
     it('should create PlayState', function () {
 
+      _player = {
+        playCard: function(){}
+      };
+      _game = {
+        transitionTo: function(){},
+        currentPlayer: _player
+      };
       _playState = new PlayState(_game);
       expect(typeof _playState).toBe('object');
     });
@@ -18,7 +25,8 @@ define(['gameStates/PlayState'], function (PlayState) {
         };
         _game = {
           transitionTo: function(){},
-          currentPlayer: _player
+          currentPlayer: _player,
+          $player1: _player
         };
 
         spyOn(_game, "transitionTo");
@@ -44,7 +52,8 @@ define(['gameStates/PlayState'], function (PlayState) {
         };
         _game = {
           transitionTo: function(){},
-          currentPlayer: _player
+          currentPlayer: _player,
+          $player1: _player
         };
 
         spyOn(_game, "transitionTo");
@@ -55,6 +64,7 @@ define(['gameStates/PlayState'], function (PlayState) {
       });
 
       it('should play card', function () {
+
         expect(_player.playCard).toHaveBeenCalledWith(1);
       });
 

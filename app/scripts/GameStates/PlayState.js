@@ -2,8 +2,8 @@ define(['gameStates/BaseState'],function(BaseState){
   function PlayState(game){
     BaseState.call(this, game, 'Play');
     gm = this.game;
-    p1 = gm.$player1;
-    p2 = gm.$player2;
+    p1 = this.game.$player1;
+    p2 = this.game.$player2;
   }
   var _toState = 'Play';
   PlayState.prototype = Object.create(BaseState.prototype);
