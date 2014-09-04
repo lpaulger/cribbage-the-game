@@ -10,7 +10,7 @@ define([], function () {
       placeCard: function(card, player){
         this.playedCards.push(card);
         this.currentBoardValue += card.value;
-        console.log(this.currentBoardValue)
+        //console.log(this.currentBoardValue)
         if(this.currentBoardValue == 31) {
           this.resetBoard();
         }

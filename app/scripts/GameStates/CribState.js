@@ -1,4 +1,4 @@
-define(['gameStates/BaseState', 'modules/DeckModule'],function(BaseState, Deck){
+define(['gameStates/BaseState'],function(BaseState){
   function CribState(game){
     BaseState.call(this, game, 'Crib');
     gm = this.game;
