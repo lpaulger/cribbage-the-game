@@ -22,6 +22,10 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
         }
       });
 
+      afterEach(function(){
+         _game = {};
+      });
+
       describe("init", function () {
         describe("if Player is CribOwner", function () {
           beforeEach(function () {

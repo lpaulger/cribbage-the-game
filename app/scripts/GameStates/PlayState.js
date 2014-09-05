@@ -39,7 +39,7 @@ define(['gameStates/BaseState'],function(BaseState){
 
   PlayState.prototype.action = function() {
     try {
-      p1.announceGo();
+      p1.announceGo(_toState);
       gm.currentPlayer = p2;
       gm.$messages = ['Their Turn'];
     } catch(e){

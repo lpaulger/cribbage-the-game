@@ -17,7 +17,7 @@ define([], function () {
       },
       announceGo: function(player){
         if(this.playersWhoSaidGo.indexOf(player) == -1 &&
-          this.playersWhoSaidGo.length == 1){
+          this.playersWhoSaidGo.length > 0){
           this.resetBoard();
         } else {
           this.playersWhoSaidGo.push(player)

@@ -5,9 +5,9 @@ define(['modules/PlayLogic', 'modules/BoardModule'], function (PlayLogic, Board)
       this.name = name;
       this.possesive = possessive;
       this.hand = [];
+      this.handInMemory = [];
       this.crib = [];
       this.cardsForCrib = [];
-      this.score = 0;
       this.playLogic = PlayLogic.getInstance();
     }
 
@@ -18,12 +18,11 @@ define(['modules/PlayLogic', 'modules/BoardModule'], function (PlayLogic, Board)
       if (this.cardsForCrib.length === 2) {
         this.cardsForCrib.forEach(removeFromHand.bind(this));
         this.cardsForCrib = [];
-      };
+      }
     };
 
     Player.prototype.selectOneFromDeck = function(deck, cardIndex) {
-      var card = deck.selectOne(cardIndex);
-      return card;
+      return deck.selectOne(cardIndex);
     };
 
     Player.prototype.playCard = function(index) {
@@ -45,16 +44,20 @@ define(['modules/PlayLogic', 'modules/BoardModule'], function (PlayLogic, Board)
       return this.playLogic.hasPlayableCards(this);
     };
 
-    Player.prototype.announceGo = function(){
-      //checkPlayableCards
-      //if hasPlayableCards == false playLogic.proceedWithGo
-      if(!this.hasPlayableCards()){
+    Player.prototype.announceGo = function(purpose){
+      if(purpose == 'Count')
+        _board.resetBoard();
+      else if(!this.hasPlayableCards()){
         _board.announceGo(this);
         gm.$messages = [this.name + ' announces GO!'];
       } else {
         gm.$messages = [this.name + ' can\'t go, you have playable cards.'];
         throw new Error('Playable Cards');
       }
+    };
+
+    Player.prototype.restoreHand = function(){
+      this.hand = this.handInMemory;
     };
 
     return Player;

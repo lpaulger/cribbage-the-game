@@ -2,6 +2,8 @@ define(['gameStates/BaseState'],function(BaseState){
   function CribState(game){
     BaseState.call(this, game, 'Crib');
     gm = this.game;
+    p1 = this.game.$player1;
+    p2 = this.game.$player2;
   }
 
   CribState.prototype = Object.create(BaseState.prototype);
@@ -53,9 +55,10 @@ define(['gameStates/BaseState'],function(BaseState){
 
   CribState.prototype.action = function() {
     if(gm.$player1.cardsForCrib.length === 2){
-      gm.$player1.placeCardsInCrib(gm.$cribOwner);
-      gm.$player2.placeCardsInCrib(gm.$cribOwner);
-
+      p1.placeCardsInCrib(gm.$cribOwner);
+      p2.placeCardsInCrib(gm.$cribOwner);
+      p1.handInMemory = p1.hand.slice();
+      p2.handInMemory = p2.hand.slice();
       this.game.transitionTo('PrePlay');
     } else {
       gm.$messages = ['Please select two cards for ' + gm.$cribOwner.possesive + ' crib.'];

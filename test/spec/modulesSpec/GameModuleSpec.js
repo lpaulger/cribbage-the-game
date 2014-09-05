@@ -7,6 +7,10 @@ define(['modules/GameModule'], function(Game){
       beforeEach(function () {
         _game = new Game();
       });
+
+      afterEach(function(){
+        _game = {};
+      });
       it('should create a game', function () {
         expect(typeof _game).toBe('object');
       });

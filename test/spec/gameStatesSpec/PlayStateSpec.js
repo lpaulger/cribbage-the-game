@@ -3,32 +3,35 @@ define(['gameStates/PlayState'], function (PlayState) {
 
   var _playState, _game, _player;
 
-  describe('PlayState', function () {
+  function setupBasicGame() {
+    _player = {
+      playCard: function () {
+      }
+    };
+    _game = {
+      transitionTo: function () {
+      },
+      currentPlayer: _player,
+      $player1: _player
+    };
+  }
 
+  describe('PlayState', function () {
+    beforeEach(function(){
+      setupBasicGame();
+    });
+
+    afterEach(function(){
+      _game = undefined;
+    });
     it('should create PlayState', function () {
 
-      _player = {
-        playCard: function(){}
-      };
-      _game = {
-        transitionTo: function(){},
-        currentPlayer: _player
-      };
       _playState = new PlayState(_game);
       expect(typeof _playState).toBe('object');
     });
 
     describe('When player selects a valid card', function () {
       beforeEach(function () {
-        _player = {
-          playCard: function(){}
-        };
-        _game = {
-          transitionTo: function(){},
-          currentPlayer: _player,
-          $player1: _player
-        };
-
         spyOn(_game, "transitionTo");
         spyOn(_player, "playCard");
 
@@ -47,15 +50,6 @@ define(['gameStates/PlayState'], function (PlayState) {
 
     describe('when player selects invalid card', function () {
       beforeEach(function () {
-        _player = {
-          playCard: function(){}
-        };
-        _game = {
-          transitionTo: function(){},
-          currentPlayer: _player,
-          $player1: _player
-        };
-
         spyOn(_game, "transitionTo");
         spyOn(_player, "playCard").and.throwError('No Playable Cards');
 
@@ -64,21 +58,12 @@ define(['gameStates/PlayState'], function (PlayState) {
       });
 
       it('should play card', function () {
-
         expect(_player.playCard).toHaveBeenCalledWith(1);
       });
 
       it('should throw error', function () {
         expect(_player.playCard).toThrowError('No Playable Cards');
       });
-    });
-
-    describe('when player says go before AI', function () {
-
-    });
-
-    describe('when player says go after AI', function () {
-
     });
   });
 });

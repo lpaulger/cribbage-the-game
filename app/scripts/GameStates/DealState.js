@@ -2,6 +2,8 @@ define(['gameStates/BaseState', 'modules/DeckModule'],function(BaseState, Deck){
   function DealState(game){
     BaseState.call(this, game, 'Deal');
     gm = this.game;
+    p1 = this.game.$player1;
+    p2 = this.game.$player2;
   }
 
   DealState.prototype = Object.create(BaseState.prototype);
@@ -11,10 +13,11 @@ define(['gameStates/BaseState', 'modules/DeckModule'],function(BaseState, Deck){
     gm.$player2HandVisible = gm.options.showOpponentsHand;
     gm.$deck = new Deck();
     gm.$deck.shuffle();
-    var hands = gm.$deck.deal();
 
-    gm.$player1.hand = hands.bottomHand.sort(sortByValue);
-    gm.$player2.hand = hands.topHand.sort(sortByValue);
+    var hands = gm.$deck.deal();
+    p1.hand = hands.bottomHand.sort(sortByValue);
+    p2.hand = hands.topHand.sort(sortByValue);
+
     gm.$messages = ['select two cards for ' + gm.$cribOwner.possesive + ' crib'];
     gm.$actionText = "Select";
 
