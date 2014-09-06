@@ -1,5 +1,10 @@
 @import 'cards';
 
+html, body, #content {
+  height: 100%;
+  margin: 0;
+}
+
 html { 
   //background: url(../images/bg.jpg) no-repeat center center fixed; 
   -webkit-background-size: cover;
@@ -31,39 +36,41 @@ body {
 
 #table {
   position: relative;
-  height: 8em;
-  margin: 0 0 1.5em 0;
+  height: 33%;
+
+  #deck{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  //height: 8em;
+  //margin: 0 0 1.5em 0;
 }
 
 #play {
   position: absolute;
-  top: 0;
-  left: 5em;
-  @extend .noSelectedState;
+  top: 60%;
+  left: 6em;
+  transform: translateY(-50%);
 }
 
 .player {
-  height: 8em;
-  margin-bottom: 1.7em;
+  height: 33%;// 8em;
+  //margin-bottom: 1.7em;
   position: relative;
 
   .playingCards {
-    position: absolute;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
   }
   .playingCards:first-child{
     left:0;
   }
   .playingCards:last-child{
-    right: 110px;
+    right: 130px;
+    position: absolute;
   }
-}
-
-#topPlay {
-  top: 8em;
-}
-
-#bottomPlay {
-  bottom: 8em;
 }
 
 #controls {
