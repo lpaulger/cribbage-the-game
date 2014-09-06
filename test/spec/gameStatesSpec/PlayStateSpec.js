@@ -1,10 +1,16 @@
 define(['gameStates/PlayState'], function (PlayState) {
   'use strict';
 
-  var _playState, _game, _player;
+  var _playState, _game, _player, _bot;
 
   function setupBasicGame() {
     _player = {
+      hand: [],
+      playCard: function () {
+      }
+    };
+    _bot = {
+      hand: [],
       playCard: function () {
       }
     };
@@ -12,7 +18,8 @@ define(['gameStates/PlayState'], function (PlayState) {
       transitionTo: function () {
       },
       currentPlayer: _player,
-      $player1: _player
+      $player1: _player,
+      $player2: _bot
     };
   }
 
@@ -24,8 +31,8 @@ define(['gameStates/PlayState'], function (PlayState) {
     afterEach(function(){
       _game = undefined;
     });
-    it('should create PlayState', function () {
 
+    it('should create PlayState', function () {
       _playState = new PlayState(_game);
       expect(typeof _playState).toBe('object');
     });
@@ -63,6 +70,23 @@ define(['gameStates/PlayState'], function (PlayState) {
 
       it('should throw error', function () {
         expect(_player.playCard).toThrowError('No Playable Cards');
+      });
+    });
+
+    describe('is end of round', function () {
+      beforeEach(function () {
+        spyOn(_game, "transitionTo");
+
+        _playState = new PlayState(_game);
+        _playState.init();
+      });
+
+      it('should transition to Count state', function () {
+        expect(_playState.nextState).toBe('Count');
+        _playState.action();
+        expect(_game.transitionTo).toHaveBeenCalledWith('Count', true);
+        expect(_playState.nextState).toBe('Play');
+
       });
     });
   });

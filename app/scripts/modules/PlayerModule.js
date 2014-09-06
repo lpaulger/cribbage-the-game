@@ -12,12 +12,18 @@ define(['modules/PlayLogic', 'modules/BoardModule'], function (PlayLogic, Board)
     }
 
     Player.prototype.placeCardsInCrib = function(cribOwner) {
-      function removeFromHand(card){
-        cribOwner.crib.push(this.hand.splice(this.hand.indexOf(card), 1));
-      }
       if (this.cardsForCrib.length === 2) {
         this.cardsForCrib.forEach(removeFromHand.bind(this));
         this.cardsForCrib = [];
+      }
+
+      function removeFromHand(card){
+        unselectCurrentCard.call(this, card);
+        cribOwner.crib.push(this.hand.splice(this.hand.indexOf(card), 1)[0]);
+      }
+
+      function unselectCurrentCard(card) {
+        this.hand[this.hand.indexOf(card)].selected = '';
       }
     };
 

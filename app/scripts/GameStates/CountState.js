@@ -4,7 +4,9 @@ define(['gameStates/BaseState'], function(BaseState){
     gm = this.game;
     p1 = this.game.$player1;
     p2 = this.game.$player2;
+    this.step = 0;
   }
+
 
   CountState.prototype = Object.create(BaseState.prototype);
   CountState.prototype.constructor = CountState;
@@ -13,26 +15,55 @@ define(['gameStates/BaseState'], function(BaseState){
     p1.restoreHand();
     p2.restoreHand();
 
-    if(gm.$cribOwner == p1){
-      gm.$player2HandVisible = true;
-      gm.$player1HandVisible = false;
+    if(isHumanCribOwner()){
+      showBotPlayerHand();
+      gm.$messages = [p2.name + ' Score: '];
     } else {
-      gm.$player2HandVisible = false;
-      gm.$player1HandVisible = true;
+      showHumanPlayerHand();
+      gm.$messages = [p1.name + ' Score: '];
     }
   };
 
   CountState.prototype.action = function(){
-    if(gm.$cribOwner == p1){
-      gm.$player2HandVisible = false;
-      gm.$player1HandVisible = true;
-      p2.hand = [];
+    if(this.step == 0){
+      if(isHumanCribOwner()){
+        showHumanPlayerHand();
+        p2.hand = [];
+      } else {
+        showBotPlayerHand();
+        p1.hand = [];
+      }
+      this.step += 1;
+    } else if(this.step == 1) {
+      gm.$cribOwner.hand = gm.$cribOwner.crib;
+      gm.$cribOwner.crib = [];
+      gm.$actionText = 'Next Round';
+      this.step += 1;
     } else {
-      gm.$player2HandVisible = true;
-      gm.$player1HandVisible = false;
-      p1.hand = [];
+      if(isHumanCribOwner()){
+        gm.$cribOwner = p2;
+      } else {
+        gm.$cribOwner = p1;
+      }
+      showHumanPlayerHand();
+      gm.transitionTo('Deal', true);
+      this.step = 0;
     }
   };
+
+  function isHumanCribOwner() {
+    return gm.$cribOwner == p1;
+  }
+
+  function showHumanPlayerHand() {
+    gm.$player2HandVisible = false;
+    gm.$player1HandVisible = true;
+  }
+
+  function showBotPlayerHand() {
+    gm.$player2HandVisible = true;
+    gm.$player1HandVisible = false;
+  }
 
   return CountState;
 });

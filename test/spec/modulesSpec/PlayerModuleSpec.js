@@ -80,6 +80,13 @@ define(['modules/PlayerModule'], function(Player) {
 
             expect(_player.cardsForCrib.length).toBe(0);
             expect(_cribOwner.crib.length).toBe(2);
+            expect(_cribOwner.crib[0]).toBe(card);
+          });
+
+          it('should unselect the two cards', function () {
+            _player.placeCardsInCrib(_cribOwner);
+            expect(_cribOwner.crib[0].selected).toEqual('');
+            expect(_cribOwner.crib[1].selected).toEqual('');
           });
         });
       });
@@ -91,18 +98,6 @@ define(['modules/PlayerModule'], function(Player) {
 
         it("should return the card for selected index", function(){
           expect(_player.selectOneFromDeck(_deck, 2)).toEqual(card);
-        });
-      });
-
-      describe("playCard", function(){
-        beforeEach(function(){
-          _hands = _deck.deal();
-          _player.hand = _hands.bottomHand;
-
-        })
-
-        it("should put card on the board", function () {
-          
         });
       });
     });

@@ -18,7 +18,8 @@ define(['gameStates/CountState'], function(CountState){
     _game = {
       $player1: _player1,
       $player2: _player2,
-      $cribOwner: _player2
+      $cribOwner: _player2,
+      transitionTo: function(){}
     };
   }
 
@@ -94,14 +95,162 @@ define(['gameStates/CountState'], function(CountState){
             expect(_game.$player2HandVisible).toBe(false);
           });
 
-          xit('should show p1\'s score in a message', function(){
-            expect(_game.$messages).toBe([_game.$player1.name + ' Score: ']);
+          it('should show p2\'s score in a message', function(){
+            expect(_game.$messages[0]).toBe(_game.$player2.name + ' Score: ');
           });
         });
-
         describe('and its second count', function(){
+          beforeEach(function () {
+            _game.$cribOwner = _game.$player1;
+            _countState = new CountState(_game);
+            _countState.init();
+            _game.$player1.hand = _game.$player1.handInMemory;
+            _game.$player1.crib = new Array(4);
+            _game.$player2.hand = _game.$player2.handInMemory;
+            _countState.action();
+          });
 
-        })
+          it('should put cards from crib in players hand', function () {
+            var _cribValue = _game.$player1.crib;
+            _countState.action();
+            expect(_game.$player1.hand).toBe(_cribValue);
+          });
+
+          it('should empty the crib', function () {
+            _countState.action();
+            expect(_game.$player1.crib).toEqual([]);
+          });
+        });
+        describe('and its third count', function () {
+          beforeEach(function () {
+            _game.$cribOwner = _game.$player1;
+            spyOn(_game, "transitionTo");
+            _countState = new CountState(_game);
+            _countState.init();
+            _countState.action();
+            _countState.action();
+          });
+
+          it('should transition to Deal State', function () {
+            _countState.action();
+            expect(_game.transitionTo).toHaveBeenCalledWith('Deal', true);
+          });
+
+          it('should set the crib owner to player2', function () {
+            _countState.action();
+            expect(_game.$cribOwner).toBe(_game.$player2);
+          });
+
+          it('should set players hand to visible', function () {
+            _countState.action();
+            expect(_game.$player1HandVisible).toBe(true);
+          });
+
+          it('should set bots hand to not visible', function () {
+            _countState.action();
+            expect(_game.$player2HandVisible).toBe(false);
+          });
+        });
+      });
+
+      describe('and bot is cribOwner', function () {
+        describe('and is first count', function () {
+          beforeEach(function () {
+            createBasicGame();
+            _game.$cribOwner = _game.$player2;
+            _countState = new CountState(_game);
+            _countState.init();
+            _game.$player1.hand = _game.$player1.handInMemory;
+            _game.$player2.hand = _game.$player2.handInMemory;
+          });
+          it('should remove the cards from p1\'s hand', function () {
+            expect(_game.$player1.hand.length).toBe(4);
+            _countState.action();
+            expect(_game.$player1.hand.length).toBe(0);
+          });
+
+          it('should show p2\'s hand', function () {
+            expect(_game.$player2HandVisible).toBe(false);
+            expect(_game.$player1HandVisible).toBe(true);
+            _countState.action();
+            expect(_game.$player2HandVisible).toBe(true);
+            expect(_game.$player1HandVisible).toBe(false);
+          });
+
+          it('should show p1\'s score in a message', function () {
+            expect(_game.$messages[0]).toBe(_game.$player1.name + ' Score: ');
+          });
+
+          it('should be on step 1', function () {
+            expect(_countState.step).toEqual(0);
+            _countState.action();
+            expect(_countState.step).toEqual(1);
+          });
+        });
+        describe('and its second count', function () {
+          beforeEach(function () {
+            _game.$cribOwner = _game.$player2;
+            _countState = new CountState(_game);
+            _countState.init();
+            _game.$player1.hand = _game.$player1.handInMemory;
+            _game.$player1.crib = new Array(4);
+            _game.$player2.hand = _game.$player2.handInMemory;
+            _countState.action();
+          });
+
+          it('should put cards from crib in bots hand', function () {
+            var _cribValue = _game.$player2.crib;
+            _countState.action();
+            expect(_game.$player2.hand).toBe(_cribValue);
+          });
+
+          it('should empty the crib', function () {
+            _countState.action();
+            expect(_game.$player2.crib).toEqual([]);
+          });
+
+          it('should be on step 2', function () {
+            expect(_countState.step).toEqual(1);
+            _countState.action();
+            expect(_countState.step).toEqual(2);
+          });
+        });
+        describe('and its third count', function () {
+          beforeEach(function () {
+            _game.$cribOwner = _game.$player2;
+            spyOn(_game, "transitionTo");
+            _countState = new CountState(_game);
+            _countState.init();
+            _countState.action();
+            _countState.action();
+          });
+
+          it('should transition to Deal State', function () {
+            _countState.action();
+            expect(_game.transitionTo).toHaveBeenCalledWith('Deal', true);
+          });
+
+          it('should set the crib owner to player2', function () {
+            _countState.action();
+            expect(_game.$cribOwner).toBe(_game.$player1);
+          });
+
+          it('should set players hand to visible', function () {
+            _countState.action();
+            expect(_game.$player1HandVisible).toBe(true);
+          });
+
+          it('should set bots hand to not visible', function () {
+            _countState.action();
+            expect(_game.$player2HandVisible).toBe(false);
+          });
+
+          it('should set step to 0', function () {
+            expect(_countState.step).toEqual(2);
+            _countState.action();
+            expect(_countState.step).toEqual(0);
+          });
+        });
       });
     });
   });

@@ -11,7 +11,8 @@ define(['modules/PlayerModule', 'modules/BoardModule'], function (Player, Board)
   PlayerAi.prototype.placeCardsInCrib = function(cribOwner) {
     for(var i = 0; i < 2; i++){
       var index = Math.floor(Math.random() * this.hand.length);
-      cribOwner.crib.push(this.hand.splice(index, 1));
+
+      cribOwner.crib.push(this.hand.splice(index, 1)[0]);
     }
   };
 
