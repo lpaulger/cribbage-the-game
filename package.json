@@ -1,6 +1,10 @@
 {
   "name": "card-game",
   "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:lpaulger/card-game.git"
+  },
   "scripts": {
     "test": "karma start --single-run --browsers Chrome"
   },
@@ -35,6 +39,7 @@
     "time-grunt": "~0.2.0",
     "grunt-webp": "~0.0.1",
     "karma": "~0.12.17",
+    "karma-cli": "~1.4",
     "karma-ng-html2js-preprocessor": "~0.1",
     "karma-coverage": "~0.1",
     "karma-chrome-launcher": "~0.1.4",
