@@ -1,6 +1,9 @@
 {
   "name": "card-game",
   "version": "0.0.0",
+  "scripts": {
+    "test": "./node_modules/.bin/karma start --single-run --browsers Chrome"
+  },
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",

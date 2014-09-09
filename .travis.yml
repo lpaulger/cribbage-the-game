@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - '0.10'
+install:
+  - npm install
+  - bower install
+cache:
+  bundler: true
+  directories:
+    - node_modules
