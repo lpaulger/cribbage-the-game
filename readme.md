@@ -1,4 +1,4 @@
-#Card-Game
+#Card-Game ![build status](https://travis-ci.org/lpaulger/card-game.svg?branch=refactor)
 
 ####Rules
 http://www.bicyclecards.com/card-games/rule/cribbage
