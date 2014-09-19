@@ -203,9 +203,6 @@ module.exports = function(grunt) {
                 }
             }
         },
-
-
-
         useminPrepare: {
             options: {
                 dest: '<%= yeoman.dist %>'
@@ -315,6 +312,20 @@ module.exports = function(grunt) {
             all: {
                 rjsConfig: '<%= yeoman.app %>/scripts/main.js'
             }
+        },
+        buildcontrol: {
+          options: {
+            dir: 'dist',
+            commit: true,
+            push: true,
+            message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
+          },
+          pages: {
+            options: {
+              remote: 'git@github.com:lpaulger/card-game.git',
+              branch: 'gh-pages'
+            }
+          }
         }
     });
 
