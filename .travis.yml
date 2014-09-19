@@ -8,3 +8,6 @@ cache:
   bundler: true
   directories:
     - node_modules
+after_success:
+  - grunt build:dist
+  - grunt buildcontrol:pages
