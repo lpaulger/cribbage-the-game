@@ -7,3 +7,4 @@ test/bower_components
 coverage
 .idea
 *.TMP
+secret.txt
