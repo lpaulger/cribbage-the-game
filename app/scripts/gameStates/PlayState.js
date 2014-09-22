@@ -33,7 +33,7 @@ define(['gameStates/BaseState'],function(BaseState){
       gm.$messages = ['Their Turn'];
     } catch(e) {
       //card not played
-      console.log(e);
+      //console.log(e);
     }
     gm.transitionTo('Play', true);
   };
@@ -44,7 +44,7 @@ define(['gameStates/BaseState'],function(BaseState){
       gm.currentPlayer = p2;
       gm.$messages = ['Their Turn'];
     } catch(e){
-      console.log(e);
+      //console.log(e);
     }
 
     gm.transitionTo(this.nextState, true);
@@ -67,7 +67,7 @@ define(['gameStates/BaseState'],function(BaseState){
       p2.playCard();
       gm.currentPlayer = p1;
     } catch(e){
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -79,7 +79,6 @@ define(['gameStates/BaseState'],function(BaseState){
     }
     else if(!p1.hasPlayableCards())
     {
-      gm.$messages = ['Press \'Go!\''];
       gm.$actionText = 'Go!';
     }
   }

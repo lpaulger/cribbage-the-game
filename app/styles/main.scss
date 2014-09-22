@@ -14,8 +14,8 @@ html {
 }
 
 body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #333;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: white;//color: #333;
 }
 
 #content{
@@ -30,13 +30,42 @@ body {
   background-color: rgba(0,0,0,0.3);
   margin: 0;
   padding: 0;
+  top: 30%;
   width: 100%;
   z-index: 1;
+
+  li {
+    font-size: 1.3em;
+    line-height: 2em;
+    text-align: center;
+  }
+}
+
+.scoreboard {
+  position: absolute;
+  width: 100%;
+  background-color: rgba(0,0,0,0.3);
+  &:first-child{
+    top: 0;
+  }
+
+  &:last-child{
+    bottom: 0;
+  }
+  label{
+    padding: .2em;
+    float: left;
+
+    &:last-child{
+      float: right;
+    }
+  }
+
 }
 
 #table {
   position: relative;
-  height: 33%;
+  height: 33.33%;
 
   #deck{
     position: relative;
@@ -55,7 +84,7 @@ body {
 }
 
 .player {
-  height: 33%;// 8em;
+  height: 33.33%;// 8em;
   //margin-bottom: 1.7em;
   position: relative;
 
@@ -73,8 +102,27 @@ body {
   }
 }
 
+#count {
+  label {
+    position: relative;
+    left: .4em;
+    padding: .2em;
+    display: inline-block;
+    background-color: rgba(0,0,0,0.3);
+  }
+}
+
 #controls {
   position: absolute;
-  right: 10px;
-  top: 50%;
+  right: 0;
+  top: 34%;
+
+  button {
+    height: 3em;
+    width: 4em;
+    background-color: rgba(0,0,0,0.3);
+    color: white;
+    border: none;
+    font-size: 2em;
+  }
 }

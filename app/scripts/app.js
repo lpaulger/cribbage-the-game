@@ -4,7 +4,7 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
   return {
     init: function(){
       this.options = {
-        showOpponentsHand: true
+        showOpponentsHand: false
       };
       this.$autoContinueTimer = 1000;
       this.$game = new Game(this.options);
@@ -24,18 +24,21 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
       this.$hiddenStraitDeckTemplate = $('#hiddenStraitDeckTemplate').html();
       this.$messageTemplate = '{{#messages}}<li>{{.}}</li>{{/messages}}';
       this.$controlsTemplate = $('#controlsTemplate').html();
+      this.$scoreboardTemplate = $('#scoreboardTemplate').html();
+      this.$countTemplate = '<label style="display:{{display}}">Count: <span>{{count}}</span></label>';
     },
     getElements: function(){
       this.$messagesEl = $('#messageContainer');
 
-      this.$player1El = $('#player1');
-      this.$player2El = $('#player2');
       this.$player1Hand = $('#bottomHand');
       this.$player2Hand = $('#topHand');
       this.$player1Crib = $('#player1 .crib');
       this.$player2Crib = $('#player2 .crib');
+      this.$player1Score = $('#player1 .scoreboard');
+      this.$player2Score = $('#player2 .scoreboard');
 
       this.$deckEl = $('#deck');
+      this.$count = $('#count');
       this.$play = $('#play .play');
       this.$controls = $('#controls');
     },
@@ -76,15 +79,22 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
 
       this.$player1Crib.html(mustache.render(this.$cribTemplate, {cards: this.$game.$player1.crib}));
 
+      this.$player1Score.html(mustache.render(this.$scoreboardTemplate, {points: 0, games:0}));
+
       this.$player2Hand.html(mustache.render(
         this.$game.$player2HandVisible ? this.$visibleHandTemplate : this.$hiddenHandTemplate,
         {cards: this.$game.$player2.hand}));
 
       this.$player2Crib.html(mustache.render(this.$cribTemplate, {cards: this.$game.$player2.crib}));
 
+      this.$player2Score.html(mustache.render(this.$scoreboardTemplate, {points: 0, games:0}));
+
       this.$deckEl.html(mustache.render(
         this.getDeckTemplate(),
       {deck: gm.$deck, card: gm.topCard}));
+
+      this.$count.html(mustache.render(this.$countTemplate, {count: this.$game.$board.currentBoardValue,
+        display: this.$activeState.name === 'Play' ? 'inline-block' : 'none'}));
 
       this.$play.html(mustache.render(this.$playTemplate, {cards: this.$game.$board.playedCards}));
 
