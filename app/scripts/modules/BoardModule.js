@@ -1,4 +1,4 @@
-define([], function () {
+define(['modules/ScoreKeeperModule'], function (ScoreKeeper) {
   'use strict';
   var instance;
 
@@ -10,7 +10,7 @@ define([], function () {
       placeCard: function(card, player){
         this.playedCards.push(card);
         this.currentBoardValue += card.value;
-        //console.log(this.currentBoardValue)
+        ScoreKeeper.evaluatePlay(this.playedCards, player);
         if(this.currentBoardValue == 31) {
           this.resetBoard();
         }

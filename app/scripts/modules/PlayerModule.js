@@ -8,6 +8,7 @@ define(['modules/PlayRules', 'modules/BoardModule'], function (PlayRules, Board)
       this.handInMemory = [];
       this.crib = [];
       this.cardsForCrib = [];
+      this.points = 0;
       this.playRules = PlayRules.getInstance();
     }
 

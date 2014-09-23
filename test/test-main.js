@@ -12,9 +12,13 @@ require.config({
   // example of using shim, to load non AMD libraries (such as underscore and jquery)
   paths: {
     'jquery': '../bower_components/jquery/dist/jquery',
-    'mustache': '../bower_components/mustache/mustache',
+    'mustache': '../bower_components/mustache/mustache'
   },
-
+  map: {
+    'modules/BoardModule': {
+      'modules/ScoreKeeperModule': '../../test/mocks/ScoreKeeperMock'
+    }
+  },
   shim: {
     'jquery': {
       exports: '$'

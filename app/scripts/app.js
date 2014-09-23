@@ -79,7 +79,7 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
 
       this.$player1Crib.html(mustache.render(this.$cribTemplate, {cards: this.$game.$player1.crib}));
 
-      this.$player1Score.html(mustache.render(this.$scoreboardTemplate, {points: 0, games:0}));
+      this.$player1Score.html(mustache.render(this.$scoreboardTemplate, {points: this.$game.$player1.points, games:0}));
 
       this.$player2Hand.html(mustache.render(
         this.$game.$player2HandVisible ? this.$visibleHandTemplate : this.$hiddenHandTemplate,
@@ -87,7 +87,7 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
 
       this.$player2Crib.html(mustache.render(this.$cribTemplate, {cards: this.$game.$player2.crib}));
 
-      this.$player2Score.html(mustache.render(this.$scoreboardTemplate, {points: 0, games:0}));
+      this.$player2Score.html(mustache.render(this.$scoreboardTemplate, {points: this.$game.$player2.points, games:0}));
 
       this.$deckEl.html(mustache.render(
         this.getDeckTemplate(),

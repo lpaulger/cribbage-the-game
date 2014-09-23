@@ -6,6 +6,7 @@ define(['modules/BoardModule'], function(Board){
     beforeEach(function () {
       _board = Board.getInstance();
       _board.resetBoard();
+      _player = {points: 0};
     });
 
     describe("place 8 card", function () {
@@ -14,12 +15,12 @@ define(['modules/BoardModule'], function(Board){
       });
 
       it("should set currentBoardValue to 8", function () {
-        _board.placeCard(_card);
+        _board.placeCard(_card, _player);
         expect(_board.currentBoardValue).toBe(8);
       });
 
       it("should insert card to playedCards", function () {
-        _board.placeCard(_card);
+        _board.placeCard(_card, _player);
         expect(_board.playedCards.length).toBe(1);
       });
     });
@@ -27,28 +28,28 @@ define(['modules/BoardModule'], function(Board){
     describe("place card totaling 31", function () {
       beforeEach(function () {
         spyOn(_board, "resetBoard");
-        _board.placeCard({value: 10})
-        _board.placeCard({value: 10})
-        _board.placeCard({value: 10})
+        _board.placeCard({value: 10}, _player);
+        _board.placeCard({value: 10}, _player);
+        _board.placeCard({value: 10}, _player)
       });
 
       it("should reset the board", function () {
-        _board.placeCard({value: 1})
+        _board.placeCard({value: 1}, _player);
         expect(_board.resetBoard.calls.count()).toBe(1)
       });
     });
 
     describe("resetting the board", function () {
       beforeEach(function () {
-        _board.placeCard({value: 10})
-        _board.placeCard({value: 10})
-        _board.placeCard({value: 10})
+        _board.placeCard({value: 10}, _player);
+        _board.placeCard({value: 10}, _player);
+        _board.placeCard({value: 10}, _player);
       });
 
       it("should set the currentBoardValue to 0", function () {
-        expect(_board.currentBoardValue).toBe(30)
-        _board.resetBoard()
-        expect(_board.currentBoardValue).toBe(0)
+        expect(_board.currentBoardValue).toBe(30);
+        _board.resetBoard();
+        expect(_board.currentBoardValue).toBe(0);
       });
     });
 

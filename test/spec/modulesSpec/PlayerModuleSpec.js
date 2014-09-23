@@ -1,5 +1,3 @@
-/* global describe, it */
-
 define(['modules/PlayerModule'], function(Player) {
     'use strict';
 
