@@ -1,4 +1,4 @@
-define(['modules/PlayLogic', 'modules/BoardModule'], function (PlayLogic, Board) {
+define(['modules/PlayRules', 'modules/BoardModule'], function (PlayRules, Board) {
     'use strict';
     var _board = Board.getInstance();
     function Player(name, possessive){
@@ -8,7 +8,7 @@ define(['modules/PlayLogic', 'modules/BoardModule'], function (PlayLogic, Board)
       this.handInMemory = [];
       this.crib = [];
       this.cardsForCrib = [];
-      this.playLogic = PlayLogic.getInstance();
+      this.playRules = PlayRules.getInstance();
     }
 
     Player.prototype.placeCardsInCrib = function(cribOwner) {
@@ -34,7 +34,7 @@ define(['modules/PlayLogic', 'modules/BoardModule'], function (PlayLogic, Board)
     Player.prototype.playCard = function(index) {
       var _tempHand = this.hand.slice();
       var card = _tempHand.splice(index, 1)[0];//selectCardFromHand
-      if(this.playLogic.isCardPlayable(this, card)){
+      if(this.playRules.isCardPlayable(this, card)){
         _board.placeCard(card, this);
         this.hand.splice(index, 1)[0];
       } else if(!this.hasPlayableCards()){
@@ -47,7 +47,7 @@ define(['modules/PlayLogic', 'modules/BoardModule'], function (PlayLogic, Board)
     };
 
     Player.prototype.hasPlayableCards = function () {
-      return this.playLogic.hasPlayableCards(this);
+      return this.playRules.hasPlayableCards(this);
     };
 
     Player.prototype.announceGo = function(purpose){

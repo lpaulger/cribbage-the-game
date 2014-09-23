@@ -2,7 +2,7 @@ define(['modules/PlayerModule', 'modules/BoardModule'], function (Player, Board)
   var _board = Board.getInstance();
   function PlayerAi(name, possesive){
     Player.call(this, name, possesive);
-    logic = this.playLogic;
+    playRules = this.playRules;
   }
 
   PlayerAi.prototype = Object.create(Player.prototype);
@@ -20,7 +20,7 @@ define(['modules/PlayerModule', 'modules/BoardModule'], function (Player, Board)
     var player = this;
 
     var selectedCard = this.hand.filter(function(card, index){
-      return logic.isCardPlayable(player, card);
+      return playRules.isCardPlayable(player, card);
     })[0];
 
     if(selectedCard)
