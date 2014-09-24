@@ -2,7 +2,7 @@ define(['modules/PlayerModule'], function(Player) {
     'use strict';
 
     describe("PlayerModule", function() {
-      var _deck, card, _player, _cribOwner, _hands, _playLogic;
+      var _deck, card, _player, _cribOwner, _hands;
       beforeEach(function(){
         card = {
           faceValue: 10,
@@ -16,7 +16,8 @@ define(['modules/PlayerModule'], function(Player) {
           bottomHand: [card, card, card, card, card, card]
         });
         _player = new Player('test', 'tests');
-      })
+        spyOn(_player.scoreKeeper, "TwoForHisHeels");
+      });
 
       describe("Constructor", function(){
         it("set the name", function() {
@@ -96,6 +97,11 @@ define(['modules/PlayerModule'], function(Player) {
 
         it("should return the card for selected index", function(){
           expect(_player.selectOneFromDeck(_deck, 2)).toEqual(card);
+        });
+
+        it("should check if TwoForHisHeels", function(){
+          var card = _player.selectOneFromDeck(_deck, 2);
+          expect(_player.scoreKeeper.TwoForHisHeels).toHaveBeenCalledWith(card, _player);
         });
       });
     });

@@ -1,4 +1,4 @@
-define(['modules/PlayerModule', 'modules/BoardModule'], function (Player, Board) {
+define(['modules/PlayerModule', 'modules/BoardSingleton'], function (Player, Board) {
   var _board = Board.getInstance();
   function PlayerAi(name, possesive){
     Player.call(this, name, possesive);

@@ -1,4 +1,4 @@
-define(['modules/PlayRules'], function(PlayRules) {
+define(['modules/PlayRulesSingleton'], function(PlayRules) {
   'use strict';
   var _logic, _player, _card;
   describe("PlayRules", function () {

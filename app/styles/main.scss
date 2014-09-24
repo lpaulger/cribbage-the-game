@@ -103,6 +103,8 @@ body {
 }
 
 #count {
+  position: absolute;
+  bottom: 0;
   label {
     position: relative;
     left: .4em;

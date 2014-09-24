@@ -1,8 +1,8 @@
-define(['modules/BoardModule'], function(Board){
+define(['modules/BoardSingleton'], function(Board){
   'use strict';
   var _board, _card, _player, _player2;
 
-  describe("BoardModule", function () {
+  describe("BoardSingleton", function () {
     beforeEach(function () {
       _board = Board.getInstance();
       _board.resetBoard();

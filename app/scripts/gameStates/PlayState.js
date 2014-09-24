@@ -33,7 +33,7 @@ define(['gameStates/BaseState'],function(BaseState){
       gm.$messages = ['Their Turn'];
     } catch(e) {
       //card not played
-      //console.log(e);
+      console.log();
     }
     gm.transitionTo('Play', true);
   };
@@ -67,7 +67,7 @@ define(['gameStates/BaseState'],function(BaseState){
       p2.playCard();
       gm.currentPlayer = p1;
     } catch(e){
-      //console.log(e);
+      console.log(e);
     }
   }
 

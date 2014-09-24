@@ -15,8 +15,11 @@ require.config({
     'mustache': '../bower_components/mustache/mustache'
   },
   map: {
-    'modules/BoardModule': {
-      'modules/ScoreKeeperModule': '../../test/mocks/ScoreKeeperMock'
+    'modules/BoardSingleton': {
+      'modules/ScoreKeeperSingleton': '../../test/mocks/ScoreKeeperMock'
+    },
+    'modules/PlayerModule': {
+      'modules/ScoreKeeperSingleton': '../../test/mocks/ScoreKeeperMock'
     }
   },
   shim: {

@@ -1,5 +1,5 @@
 define(
-  ['modules/DeckModule', 'modules/PlayerModule', 'modules/PlayerAiModule', 'gameStates/StateRegistry', 'modules/BoardModule'],
+  ['modules/DeckModule', 'modules/PlayerModule', 'modules/PlayerAiModule', 'gameStates/StateRegistry', 'modules/BoardSingleton'],
   function(Deck, Player, PlayerAi, StateRegistry, Board){
 
   function Game(options){

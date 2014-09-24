@@ -1,6 +1,8 @@
-define(['modules/PlayRules', 'modules/BoardModule'], function (PlayRules, Board) {
+define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/ScoreKeeperSingleton'], function (PlayRules, Board, ScoreKeeper) {
     'use strict';
+
     var _board = Board.getInstance();
+
     function Player(name, possessive){
       this.name = name;
       this.possesive = possessive;
@@ -9,6 +11,7 @@ define(['modules/PlayRules', 'modules/BoardModule'], function (PlayRules, Board)
       this.crib = [];
       this.cardsForCrib = [];
       this.points = 0;
+      this.scoreKeeper = ScoreKeeper.getInstance();
       this.playRules = PlayRules.getInstance();
     }
 
@@ -29,7 +32,9 @@ define(['modules/PlayRules', 'modules/BoardModule'], function (PlayRules, Board)
     };
 
     Player.prototype.selectOneFromDeck = function(deck, cardIndex) {
-      return deck.selectOne(cardIndex);
+      var card = deck.selectOne(cardIndex);
+      this.scoreKeeper.TwoForHisHeels(card, this);
+      return card;
     };
 
     Player.prototype.playCard = function(index) {
