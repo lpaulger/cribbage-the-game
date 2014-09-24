@@ -8,6 +8,7 @@ define([], function(){
       is15: function(playCards){},
       is31: function(playCards){},
       hasAtLeastOnePair: function(playCards){},
+      pointForGo: function(player){},
       evaluatePlay: function(playCards, player){}
     };
   }

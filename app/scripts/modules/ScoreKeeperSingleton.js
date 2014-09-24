@@ -29,6 +29,9 @@ define([], function(){
           return playCards[playCards.length - 1].faceValue == playCards[playCards.length - 2].faceValue;
         return false;
       },
+      isLastCard: function(totalPlayedCards){
+        return totalPlayedCards.length == 8;
+      },
       iterateCardsForRun: function (playCards) {
         var count = 0;
         //iterate cards backwards
@@ -79,7 +82,10 @@ define([], function(){
           }
         }
       },
-      evaluatePlay: function(playCards, player){
+      pointForGo: function(player){
+        player.points += 1;
+      },
+      evaluatePlay: function(playCards, player, totalPlayedCards){
         if(this.is15(playCards))
           player.points += 2;
         if(this.is31(playCards))
@@ -88,6 +94,8 @@ define([], function(){
           this.scorePairs(playCards, player);
         if(this.hasARun(playCards))
           this.scoreRun(playCards, player);
+        if(this.isLastCard(totalPlayedCards))
+          player.points += 1;
       }
     };
   }

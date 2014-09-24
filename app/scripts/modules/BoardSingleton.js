@@ -6,22 +6,29 @@ define(['modules/ScoreKeeperSingleton'], function (ScoreKeeper) {
   function init() {
     return {
       currentBoardValue: 0,
+      totalPlayedCards: [],
       playedCards: [],
       playersWhoSaidGo: [],
       placeCard: function(card, player){
         this.playedCards.push(card);
+        this.totalPlayedCards.push(card);
         this.currentBoardValue += card.value;
-        scoreKeeper.evaluatePlay(this.playedCards, player);
+        scoreKeeper.evaluatePlay(this.playedCards, player, this.totalPlayedCards);
         if(this.currentBoardValue == 31) {
           this.resetBoard();
         }
       },
       announceGo: function(player){
-        if(this.playersWhoSaidGo.indexOf(player) == -1 &&
-          this.playersWhoSaidGo.length > 0){
+        if(otherPlayerAnnouncedGo.call(this)){
+          scoreKeeper.pointForGo(player);
           this.resetBoard();
         } else {
           this.playersWhoSaidGo.push(player)
+        }
+
+        function otherPlayerAnnouncedGo() {
+          return this.playersWhoSaidGo.indexOf(player) == -1 &&
+            this.playersWhoSaidGo.length > 0;
         }
       },
       resetBoard: function(){
