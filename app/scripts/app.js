@@ -120,7 +120,7 @@ define(['jquery', 'mustache', 'modules/GameModule'], function ($, mustache, Game
       var card = $(event.currentTarget).find('a');
       this.render(this.$game.$state.selectCard({index: index, card: card, event:event}));
     }
-  }
+  };
 
   function stateChanged(){
     return this.$activeState !== this.$game.$state

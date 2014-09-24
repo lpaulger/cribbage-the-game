@@ -25,7 +25,9 @@ define([], function(){
         return this.playCount(playCards) == 31;
       },
       hasAtLeastOnePair: function(playCards){
-        return playCards[playCards.length - 1].faceValue == playCards[playCards.length - 2].faceValue;
+        if(playCards.length > 1)
+          return playCards[playCards.length - 1].faceValue == playCards[playCards.length - 2].faceValue;
+        return false;
       },
       iterateCardsForRun: function (playCards) {
         var count = 0;
