@@ -34,46 +34,48 @@ define([], function(){
       isLastCard: function(totalPlayedCards){
         return totalPlayedCards.length == 8;
       },
-      iterateCardsForRun: function (playCards) {
-        var count = 0;
-        //iterate cards backwards
-        for (var i = playCards.length - 1; i > 0; i--) {
-          //check run backwards
-          if (isCardValueOneAboveNextCard(i) && isAssending(i)) {
-            count++;
-          } else if (isCardValueOneBelowNextCard(i) && isDessending(i)) {
-            count++;
-          } else {
-            break;
-          }
-        }
-        function isAssending(i){
-          if(count == 0)
-            return true;
-          return isCardValueOneAboveNextCard(i + 1);
-        }
+      iterateCardsForRun: function (playedCards) {
+        var runValue = 0;
+        var _sortedCards, _subSet;
+        //order cards and check of they are a straight. compare between 3 and length of cards played.
+        //can't have a run less than 3 cards
 
-        function isDessending(i){
-          if(count == 0)
-            return true;
+        for(var i = 3; i <= playedCards.length; i+=1){
+          _subSet = playedCards.slice(playedCards.length - i, playedCards.length);
+          _sortedCards = _subSet.sort(sortByFaceValue);
 
-          return isCardValueOneBelowNextCard(i + 1);
+          //check sequence is good, if so continue else break
+          var isSuccessfulRun = _sortedCards.every(function(ele, index, array){
+
+            if(index == array.length - 1)//isLastCard
+              return true;
+
+            return (ele.faceValue + 1) == array[index + 1].faceValue;
+          });
+
+          if(isSuccessfulRun)
+            setRunValue();
         }
 
-        function isCardValueOneAboveNextCard(i) {
-          return playCards[i].faceValue == playCards[i - 1].faceValue - 1;
+        function sortByFaceValue(a, b){
+          if(a.faceValue < b.faceValue)
+            return -1;
+          if(a.faceValue > b.faceValue)
+            return 1;
+          return 0;
         }
 
-        function isCardValueOneBelowNextCard(i) {
-          return playCards[i].faceValue == playCards[i - 1].faceValue + 1;
+        function setRunValue() {
+          runValue = _sortedCards.length;
         }
 
-        return count;
+        return runValue;
       },
       hasARun: function(playCards){
         var count = this.iterateCardsForRun(playCards);
+
         function atLeastTwoSequencesOfCardsForRun() {
-          return count > 1;
+          return count > 2;
         }
 
         return atLeastTwoSequencesOfCardsForRun();
@@ -81,9 +83,9 @@ define([], function(){
       scoreRun: function(playCards, player){
         var count = this.iterateCardsForRun(playCards);
 
-        if(count > 1){
-          console.log('hasARun for ' + player.name + (count+1) + ' points');
-          player.points += (count+1);
+        if(count > 2){
+          console.log('hasARun for ' + player.name + ' ' + count + ' points');
+          player.points += count;
         }
       },
       scorePairs: function(playCards, player){

@@ -137,7 +137,7 @@ define(['modules/ScoreKeeperSingleton', 'modules/CardModule'], function(ScoreKee
 
       describe("and there is no run", function(){
         it("should not award 3 points to the player", function(){
-          var playCards = [new Card(3, 'diamonds'), new Card(2, 'hearts'), new Card(4, 'clubs')];
+          var playCards = [new Card(3, 'diamonds'), new Card(2, 'hearts'), new Card(5, 'clubs')];
           expect(scoreKeeper.hasARun(playCards)).toEqual(false);
 
           expect(player.points).toEqual(0);
@@ -155,11 +155,62 @@ define(['modules/ScoreKeeperSingleton', 'modules/CardModule'], function(ScoreKee
             expect(player.points).toEqual(0);
           });
         });
+
+        describe('out of order run of 5: 3, 5, 6, 7, 4', function () {
+          it('should award 3 points for first three cards', function () {
+            var playCards = [new Card(3, 'diamonds'), new Card(5, 'hearts'), new Card(6, 'clubs')];
+            expect(scoreKeeper.hasARun(playCards)).toEqual(false);
+
+            expect(player.points).toEqual(0);
+            scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+            expect(player.points).toEqual(0);
+          });
+
+          it('should award no points for the 4th card', function () {
+            var playCards = [new Card(3, 'diamonds'), new Card(5, 'hearts'), new Card(6, 'clubs'), new Card(7, 'hearts')];
+            expect(scoreKeeper.hasARun(playCards)).toEqual(true);
+
+            expect(player.points).toEqual(0);
+            scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+            expect(player.points).toEqual(3);
+          });
+
+          it('should award 5 points for the 5th card', function () {
+            var playCards = [new Card(3, 'diamonds'), new Card(5, 'hearts'), new Card(6, 'clubs'), new Card(7, 'hearts'), new Card(4, 'clubs')];
+            expect(scoreKeeper.hasARun(playCards)).toEqual(true);
+
+            expect(player.points).toEqual(0);
+            scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+            expect(player.points).toEqual(5);
+          });
+        });
+      });
+
+      describe('check run when less than three cards', function () {
+        it('should award 0 points to the player', function () {
+          var playCards = [new Card(3, 'diamonds'), new Card(4, 'hearts')];
+          expect(scoreKeeper.hasARun(playCards)).toEqual(false);
+
+          expect(player.points).toEqual(0);
+          scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+          expect(player.points).toEqual(0);
+        });
       });
 
       describe("has a run of 3, 2, 1", function(){
         it("should award 3 points to the player", function(){
           var playCards = [new Card(3, 'diamonds'), new Card(2, 'hearts'), new Card(1, 'clubs')];
+          expect(scoreKeeper.hasARun(playCards)).toEqual(true);
+
+          expect(player.points).toEqual(0);
+          scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+          expect(player.points).toEqual(3);
+        });
+      });
+
+      describe("out of order run of 3: 4, 5, 3", function(){
+        it('should award 3 points to the player', function () {
+          var playCards = [new Card(4, 'diamonds'), new Card(5, 'hearts'), new Card(3, 'clubs')];
           expect(scoreKeeper.hasARun(playCards)).toEqual(true);
 
           expect(player.points).toEqual(0);
