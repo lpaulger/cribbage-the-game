@@ -6,14 +6,21 @@ define(['modules/ScoreKeeperSingleton'], function (ScoreKeeper) {
   function init() {
     return {
       currentBoardValue: 0,
-      totalPlayedCards: [],
+      totalPlayedCardsForRound: [],
       playedCards: [],
       playersWhoSaidGo: [],
-      placeCard: function(card, player){
+      isEndOfRound: function () {
+        return this.totalPlayedCardsForRound.length == 8;
+      }, placeCard: function(card, player){
         this.playedCards.push(card);
-        this.totalPlayedCards.push(card);
+        this.totalPlayedCardsForRound.push(card);
         this.currentBoardValue += card.value;
-        scoreKeeper.evaluatePlay(this.playedCards, player, this.totalPlayedCards);
+
+        scoreKeeper.evaluatePlay(this.playedCards, player, this.totalPlayedCardsForRound);
+        
+        if(this.isEndOfRound()){
+          this.totalPlayedCardsForRound = [];
+        }
         if(this.currentBoardValue == 31) {
           this.resetBoard();
         }

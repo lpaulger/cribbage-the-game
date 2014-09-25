@@ -6,6 +6,7 @@ define(['modules/BoardSingleton'], function(Board){
     beforeEach(function () {
       _board = Board.getInstance();
       _board.resetBoard();
+      _board.totalPlayedCardsForRound = [];
       _player = {points: 0};
     });
 
@@ -30,7 +31,7 @@ define(['modules/BoardSingleton'], function(Board){
         spyOn(_board, "resetBoard");
         _board.placeCard({value: 10}, _player);
         _board.placeCard({value: 10}, _player);
-        _board.placeCard({value: 10}, _player)
+        _board.placeCard({value: 10}, _player);
       });
 
       it("should reset the board", function () {
@@ -59,9 +60,9 @@ define(['modules/BoardSingleton'], function(Board){
         spyOn(_board, "resetBoard");
       });
       it("should record player stating Go", function () {
-        _board.announceGo(_player)
-        expect(_board.playersWhoSaidGo.length).toBe(1)
-        expect(_board.playersWhoSaidGo[0]).toBe(_player)
+        _board.announceGo(_player);
+        expect(_board.playersWhoSaidGo.length).toBe(1);
+        expect(_board.playersWhoSaidGo[0]).toBe(_player);
         expect(_board.resetBoard).not.toHaveBeenCalled();
       });
 
@@ -71,11 +72,26 @@ define(['modules/BoardSingleton'], function(Board){
           _player2 = {name: 'player2'};
         });
         it("should reset the game", function () {
-          _board.announceGo(_player)
-          _board.announceGo(_player2)
+          _board.announceGo(_player);
+          _board.announceGo(_player2);
           expect(_board.resetBoard).toHaveBeenCalled();
         });
       });
     });
+
+    describe("player plays last card for round", function(){
+      beforeEach(function () {
+        _board.totalPlayedCardsForRound = [
+          {value: 10},{value: 10},{value: 10},{value: 10},
+          {value: 10},{value: 10},{value: 10}
+        ];
+      });
+
+      it('should reset totalPlayedCardsForRound', function () {
+        expect(_board.totalPlayedCardsForRound.length).toEqual(7);
+        _board.placeCard({value: 10}, _player);
+        expect(_board.totalPlayedCardsForRound.length).toEqual(0);
+      });
+    });
   });
-})
+});
