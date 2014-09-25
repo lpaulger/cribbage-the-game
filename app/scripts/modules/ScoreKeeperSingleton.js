@@ -39,13 +39,25 @@ define([], function(){
         //iterate cards backwards
         for (var i = playCards.length - 1; i > 0; i--) {
           //check run backwards
-          if (isCardValueOneAboveNextCard(i)) {
+          if (isCardValueOneAboveNextCard(i) && isAssending(i)) {
             count++;
-          } else if (isCardValueOneBelowNextCard(i)) {
+          } else if (isCardValueOneBelowNextCard(i) && isDessending(i)) {
             count++;
           } else {
             break;
           }
+        }
+        function isAssending(i){
+          if(count == 0)
+            return true;
+          return isCardValueOneAboveNextCard(i + 1);
+        }
+
+        function isDessending(i){
+          if(count == 0)
+            return true;
+
+          return isCardValueOneBelowNextCard(i + 1);
         }
 
         function isCardValueOneAboveNextCard(i) {
@@ -60,7 +72,6 @@ define([], function(){
       },
       hasARun: function(playCards){
         var count = this.iterateCardsForRun(playCards);
-
         function atLeastTwoSequencesOfCardsForRun() {
           return count > 1;
         }

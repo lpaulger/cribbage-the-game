@@ -144,6 +144,17 @@ define(['modules/ScoreKeeperSingleton', 'modules/CardModule'], function(ScoreKee
           scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
           expect(player.points).toEqual(0);
         });
+
+        describe('even when cards are 5, 6, 5', function () {
+          it('should not award 3 points to the player', function () {
+            var playCards = [new Card(5, 'diamonds'), new Card(6, 'hearts'), new Card(5, 'clubs')];
+            expect(scoreKeeper.hasARun(playCards)).toEqual(false);
+
+            expect(player.points).toEqual(0);
+            scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+            expect(player.points).toEqual(0);
+          });
+        });
       });
 
       describe("has a run of 3, 2, 1", function(){
