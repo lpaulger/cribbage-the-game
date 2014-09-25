@@ -12,12 +12,12 @@ define(['modules/BoardSingleton'],function(Board){
       isCardPlayable: function(player, card){
         //console.log(player.name + ': ' + card.value)
         if(!this.hasPlayableCards(player)) {
-          console.log(player.name + ' has no playable cards');
+          //console.log(player.name + ' has no playable cards');
           return false;
         }
 
         if(exceeds31(_board.currentBoardValue, card)){
-          console.log(card.value + ' exceeds 31 at with current running value: ' + _board.currentBoardValue)
+          //console.log(card.value + ' exceeds 31 at with current running value: ' + _board.currentBoardValue)
           return false;
         }
 

@@ -17,7 +17,7 @@ define(
   }
 
   Game.prototype.transitionTo = function (stateName, shouldWait) {
-    console.log('active: ' + this.$state.name + ' - transitionTo: ' + stateName);
+    //console.log('active: ' + this.$state.name + ' - transitionTo: ' + stateName);
     if(this.$state.name === stateName){
       this.$forceRender = true;
     }
