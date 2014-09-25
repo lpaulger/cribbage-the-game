@@ -24,10 +24,6 @@ define(['gameStates/BaseState', 'modules/DeckModule'],function(BaseState, Deck){
     return gm.transitionTo('Crib');
   };
 
-  DealState.prototype.deck = function() {
-
-  };
-
   function sortByValue(a,b){
     return a.faceValue > b.faceValue;
   }

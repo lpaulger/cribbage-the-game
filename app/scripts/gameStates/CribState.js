@@ -9,14 +9,6 @@ define(['gameStates/BaseState'],function(BaseState){
   CribState.prototype = Object.create(BaseState.prototype);
   CribState.prototype.constructor = CribState;
 
-  CribState.prototype.init = function(){
-
-  };
-
-  CribState.prototype.deck = function() {
-
-  };
-
   CribState.prototype.selectCard = function(options) {
     var selectedCards = this.game.$player1.cardsForCrib;
     var _hand = this.game.$player1.hand;

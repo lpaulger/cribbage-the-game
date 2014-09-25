@@ -47,6 +47,7 @@ define(['gameStates/BaseState'], function(BaseState){
       }
       showHumanPlayerHand();
       gm.transitionTo('Deal', true);
+      gm.$showTopCard = false;
       this.step = 0;
     }
   };

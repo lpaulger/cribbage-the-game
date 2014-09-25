@@ -19,6 +19,7 @@ define(['gameStates/CountState'], function(CountState){
       $player1: _player1,
       $player2: _player2,
       $cribOwner: _player2,
+      $showTopCard: true,
       transitionTo: function(){}
     };
   }
@@ -149,6 +150,12 @@ define(['gameStates/CountState'], function(CountState){
           it('should set bots hand to not visible', function () {
             _countState.action();
             expect(_game.$player2HandVisible).toBe(false);
+          });
+
+          it('should turn over top card', function(){
+            expect(_game.$showTopCard).toBe(true);
+            _countState.action();
+            expect(_game.$showTopCard).toBe(false);
           });
         });
       });
