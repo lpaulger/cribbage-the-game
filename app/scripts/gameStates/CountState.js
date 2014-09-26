@@ -15,22 +15,22 @@ define(['gameStates/BaseState'], function(BaseState){
     p1.restoreHand();
     p2.restoreHand();
 
-    if(isHumanCribOwner()){
-      showBotPlayerHand();
+    if(isPlayerOneCribOwner()){
+      showPlayerTwoHand();
       gm.$messages = [p2.name + ' Score: '];
     } else {
-      showHumanPlayerHand();
+      showPlayerOneHand();
       gm.$messages = [p1.name + ' Score: '];
     }
   };
 
   CountState.prototype.action = function(){
     if(this.step == 0){
-      if(isHumanCribOwner()){
-        showHumanPlayerHand();
+      if(isPlayerOneCribOwner()){
+        showPlayerOneHand();
         p2.hand = [];
       } else {
-        showBotPlayerHand();
+        showPlayerTwoHand();
         p1.hand = [];
       }
       this.step += 1;
@@ -40,28 +40,28 @@ define(['gameStates/BaseState'], function(BaseState){
       gm.$actionText = 'Next Round';
       this.step += 1;
     } else {
-      if(isHumanCribOwner()){
+      if(isPlayerOneCribOwner()){
         gm.$cribOwner = p2;
       } else {
         gm.$cribOwner = p1;
       }
-      showHumanPlayerHand();
+      showPlayerOneHand();
       gm.transitionTo('Deal', true);
       gm.$showTopCard = false;
       this.step = 0;
     }
   };
 
-  function isHumanCribOwner() {
+  function isPlayerOneCribOwner() {
     return gm.$cribOwner == p1;
   }
 
-  function showHumanPlayerHand() {
+  function showPlayerOneHand() {
     gm.$player2HandVisible = false;
     gm.$player1HandVisible = true;
   }
 
-  function showBotPlayerHand() {
+  function showPlayerTwoHand() {
     gm.$player2HandVisible = true;
     gm.$player1HandVisible = false;
   }

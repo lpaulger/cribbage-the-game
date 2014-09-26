@@ -1,4 +1,4 @@
-define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/ScoreKeeperSingleton'], function (PlayRules, Board, ScoreKeeper) {
+define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlayScoreKeeperSingleton'], function (PlayRules, Board, ScoreKeeper) {
     'use strict';
 
     var _board = Board.getInstance();

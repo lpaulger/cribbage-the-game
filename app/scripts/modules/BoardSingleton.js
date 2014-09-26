@@ -1,4 +1,4 @@
-define(['modules/ScoreKeeperSingleton'], function (ScoreKeeper) {
+define(['modules/PlayScoreKeeperSingleton'], function (ScoreKeeper) {
   'use strict';
   var instance,
     scoreKeeper = ScoreKeeper.getInstance();
