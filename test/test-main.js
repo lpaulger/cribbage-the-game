@@ -16,10 +16,10 @@ require.config({
   },
   map: {
     'modules/BoardSingleton': {
-      'modules/ScoreKeeperSingleton': '../../test/mocks/ScoreKeeperMock'
+      'modules/PlayScoreKeeperSingleton': '../../test/mocks/PlayScoreKeeperMock'
     },
     'modules/PlayerModule': {
-      'modules/ScoreKeeperSingleton': '../../test/mocks/ScoreKeeperMock'
+      'modules/PlayScoreKeeperSingleton': '../../test/mocks/PlayScoreKeeperMock'
     }
   },
   shim: {

@@ -8,7 +8,7 @@ define([], function(){
       },
       TwoForHisHeels: function(card, player){
         if(this.isTwoForHisHeels(card)){
-          console.log('TwoForHisHeels for ' + player.name + ' 2 points');
+          //console.log('TwoForHisHeels for ' + player.name + ' 2 points');
           player.points += 2;
         }
       },
@@ -84,7 +84,7 @@ define([], function(){
         var count = this.iterateCardsForRun(playCards);
 
         if(count > 2){
-          console.log('hasARun for ' + player.name + ' ' + count + ' points');
+          //console.log('hasARun for ' + player.name + ' ' + count + ' points');
           player.points += count;
         }
       },
@@ -92,7 +92,7 @@ define([], function(){
         var topCard = playCards[playCards.length - 1];
         for(var i = playCards.length - 2; i >= 0; i--){
           if(topCard.faceValue == playCards[i].faceValue){
-            console.log('hasPairs for ' + player.name + ' 2 points');
+            //console.log('hasPairs for ' + player.name + ' 2 points');
             player.points += 2;
           } else {
             break;
@@ -104,12 +104,12 @@ define([], function(){
       },
       evaluatePlay: function(playCards, player, totalPlayedCards){
         if(this.is15(playCards)){
-          console.log('is15 for ' + player.name + ' 2 points');
+          //console.log('is15 for ' + player.name + ' 2 points');
           player.points += 2;
         }
 
         if(this.is31(playCards)){
-          console.log('is31 for ' + player.name + ' 2 points');
+          //console.log('is31 for ' + player.name + ' 2 points');
           player.points += 2;
         }
 
@@ -118,7 +118,7 @@ define([], function(){
         if(this.hasARun(playCards))
           this.scoreRun(playCards, player);
         if(this.isLastCard(totalPlayedCards)){
-          console.log('isLastCard for ' + player.name + ' 1 point');
+          //console.log('isLastCard for ' + player.name + ' 1 point');
           player.points += 1;
         }
       }
