@@ -1,4 +1,4 @@
-#Card-Game [![Build Status](https://travis-ci.org/lpaulger/card-game.svg?branch=refactor)](https://travis-ci.org/lpaulger/card-game) [![Coverage Status](https://coveralls.io/repos/lpaulger/card-game/badge.png)](https://coveralls.io/r/lpaulger/card-game)
+#Card-Game [![Build Status](https://travis-ci.org/lpaulger/card-game.svg?branch=refactor)](https://travis-ci.org/lpaulger/card-game) [![Coverage Status](https://coveralls.io/repos/lpaulger/card-game/badge.png?branch=refactor)](https://coveralls.io/r/lpaulger/card-game?branch=refactor)
 
 Auto Deployments to http://lucaspaulger.com/card-game/ after successful build.
 
