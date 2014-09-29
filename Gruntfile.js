@@ -1,4 +1,5 @@
 // Generated on 2014-04-25 using generator-mobile 1.0.0-alpha.1
+/* jshint ignore:start */
 'use strict';
 var LIVERELOAD_PORT = 35729;
 var lrSnippet = require('connect-livereload')({
@@ -23,28 +24,26 @@ module.exports = function(grunt) {
     // configurable paths
     var yeomanConfig = {
         app: 'app',
-        dist: 'dist'
+        dist: 'dist',
+        test: 'test'
     };
 
     grunt.initConfig({
         yeoman: yeomanConfig,
         // TODO: Make this conditional
         watch: {
-            compass: {
-                files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-                tasks: ['compass:server']
-            },
+          files: ['<%= yeoman.app %>/*.html',
+            '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.{scss,sass, css}',
+            '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
+            '<%= yeoman.test %>/spec/{,*/}*.js',
+            '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'],
+          tasks: ['jshint', 'compass:server'],
+          options: {
+            spawn: false,
             livereload: {
-                options: {
-                    livereload: LIVERELOAD_PORT
-                },
-                files: [
-                    '<%= yeoman.app %>/*.html',
-                    '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
-                    '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
-                    '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
-                ]
+              port: LIVERELOAD_PORT
             }
+          }
         },
 
         connect: {
@@ -132,7 +131,7 @@ module.exports = function(grunt) {
             },
             all: [
                 '<%= yeoman.app %>/scripts/{,*/}*.js',
-                '!<%= yeoman.app %>/scripts/vendor/*',
+                '!<%= yeoman.app %>/bower_components/*',
                 'test/spec/{,*/}*.js'
             ]
         },
@@ -361,6 +360,7 @@ module.exports = function(grunt) {
         'clean:server',
         'concurrent:test',
         'connect:test',
+        'jshint',
         'karma',
         'coveralls'
     ]);

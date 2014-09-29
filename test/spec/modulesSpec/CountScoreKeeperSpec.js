@@ -5,8 +5,8 @@ define(['modules/CountScoreKeeperSingleton', 'modules/CardModule'], function(Sco
     beforeEach(function(){
       scoreKeeper = ScoreKeeper.getInstance();
     });
-    describe("When 0 point hand", function(){
-      it("should award 0 points", function(){
+    describe('When 0 point hand', function(){
+      it('should award 0 points', function(){
         var player = {points: 0};
         var starter = new Card(10, 'diamonds');
         var hand = [new Card(2, 'diamonds'), new Card(4, 'hearts'), new Card(6, 'clubs'), new Card(8, 'hearts')];
@@ -16,9 +16,9 @@ define(['modules/CountScoreKeeperSingleton', 'modules/CardModule'], function(Sco
       });
     });
     
-    describe("getPairs", function(){
-      describe("When one pair", function(){
-        it("should award two points", function(){
+    describe('getPairs', function(){
+      describe('When one pair', function(){
+        it('should award two points', function(){
           var player = {points: 0};
           var starter = new Card(10, 'diamonds');
           var hand = [new Card(2, 'diamonds'), new Card(2, 'hearts'), new Card(6, 'clubs'), new Card(8, 'hearts')];
@@ -27,8 +27,8 @@ define(['modules/CountScoreKeeperSingleton', 'modules/CardModule'], function(Sco
           expect(player.points).toEqual(2);
         });
 
-        describe("and its from the starter", function(){
-          it("should award two points", function(){
+        describe('and its from the starter', function(){
+          it('should award two points', function(){
             var player = {points: 0};
             var starter = new Card(2, 'diamonds');
             var hand = [new Card(2, 'diamonds'), new Card(10, 'hearts'), new Card(6, 'clubs'), new Card(8, 'hearts')];

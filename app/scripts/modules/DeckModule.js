@@ -5,7 +5,7 @@ define(['modules/CardModule'], function (Card) {
   function Deck(options){
     this.deckType = (options && options.deckType) ? options.deckType : '52-card';
     this.cards = createDeck(this.deckType);
-  };
+  }
 
   Deck.prototype.shuffle = function(){
     for(var j, x, i = this.cards.length; i; j = Math.floor(Math.random() * i), x = this.cards[--i], this.cards[i] = this.cards[j], this.cards[j] = x);
@@ -16,7 +16,8 @@ define(['modules/CardModule'], function (Card) {
   };
 
   Deck.prototype.deal = function(){
-    this.topHand = [], this.bottomHand = [];
+    this.topHand = [];
+    this.bottomHand = [];
     this.shuffle();
 
     while(this.topHand.length < 6) {
@@ -27,7 +28,7 @@ define(['modules/CardModule'], function (Card) {
     return {
       topHand: this.topHand,
       bottomHand: this.bottomHand
-    }
+    };
   };
 
   Deck.prototype.selectOne = function(index) {
@@ -40,12 +41,11 @@ define(['modules/CardModule'], function (Card) {
     switch (deckType){
       case '52-card':
         return create52();
-        break;
       default:
 
       break;
     }
-  };
+  }
 
   function create52 () {
   	var cards = [];
@@ -56,15 +56,15 @@ define(['modules/CardModule'], function (Card) {
     cards = cards.concat(createSuit('spades'));
 
     return cards;
-  };
+  }
 
   function createSuit (type) {
     var suit = [];
     for (var i = 1; i < 14; i++) {
       suit.push(new Card(i, type));
-    };
+    }
     return suit;
-  };
+  }
 
   return Deck;
 });

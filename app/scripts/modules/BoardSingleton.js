@@ -10,7 +10,7 @@ define(['modules/PlayScoreKeeperSingleton'], function (ScoreKeeper) {
       playedCards: [],
       playersWhoSaidGo: [],
       isEndOfRound: function () {
-        return this.totalPlayedCardsForRound.length == 8;
+        return this.totalPlayedCardsForRound.length === 8;
       }, placeCard: function(card, player){
         this.playedCards.push(card);
         this.totalPlayedCardsForRound.push(card);
@@ -21,21 +21,22 @@ define(['modules/PlayScoreKeeperSingleton'], function (ScoreKeeper) {
         if(this.isEndOfRound()){
           this.totalPlayedCardsForRound = [];
         }
-        if(this.currentBoardValue == 31) {
+        if(this.currentBoardValue === 31) {
           this.resetBoard();
         }
       },
       announceGo: function(player){
+
+        function otherPlayerAnnouncedGo() {
+          return this.playersWhoSaidGo.indexOf(player) === -1 &&
+            this.playersWhoSaidGo.length > 0;
+        }
+
         if(otherPlayerAnnouncedGo.call(this)){
           scoreKeeper.pointForGo(player);
           this.resetBoard();
         } else {
-          this.playersWhoSaidGo.push(player)
-        }
-
-        function otherPlayerAnnouncedGo() {
-          return this.playersWhoSaidGo.indexOf(player) == -1 &&
-            this.playersWhoSaidGo.length > 0;
+          this.playersWhoSaidGo.push(player);
         }
       },
       resetBoard: function(){
@@ -43,7 +44,7 @@ define(['modules/PlayScoreKeeperSingleton'], function (ScoreKeeper) {
         this.playedCards = [];
         this.playersWhoSaidGo = [];
       }
-    }
+    };
   }
 
   return {

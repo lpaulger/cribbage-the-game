@@ -21,7 +21,7 @@ define([], function () {
         default:
           return value.toString();
       }
-    };
+    }
 
     function setValue(value){
       if(value > 10) return 10;
