@@ -24,7 +24,7 @@ module.exports = function(config) {
     exclude: ['app/scripts/main.js'],
 
     // coverage reporter generates the coverage
-    reporters: ['progress', 'coverage'],
+    reporters: ['dots', 'coverage'],
 
     preprocessors: {
       // source files, that you wanna generate coverage for
@@ -34,8 +34,8 @@ module.exports = function(config) {
     },
 
     coverageReporter: {
-      type: "lcov",
-      dir: "coverage/"
+      type: 'lcov',
+      dir: 'test/coverage'
     },
 
     // web server port
