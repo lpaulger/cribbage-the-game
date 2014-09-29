@@ -145,6 +145,15 @@ module.exports = function(grunt) {
                 logLevel: 'ERROR'
             }
         },
+        coveralls: {
+          options: {
+            debug: true,
+            coverage_dir: 'coverage',
+            dryRun: true,
+            force: true,
+            recursive: true
+          }
+        },
         compass: {
             options: {
                 sassDir: '<%= yeoman.app %>/styles',
@@ -352,7 +361,8 @@ module.exports = function(grunt) {
         'clean:server',
         'concurrent:test',
         'connect:test',
-        'karma'
+        'karma',
+        'coveralls'
     ]);
 
     grunt.registerTask('build', [

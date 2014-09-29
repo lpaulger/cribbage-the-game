@@ -33,6 +33,11 @@ module.exports = function(config) {
       'app/scripts/**/*.js': ['coverage']
     },
 
+    coverageReporter: {
+      type: "lcov",
+      dir: "coverage/"
+    },
+
     // web server port
     port: 9090,
 
