@@ -3,6 +3,43 @@ define([], function(){
 
   function init() {
     return {
+      get15s: function(hand, starter){
+
+        var cards = hand.concat(starter);
+        var arrayOfMatches = [];
+        var tempArray = [];
+        for(var i = 0; i <= cards.length; i++){
+          combinationUtil(cards, cards.length, i, 0, tempArray, 0, arrayOfMatches, 15);
+        }
+
+        return arrayOfMatches.length * 2;
+
+        function combinationUtil(inputArray, sizeOfInputArray, sizeOfCombination, index, tempArray, indexOfCurrentElementOfInputArray, matchesArr, matchCondition)
+        {
+          // Current combination is ready, check it
+          if (index == sizeOfCombination)
+          {
+            var total = 0;
+            for (var j=0; j<sizeOfCombination; j++)
+              total += tempArray[j].value;
+            if(total == matchCondition)
+              matchesArr.push(tempArray.slice(0, tempArray.length));
+            return;
+          }
+
+          // When no more elements are there to put in data[]
+          if (indexOfCurrentElementOfInputArray >= sizeOfInputArray)
+            return;
+
+          // current is included, put next at next location
+          tempArray[index] = inputArray[indexOfCurrentElementOfInputArray];
+          combinationUtil(inputArray, sizeOfInputArray, sizeOfCombination, index+1, tempArray, indexOfCurrentElementOfInputArray+1, matchesArr, matchCondition);
+
+          // current is excluded, replace it with next (Note that
+          // i+1 is passed, but index is not changed)
+          combinationUtil(inputArray, sizeOfInputArray, sizeOfCombination, index, tempArray, indexOfCurrentElementOfInputArray+1, matchesArr, matchCondition);
+        }
+      },
       getPairs: function(hand, starter){
         var pairs = [];
         var cards = hand.concat(starter);
@@ -14,7 +51,7 @@ define([], function(){
           }
         });
 
-        return pairs.length;
+        return pairs.length * 2;
       },
       getRuns: function(hand, starter){
         var _cards = hand.concat(starter);
@@ -39,28 +76,32 @@ define([], function(){
         else return 0;
       },
       getHandFlush: function(hand, starter){
-        var _tempHand = hand.slice(0,hand.length);
-        _tempHand.push(starter);
-        console.log(_tempHand);
-        if(_tempHand.every(isFlush))
+
+        var handAndStarter = hand.slice(0,hand.length);
+        handAndStarter.push(starter);
+        if(handAndStarter.every(isFlush))
           return 5;
-        if(_tempHand.every(isFlush))
+        if(hand.every(isFlush))
           return 4;
 
         return 0;
 
         function isFlush(card, index, array){
-          console.log(card);
-          console.log(array[0]);
-          console.log(card.suit == array[0].suit);
-
-          card.suit == array[0].suit;
+          return card.suit == array[0].suit;
         }
       },
+      getNobs: function(hand, starter){
+        var hasMatchingJack = hand.some(function(card){
+          return card.faceValue == 11 && card.suit == starter.suit;
+        });
+        return hasMatchingJack ? 1 : 0;
+      },
       evaluateHand: function(hand, starter, player){
-        player.points += this.getPairs(hand, starter) * 2;
+        player.points += this.get15s(hand,starter);
+        player.points += this.getPairs(hand, starter);
         player.points += this.getRuns(hand, starter);
         player.points += this.getHandFlush(hand, starter);
+        player.points += this.getNobs(hand, starter);
       }
     }
   }
