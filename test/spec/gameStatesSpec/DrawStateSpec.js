@@ -1,15 +1,15 @@
 define(['gameStates/DrawState'], function(DrawState){
   'use strict';
   var _draw,
-      _game = {
-        $player1: {hand:{faceValue: 1}},
-        $player2: {hand:{faceValue: 2}},
-        $deck:{
-          shuffle: function(){},
-          cut: function(){}
-        },
-        transitionTo: function(){}
-      };
+  _game = {
+    $player1: {hand:{faceValue: 1}},
+    $player2: {hand:{faceValue: 2}},
+    $deck:{
+      shuffle: function(){},
+      cut: function(){}
+    },
+    transitionTo: function(){}
+  };
   describe('Draw', function () {
     it('should create Draw State', function () {
       _draw = new DrawState(_game);

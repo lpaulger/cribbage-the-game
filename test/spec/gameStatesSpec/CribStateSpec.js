@@ -33,7 +33,7 @@ define(['gameStates/CribState'], function(CribState) {
           $cribOwner: {possessive:'his'},
           transitionTo: function(){}
         };
-  };
+      };
   describe('CribState', function () {
     beforeEach(function(){
       gameSetup();
