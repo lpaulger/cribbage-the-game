@@ -1,7 +1,6 @@
-define(['app'], function(app) {
+define(['app'], function() {
   'use strict';
-
-  describe("App", function() {
+  describe('App', function() {
 
   });
 });

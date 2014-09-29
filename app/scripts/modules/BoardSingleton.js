@@ -11,7 +11,8 @@ define(['modules/PlayScoreKeeperSingleton'], function (ScoreKeeper) {
       playersWhoSaidGo: [],
       isEndOfRound: function () {
         return this.totalPlayedCardsForRound.length === 8;
-      }, placeCard: function(card, player){
+      },
+      placeCard: function(card, player){
         this.playedCards.push(card);
         this.totalPlayedCardsForRound.push(card);
         this.currentBoardValue += card.value;

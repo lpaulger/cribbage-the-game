@@ -39,8 +39,8 @@ define(['gameStates/PlayState'], function (PlayState) {
 
     describe('When player selects a valid card', function () {
       beforeEach(function () {
-        spyOn(_game, "transitionTo");
-        spyOn(_player, "playCard");
+        spyOn(_game, 'transitionTo');
+        spyOn(_player, 'playCard');
 
         _playState = new PlayState(_game);
         _playState.selectCard({index: 1});
@@ -57,8 +57,8 @@ define(['gameStates/PlayState'], function (PlayState) {
 
     describe('when player selects invalid card', function () {
       beforeEach(function () {
-        spyOn(_game, "transitionTo");
-        spyOn(_player, "playCard").and.throwError('No Playable Cards');
+        spyOn(_game, 'transitionTo');
+        spyOn(_player, 'playCard').and.throwError('No Playable Cards');
 
         _playState = new PlayState(_game);
         _playState.selectCard({index: 1});
@@ -75,7 +75,7 @@ define(['gameStates/PlayState'], function (PlayState) {
 
     describe('is end of round', function () {
       beforeEach(function () {
-        spyOn(_game, "transitionTo");
+        spyOn(_game, 'transitionTo');
 
         _playState = new PlayState(_game);
         _playState.init();

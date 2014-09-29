@@ -1,7 +1,7 @@
-define(['gameStates/CribState'], function(CribState) {
+define(['gameStates/CribState'], function() {
   'use strict';
 
-  describe("CribState", function () {
+  describe('CribState', function () {
 
   });
 });

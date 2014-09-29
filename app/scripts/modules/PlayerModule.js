@@ -1,8 +1,5 @@
 define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlayScoreKeeperSingleton'], function (PlayRules, Board, ScoreKeeper) {
     'use strict';
-
-    var _board = Board.getInstance();
-
     function Player(name, possessive){
       this.name = name;
       this.possesive = possessive;
@@ -13,13 +10,10 @@ define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlaySco
       this.points = 0;
       this.scoreKeeper = ScoreKeeper.getInstance();
       this.playRules = PlayRules.getInstance();
+      this.board = Board.getInstance();
     }
 
     Player.prototype.placeCardsInCrib = function(cribOwner) {
-      if (this.cardsForCrib.length === 2) {
-        this.cardsForCrib.forEach(removeFromHand.bind(this));
-        this.cardsForCrib = [];
-      }
 
       function removeFromHand(card){
         unselectCurrentCard.call(this, card);
@@ -28,6 +22,11 @@ define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlaySco
 
       function unselectCurrentCard(card) {
         this.hand[this.hand.indexOf(card)].selected = '';
+      }
+
+      if (this.cardsForCrib.length === 2) {
+        this.cardsForCrib.forEach(removeFromHand.bind(this));
+        this.cardsForCrib = [];
       }
     };
 
@@ -41,14 +40,12 @@ define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlaySco
       var _tempHand = this.hand.slice();
       var card = _tempHand.splice(index, 1)[0];//selectCardFromHand
       if(this.playRules.isCardPlayable(this, card)){
-        _board.placeCard(card, this);
-        this.hand.splice(index, 1)[0];
+        this.board.placeCard(card, this);
+        this.hand.splice(index, 1);
       } else if(!this.hasPlayableCards()){
-        gm.$messages = ['No Playable Cards, Press \'Go!\''];
-        throw new Error('No Playable Cards')
+        throw new Error('No Playable Cards');
       } else {
-        gm.$messages = ['Try another card'];
-        throw new Error('Invalid Playable Card')
+        throw new Error('Invalid Playable Card');
       }
     };
 
@@ -57,13 +54,12 @@ define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlaySco
     };
 
     Player.prototype.announceGo = function(purpose){
-      if(purpose == 'Count')
-        _board.resetBoard();
+      if(purpose === 'Count')
+        this.board.resetBoard();
       else if(!this.hasPlayableCards()){
-        _board.announceGo(this);
-        gm.$messages = [this.name + ' announces GO!'];
+        this.board.announceGo(this);
+        return this.name + ' said GO';
       } else {
-        gm.$messages = [this.name + ' can\'t go, you have playable cards.'];
         throw new Error('Playable Cards');
       }
     };
@@ -73,4 +69,4 @@ define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlaySco
     };
 
     return Player;
-});
+  });

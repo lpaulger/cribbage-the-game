@@ -34,8 +34,8 @@ define(['gameStates/CountState'], function(CountState){
 
     describe('init', function () {
       beforeEach(function () {
-        spyOn(_player1, "restoreHand");
-        spyOn(_player2, "restoreHand");
+        spyOn(_player1, 'restoreHand');
+        spyOn(_player2, 'restoreHand');
         _countState = new CountState(_game);
         _countState.init();
       });
@@ -125,7 +125,7 @@ define(['gameStates/CountState'], function(CountState){
         describe('and its third count', function () {
           beforeEach(function () {
             _game.$cribOwner = _game.$player1;
-            spyOn(_game, "transitionTo");
+            spyOn(_game, 'transitionTo');
             _countState = new CountState(_game);
             _countState.init();
             _countState.action();
@@ -225,7 +225,7 @@ define(['gameStates/CountState'], function(CountState){
         describe('and its third count', function () {
           beforeEach(function () {
             _game.$cribOwner = _game.$player2;
-            spyOn(_game, "transitionTo");
+            spyOn(_game, 'transitionTo');
             _countState = new CountState(_game);
             _countState.init();
             _countState.action();

@@ -1,7 +1,7 @@
 define(['gameStates/DrawState', 'gameStates/DealState', 'gameStates/CribState',
         'gameStates/PrePlayState', 'gameStates/PlayState', 'gameStates/CountState'],
   function (DrawState, DealState, CribState, PrePlayState, PlayState, CountState) {
-
+    'use strict';
     function StateManager(game){
       return [new DrawState(game),
          new DealState(game),
@@ -9,7 +9,7 @@ define(['gameStates/DrawState', 'gameStates/DealState', 'gameStates/CribState',
          new PrePlayState(game),
          new PlayState(game),
          new CountState(game)];
-    };
+    }
 
     return StateManager;
-});
+  });

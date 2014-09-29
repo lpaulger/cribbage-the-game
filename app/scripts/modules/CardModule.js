@@ -29,4 +29,4 @@ define([], function () {
     }
 
     return Card;
-});
+  });

@@ -1,4 +1,5 @@
 define(['modules/BoardSingleton'],function(Board){
+  'use strict';
    // Instance stores a reference to the Singleton
   var instance;
   var _board = Board.getInstance();

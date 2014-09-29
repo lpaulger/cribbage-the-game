@@ -1,8 +1,7 @@
-define(['modules/PlayerModule', 'modules/BoardSingleton'], function (Player, Board) {
-  var _board = Board.getInstance();
+define(['modules/PlayerModule'], function (Player) {
+  'use strict';
   function PlayerAi(name, possesive){
     Player.call(this, name, possesive);
-    playRules = this.playRules;
   }
 
   PlayerAi.prototype = Object.create(Player.prototype);
@@ -19,15 +18,14 @@ define(['modules/PlayerModule', 'modules/BoardSingleton'], function (Player, Boa
   PlayerAi.prototype.playCard = function() {
     var player = this;
 
-    var selectedCard = this.hand.filter(function(card, index){
-      return playRules.isCardPlayable(player, card);
-    })[0];
+    var selectedCard = this.hand.filter(function(card){
+      return this.playRules.isCardPlayable(player, card);
+    }.bind(this))[0];
 
     if(selectedCard)
     {
-      this.hand.splice(this.hand.indexOf(selectedCard), 1)[0];
-      _board.placeCard(selectedCard, player);
-      gm.$messages = ['Your Turn.'];
+      this.hand.splice(this.hand.indexOf(selectedCard), 1);
+      this.board.placeCard(selectedCard, player);
     } else {
       this.announceGo();
     }

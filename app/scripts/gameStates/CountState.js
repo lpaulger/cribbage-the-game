@@ -1,9 +1,7 @@
 define(['gameStates/BaseState'], function(BaseState){
+  'use strict';
   function CountState(game){
     BaseState.call(this, game, 'Count');
-    gm = this.game;
-    p1 = this.game.$player1;
-    p2 = this.game.$player2;
     this.step = 0;
   }
 
@@ -12,58 +10,58 @@ define(['gameStates/BaseState'], function(BaseState){
   CountState.prototype.constructor = CountState;
 
   CountState.prototype.init = function(){
-    p1.restoreHand();
-    p2.restoreHand();
+    this.p1.restoreHand();
+    this.p2.restoreHand();
 
-    if(isPlayerOneCribOwner()){
-      showPlayerTwoHand();
-      gm.$messages = [p2.name + ' Score: '];
+    if(isPlayerOneCribOwner.call(this)){
+      showPlayerTwoHand.call(this);
+      this.game.$messages = [this.p2.name + ' Score: '];
     } else {
-      showPlayerOneHand();
-      gm.$messages = [p1.name + ' Score: '];
+      showPlayerOneHand.call(this);
+      this.game.$messages = [this.p1.name + ' Score: '];
     }
   };
 
   CountState.prototype.action = function(){
-    if(this.step == 0){
-      if(isPlayerOneCribOwner()){
-        showPlayerOneHand();
-        p2.hand = [];
+    if(this.step === 0){
+      if(isPlayerOneCribOwner.call(this)){
+        showPlayerOneHand.call(this);
+        this.p2.hand = [];
       } else {
-        showPlayerTwoHand();
-        p1.hand = [];
+        showPlayerTwoHand.call(this);
+        this.p1.hand = [];
       }
       this.step += 1;
-    } else if(this.step == 1) {
-      gm.$cribOwner.hand = gm.$cribOwner.crib;
-      gm.$cribOwner.crib = [];
-      gm.$actionText = 'Next Round';
+    } else if(this.step === 1) {
+      this.game.$cribOwner.hand = this.game.$cribOwner.crib;
+      this.game.$cribOwner.crib = [];
+      this.game.$actionText = 'Next Round';
       this.step += 1;
     } else {
-      if(isPlayerOneCribOwner()){
-        gm.$cribOwner = p2;
+      if(isPlayerOneCribOwner.call(this)){
+        this.game.$cribOwner = this.p2;
       } else {
-        gm.$cribOwner = p1;
+        this.game.$cribOwner = this.p1;
       }
-      showPlayerOneHand();
-      gm.transitionTo('Deal', true);
-      gm.$showTopCard = false;
+      showPlayerOneHand.call(this);
+      this.game.transitionTo('Deal', true);
+      this.game.$showTopCard = false;
       this.step = 0;
     }
   };
 
   function isPlayerOneCribOwner() {
-    return gm.$cribOwner == p1;
+    return this.game.$cribOwner === this.p1;
   }
 
   function showPlayerOneHand() {
-    gm.$player2HandVisible = false;
-    gm.$player1HandVisible = true;
+    this.game.$player2HandVisible = false;
+    this.game.$player1HandVisible = true;
   }
 
   function showPlayerTwoHand() {
-    gm.$player2HandVisible = true;
-    gm.$player1HandVisible = false;
+    this.game.$player2HandVisible = true;
+    this.game.$player1HandVisible = false;
   }
 
   return CountState;

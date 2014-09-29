@@ -1,9 +1,7 @@
 define(['gameStates/BaseState'],function(BaseState){
+  'use strict';
   function PlayState(game){
     BaseState.call(this, game, 'Play');
-    gm = this.game;
-    p1 = this.game.$player1;
-    p2 = this.game.$player2;
     this.nextState = 'Play';
   }
 
@@ -11,80 +9,86 @@ define(['gameStates/BaseState'],function(BaseState){
   PlayState.prototype.constructor = PlayState;
 
   PlayState.prototype.init = function(){
-    gm.$showTopCard = true;
-    gm.$actionText = 'Go';
-    setCurrentPlayer();
-    if(gm.currentPlayer == p2)
+    this.game.$showTopCard = true;
+    this.game.$actionText = 'Go';
+    setCurrentPlayer.call(this);
+    if(this.game.currentPlayer === this.p2)
       processAiTurn.call(this);
     else
-      gm.$messages = ['Select a card to play'];
+      this.game.$messages = ['Select a card to play'];
 
     setAction.call(this);
   };
 
-  PlayState.prototype.deck = function(cardIndex) {
-
-  };
-
   PlayState.prototype.selectCard = function(options) {
     try {
-      p1.playCard(options.index);
-      gm.currentPlayer = p2;
-      gm.$messages = ['Their Turn'];
+      this.p1.playCard(options.index);
+      this.game.currentPlayer = this.p2;
+      this.game.$messages = ['Their Turn'];
     } catch(e) {
-      //card not played
-      console.log();
+      if(e.message === 'No Playable Cards')
+        this.game.$messages = ['No Playable Cards, Press \'Go!\''];
+      else if(e.message === 'Invalid Playable Card')
+        this.game.$messages = ['Try another card'];
     }
-    gm.transitionTo('Play', true);
+    this.game.transitionTo('Play', true);
   };
 
   PlayState.prototype.action = function() {
     try {
-      p1.announceGo(this.nextState);
-      gm.currentPlayer = p2;
-      gm.$messages = ['Their Turn'];
+      var response = this.p1.announceGo(this.nextState);
+      this.game.currentPlayer = this.p2;
+      this.game.$messages = [response, 'Their Turn'];
     } catch(e){
-      //console.log(e);
+      if(e.message === 'No Playable Cards')
+        this.game.$messages = ['No Playable Cards, Press \'Go!\''];
+      else if(e.message === 'Playable Cards')
+        this.game.$messages = [this.name + ' can\'t go, you have playable cards.'];
     }
 
-    gm.transitionTo(this.nextState, true);
+    this.game.transitionTo(this.nextState, true);
 
-    if(isEndOfRound())
+    if(isEndOfRound.call(this))
       this.nextState = 'Play';
 
   };
 
   function setCurrentPlayer(){
-    if(!gm.currentPlayer){
-      (gm.$cribOwner == p1) ?
-        gm.currentPlayer = p2 :
-        gm.currentPlayer = p1
+    if(!this.game.currentPlayer){
+      if(this.game.$cribOwner === this.p1){
+        this.game.currentPlayer = this.p2;
+      } else {
+        this.game.currentPlayer = this.p1;
+      }
     }
   }
 
   function processAiTurn(){
     try{
-      p2.playCard();
-      gm.currentPlayer = p1;
+      var response = this.p2.playCard();
+      this.game.currentPlayer = this.p1;
+      if(response)
+        this.game.$messages = [response];
+      this.game.$messages = ['Your Turn.'];
     } catch(e){
       console.log(e);
     }
   }
 
   function setAction(){
-    if(isEndOfRound()){
-      gm.$messages = ['Round Over!'];
-      gm.$actionText = 'Ok';
+    if(isEndOfRound.call(this)){
+      this.game.$messages = ['Round Over!'];
+      this.game.$actionText = 'Ok';
       this.nextState = 'Count';
     }
-    else if(!p1.hasPlayableCards())
+    else if(!this.p1.hasPlayableCards())
     {
-      gm.$actionText = 'Go!';
+      this.game.$actionText = 'Go!';
     }
   }
 
   function isEndOfRound(){
-    return p1.hand.length == 0 && p2.hand.length == 0;
+    return this.p1.hand.length === 0 && this.p2.hand.length === 0;
   }
 
   return PlayState;

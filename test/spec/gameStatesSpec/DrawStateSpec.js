@@ -2,7 +2,6 @@ define(['gameStates/DrawState'], function(DrawState){
   'use strict';
   var _draw, _game = {$player1: {},$player2: {}};
   describe('Draw', function () {
-    'use strict';
     it('should create Draw State', function () {
       _draw = new DrawState(_game);
       expect(typeof _draw).toBe('object');
@@ -13,5 +12,5 @@ define(['gameStates/DrawState'], function(DrawState){
         
       });
     });
-  }); 
+  });
 });

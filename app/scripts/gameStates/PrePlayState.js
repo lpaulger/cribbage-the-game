@@ -1,35 +1,27 @@
 define(['gameStates/BaseState'],function(BaseState){
+  'use strict';
   function PrePlayState(game){
     BaseState.call(this, game, 'PrePlay');
-    gm = this.game;
   }
 
   PrePlayState.prototype = Object.create(BaseState.prototype);
   PrePlayState.prototype.constructor = PrePlayState;
 
   PrePlayState.prototype.init = function(){
-    if(gm.$cribOwner !== gm.$player1)
+    if(this.game.$cribOwner !== this.game.$player1)
       this.game.$messages = ['Reveal Top Card'];
     else {
       this.game.$messages = ['They will reveal top card'];
-      var index = Math.floor(Math.random() * gm.$deck.cards.length);
-      gm.topCard = gm.$cribOwner.selectOneFromDeck(gm.$deck, index);
-      gm.transitionTo('Play', true);
+      var index = Math.floor(Math.random() * this.game.$deck.cards.length);
+      this.game.topCard = this.game.$cribOwner.selectOneFromDeck(this.game.$deck, index);
+      this.game.transitionTo('Play', true);
     }
 
   };
 
   PrePlayState.prototype.deck = function(cardIndex) {
-    gm.topCard = gm.$cribOwner.selectOneFromDeck(gm.$deck, cardIndex);
-    gm.transitionTo('Play', false);
-  };
-
-  PrePlayState.prototype.selectCard = function(options) {
-
-  };
-
-  PrePlayState.prototype.action = function() {
-
+    this.game.topCard = this.game.$cribOwner.selectOneFromDeck(this.game.$deck, cardIndex);
+    this.game.transitionTo('Play', false);
   };
 
   return PrePlayState;

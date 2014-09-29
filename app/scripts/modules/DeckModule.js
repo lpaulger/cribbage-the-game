@@ -42,14 +42,12 @@ define(['modules/CardModule'], function (Card) {
       case '52-card':
         return create52();
       default:
-
-      break;
+        break;
     }
   }
 
   function create52 () {
-  	var cards = [];
-
+    var cards = [];
     cards = cards.concat(createSuit('hearts'));
     cards = cards.concat(createSuit('clubs'));
     cards = cards.concat(createSuit('diams'));

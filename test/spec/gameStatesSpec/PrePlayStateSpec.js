@@ -3,7 +3,7 @@
 define(['gameStates/PrePlayState'], function(PrePlayState) {
     'use strict';
 
-    describe("PrePlayState", function () {
+    describe('PrePlayState', function () {
       var _prePlayState, _game, _player, _cribOwner, _setup;
       beforeEach(function () {
         _setup = function(){
@@ -14,40 +14,40 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
             $deck: {
               cards: []
             },
-            transitionTo: function(state, animate){}
+            transitionTo: function(){}
           };
 
-          spyOn(_game, "transitionTo");
+          spyOn(_game, 'transitionTo');
           _prePlayState = new PrePlayState(_game);
-        }
+        };
       });
 
       afterEach(function(){
-         _game = {};
+        _game = {};
       });
 
-      describe("init", function () {
-        describe("if Player is CribOwner", function () {
+      describe('init', function () {
+        describe('if Player is CribOwner', function () {
           beforeEach(function () {
             _player = _cribOwner = {hand:[], selectOneFromDeck: function(){}};
             _setup();
           });
 
-          it("should set message to 'They will reveal top card'", function () {
+          it('should set message to "They will reveal top card"', function () {
             expect(_game.$messages).toEqual(['default']);
             _prePlayState.init();
             expect(_game.$messages).toEqual(['They will reveal top card']);
           });
         });
 
-        describe("if Player is not CribOwner", function () {
+        describe('if Player is not CribOwner', function () {
           beforeEach(function () {
             _cribOwner = {name: 'Robo', selectOneFromDeck: function(){}};
             _player = {name: 'User'};
             _setup();
           });
 
-          it("should set message to 'Reveal Top Card'", function () {
+          it('should set message to "Reveal Top Card"', function () {
             expect(_game.$messages).toEqual(['default']);
             _prePlayState.init();
             expect(_game.$messages).toEqual(['Reveal Top Card']);
@@ -55,15 +55,15 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
         });
       });
 
-      describe("deck", function () {
+      describe('deck', function () {
         beforeEach(function () {
           _setup();
           _prePlayState.deck();
         });
         
-        it("should transitionTo 'Play' state", function () {
+        it('should transitionTo "Play" state', function () {
           expect(_game.transitionTo).toHaveBeenCalledWith('Play', false);
         });
       });
     });
-});
+  });

@@ -152,4 +152,4 @@ define(['jquery', 'mustache', 'modules/GameModule'],
         this.render(this.$game.$state.selectCard({index: index, card: card, event: event}));
       }
     };
-});
+  });

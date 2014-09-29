@@ -1,7 +1,7 @@
-define(['gameStates/DealState'], function(DealState) {
+define(['gameStates/DealState'], function() {
   'use strict';
 
-  describe("DealState", function () {
+  describe('DealState', function () {
 
   });
 });

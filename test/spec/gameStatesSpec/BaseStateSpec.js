@@ -1,5 +1,5 @@
-define(['gameStates/BaseState'], function (BaseState) {
-  var _baseState = new BaseState();
+define(['gameStates/BaseState'], function () {
+  'use strict';
   describe('BaseState', function () {
 
   });

@@ -1,7 +1,7 @@
 define(['modules/PlayerModule'], function(Player) {
     'use strict';
 
-    describe("PlayerModule", function() {
+    describe('PlayerModule', function() {
       var _deck, card, _player, _cribOwner, _hands;
       beforeEach(function(){
         card = {
@@ -16,29 +16,29 @@ define(['modules/PlayerModule'], function(Player) {
           bottomHand: [card, card, card, card, card, card]
         });
         _player = new Player('test', 'tests');
-        spyOn(_player.scoreKeeper, "TwoForHisHeels");
+        spyOn(_player.scoreKeeper, 'TwoForHisHeels');
       });
 
-      describe("Constructor", function(){
-        it("set the name", function() {
+      describe('Constructor', function(){
+        it('set the name', function() {
           expect(_player.name).toBe('test');
         });
 
-        it("set the possesive", function() {
+        it('set the possesive', function() {
           expect(_player.possesive).toBe('tests');
         });
       });
 
-      describe("placeCardsInCrib", function(){
-        _player, _cribOwner, _hands;
+      describe('placeCardsInCrib', function(){
         beforeEach(function(){
           _cribOwner = new Player('cOwner', 'cOwner\'s');
           _hands = _deck.deal();
+
           _player.hand = _hands.bottomHand;
         });
 
-        describe("if 0 cards selected", function(){
-          it("should not put cards in crib owners crib", function() {
+        describe('if 0 cards selected', function(){
+          it('should not put cards in crib owners crib', function() {
             expect(_player.cardsForCrib.length).toBe(0);
             expect(_cribOwner.crib.length).toBe(0);
 
@@ -49,13 +49,13 @@ define(['modules/PlayerModule'], function(Player) {
           });
         });
 
-        describe("if 1 card selected", function(){
+        describe('if 1 card selected', function(){
 
           beforeEach(function(){
             _player.cardsForCrib.push(_player.hand[0]);
           });
 
-          it("should not put cards in crib owners crib", function() {
+          it('should not put cards in crib owners crib', function() {
 
             _player.placeCardsInCrib(_cribOwner);
 
@@ -64,14 +64,14 @@ define(['modules/PlayerModule'], function(Player) {
           });
         });
 
-        describe("if 2 cards selected", function(){
+        describe('if 2 cards selected', function(){
 
           beforeEach(function(){
             _player.cardsForCrib.push(_player.hand[0]);
             _player.cardsForCrib.push(_player.hand[1]);
           });
 
-          it("should put cards in crib owners crib", function() {
+          it('should put cards in crib owners crib', function() {
             expect(_player.cardsForCrib.length).toBe(2);
             expect(_cribOwner.crib.length).toBe(0);
 
@@ -90,19 +90,19 @@ define(['modules/PlayerModule'], function(Player) {
         });
       });
 
-      describe("selectOneFromDeck", function(){
+      describe('selectOneFromDeck', function(){
         beforeEach(function(){
           _deck.selectOne.and.returnValue(card);
         });
 
-        it("should return the card for selected index", function(){
+        it('should return the card for selected index', function(){
           expect(_player.selectOneFromDeck(_deck, 2)).toEqual(card);
         });
 
-        it("should check if TwoForHisHeels", function(){
+        it('should check if TwoForHisHeels', function(){
           var card = _player.selectOneFromDeck(_deck, 2);
           expect(_player.scoreKeeper.TwoForHisHeels).toHaveBeenCalledWith(card, _player);
         });
       });
     });
-});
+  });

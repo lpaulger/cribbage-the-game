@@ -3,7 +3,7 @@
 define(['modules/PlayerAiModule'], function(PlayerAi) {
   'use strict';
   var _playerAi, _deck, card, _hands, _cribOwner;
-  describe("PlayerAiModule", function() {
+  describe('PlayerAiModule', function() {
     beforeEach(function(){
       _playerAi = new PlayerAi('name', 'name\'s');
       card = {
@@ -19,14 +19,14 @@ define(['modules/PlayerAiModule'], function(PlayerAi) {
       });
     });
 
-    describe("placeCardsInCrib", function(){
+    describe('placeCardsInCrib', function(){
       beforeEach(function(){
         _cribOwner = new PlayerAi('cOwner', 'cOwner\'s');
         _hands = _deck.deal();
         _playerAi.hand = _hands.bottomHand;
       });
 
-      it("should select two random cards for the cribOwner", function(){
+      it('should select two random cards for the cribOwner', function(){
         expect(_cribOwner.crib.length).toEqual(0);
         _playerAi.placeCardsInCrib(_cribOwner);
         expect(_cribOwner.crib.length).toEqual(2);
