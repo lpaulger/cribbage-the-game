@@ -2,7 +2,7 @@ define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlaySco
     'use strict';
     function Player(name, possessive){
       this.name = name;
-      this.possesive = possessive;
+      this.possessive = possessive;
       this.hand = [];
       this.handInMemory = [];
       this.crib = [];

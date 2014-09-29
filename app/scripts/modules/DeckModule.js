@@ -37,13 +37,8 @@ define(['modules/CardModule'], function (Card) {
     return selected;
   };
 
-  function createDeck(deckType){
-    switch (deckType){
-      case '52-card':
-        return create52();
-      default:
-        break;
-    }
+  function createDeck(){
+    return create52();
   }
 
   function create52 () {

@@ -35,5 +35,28 @@ define(['modules/DeckModule'], function(Deck) {
         expect(_deck.selectOne(3)).toEqual(_deck.cards[51]);
       });
     });
+
+    describe('deal', function(){
+      beforeEach(function(){
+        _deck = new Deck();
+      });
+
+      it('should return two hands', function(){
+        var response = _deck.deal();
+        expect(response.topHand.length).toEqual(6);
+        expect(response.bottomHand.length).toEqual(6);
+      });
+    });
+
+    describe('cut', function(){
+      beforeEach(function(){
+        _deck = new Deck();
+      });
+
+      it('should return the top card', function(){
+        var topCard = _deck.cards[_deck.cards.length-1];
+        expect(_deck.cut()).toEqual(topCard);
+      });
+    });
   });
 });

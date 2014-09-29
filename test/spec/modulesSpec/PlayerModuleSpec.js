@@ -24,8 +24,8 @@ define(['modules/PlayerModule'], function(Player) {
           expect(_player.name).toBe('test');
         });
 
-        it('set the possesive', function() {
-          expect(_player.possesive).toBe('tests');
+        it('set the possessive', function() {
+          expect(_player.possessive).toBe('tests');
         });
       });
 

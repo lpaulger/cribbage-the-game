@@ -51,7 +51,7 @@ define(['gameStates/BaseState'],function(BaseState){
       this.p2.handInMemory = this.p2.hand.slice();
       this.game.transitionTo('PrePlay');
     } else {
-      this.game.$messages = ['Please select two cards for ' + this.game.$cribOwner.possesive + ' crib.'];
+      this.game.$messages = ['Please select two cards for ' + this.game.$cribOwner.possessive + ' crib.'];
     }
   };
 

@@ -16,7 +16,7 @@ define(['gameStates/BaseState', 'modules/DeckModule'],function(BaseState, Deck){
     this.p1.hand = hands.bottomHand.sort(sortByValue);
     this.p2.hand = hands.topHand.sort(sortByValue);
 
-    this.game.$messages = ['select two cards for ' + this.game.$cribOwner.possesive + ' crib'];
+    this.game.$messages = ['select two cards for ' + this.game.$cribOwner.possessive + ' crib'];
     this.game.$actionText = 'Select';
 
     return this.game.transitionTo('Crib');

@@ -1,7 +1,7 @@
 define(['modules/PlayerModule'], function (Player) {
   'use strict';
-  function PlayerAi(name, possesive){
-    Player.call(this, name, possesive);
+  function PlayerAi(name, possessive){
+    Player.call(this, name, possessive);
   }
 
   PlayerAi.prototype = Object.create(Player.prototype);
