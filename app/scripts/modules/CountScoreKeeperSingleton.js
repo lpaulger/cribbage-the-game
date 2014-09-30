@@ -1,36 +1,56 @@
 define([], function(){
   'use strict';
   var instance;
+  function combine(a, min) {
+    var fn = function(n, src, got, all) {
+      if (n === 0) {
+        if (got.length > 0) {
+          all[all.length] = got;
+        }
+        return;
+      }
+      for (var j = 0; j < src.length; j++) {
+        fn(n - 1, src.slice(j + 1), got.concat([src[j]]), all);
+      }
+      return;
+    };
+    var all = [];
+    for (var i = min; i < a.length; i++) {
+      fn(i, a, [], all);
+    }
+    all.push(a);
+    return all;
+  }
+
+  function combinationUtil(inputArray, sizeOfInputArray, sizeOfCombination, index, tempArray, indexOfCurrentElementOfInputArray, matchesArr, matchCondition)
+  {
+    // Current combination is ready, check it
+    if (index === sizeOfCombination)
+    {
+      var total = 0;
+      for (var j=0; j<sizeOfCombination; j++)
+        total += tempArray[j].value;
+      if(total === matchCondition)
+        matchesArr.push(tempArray.slice(0, tempArray.length));
+      return;
+    }
+
+    // When no more elements are there to put in data[]
+    if (indexOfCurrentElementOfInputArray >= sizeOfInputArray)
+      return;
+
+    // current is included, put next at next location
+    tempArray[index] = inputArray[indexOfCurrentElementOfInputArray];
+    combinationUtil(inputArray, sizeOfInputArray, sizeOfCombination, index+1, tempArray, indexOfCurrentElementOfInputArray+1, matchesArr, matchCondition);
+
+    // current is excluded, replace it with next (Note that
+    // i+1 is passed, but index is not changed)
+    combinationUtil(inputArray, sizeOfInputArray, sizeOfCombination, index, tempArray, indexOfCurrentElementOfInputArray+1, matchesArr, matchCondition);
+  }
 
   function init() {
     return {
       get15s: function(hand, starter){
-
-        function combinationUtil(inputArray, sizeOfInputArray, sizeOfCombination, index, tempArray, indexOfCurrentElementOfInputArray, matchesArr, matchCondition)
-        {
-          // Current combination is ready, check it
-          if (index === sizeOfCombination)
-          {
-            var total = 0;
-            for (var j=0; j<sizeOfCombination; j++)
-              total += tempArray[j].value;
-            if(total === matchCondition)
-              matchesArr.push(tempArray.slice(0, tempArray.length));
-            return;
-          }
-
-          // When no more elements are there to put in data[]
-          if (indexOfCurrentElementOfInputArray >= sizeOfInputArray)
-            return;
-
-          // current is included, put next at next location
-          tempArray[index] = inputArray[indexOfCurrentElementOfInputArray];
-          combinationUtil(inputArray, sizeOfInputArray, sizeOfCombination, index+1, tempArray, indexOfCurrentElementOfInputArray+1, matchesArr, matchCondition);
-
-          // current is excluded, replace it with next (Note that
-          // i+1 is passed, but index is not changed)
-          combinationUtil(inputArray, sizeOfInputArray, sizeOfCombination, index, tempArray, indexOfCurrentElementOfInputArray+1, matchesArr, matchCondition);
-        }
 
         var cards = hand.concat(starter);
         var arrayOfMatches = [];
@@ -40,8 +60,6 @@ define([], function(){
         }
 
         return arrayOfMatches.length * 2;
-
-
       },
       getPairs: function(hand, starter){
         var pairs = [];
@@ -57,7 +75,6 @@ define([], function(){
         return pairs.length * 2;
       },
       getRuns: function(hand, starter){
-
         function sortByFaceValue(a, b){
           if(a.faceValue < b.faceValue)
             return -1;
@@ -66,21 +83,53 @@ define([], function(){
           return 0;
         }
 
-        var _cards = hand.concat(starter);
-        var _sortedCards = _cards.sort(sortByFaceValue);
-
-        var runCards = _sortedCards.filter(function(card, i, array){
-
-          if(i === array.length - 1)//isLastCard
+        function isSequential(card, i, arr){
+          if(i === arr.length - 1)//isLastCard
             return true;
-          return card.faceValue + 1 === array[i + 1].faceValue;
+          return card.faceValue + 1 === arr[i + 1].faceValue;
+        }
+
+        var cards = hand.concat(starter);
+        var subsets = combine(cards, 3);
+        var points = 0;
+        var runs = [];
+        subsets.forEach(function(ele){
+          //console.log(ele);
+          var _sortedCards = ele.sort(sortByFaceValue);
+          //console.log(_sortedCards);
+          if(_sortedCards.every(isSequential)){
+            runs.push(_sortedCards.splice(0, _sortedCards.length));
+            //points += _sortedCards.length;
+          }
+        });
+        var tempArray = [];
+        var uniques = [];
+        var isSubRun = false;
+        //for each run
+
+        for(var i = runs.length-1; i >= 0; i--){
+          for(var j = runs[i].length-1; j >= 0; j--){
+            if(tempArray.length < runs[i].length){
+              tempArray.push(runs[i][j]);
+            } else if(tempArray.indexOf(runs[i][j]) === -1){
+              isSubRun = false;
+              break;
+            } else {
+              //console.log('true');
+              isSubRun = true;
+            }
+          }
+          if(!isSubRun){
+            uniques.push(runs[i]);
+          }
+        }
+
+        uniques.forEach(function(set){
+          points += set.length;
         });
 
+        return points;
 
-
-        if(runCards.length > 2)
-          return runCards.length;
-        else return 0;
       },
       getHandFlush: function(hand, starter){
 
@@ -112,7 +161,7 @@ define([], function(){
         gainedPoints += this.getRuns(player.hand, starter);
         //console.log('runs: ' + gainedPoints);
         gainedPoints += this.getHandFlush(player.hand, starter);
-       // console.log('handFlush: ' + gainedPoints);
+        //console.log('handFlush: ' + gainedPoints);
         gainedPoints += this.getNobs(player.hand, starter);
         //console.log('nobs: ' + gainedPoints);
         return gainedPoints;

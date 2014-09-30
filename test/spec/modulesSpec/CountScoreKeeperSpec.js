@@ -77,10 +77,9 @@ define(['modules/CountScoreKeeperSingleton', 'modules/CardModule'], function(Sco
             hand: [new Card(10, 'diamonds'), new Card(11, 'clubs'), new Card(12, 'clubs'), new Card(7, 'diamonds')]};
           var starter = new Card(10, 'hearts');
 
-          //4,4 pair (2)
-          //7, 4, 4 15 (2)
-          //2,3,4 run of 3 (3)
-          //2,3,4 run of 3 (3)
+          //10,10 pair (2)
+          //10d, J, Q run of 3 (3)
+          //10h, J, Q run of 3 (3)
           player.points += scoreKeeper.evaluateHand(player, starter);
           expect(player.points).toEqual(8);
         });
@@ -176,7 +175,7 @@ define(['modules/CountScoreKeeperSingleton', 'modules/CardModule'], function(Sco
     
     describe('evaluateHand', function(){
       describe('and cards are 2,3,4,7 and 4', function(){
-        xit('should reward 10 points to the player', function(){
+        it('should reward 10 points to the player', function(){
           var player = {points: 0,
             hand: [new Card(2, 'diamonds'), new Card(3, 'hearts'), new Card(4, 'clubs'), new Card(7, 'diamonds')]};
           var starter = new Card(4, 'diamonds');
