@@ -20,6 +20,9 @@ require.config({
     },
     'modules/PlayerModule': {
       'modules/PlayScoreKeeperSingleton': '../../test/mocks/PlayScoreKeeperMock'
+    },
+    'gameStates/CountState': {
+      'modules/CountScoreKeeperSingleton': '../../test/mocks/CountScoreKeeperMock'
     }
   },
   shim: {

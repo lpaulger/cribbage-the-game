@@ -70,6 +70,7 @@ define([], function(){
         var _sortedCards = _cards.sort(sortByFaceValue);
 
         var runCards = _sortedCards.filter(function(card, i, array){
+
           if(i === array.length - 1)//isLastCard
             return true;
           return card.faceValue + 1 === array[i + 1].faceValue;
@@ -102,12 +103,19 @@ define([], function(){
         });
         return hasMatchingJack ? 1 : 0;
       },
-      evaluateHand: function(hand, starter, player){
-        player.points += this.get15s(hand,starter);
-        player.points += this.getPairs(hand, starter);
-        player.points += this.getRuns(hand, starter);
-        player.points += this.getHandFlush(hand, starter);
-        player.points += this.getNobs(hand, starter);
+      evaluateHand: function(player, starter){
+        var gainedPoints = 0;
+        gainedPoints += this.get15s(player.hand,starter);
+        //console.log('15-2: ' + gainedPoints);
+        gainedPoints += this.getPairs(player.hand, starter);
+        //console.log('pairs: ' + gainedPoints);
+        gainedPoints += this.getRuns(player.hand, starter);
+        //console.log('runs: ' + gainedPoints);
+        gainedPoints += this.getHandFlush(player.hand, starter);
+       // console.log('handFlush: ' + gainedPoints);
+        gainedPoints += this.getNobs(player.hand, starter);
+        //console.log('nobs: ' + gainedPoints);
+        return gainedPoints;
       }
     };
   }

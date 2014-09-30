@@ -1,8 +1,9 @@
-define(['gameStates/BaseState'], function(BaseState){
+define(['gameStates/BaseState', 'modules/CountScoreKeeperSingleton'], function(BaseState, ScoreKeeper){
   'use strict';
   function CountState(game){
     BaseState.call(this, game, 'Count');
     this.step = 0;
+    this.scoreKeeper = ScoreKeeper.getInstance();
   }
 
 
@@ -12,25 +13,33 @@ define(['gameStates/BaseState'], function(BaseState){
   CountState.prototype.init = function(){
     this.p1.restoreHand();
     this.p2.restoreHand();
-
+    var points = 0;
     if(isPlayerOneCribOwner.call(this)){
       showPlayerTwoHand.call(this);
-      this.game.$messages = [this.p2.name + ' Score: '];
+      this.p2.points += points = this.scoreKeeper.evaluateHand(this.p2, this.game.topCard);
+      this.game.$messages = [this.p2.name + ' Scored ' + points + ' points.'];
     } else {
       showPlayerOneHand.call(this);
-      this.game.$messages = [this.p1.name + ' Score: '];
+      this.p1.points += points = this.scoreKeeper.evaluateHand(this.p1, this.game.topCard);
+      this.game.$messages = [this.p1.name + ' Scored ' + points + ' points.'];
     }
   };
 
   CountState.prototype.action = function(){
+    var points = 0;
     if(this.step === 0){
       if(isPlayerOneCribOwner.call(this)){
         showPlayerOneHand.call(this);
+        this.p1.points += points = this.scoreKeeper.evaluateHand(this.p1, this.game.topCard);
+        this.game.$messages = [this.p1.name + ' Scored ' + points + ' points.'];
         this.p2.hand = [];
       } else {
         showPlayerTwoHand.call(this);
+        this.p2.points += points = this.scoreKeeper.evaluateHand(this.p2, this.game.topCard);
+        this.game.$messages = [this.p2.name + ' Scored ' + points + ' points.'];
         this.p1.hand = [];
       }
+      points = 0;
       this.step += 1;
     } else if(this.step === 1) {
       this.game.$cribOwner.hand = this.game.$cribOwner.crib;

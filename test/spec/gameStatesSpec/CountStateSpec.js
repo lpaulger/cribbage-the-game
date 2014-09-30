@@ -1,4 +1,4 @@
-define(['gameStates/CountState'], function(CountState){
+define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Card){
   'use strict';
   var _countState, _game, _player1, _player2;
 
@@ -6,13 +6,25 @@ define(['gameStates/CountState'], function(CountState){
     _player1 = {
       name: 'bob',
       hand: [],
-      handInMemory: new Array(4),
+      points: 0,
+      handInMemory: [
+        new Card(1, 'hearts'),
+        new Card(3, 'hearts'),
+        new Card(4, 'hearts'),
+        new Card(6, 'hearts')
+      ],
       restoreHand: function(){}
     };
     _player2 = {
       name: 'sally',
       hand: [],
-      handInMemory: new Array(4),
+      points: 0,
+      handInMemory: [
+        new Card(1, 'clubs'),
+        new Card(3, 'clubs'),
+        new Card(4, 'clubs'),
+        new Card(6, 'clubs')
+      ],
       restoreHand: function(){}
     };
     _game = {
@@ -20,6 +32,7 @@ define(['gameStates/CountState'], function(CountState){
       $player2: _player2,
       $cribOwner: _player2,
       $showTopCard: true,
+      topCard: new Card(10, 'diams'),
       transitionTo: function(){}
     };
   }
@@ -28,8 +41,15 @@ define(['gameStates/CountState'], function(CountState){
     beforeEach(function(){
       createBasicGame();
     });
+
     it('should create CountState', function () {
       _countState = new CountState(_game);
+      expect(_countState).toBeDefined();
+    });
+
+    it('should have a CountScoreKeeperInstance', function(){
+      _countState = new CountState(_game);
+      expect(_countState.scoreKeeper).toBeDefined();
     });
 
     describe('init', function () {
@@ -45,11 +65,27 @@ define(['gameStates/CountState'], function(CountState){
           createBasicGame();
           _game.$cribOwner = _game.$player1;
           _countState = new CountState(_game);
+          spyOn(_countState.scoreKeeper, 'evaluateHand').and.callFake(function(){
+            return 15;
+          });
           _countState.init();
         });
+
         it('show non crib holders hand', function () {
           expect(_game.$player1HandVisible).toBe(false);
           expect(_game.$player2HandVisible).toBe(true);
+        });
+        
+        it('should call scoreKeeper.evaluateHand fo player2', function(){
+          expect(_countState.scoreKeeper.evaluateHand).toHaveBeenCalledWith(_player2, _game.topCard);
+        });
+        
+        it('should set player2\'s score', function(){
+          expect(_player2.points).toEqual(15);
+        });
+        
+        it('should show a message with player 2\'s score', function(){
+          expect(_game.$messages[0]).toEqual('sally Scored 15 points.');
         });
       });
 
@@ -57,11 +93,27 @@ define(['gameStates/CountState'], function(CountState){
         beforeEach(function(){
           createBasicGame();
           _countState = new CountState(_game);
+          spyOn(_countState.scoreKeeper, 'evaluateHand').and.callFake(function(){
+            return 15;
+          });
           _countState.init();
         });
+
         it('show non crib holders hand', function () {
           expect(_game.$player1HandVisible).toBe(true);
           expect(_game.$player2HandVisible).toBe(false);
+        });
+
+        it('should call scoreKeeper.evaluateHand for player1', function(){
+          expect(_countState.scoreKeeper.evaluateHand).toHaveBeenCalledWith(_player1, _game.topCard);
+        });
+
+        it('should set player1\'s score', function(){
+          expect(_player1.points).toEqual(15);
+        });
+
+        it('should show a message with player 1\'s score', function(){
+          expect(_game.$messages[0]).toEqual('bob Scored 15 points.');
         });
       });
 
@@ -72,16 +124,20 @@ define(['gameStates/CountState'], function(CountState){
     });
 
     describe('action', function(){
-      describe('and player is cribOwner', function(){
+      describe('and player1 is cribOwner', function(){
         describe('and is first count', function(){
           beforeEach(function(){
             createBasicGame();
             _game.$cribOwner = _game.$player1;
             _countState = new CountState(_game);
             _countState.init();
+            spyOn(_countState.scoreKeeper, 'evaluateHand').and.callFake(function(){
+              return 15;
+            });
             _game.$player1.hand = _game.$player1.handInMemory;
             _game.$player2.hand = _game.$player2.handInMemory;
           });
+
           it('should remove the cards from p2\'s hand', function(){
             expect(_game.$player2.hand.length).toBe(4);
             _countState.action();
@@ -95,15 +151,24 @@ define(['gameStates/CountState'], function(CountState){
             expect(_game.$player1HandVisible).toBe(true);
             expect(_game.$player2HandVisible).toBe(false);
           });
+          
+          it('should calculate player1\'s hand', function(){
+            _countState.action();
+            expect(_player1.points).toEqual(15);
+          });
 
-          it('should show p2\'s score in a message', function(){
-            expect(_game.$messages[0]).toBe(_game.$player2.name + ' Score: ');
+          it('should show p1\'s score in a message', function(){
+            _countState.action();
+            expect(_game.$messages[0]).toBe(_player1.name + ' Scored ' + _player1.points + ' points.');
           });
         });
         describe('and its second count', function(){
           beforeEach(function () {
             _game.$cribOwner = _game.$player1;
             _countState = new CountState(_game);
+            spyOn(_countState.scoreKeeper, 'evaluateHand').and.callFake(function(){
+              return 15;
+            });
             _countState.init();
             _game.$player1.hand = _game.$player1.handInMemory;
             _game.$player1.crib = new Array(4);
@@ -121,7 +186,18 @@ define(['gameStates/CountState'], function(CountState){
             _countState.action();
             expect(_game.$player1.crib).toEqual([]);
           });
+          
+          it('should set player1 points', function(){
+            _countState.action();
+            expect(_player1.points).toEqual(15);
+          });
+          
+          it('should evaluate player1\'s hand for points', function(){
+            _countState.action();
+            expect(_countState.scoreKeeper.evaluateHand.calls.count()).toBe(2);
+          });
         });
+
         describe('and its third count', function () {
           beforeEach(function () {
             _game.$cribOwner = _game.$player1;
@@ -166,10 +242,14 @@ define(['gameStates/CountState'], function(CountState){
             createBasicGame();
             _game.$cribOwner = _game.$player2;
             _countState = new CountState(_game);
+            spyOn(_countState.scoreKeeper, 'evaluateHand').and.callFake(function(){
+              return 15;
+            });
             _countState.init();
             _game.$player1.hand = _game.$player1.handInMemory;
             _game.$player2.hand = _game.$player2.handInMemory;
           });
+          
           it('should remove the cards from p1\'s hand', function () {
             expect(_game.$player1.hand.length).toBe(4);
             _countState.action();
@@ -185,7 +265,7 @@ define(['gameStates/CountState'], function(CountState){
           });
 
           it('should show p1\'s score in a message', function () {
-            expect(_game.$messages[0]).toBe(_game.$player1.name + ' Score: ');
+            expect(_game.$messages[0]).toBe(_player1.name + ' Scored 15 points.');
           });
 
           it('should be on step 1', function () {
