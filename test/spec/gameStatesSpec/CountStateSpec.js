@@ -85,7 +85,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
         });
         
         it('should show a message with player 2\'s score', function(){
-          expect(_game.$messages[0]).toEqual('sally Scored 15 points.');
+          expect(_game.$messages[0]).toEqual('sally scored 15 points.');
         });
       });
 
@@ -113,7 +113,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
         });
 
         it('should show a message with player 1\'s score', function(){
-          expect(_game.$messages[0]).toEqual('bob Scored 15 points.');
+          expect(_game.$messages[0]).toEqual('bob scored 15 points.');
         });
       });
 
@@ -159,7 +159,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
 
           it('should show p1\'s score in a message', function(){
             _countState.action();
-            expect(_game.$messages[0]).toBe(_player1.name + ' Scored ' + _player1.points + ' points.');
+            expect(_game.$messages[0]).toBe(_player1.name + ' scored ' + _player1.points + ' points.');
           });
         });
         describe('and its second count', function(){
@@ -194,7 +194,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
           
           it('should evaluate player1\'s hand for points', function(){
             _countState.action();
-            expect(_countState.scoreKeeper.evaluateHand.calls.count()).toBe(2);
+            expect(_countState.scoreKeeper.evaluateHand.calls.count()).toBe(3);
           });
         });
 
@@ -265,7 +265,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
           });
 
           it('should show p1\'s score in a message', function () {
-            expect(_game.$messages[0]).toBe(_player1.name + ' Scored 15 points.');
+            expect(_game.$messages[0]).toBe(_player1.name + ' scored 15 points.');
           });
 
           it('should be on step 1', function () {
@@ -274,11 +274,15 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             expect(_countState.step).toEqual(1);
           });
         });
+        
         describe('and its second count', function () {
           beforeEach(function () {
             _game.$cribOwner = _game.$player2;
             _countState = new CountState(_game);
             _countState.init();
+            spyOn(_countState.scoreKeeper, 'evaluateHand').and.callFake(function(){
+              return 15;
+            });
             _game.$player1.hand = _game.$player1.handInMemory;
             _game.$player1.crib = new Array(4);
             _game.$player2.hand = _game.$player2.handInMemory;
@@ -301,7 +305,18 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             _countState.action();
             expect(_countState.step).toEqual(2);
           });
+
+          it('should add points to player2\'s hand', function(){
+            _countState.action();
+            expect(_game.$player2.points).toBe(30);
+          });
+
+          it('it should display message', function(){
+            _countState.action();
+            expect(_game.$messages[0]).toEqual('sally\'s crib scored 15 points.');
+          });
         });
+
         describe('and its third count', function () {
           beforeEach(function () {
             _game.$cribOwner = _game.$player2;

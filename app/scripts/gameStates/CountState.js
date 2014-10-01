@@ -17,11 +17,11 @@ define(['gameStates/BaseState', 'modules/CountScoreKeeperSingleton'], function(B
     if(isPlayerOneCribOwner.call(this)){
       showPlayerTwoHand.call(this);
       this.p2.points += points = this.scoreKeeper.evaluateHand(this.p2, this.game.topCard);
-      this.game.$messages = [this.p2.name + ' Scored ' + points + ' points.'];
+      this.game.$messages = [this.p2.name + ' scored ' + points + ' points.'];
     } else {
       showPlayerOneHand.call(this);
       this.p1.points += points = this.scoreKeeper.evaluateHand(this.p1, this.game.topCard);
-      this.game.$messages = [this.p1.name + ' Scored ' + points + ' points.'];
+      this.game.$messages = [this.p1.name + ' scored ' + points + ' points.'];
     }
   };
 
@@ -31,12 +31,12 @@ define(['gameStates/BaseState', 'modules/CountScoreKeeperSingleton'], function(B
       if(isPlayerOneCribOwner.call(this)){
         showPlayerOneHand.call(this);
         this.p1.points += points = this.scoreKeeper.evaluateHand(this.p1, this.game.topCard);
-        this.game.$messages = [this.p1.name + ' Scored ' + points + ' points.'];
+        this.game.$messages = [this.p1.name + ' scored ' + points + ' points.'];
         this.p2.hand = [];
       } else {
         showPlayerTwoHand.call(this);
         this.p2.points += points = this.scoreKeeper.evaluateHand(this.p2, this.game.topCard);
-        this.game.$messages = [this.p2.name + ' Scored ' + points + ' points.'];
+        this.game.$messages = [this.p2.name + ' scored ' + points + ' points.'];
         this.p1.hand = [];
       }
       points = 0;
@@ -44,6 +44,8 @@ define(['gameStates/BaseState', 'modules/CountScoreKeeperSingleton'], function(B
     } else if(this.step === 1) {
       this.game.$cribOwner.hand = this.game.$cribOwner.crib;
       this.game.$cribOwner.crib = [];
+      this.game.$cribOwner.points += points = this.scoreKeeper.evaluateHand(this.game.$cribOwner, this.game.topCard);
+      this.game.$messages = [this.game.$cribOwner.name + '\'s crib scored ' + points + ' points.'];
       this.game.$actionText = 'Next Round';
       this.step += 1;
     } else {
