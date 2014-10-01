@@ -274,7 +274,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             expect(_countState.step).toEqual(1);
           });
         });
-        
+
         describe('and its second count', function () {
           beforeEach(function () {
             _game.$cribOwner = _game.$player2;

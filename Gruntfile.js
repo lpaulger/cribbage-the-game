@@ -331,6 +331,12 @@ module.exports = function(grunt) {
               branch: 'gh-pages'
             }
           }
+        },
+        githooks: {
+          all: {
+            // Will run the jshint and test:unit tasks at every commit
+            'pre-commit': 'jshint'
+          }
         }
     });
 
