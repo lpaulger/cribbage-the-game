@@ -40,30 +40,31 @@ define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlaySco
       var points = 0;
       var _tempHand = this.hand.slice();
       var card = _tempHand.splice(index, 1)[0];//selectCardFromHand
+
       if(this.playRules.isCardPlayable(this, card)){
         this.board.placeCard(card, this);
         this.points += points = this.scoreKeeper.evaluatePlay(this.board.playedCards, this.board.totalPlayedCardsForRound);
+        if(this.board.currentBoardValue === 31){
+          this.board.resetBoard();
+        } else if(this.board.isEndOfRound()){
+          this.board.totalPlayedCardsForRound = [];
+          this.board.resetBoard();
+        }
         this.hand.splice(index, 1);
         return points;
-      } else if(!this.hasPlayableCards()){
+      } else if(!this.playRules.hasPlayableCards(this)){
         throw new Error('No Playable Cards');
       } else {
         throw new Error('Invalid Playable Card');
       }
     };
 
-    Player.prototype.hasPlayableCards = function () {
-      return this.playRules.hasPlayableCards(this);
-    };
-
-    Player.prototype.announceGo = function(purpose){
-      if(purpose === 'Count')
-        this.board.resetBoard();
-      else if(!this.hasPlayableCards()){
+    Player.prototype.announceGo = function(){
+      if(!this.playRules.hasPlayableCards()){
         var response = this.board.announceGo(this);
         if(response){
           this.points += response;
-          return this.name + ',' + response + ' point for GO';
+          return this.name + ' scored 1 point for GO';
         }
         return this.name + ' said GO';
       } else {

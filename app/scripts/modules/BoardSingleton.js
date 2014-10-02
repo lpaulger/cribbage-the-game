@@ -16,15 +16,8 @@ define(['modules/PlayScoreKeeper'], function (ScoreKeeper) {
         this.playedCards.push(card);
         this.totalPlayedCardsForRound.push(card);
         this.currentBoardValue += card.value;
-        if(this.isEndOfRound()){
-          this.totalPlayedCardsForRound = [];
-        }
-        if(this.currentBoardValue === 31) {
-          this.resetBoard();
-        }
       },
       announceGo: function(player){
-
         function otherPlayerAnnouncedGo() {
           return this.playersWhoSaidGo.indexOf(player) === -1 &&
             this.playersWhoSaidGo.length > 0;

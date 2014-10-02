@@ -38,18 +38,22 @@ define(['gameStates/BaseState'],function(BaseState){
   };
 
   PlayState.prototype.action = function() {
-    try {
-      var response = this.p1.announceGo(this.nextState);
-      this.game.currentPlayer = this.p2;
-      this.game.$messages = [response, 'Their Turn'];
-    } catch(e){
-      if(e.message === 'No Playable Cards')
-        this.game.$messages = ['No Playable Cards, Press \'Go!\''];
-      else if(e.message === 'Playable Cards')
-        this.game.$messages = [this.name + ' can\'t go, you have playable cards.'];
+    if(this.nextState === 'Play'){
+      try {
+        var response = this.p1.announceGo(this.nextState);
+        this.game.currentPlayer = this.p2;
+        this.game.$messages = [response, 'Their Turn'];
+      } catch(e){
+        if(e.message === 'No Playable Cards')
+          this.game.$messages = ['No Playable Cards, Press \'Go!\''];
+        else if(e.message === 'Playable Cards')
+          this.game.$messages = [this.name + ' can\'t go, you have playable cards.'];
+      }
+    } else {
+
     }
 
-    this.game.transitionTo(this.nextState, this.nextState === 'Count'? false : true);
+    this.game.transitionTo(this.nextState, true);
 
     if(isEndOfRound.call(this))
       this.nextState = 'Play';

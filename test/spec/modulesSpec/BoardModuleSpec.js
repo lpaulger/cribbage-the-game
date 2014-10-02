@@ -26,20 +26,6 @@ define(['modules/BoardSingleton'], function(Board){
       });
     });
 
-    describe('place card totaling 31', function () {
-      beforeEach(function () {
-        spyOn(_board, 'resetBoard');
-        _board.placeCard({value: 10}, _player);
-        _board.placeCard({value: 10}, _player);
-        _board.placeCard({value: 10}, _player);
-      });
-
-      it('should reset the board', function () {
-        _board.placeCard({value: 1}, _player);
-        expect(_board.resetBoard.calls.count()).toBe(1);
-      });
-    });
-
     describe('resetting the board', function () {
       beforeEach(function () {
         _board.placeCard({value: 10}, _player);
@@ -76,21 +62,6 @@ define(['modules/BoardSingleton'], function(Board){
           _board.announceGo(_player2);
           expect(_board.resetBoard).toHaveBeenCalled();
         });
-      });
-    });
-
-    describe('player plays last card for round', function(){
-      beforeEach(function () {
-        _board.totalPlayedCardsForRound = [
-          {value: 10},{value: 10},{value: 10},{value: 10},
-          {value: 10},{value: 10},{value: 10}
-        ];
-      });
-
-      it('should reset totalPlayedCardsForRound', function () {
-        expect(_board.totalPlayedCardsForRound.length).toEqual(7);
-        _board.placeCard({value: 10}, _player);
-        expect(_board.totalPlayedCardsForRound.length).toEqual(0);
       });
     });
   });

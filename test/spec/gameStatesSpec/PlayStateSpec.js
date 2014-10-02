@@ -84,7 +84,7 @@ define(['gameStates/PlayState'], function (PlayState) {
       it('should transition to Count state', function () {
         expect(_playState.nextState).toBe('Count');
         _playState.action();
-        expect(_game.transitionTo).toHaveBeenCalledWith('Count', false);
+        expect(_game.transitionTo).toHaveBeenCalledWith('Count', true);
         expect(_playState.nextState).toBe('Play');
       });
     });
