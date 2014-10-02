@@ -16,18 +16,13 @@ define(['modules/PlayerModule'], function (Player) {
   };
 
   PlayerAi.prototype.playCard = function() {
-    var points = 0;
-
     var selectedCard = this.hand.filter(function(card){
       return this.playRules.isCardPlayable(this, card);
     }.bind(this))[0];
 
     if(selectedCard)
     {
-      this.hand.splice(this.hand.indexOf(selectedCard), 1);
-      this.board.placeCard(selectedCard, this);
-      this.points += points = this.scoreKeeper.evaluatePlay(this.board.playedCards, this.board.totalPlayedCardsForRound);
-      return points === 0 ? undefined : points;
+      Player.prototype.playCard.call(this, this.hand.indexOf(selectedCard));
     } else {
       return this.announceGo();
     }
