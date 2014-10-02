@@ -189,7 +189,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
           
           it('should set player1 points', function(){
             _countState.action();
-            expect(_player1.points).toEqual(15);
+            expect(_player1.points).toEqual(30);
           });
           
           it('should evaluate player1\'s hand for points', function(){
