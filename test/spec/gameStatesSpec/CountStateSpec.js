@@ -5,6 +5,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
   function createBasicGame() {
     _player1 = {
       name: 'bob',
+      possessive: 'his',
       hand: [],
       points: 0,
       handInMemory: [
@@ -23,6 +24,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
     };
     _player2 = {
       name: 'sally',
+      possessive: 'her',
       hand: [],
       points: 0,
       handInMemory: [
@@ -325,7 +327,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
 
           it('it should display message', function(){
             _countState.action();
-            expect(_game.$messages[0]).toEqual('sally\'s crib scored 15 points.');
+            expect(_game.$messages[0]).toEqual('her crib scored 15 points.');
           });
         });
 

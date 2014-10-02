@@ -36,7 +36,7 @@ define(['gameStates/BaseState', 'modules/CountScoreKeeper'], function(BaseState,
       this.game.$cribOwner.hand = this.game.$cribOwner.crib;
       this.game.$cribOwner.crib = [];
       this.game.$cribOwner.points += points = this.scoreKeeper.evaluateHand(this.game.$cribOwner, this.game.topCard);
-      this.game.$messages = [this.game.$cribOwner.name + '\'s crib scored ' + points + ' points.'];
+      this.game.$messages = [this.game.$cribOwner.possessive + ' crib scored ' + points + ' points.'];
       this.game.$actionText = 'Next Round';
       this.step += 1;
     } else {
