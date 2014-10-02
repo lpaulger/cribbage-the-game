@@ -2,7 +2,7 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
   'use strict';
 
   describe('ScoreKeeperModule', function () {
-    var player, scoreKeeper, totalPlayedCards = [];
+    var player, scoreKeeper, totalPlayedCards = [], points;
     beforeEach(function(){
       player = {points: 0};
       scoreKeeper = new ScoreKeeper();
@@ -15,9 +15,8 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
 
           var result = scoreKeeper.isTwoForHisHeels(card);
           expect(result).toEqual(true);
-          expect(player.points).toEqual(0);
-          scoreKeeper.TwoForHisHeels(card, player);
-          expect(player.points).toEqual(2);
+          points = scoreKeeper.TwoForHisHeels(card, player);
+          expect(points).toEqual(2);
         });
       });
     });
@@ -29,9 +28,8 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
 
           expect(scoreKeeper.is15(playCards)).toEqual(true);
 
-          expect(player.points).toEqual(0);
-          scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
-          expect(player.points).toEqual(2);
+          points = scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+          expect(points).toEqual(2);
         });
       });
 
@@ -48,9 +46,8 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
 
           expect(scoreKeeper.is31(playCards)).toEqual(true);
 
-          expect(player.points).toEqual(0);
-          scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
-          expect(player.points).toEqual(2);
+          points = scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+          expect(points).toEqual(2);
         });
       });
 
@@ -59,9 +56,8 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
           var playCards = [new Card(5, 'hearts'), new Card(5, 'clubs')];
           expect(scoreKeeper.hasAtLeastOnePair(playCards)).toEqual(true);
 
-          expect(player.points).toEqual(0);
-          scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
-          expect(player.points).toEqual(2);
+          points = scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+          expect(points).toEqual(2);
         });
       });
 
@@ -70,9 +66,8 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
           var playCards = [new Card(6, 'hearts'), new Card(5, 'hearts'), new Card(5, 'clubs')];
           expect(scoreKeeper.hasAtLeastOnePair(playCards)).toEqual(true);
 
-          expect(player.points).toEqual(0);
-          scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
-          expect(player.points).toEqual(2);
+          points = scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+          expect(points).toEqual(2);
         });
       });
 
@@ -81,9 +76,8 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
           var playCards = [new Card(4, 'diams'), new Card(4, 'clubs'), new Card(4, 'spades')];
           expect(scoreKeeper.hasAtLeastOnePair(playCards)).toEqual(true);
 
-          expect(player.points).toEqual(0);
-          scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
-          expect(player.points).toEqual(6);
+          points = scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+          expect(points).toEqual(6);
         });
       });
 
@@ -92,9 +86,8 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
           var playCards = [new Card(3, 'diamonds'), new Card(4, 'hearts'), new Card(3, 'clubs'), new Card(3, 'hearts')];
           expect(scoreKeeper.hasAtLeastOnePair(playCards)).toEqual(true);
 
-          expect(player.points).toEqual(0);
-          scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
-          expect(player.points).toEqual(2);
+          points = scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+          expect(points).toEqual(2);
         });
       });
 
@@ -105,13 +98,13 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
         });
 
         it('should award 0 points', function(){
-          scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
-          expect(player.points).toEqual(0);
+          points = scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+          expect(points).toEqual(0);
         });
 
         it('should not throw an error', function(){
           expect(function(){
-            scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+            points = scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
           }).not.toThrow();
         });
       });
@@ -121,9 +114,8 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
           var playCards = [new Card(1, 'diamonds'), new Card(2, 'hearts'), new Card(3, 'clubs')];
           expect(scoreKeeper.hasARun(playCards)).toEqual(true);
 
-          expect(player.points).toEqual(0);
-          scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
-          expect(player.points).toEqual(3);
+          points = scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+          expect(points).toEqual(3);
         });
       });
 
@@ -132,9 +124,8 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
           var playCards = [new Card(1, 'diamonds'), new Card(2, 'hearts'), new Card(3, 'clubs'), new Card(4, 'hearts')];
           expect(scoreKeeper.hasARun(playCards)).toEqual(true);
 
-          expect(player.points).toEqual(0);
-          scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
-          expect(player.points).toEqual(4);
+          points = scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+          expect(points).toEqual(4);
         });
       });
 
@@ -143,9 +134,8 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
           var playCards = [new Card(3, 'diamonds'), new Card(2, 'hearts'), new Card(5, 'clubs')];
           expect(scoreKeeper.hasARun(playCards)).toEqual(false);
 
-          expect(player.points).toEqual(0);
-          scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
-          expect(player.points).toEqual(0);
+          points = scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+          expect(points).toEqual(0);
         });
 
         describe('even when cards are 5, 6, 5', function () {
@@ -153,9 +143,8 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
             var playCards = [new Card(5, 'diamonds'), new Card(6, 'hearts'), new Card(5, 'clubs')];
             expect(scoreKeeper.hasARun(playCards)).toEqual(false);
 
-            expect(player.points).toEqual(0);
-            scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
-            expect(player.points).toEqual(0);
+            points = scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+            expect(points).toEqual(0);
           });
         });
 
@@ -163,28 +152,24 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
           it('should award 3 points for first three cards', function () {
             var playCards = [new Card(3, 'diamonds'), new Card(5, 'hearts'), new Card(6, 'clubs')];
             expect(scoreKeeper.hasARun(playCards)).toEqual(false);
-
-            expect(player.points).toEqual(0);
-            scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
-            expect(player.points).toEqual(0);
+            points = scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+            expect(points).toEqual(0);
           });
 
           it('should award no points for the 4th card', function () {
             var playCards = [new Card(3, 'diamonds'), new Card(5, 'hearts'), new Card(6, 'clubs'), new Card(7, 'hearts')];
             expect(scoreKeeper.hasARun(playCards)).toEqual(true);
 
-            expect(player.points).toEqual(0);
-            scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
-            expect(player.points).toEqual(3);
+            points = scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+            expect(points).toEqual(3);
           });
 
           it('should award 5 points for the 5th card', function () {
             var playCards = [new Card(3, 'diamonds'), new Card(5, 'hearts'), new Card(6, 'clubs'), new Card(7, 'hearts'), new Card(4, 'clubs')];
             expect(scoreKeeper.hasARun(playCards)).toEqual(true);
 
-            expect(player.points).toEqual(0);
-            scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
-            expect(player.points).toEqual(5);
+            points = scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+            expect(points).toEqual(5);
           });
         });
       });
@@ -193,10 +178,8 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
         it('should award 0 points to the player', function () {
           var playCards = [new Card(3, 'diamonds'), new Card(4, 'hearts')];
           expect(scoreKeeper.hasARun(playCards)).toEqual(false);
-
-          expect(player.points).toEqual(0);
-          scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
-          expect(player.points).toEqual(0);
+          points = scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+          expect(points).toEqual(0);
         });
       });
 
@@ -205,9 +188,8 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
           var playCards = [new Card(3, 'diamonds'), new Card(2, 'hearts'), new Card(1, 'clubs')];
           expect(scoreKeeper.hasARun(playCards)).toEqual(true);
 
-          expect(player.points).toEqual(0);
-          scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
-          expect(player.points).toEqual(3);
+          points = scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+          expect(points).toEqual(3);
         });
       });
 
@@ -216,16 +198,14 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
           var playCards = [new Card(4, 'diamonds'), new Card(5, 'hearts'), new Card(3, 'clubs')];
           expect(scoreKeeper.hasARun(playCards)).toEqual(true);
 
-          expect(player.points).toEqual(0);
-          scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
-          expect(player.points).toEqual(3);
+          points = scoreKeeper.evaluatePlay(playCards, player, totalPlayedCards);
+          expect(points).toEqual(3);
         });
       });
 
       describe('player announces go', function(){
         describe('and other play has announces go', function(){
           it('should award player 1 point', function(){
-            expect(player.points).toEqual(0);
             scoreKeeper.pointForGo(player);
             expect(player.points).toEqual(1);
           });
@@ -246,9 +226,8 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
             new Card(11, 'clubs'), new Card(12, 'diamonds')
           ];
 
-          expect(player.points).toEqual(0);
-          scoreKeeper.evaluatePlay(playedCards, player, totalPlayedCards);
-          expect(player.points).toEqual(1);
+          points = scoreKeeper.evaluatePlay(playedCards, totalPlayedCards);
+          expect(points).toEqual(1);
         });
       });
     });

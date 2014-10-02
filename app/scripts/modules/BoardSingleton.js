@@ -16,9 +16,6 @@ define(['modules/PlayScoreKeeper'], function (ScoreKeeper) {
         this.playedCards.push(card);
         this.totalPlayedCardsForRound.push(card);
         this.currentBoardValue += card.value;
-
-        scoreKeeper.evaluatePlay(this.playedCards, player, this.totalPlayedCardsForRound);
-        
         if(this.isEndOfRound()){
           this.totalPlayedCardsForRound = [];
         }

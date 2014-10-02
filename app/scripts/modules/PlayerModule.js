@@ -37,11 +37,14 @@ define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlaySco
     };
 
     Player.prototype.playCard = function(index) {
+      var points = 0;
       var _tempHand = this.hand.slice();
       var card = _tempHand.splice(index, 1)[0];//selectCardFromHand
       if(this.playRules.isCardPlayable(this, card)){
         this.board.placeCard(card, this);
+        this.points += points = this.scoreKeeper.evaluatePlay(this.board.playedCards, this.board.totalPlayedCardsForRound);
         this.hand.splice(index, 1);
+        return points;
       } else if(!this.hasPlayableCards()){
         throw new Error('No Playable Cards');
       } else {

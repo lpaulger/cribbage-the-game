@@ -22,9 +22,12 @@ define(['gameStates/BaseState'],function(BaseState){
 
   PlayState.prototype.selectCard = function(options) {
     try {
-      this.p1.playCard(options.index);
+      var points = this.p1.playCard(options.index);
       this.game.currentPlayer = this.p2;
-      this.game.$messages = ['Their Turn'];
+      if(points > 0)
+        this.game.$messages = [this.p1.possessive + ' scored ' + points + ' points.'];
+      else
+        this.game.$messages = ['Their Turn'];
     } catch(e) {
       if(e.message === 'No Playable Cards')
         this.game.$messages = ['No Playable Cards, Press \'Go!\''];

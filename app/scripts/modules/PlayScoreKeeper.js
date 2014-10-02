@@ -11,10 +11,10 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
   PlayScoreKeeper.prototype.isTwoForHisHeels = function(card){
     return card.faceValue === 11;
   };
-  PlayScoreKeeper.prototype.TwoForHisHeels = function(card, player){
+  PlayScoreKeeper.prototype.TwoForHisHeels = function(card){
     if(this.isTwoForHisHeels(card)){
       //console.log('TwoForHisHeels for ' + player.name + ' 2 points');
-      player.points += 2;
+      return 2;
     }
   };
   PlayScoreKeeper.prototype.playCount = function (playCards) {
@@ -87,15 +87,15 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
 
     return atLeastTwoSequencesOfCardsForRun();
   };
-  PlayScoreKeeper.prototype.scoreRun = function(playCards, player){
+  PlayScoreKeeper.prototype.scoreRun = function(playCards){
     var count = this.iterateCardsForRun(playCards);
 
     if(count > 2){
       //console.log('hasARun for ' + player.name + ' ' + count + ' points');
-      player.points += count;
+      return count;
     }
   };
-  PlayScoreKeeper.prototype.scorePairs = function(playCards, player){
+  PlayScoreKeeper.prototype.scorePairs = function(playCards){
     var topCard = playCards[playCards.length - 1];
 
     var matches = 0;
@@ -108,30 +108,33 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
       }
     }
 
-    player.points += ((matches+1) * matches);
+    return ((matches+1) * matches);
   };
   PlayScoreKeeper.prototype.pointForGo = function(player){
     player.points += 1;
   };
-  PlayScoreKeeper.prototype.evaluatePlay = function(playCards, player, totalPlayedCards){
+  PlayScoreKeeper.prototype.evaluatePlay = function(playCards, totalPlayedCards){
+    var points = 0;
       if(this.is15(playCards)){
         //console.log('is15 for ' + player.name + ' 2 points');
-        player.points += 2;
+        points += 2;
       }
 
       if(this.is31(playCards)){
         //console.log('is31 for ' + player.name + ' 2 points');
-        player.points += 2;
+        points += 2;
       }
 
       if(this.hasAtLeastOnePair(playCards))
-        this.scorePairs(playCards, player);
+        points += this.scorePairs(playCards);
       if(this.hasARun(playCards))
-        this.scoreRun(playCards, player);
+        points += this.scoreRun(playCards);
       if(this.isLastCard(totalPlayedCards)){
         //console.log('isLastCard for ' + player.name + ' 1 point');
-        player.points += 1;
+        points += 1;
       }
+
+      return points;
     };
 
   return PlayScoreKeeper;
