@@ -78,7 +78,7 @@ define(['modules/PlayScoreKeeperSingleton', 'modules/CardModule'], function(Scor
 
       describe('is 3 of a kind', function(){
         it('should award 6 points to the player', function(){
-          var playCards = [new Card(5, 'diamonds'), new Card(5, 'hearts'), new Card(5, 'clubs')];
+          var playCards = [new Card(4, 'diams'), new Card(4, 'clubs'), new Card(4, 'spades')];
           expect(scoreKeeper.hasAtLeastOnePair(playCards)).toEqual(true);
 
           expect(player.points).toEqual(0);

@@ -94,14 +94,18 @@ define([], function(){
       },
       scorePairs: function(playCards, player){
         var topCard = playCards[playCards.length - 1];
+
+        var matches = 0;
         for(var i = playCards.length - 2; i >= 0; i--){
           if(topCard.faceValue === playCards[i].faceValue){
-            //console.log('hasPairs for ' + player.name + ' 2 points');
-            player.points += 2;
+
+            matches++;
           } else {
             break;
           }
         }
+
+        player.points += ((matches+1) * matches);
       },
       pointForGo: function(player){
         player.points += 1;
