@@ -38,26 +38,21 @@ define(['gameStates/BaseState'],function(BaseState){
   };
 
   PlayState.prototype.action = function() {
-    if(this.nextState === 'Play'){
-      try {
-        var response = this.p1.announceGo(this.nextState);
-        this.game.currentPlayer = this.p2;
-        this.game.$messages = [response, 'Their Turn'];
-      } catch(e){
-        if(e.message === 'No Playable Cards')
-          this.game.$messages = ['No Playable Cards, Press \'Go!\''];
-        else if(e.message === 'Playable Cards')
-          this.game.$messages = [this.name + ' can\'t go, you have playable cards.'];
-      }
-    } else {
-
+    try {
+      var response = this.p1.announceGo();
+      this.game.currentPlayer = this.p2;
+      this.game.$messages = [response, 'Their Turn'];
+    } catch(e) {
+      if(e.message === 'No Playable Cards')
+        this.game.$messages = ['No Playable Cards, Press \'Go!\''];
+      else if(e.message === 'Playable Cards')
+        this.game.$messages = [this.name + ' can\'t go, you have playable cards.'];
     }
 
     this.game.transitionTo(this.nextState, true);
 
     if(isEndOfRound.call(this))
       this.nextState = 'Play';
-
   };
 
   function setCurrentPlayer(){
@@ -93,7 +88,7 @@ define(['gameStates/BaseState'],function(BaseState){
       this.game.$actionText = 'Ok';
       this.nextState = 'Count';
     }
-    else if(!this.p1.hasPlayableCards())
+    else if(!this.p1.playRules.hasPlayableCards(this.p1))
     {
       this.game.$actionText = 'Go!';
     }

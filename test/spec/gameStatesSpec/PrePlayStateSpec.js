@@ -33,36 +33,48 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
             _setup();
           });
 
-          it('should set message to "They will reveal top card"', function () {
+          it('should set message to "Reveal top card"', function () {
             expect(_game.$messages).toEqual(['default']);
             _prePlayState.init();
-            expect(_game.$messages).toEqual(['They will reveal top card']);
+            expect(_game.$messages).toEqual(['Reveal top card']);
           });
         });
 
         describe('if Player is not CribOwner', function () {
           beforeEach(function () {
             _cribOwner = {name: 'Robo', selectOneFromDeck: function(){}};
+            spyOn(_cribOwner, 'selectOneFromDeck').and.returnValue({card: {}, isTwoForHisHeels: undefined});
             _player = {name: 'User'};
             _setup();
           });
 
-          it('should set message to "Reveal Top Card"', function () {
+          it('should set message to "They will reveal top card"', function () {
             expect(_game.$messages).toEqual(['default']);
             _prePlayState.init();
-            expect(_game.$messages).toEqual(['Reveal Top Card']);
+            expect(_game.$messages).toEqual(['They will reveal top card']);
           });
         });
       });
 
       describe('deck', function () {
         beforeEach(function () {
+          _player = _cribOwner = {name: 'test', hand:[], selectOneFromDeck: function(){}, points: 0};
+          spyOn(_cribOwner, 'selectOneFromDeck').and.returnValue({card: {}, isTwoForHisHeels: 2});
           _setup();
           _prePlayState.deck();
         });
         
         it('should transitionTo "Play" state', function () {
           expect(_game.transitionTo).toHaveBeenCalledWith('Play', false);
+        });
+        describe('and two for his heels', function(){
+          it('should award crib owner 2 points', function(){
+            expect(_game.$cribOwner.points).toEqual(2);
+          });
+
+          it('should display message', function(){
+            expect(_game.$messages[0]).toEqual('test scored two for his heels');
+          });
         });
       });
     });

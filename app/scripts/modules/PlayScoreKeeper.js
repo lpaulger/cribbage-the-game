@@ -14,7 +14,6 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
 
   PlayScoreKeeper.prototype.TwoForHisHeels = function(card){
     if(this.isTwoForHisHeels(card)){
-      //console.log('TwoForHisHeels for ' + player.name + ' 2 points');
       return 2;
     }
   };

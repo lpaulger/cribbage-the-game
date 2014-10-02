@@ -32,8 +32,8 @@ define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlaySco
 
     Player.prototype.selectOneFromDeck = function(deck, cardIndex) {
       var card = deck.selectOne(cardIndex);
-      this.scoreKeeper.TwoForHisHeels(card, this);
-      return card;
+      var isTwoForHisHeels = this.scoreKeeper.TwoForHisHeels(card, this);
+      return {card: card, isTwoForHisHeels: isTwoForHisHeels};
     };
 
     Player.prototype.playCard = function(index) {
@@ -60,7 +60,7 @@ define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlaySco
     };
 
     Player.prototype.announceGo = function(){
-      if(!this.playRules.hasPlayableCards()){
+      if(!this.playRules.hasPlayableCards(this)){
         var response = this.board.announceGo(this);
         if(response){
           this.points += response;

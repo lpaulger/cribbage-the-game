@@ -48,6 +48,18 @@ define(['modules/DeckModule'], function(Deck) {
       });
     });
 
+    describe('shuffle', function(){
+      describe('and the deck has missing cards', function(){
+        it('should recreate the deck with all 52 cards', function(){
+          _deck = new Deck();
+          _deck.deal();
+          expect(_deck.cards.length).toEqual(40);
+          _deck.shuffle();
+          expect(_deck.cards.length).toEqual(52);
+        });
+      });
+    });
+
     describe('cut', function(){
       beforeEach(function(){
         _deck = new Deck();

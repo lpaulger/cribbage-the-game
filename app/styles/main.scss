@@ -92,13 +92,14 @@ body {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
+    .crib{
+      right: 130px;
+      position: absolute;
+      top: 0;
+    }
   }
   .playingCards:first-child{
     left:0;
-  }
-  .playingCards:last-child{
-    right: 130px;
-    position: absolute;
   }
 }
 

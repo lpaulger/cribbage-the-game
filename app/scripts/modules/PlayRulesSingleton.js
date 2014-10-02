@@ -11,9 +11,7 @@ define(['modules/BoardSingleton'],function(Board){
 
     return {
       isCardPlayable: function(player, card){
-        //console.log(player.name + ': ' + card.value)
         if(!this.hasPlayableCards(player)) {
-          //console.log(player.name + ' has no playable cards');
           return false;
         }
 

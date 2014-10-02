@@ -92,16 +92,17 @@ define(['modules/PlayerModule'], function(Player) {
 
       describe('selectOneFromDeck', function(){
         beforeEach(function(){
+          //spyOn(_player.scoreKeeper, 'evaluateHand').and.returnValue(undefined);
           _deck.selectOne.and.returnValue(card);
         });
 
         it('should return the card for selected index', function(){
-          expect(_player.selectOneFromDeck(_deck, 2)).toEqual(card);
+          expect(_player.selectOneFromDeck(_deck, 2)).toEqual({card: card, isTwoForHisHeels: undefined});
         });
 
         it('should check if TwoForHisHeels', function(){
-          var card = _player.selectOneFromDeck(_deck, 2);
-          expect(_player.scoreKeeper.TwoForHisHeels).toHaveBeenCalledWith(card, _player);
+          var result = _player.selectOneFromDeck(_deck, 2);
+          expect(_player.scoreKeeper.TwoForHisHeels).toHaveBeenCalledWith(result.card, _player);
         });
       });
 

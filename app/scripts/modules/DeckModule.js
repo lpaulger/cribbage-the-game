@@ -8,6 +8,8 @@ define(['modules/CardModule'], function (Card) {
   }
 
   Deck.prototype.shuffle = function(){
+    if(this.cards.length < 52)
+      this.cards = createDeck(this.deckType);
     for(var j, x, i = this.cards.length; i; j = Math.floor(Math.random() * i), x = this.cards[--i], this.cards[i] = this.cards[j], this.cards[j] = x);
   };
 
@@ -18,7 +20,6 @@ define(['modules/CardModule'], function (Card) {
   Deck.prototype.deal = function(){
     this.topHand = [];
     this.bottomHand = [];
-    this.shuffle();
 
     while(this.topHand.length < 6) {
       this.topHand.push(this.cards.pop());

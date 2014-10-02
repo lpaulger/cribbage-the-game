@@ -10,7 +10,7 @@ define(
       this.$player1HandVisible = true;
       this.$player2HandVisible = true;
       this.$board = Board.getInstance();
-      this.$messages = ['Welcome Click the Deck to Play'];
+      this.$messages = ['Click the Deck to Start'];
       this.$states = new StateRegistry(this);
       this.$state = this.$states[0];
       this.$forceRender = false;
