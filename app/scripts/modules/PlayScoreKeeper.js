@@ -111,8 +111,8 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
 
     return ((matches+1) * matches);
   };
-  PlayScoreKeeper.prototype.pointForGo = function(player){
-    player.points += 1;
+  PlayScoreKeeper.prototype.pointForGo = function(){
+    return 1;
   };
   PlayScoreKeeper.prototype.evaluatePlay = function(playCards, totalPlayedCards){
     var points = 0;

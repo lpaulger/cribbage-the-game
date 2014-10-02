@@ -48,6 +48,7 @@ define(['gameStates/BaseState', 'modules/CountScoreKeeper'], function(BaseState,
       showPlayerOneHand.call(this);
       this.game.transitionTo('Deal', true);
       this.game.$showTopCard = false;
+      this.game.$messages = [];
       this.step = 0;
     }
   };

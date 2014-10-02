@@ -206,8 +206,8 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
       describe('player announces go', function(){
         describe('and other play has announces go', function(){
           it('should award player 1 point', function(){
-            scoreKeeper.pointForGo(player);
-            expect(player.points).toEqual(1);
+            points = scoreKeeper.pointForGo(player);
+            expect(points).toEqual(1);
           });
         });
       });

@@ -49,7 +49,7 @@ define(['gameStates/BaseState'],function(BaseState){
         this.game.$messages = [this.name + ' can\'t go, you have playable cards.'];
     }
 
-    this.game.transitionTo(this.nextState, true);
+    this.game.transitionTo(this.nextState, this.nextState === 'Count'? false : true);
 
     if(isEndOfRound.call(this))
       this.nextState = 'Play';
@@ -70,9 +70,14 @@ define(['gameStates/BaseState'],function(BaseState){
     try{
       var response = this.p2.playCard();
       this.game.currentPlayer = this.p1;
-      if(response)
-        this.game.$messages = [response];
-      this.game.$messages = ['Your Turn.'];
+      this.game.$messages = [];
+      if(typeof response === 'number')
+        this.game.$messages.push(this.p2.name + ' scored ' + response + ' points');
+      else if(typeof response === 'string'){
+        this.game.$messages.push(response);
+      }
+
+      this.game.$messages.push('Your Turn.');
     } catch(e){
       console.log(e);
     }

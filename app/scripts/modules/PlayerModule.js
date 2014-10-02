@@ -60,7 +60,11 @@ define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlaySco
       if(purpose === 'Count')
         this.board.resetBoard();
       else if(!this.hasPlayableCards()){
-        this.board.announceGo(this);
+        var response = this.board.announceGo(this);
+        if(response){
+          this.points += response;
+          return this.name + ',' + response + ' point for GO';
+        }
         return this.name + ' said GO';
       } else {
         throw new Error('Playable Cards');
