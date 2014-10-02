@@ -11,6 +11,7 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
   PlayScoreKeeper.prototype.isTwoForHisHeels = function(card){
     return card.faceValue === 11;
   };
+
   PlayScoreKeeper.prototype.TwoForHisHeels = function(card){
     if(this.isTwoForHisHeels(card)){
       //console.log('TwoForHisHeels for ' + player.name + ' 2 points');
@@ -115,27 +116,27 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
   };
   PlayScoreKeeper.prototype.evaluatePlay = function(playCards, totalPlayedCards){
     var points = 0;
-      if(this.is15(playCards)){
-        //console.log('is15 for ' + player.name + ' 2 points');
-        points += 2;
-      }
+    if(this.is15(playCards)){
+      //console.log('is15 for ' + player.name + ' 2 points');
+      points += 2;
+    }
 
-      if(this.is31(playCards)){
-        //console.log('is31 for ' + player.name + ' 2 points');
-        points += 2;
-      }
+    if(this.is31(playCards)){
+      //console.log('is31 for ' + player.name + ' 2 points');
+      points += 2;
+    }
 
-      if(this.hasAtLeastOnePair(playCards))
-        points += this.scorePairs(playCards);
-      if(this.hasARun(playCards))
-        points += this.scoreRun(playCards);
-      if(this.isLastCard(totalPlayedCards)){
-        //console.log('isLastCard for ' + player.name + ' 1 point');
-        points += 1;
-      }
+    if(this.hasAtLeastOnePair(playCards))
+      points += this.scorePairs(playCards);
+    if(this.hasARun(playCards))
+      points += this.scoreRun(playCards);
+    if(this.isLastCard(totalPlayedCards)){
+      //console.log('isLastCard for ' + player.name + ' 1 point');
+      points += 1;
+    }
 
-      return points;
-    };
+    return points;
+  };
 
   return PlayScoreKeeper;
 });

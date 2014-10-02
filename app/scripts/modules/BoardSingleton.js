@@ -12,7 +12,7 @@ define(['modules/PlayScoreKeeper'], function (ScoreKeeper) {
       isEndOfRound: function () {
         return this.totalPlayedCardsForRound.length === 8;
       },
-      placeCard: function(card, player){
+      placeCard: function(card){
         this.playedCards.push(card);
         this.totalPlayedCardsForRound.push(card);
         this.currentBoardValue += card.value;
