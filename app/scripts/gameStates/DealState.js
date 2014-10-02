@@ -9,7 +9,7 @@ define(['gameStates/BaseState', 'modules/DeckModule'],function(BaseState, Deck){
   DealState.prototype.constructor = DealState;
 
   DealState.prototype.init = function(){
-    this.game.$player2HandVisible = this.game.options.showOpponentsHand;
+    this.game.$player2HandVisible = false;
     this.game.$deck.shuffle();
     var hands = this.game.$deck.deal();
     this.p1.hand = hands.bottomHand.sort(sortByValue);

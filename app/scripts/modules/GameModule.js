@@ -3,8 +3,7 @@ define(
   function(Deck, Player, PlayerAi, StateRegistry, Board){
 
     'use strict';
-    function Game(options){
-      this.options = options;
+    function Game(){
       this.$deck = new Deck();
       this.$player1 = new Player('You', 'your');
       this.$player2 = new PlayerAi('Roboto', 'his');

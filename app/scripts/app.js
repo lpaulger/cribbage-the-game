@@ -4,11 +4,8 @@ define(['jquery', 'mustache', 'modules/GameModule'],
 
     return {
       init: function(){
-        this.options = {
-          showOpponentsHand: false
-        };
         this.$autoContinueTimer = 1000;
-        this.$game = new Game(this.options);
+        this.$game = new Game();
         this.$activeState = this.$game.$state;
         this.getTemplates();
         this.getElements();
