@@ -1,11 +1,11 @@
-define(['modules/PlayScoreKeeperSingleton', 'modules/CardModule'], function(ScoreKeeper, Card) {
+define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, Card) {
   'use strict';
 
   describe('ScoreKeeperModule', function () {
     var player, scoreKeeper, totalPlayedCards = [];
     beforeEach(function(){
       player = {points: 0};
-      scoreKeeper = ScoreKeeper.getInstance();
+      scoreKeeper = new ScoreKeeper();
     });
 
     describe('Two For His Heels', function(){

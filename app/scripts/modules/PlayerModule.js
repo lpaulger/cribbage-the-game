@@ -1,4 +1,4 @@
-define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlayScoreKeeperSingleton'], function (PlayRules, Board, ScoreKeeper) {
+define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlayScoreKeeper'], function (PlayRules, Board, ScoreKeeper) {
     'use strict';
     function Player(name, possessive){
       this.name = name;
@@ -8,7 +8,7 @@ define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlaySco
       this.crib = [];
       this.cardsForCrib = [];
       this.points = 0;
-      this.scoreKeeper = ScoreKeeper.getInstance();
+      this.scoreKeeper = new ScoreKeeper();
       this.playRules = PlayRules.getInstance();
       this.board = Board.getInstance();
     }

@@ -1,11 +1,10 @@
-define(['gameStates/BaseState', 'modules/CountScoreKeeperSingleton'], function(BaseState, ScoreKeeper){
+define(['gameStates/BaseState', 'modules/CountScoreKeeper'], function(BaseState, ScoreKeeper){
   'use strict';
   function CountState(game){
     BaseState.call(this, game, 'Count');
     this.step = 0;
-    this.scoreKeeper = ScoreKeeper.getInstance();
+    this.scoreKeeper = new ScoreKeeper();
   }
-
 
   CountState.prototype = Object.create(BaseState.prototype);
   CountState.prototype.constructor = CountState;
@@ -15,13 +14,9 @@ define(['gameStates/BaseState', 'modules/CountScoreKeeperSingleton'], function(B
     this.p2.restoreHand();
     var points = 0;
     if(isPlayerOneCribOwner.call(this)){
-      showPlayerTwoHand.call(this);
-      this.p2.points += points = this.scoreKeeper.evaluateHand(this.p2, this.game.topCard);
-      this.game.$messages = [this.p2.name + ' scored ' + points + ' points.'];
+      evaluatePlayerTwoScore.call(this, points);
     } else {
-      showPlayerOneHand.call(this);
-      this.p1.points += points = this.scoreKeeper.evaluateHand(this.p1, this.game.topCard);
-      this.game.$messages = [this.p1.name + ' scored ' + points + ' points.'];
+      evaluatePlayerOneScore.call(this, points);
     }
   };
 
@@ -29,14 +24,10 @@ define(['gameStates/BaseState', 'modules/CountScoreKeeperSingleton'], function(B
     var points = 0;
     if(this.step === 0){
       if(isPlayerOneCribOwner.call(this)){
-        showPlayerOneHand.call(this);
-        this.p1.points += points = this.scoreKeeper.evaluateHand(this.p1, this.game.topCard);
-        this.game.$messages = [this.p1.name + ' scored ' + points + ' points.'];
+        evaluatePlayerOneScore.call(this, points);
         this.p2.hand = [];
       } else {
-        showPlayerTwoHand.call(this);
-        this.p2.points += points = this.scoreKeeper.evaluateHand(this.p2, this.game.topCard);
-        this.game.$messages = [this.p2.name + ' scored ' + points + ' points.'];
+        evaluatePlayerTwoScore.call(this, points);
         this.p1.hand = [];
       }
       points = 0;
@@ -60,6 +51,20 @@ define(['gameStates/BaseState', 'modules/CountScoreKeeperSingleton'], function(B
       this.step = 0;
     }
   };
+
+  function evaluatePlayerOneScore(points){
+    showPlayerOneHand.call(this);
+    this.p1.points += points = this.scoreKeeper.evaluateHand(this.p1, this.game.topCard);
+    this.game.$messages = [this.p1.name + ' scored ' + points + ' points.'];
+    return points;
+  }
+
+  function evaluatePlayerTwoScore(points){
+    showPlayerTwoHand.call(this);
+    this.p2.points += points = this.scoreKeeper.evaluateHand(this.p2, this.game.topCard);
+    this.game.$messages = [this.p2.name + ' scored ' + points + ' points.'];
+    return points;
+  }
 
   function isPlayerOneCribOwner() {
     return this.game.$cribOwner === this.p1;

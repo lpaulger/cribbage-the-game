@@ -1,9 +1,9 @@
-define(['modules/CountScoreKeeperSingleton', 'modules/CardModule'], function(ScoreKeeper, Card) {
+define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, Card) {
   'use strict';
   var scoreKeeper;
   describe('CountScoreKeeper', function () {
     beforeEach(function(){
-      scoreKeeper = ScoreKeeper.getInstance();
+      scoreKeeper = new ScoreKeeper();
     });
     describe('When 0 point hand', function(){
       it('should award 0 points', function(){

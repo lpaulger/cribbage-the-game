@@ -13,6 +13,12 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
         new Card(4, 'hearts'),
         new Card(6, 'hearts')
       ],
+      crib: [
+        new Card(1, 'hearts'),
+        new Card(3, 'hearts'),
+        new Card(4, 'hearts'),
+        new Card(6, 'hearts')
+      ],
       restoreHand: function(){}
     };
     _player2 = {
@@ -24,6 +30,12 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
         new Card(3, 'clubs'),
         new Card(4, 'clubs'),
         new Card(6, 'clubs')
+      ],
+      crib: [
+        new Card(1, 'hearts'),
+        new Card(3, 'hearts'),
+        new Card(4, 'hearts'),
+        new Card(6, 'hearts')
       ],
       restoreHand: function(){}
     };
