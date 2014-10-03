@@ -57,17 +57,26 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
       });
 
       describe('deck', function () {
-        beforeEach(function () {
-          _player = _cribOwner = {name: 'test', hand:[], selectOneFromDeck: function(){}, points: 0};
-          spyOn(_cribOwner, 'selectOneFromDeck').and.returnValue({card: {}, isTwoForHisHeels: 2});
-          _setup();
-          _prePlayState.deck();
-        });
-        
-        it('should transitionTo "Play" state', function () {
-          expect(_game.transitionTo).toHaveBeenCalledWith('Play', false);
+        describe('and is not two for his heels', function(){
+          beforeEach(function () {
+            _player = _cribOwner = {name: 'test', hand:[], selectOneFromDeck: function(){}, points: 0};
+            spyOn(_cribOwner, 'selectOneFromDeck').and.returnValue({card: {}, isTwoForHisHeels: 0});
+            _setup();
+            _prePlayState.deck();
+          });
+
+          it('should transitionTo "Play" state', function () {
+            expect(_game.transitionTo).toHaveBeenCalledWith('Play', false);
+          });
         });
         describe('and two for his heels', function(){
+          beforeEach(function () {
+            _player = _cribOwner = {name: 'test', hand:[], selectOneFromDeck: function(){}, points: 0};
+            spyOn(_cribOwner, 'selectOneFromDeck').and.returnValue({card: {}, isTwoForHisHeels: 2});
+            _setup();
+            _prePlayState.deck();
+          });
+
           it('should award crib owner 2 points', function(){
             expect(_game.$cribOwner.points).toEqual(2);
           });

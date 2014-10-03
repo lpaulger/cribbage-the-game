@@ -41,6 +41,8 @@ define(['gameStates/BaseState'],function(BaseState){
     else if(hasTwoCards())
       replaceOldCard.apply(this);
     else addNewCard.apply(this);
+
+    this.render();
   };
 
   CribState.prototype.action = function() {

@@ -13,20 +13,32 @@ define(
       this.$messages = ['Click the Deck to Start'];
       this.$states = new StateRegistry(this);
       this.$state = this.$states[0];
-      this.$forceRender = false;
     }
 
-    Game.prototype.transitionTo = function (stateName, shouldWait) {
-      //console.log('active: ' + this.$state.name + ' - transitionTo: ' + stateName);
-      if(this.$state.name === stateName){
-        this.$forceRender = true;
+    Game.prototype.start = function(){
+      this.$state.init();
+      this.$state.render();
+    };
+
+    Game.prototype.transitionTo = function (stateName, wait) {
+      function process(){
+        this.$state = this.$states.filter(function(state){
+          return state.name === stateName;
+        })[0];
+        if(!this.$state)
+          throw new Error('State ' + stateName + ' Not Found');
+
+        this.start();
       }
-      this.$await = shouldWait || false;
-      this.$state = this.$states.filter(function(state){
-        return state.name === stateName;
-      })[0];
-      if(!this.$state)
-        throw new Error('State ' + stateName + ' Not Found');
+
+      this.$state.render();
+      if(wait){
+        setTimeout(function(){
+          process.call(this);
+        }.bind(this), 1000);
+      } else {
+        process.call(this);
+      }
     };
 
     return Game;

@@ -8,6 +8,12 @@ define(['gameStates/BaseState', 'modules/DeckModule'],function(BaseState, Deck){
   DealState.prototype = Object.create(BaseState.prototype);
   DealState.prototype.constructor = DealState;
 
+  DealState.prototype.templates = function(){
+    var templates = BaseState.prototype.templates();
+    templates.p2Hand = $('#visibleHandTemplate').html();
+    return templates;
+  };
+
   DealState.prototype.init = function(){
     this.game.$player2HandVisible = false;
     this.game.$deck.shuffle();
@@ -16,9 +22,9 @@ define(['gameStates/BaseState', 'modules/DeckModule'],function(BaseState, Deck){
     this.p2.hand = hands.topHand.sort(sortByValue);
 
     this.game.$messages = ['select two cards for ' + this.game.$cribOwner.possessive + ' crib'];
-    this.game.$actionText = 'Select';
+    this.game.$action = {text: 'Select'};
 
-    return this.game.transitionTo('Crib');
+    this.game.transitionTo('Crib');
   };
 
   function sortByValue(a,b){

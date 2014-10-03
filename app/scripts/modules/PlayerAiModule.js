@@ -22,7 +22,7 @@ define(['modules/PlayerModule'], function (Player) {
 
     if(selectedCard)
     {
-      Player.prototype.playCard.call(this, this.hand.indexOf(selectedCard));
+      return Player.prototype.playCard.call(this, this.hand.indexOf(selectedCard));
     } else {
       return this.announceGo();
     }

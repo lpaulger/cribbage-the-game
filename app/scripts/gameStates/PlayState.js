@@ -8,9 +8,16 @@ define(['gameStates/BaseState'],function(BaseState){
   PlayState.prototype = Object.create(BaseState.prototype);
   PlayState.prototype.constructor = PlayState;
 
+  PlayState.prototype.templates = function(){
+    var templates = BaseState.prototype.templates();
+    templates.deck =  $('#visibleDeckTemplate').html();
+    return templates;
+  };
+
   PlayState.prototype.init = function(){
     this.game.$showTopCard = true;
-    this.game.$actionText = 'Go';
+    this.game.$action = {text:'Go'};
+
     setCurrentPlayer.call(this);
     if(this.game.currentPlayer === this.p2)
       processAiTurn.call(this);
@@ -72,7 +79,7 @@ define(['gameStates/BaseState'],function(BaseState){
       var response = this.p2.playCard();
       this.game.currentPlayer = this.p1;
       this.game.$messages = [];
-      if(typeof response === 'number')
+      if(response > 0)
         this.game.$messages.push(this.p2.name + ' scored ' + response + ' points');
       else if(typeof response === 'string'){
         this.game.$messages.push(response);
@@ -86,13 +93,13 @@ define(['gameStates/BaseState'],function(BaseState){
 
   function setAction(){
     if(isEndOfRound.call(this)){
-      this.game.$messages = ['Round Over!'];
-      this.game.$actionText = 'Ok';
+      this.game.$messages.push('Round Over!');
+      this.game.$action = {text:'Ok'};
       this.nextState = 'Count';
     }
     else if(!this.p1.playRules.hasPlayableCards(this.p1))
     {
-      this.game.$actionText = 'Go!';
+      this.game.$action = {text:'Go'};
     }
   }
 

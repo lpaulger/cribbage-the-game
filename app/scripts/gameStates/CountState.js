@@ -9,6 +9,14 @@ define(['gameStates/BaseState', 'modules/CountScoreKeeper'], function(BaseState,
   CountState.prototype = Object.create(BaseState.prototype);
   CountState.prototype.constructor = CountState;
 
+  CountState.prototype.templates = function(){
+    var templates = BaseState.prototype.templates();
+    templates.deck =  $('#visibleDeckTemplate').html();
+    templates.p2Hand = $('#visibleHandTemplate').html();
+    return templates;
+  };
+
+
   CountState.prototype.init = function(){
     this.p1.restoreHand();
     this.p2.restoreHand();
@@ -18,6 +26,7 @@ define(['gameStates/BaseState', 'modules/CountScoreKeeper'], function(BaseState,
     } else {
       evaluatePlayerOneScore.call(this, points);
     }
+    this.render();
   };
 
   CountState.prototype.action = function(){
@@ -37,7 +46,7 @@ define(['gameStates/BaseState', 'modules/CountScoreKeeper'], function(BaseState,
       this.game.$cribOwner.crib = [];
       this.game.$cribOwner.points += points = this.scoreKeeper.evaluateHand(this.game.$cribOwner, this.game.topCard);
       this.game.$messages = [this.game.$cribOwner.possessive + ' crib scored ' + points + ' points.'];
-      this.game.$actionText = 'Next Round';
+      this.game.$action = {text: 'Next Round'};
       this.step += 1;
     } else {
       if(isPlayerOneCribOwner.call(this)){
@@ -51,6 +60,7 @@ define(['gameStates/BaseState', 'modules/CountScoreKeeper'], function(BaseState,
       this.game.$messages = [];
       this.step = 0;
     }
+    this.render();
   };
 
   function evaluatePlayerOneScore(points){

@@ -5,6 +5,9 @@ define(['modules/PlayScoreKeeper'], function (ScoreKeeper) {
 
   function init() {
     return {
+      display: function(){
+        return this.currentBoardValue > 0? 'inline-block':'none';
+      },
       currentBoardValue: 0,
       totalPlayedCardsForRound: [],
       playedCards: [],

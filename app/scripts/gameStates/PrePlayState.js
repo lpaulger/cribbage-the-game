@@ -12,10 +12,17 @@ define(['gameStates/BaseState'],function(BaseState){
     if(result.isTwoForHisHeels){
       this.game.$cribOwner.points += result.isTwoForHisHeels;
       this.game.$messages = [this.game.$cribOwner.name + ' scored two for his heels'];
+      wait = true;
     }
     this.game.topCard = result.card;
     this.game.transitionTo('Play', wait);
   }
+
+  PrePlayState.prototype.templates = function(){
+    var templates = BaseState.prototype.templates();
+    templates.deck =  $('#hiddenStraitDeckTemplate').html();
+    return templates;
+  };
 
   PrePlayState.prototype.init = function(){
     if(this.game.$cribOwner !== this.game.$player1){
