@@ -96,6 +96,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
       this.game.$messages.push('Round Over!');
       this.game.$action = {text:'Ok'};
       this.nextState = 'Count';
+      this.game.currentPlayer = undefined;
     }
     else if(!this.p1.playRules.hasPlayableCards(this.p1))
     {
