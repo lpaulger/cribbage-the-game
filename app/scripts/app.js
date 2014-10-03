@@ -1,5 +1,5 @@
-define(['jquery', 'mustache', 'modules/GameModule'],
-  function($, mustache, Game){
+define(['modules/GameModule'],
+  function(Game){
     'use strict';
 
     return {

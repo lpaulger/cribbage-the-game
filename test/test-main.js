@@ -14,17 +14,11 @@ require.config({
     'jquery': '../bower_components/jquery/dist/jquery',
     'mustache': '../bower_components/mustache/mustache'
   },
-//  map: {
-//    'modules/BoardSingleton': {
-//      'modules/PlayScoreKeeperSingleton': '../../test/mocks/PlayScoreKeeperMock'
-//    },
-//    'modules/PlayerModule': {
-//      'modules/PlayScoreKeeperSingleton': '../../test/mocks/PlayScoreKeeperMock'
-//    },
-//    'gameStates/CountState': {
-//      'modules/CountScoreKeeperSingleton': '../../test/mocks/CountScoreKeeperMock'
-//    }
-//  },
+  map: {
+    'app': {
+      'modules/GameModule': '../../test/mocks/GameModuleMock'
+    }
+  },
   shim: {
     'jquery': {
       exports: '$'
