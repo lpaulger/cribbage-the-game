@@ -30,21 +30,21 @@ define(['jquery', 'mustache'],function($, mustache){
   BaseState.prototype.action = function() {};
 
   BaseState.prototype.render = function() {
-      var rendered = mustache.render($('#stateTemplate').html(), this.game, this.templates());
-      $('#content').html(rendered);
-      $('#deck').on('click', function(e){
-        var cardIndex = $($(e.currentTarget).children('ul')[0]).children('li').children('a').index(e.target);
-        $(e.target).addClass('selected');
-        this.deck(cardIndex);
-      }.bind(this));
+    var rendered = mustache.render($('#stateTemplate').html(), this.game, this.templates());
+    $('#content').html(rendered);
+    $('#deck').on('click', function(e){
+      var cardIndex = $($(e.currentTarget).children('ul')[0]).children('li').children('a').index(e.target);
+      $(e.target).addClass('selected');
+      this.deck(cardIndex);
+    }.bind(this));
 
-      $('#bottomHand').on('click', 'li', function(event){
-        var index = $('#bottomHand').find('li').index(event.currentTarget);
-        var card = $(event.currentTarget).find('a');
-        this.selectCard({index: index, card: card, event: event});
-      }.bind(this));
+    $('#bottomHand').on('click', 'li', function(event){
+      var index = $('#bottomHand').find('li').index(event.currentTarget);
+      var card = $(event.currentTarget).find('a');
+      this.selectCard({index: index, card: card, event: event});
+    }.bind(this));
 
-      $('#controls').on('click', 'button', this.action.bind(this));
+    $('#controls').on('click', 'button', this.action.bind(this));
   };
 
   return BaseState;

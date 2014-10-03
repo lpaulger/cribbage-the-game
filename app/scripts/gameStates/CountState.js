@@ -1,4 +1,4 @@
-define(['gameStates/BaseState', 'modules/CountScoreKeeper'], function(BaseState, ScoreKeeper){
+define(['jquery','gameStates/BaseState', 'modules/CountScoreKeeper'], function($, BaseState, ScoreKeeper){
   'use strict';
   function CountState(game){
     BaseState.call(this, game, 'Count');

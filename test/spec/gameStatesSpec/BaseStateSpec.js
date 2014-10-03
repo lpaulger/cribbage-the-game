@@ -9,12 +9,6 @@ define(['gameStates/BaseState'], function (BaseState) {
       });
     });
 
-    describe('render', function(){
-      beforeEach(function(){
-        spyOn()
-      });
-    });
-
     describe('templates', function(){
       var baseState;
       beforeEach(function(){

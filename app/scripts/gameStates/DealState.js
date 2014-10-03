@@ -1,4 +1,4 @@
-define(['gameStates/BaseState', 'modules/DeckModule'],function(BaseState, Deck){
+define(['jquery','gameStates/BaseState', 'modules/DeckModule'],function($, BaseState, Deck){
   'use strict';
   function DealState(game){
     BaseState.call(this, game, 'Deal');
