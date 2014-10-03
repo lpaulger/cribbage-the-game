@@ -16,59 +16,52 @@
         <script src="scripts/vendor/d7100892.modernizr.js"></script>
     </head>
     <body>
-    <div id="content">
-      <ul id="messageContainer"></ul>
-      <div id="player2" class="player">
-        <div class="scoreboard"></div>
+    <div id="content"></div>
+    <script id="stateTemplate" type="x-tmpl-mustache">
+        <ul id="messageContainer">{{> messages}}</ul>
+        <div id="player2" class="player">
+        {{#$player2}}
+        <div class="scoreboard">{{> p2Score}}</div>
         <div class="playingCards">
-          <ul id="topHand" class="hand"></ul>
-          <ul class="crib hand"></ul>
+                <ul id="topHand" class="hand">{{#hand}}{{> p2Hand}}{{/hand}}</ul>
+        <ul class="crib hand">{{#crib}}{{> crib}}{{/crib}}</ul>
         </div>
-      </div>
-      <div id="table">
-        <div id="deck" class="playingCards"></div>
-        <div id="count"></div>
+        {{/$player2}}
+        </div>
+            <div id="table">
+                    <div id="deck" class="playingCards">{{> deck}}</div>
+        <div id="count">{{#$board}}<label style="display: {{display}}">Count: <span>{{currentBoardValue}}</span></label>{{/$board}}</div>
         <div id="play" class="playingCards">
-          <ul class="hand play"></ul>
+                <ul class="hand play">{{#$board}}{{> play}}{{/$board}}</ul>
         </div>
-        <div id="controls"></div>
-      </div>
-      <div id="player1" class="player">
+        <div id="controls">{{#$action}}{{> controls}}{{/$action}}</div>
+        </div>
+        <div id="player1" class="player">
+        {{#$player1}}
         <div class="playingCards">
-          <ul id="bottomHand" class="hand"></ul>
-          <ul class="crib hand"></ul>
+                    <ul id="bottomHand" class="hand">{{#hand}}{{> p1Hand}}{{/hand}}</ul>
+        <ul class="crib hand">{{#crib}}{{> crib}}{{/crib}}</ul>
         </div>
-          <div class="scoreboard"></div>
-      </div>
-    </div>
+        <div class="scoreboard">{{> p1Score}}</div>
+        {{/$player1}}
+        </div>
+    </script>
     <script id="visibleHandTemplate" type="x-tmpl-mustache">
-      {{#cards}}
         <li>
           <a class="card rank-{{name}} {{suit}} {{selected}}">
             <span class="rank">{{name}}</span>
             <span class="suit">&{{suit}};</span>
           </a>
         </li>
-      {{/cards}}
-    </script>
-    <script id="cribTemplate" type="x-tmpl-mustache">
-      {{#cards}}
-        <li class="card back">*</li>
-      {{/cards}}
     </script>
     <script id="hiddenHandTemplate" type="x-tmpl-mustache">
-      {{#cards}}
         <li class="card back">*</li>
-      {{/cards}}
-    </script>
-    <script id="controlsTemplate" type="x-tmpl-mustache">
-      <button style="display:{{display}}">{{text}}</button>
     </script>
     <script id="hiddenStraitDeckTemplate" type="x-tmpl-mustache">
       <ul class="deck strait">
-        {{#deck.cards}}
+        {{#$deck.cards}}
           <li><a class="card back">*</a></li>
-        {{/deck.cards}}
+        {{/$deck.cards}}
       </ul>
     </script>
     <script id="hiddenDeckTemplate" type="x-tmpl-mustache">
@@ -84,27 +77,29 @@
     </script>
     <script id="visibleDeckTemplate" type="x-tmpl-mustache">
       <ul class="deck">
+      {{#topCard}}
         <li class="card back">*</li>
         <li class="card back">*</li>
         <li class="card back">*</li>
         <li class="card back">*</li>
         <li class="card back">*</li>
         <li class="card back">*</li>
-        <li class="card rank-{{card.name}} {{card.suit}}">
-          <span class="rank">{{card.name}}</span>
-          <span class="suit">&{{card.suit}};</span>
+        <li class="card rank-{{name}} {{suit}}">
+          <span class="rank">{{name}}</span>
+          <span class="suit">&{{suit}};</span>
         </li>
+        {{/topCard}}
       </ul>
     </script>
     <script id="playTemplate" type="x-tmpl-mustache">
-      {{#cards}}
+      {{#playedCards}}
         <li>
           <a class="card rank-{{name}} {{suit}}">
             <span class="rank">{{name}}</span>
             <span class="suit">&{{suit}};</span>
           </a>
         </li>
-      {{/cards}}
+      {{/playedCards}}
     </script>
     <script id="scoreboardTemplate" type="x-tmple-mustache">
       <label>score: <span>{{points}}</span></label>
@@ -122,6 +117,6 @@
             s.parentNode.insertBefore(g,s)}(document,'script'));
         </script>
 
-        <script data-main="scripts/56bed64c.main" src="bower_components/requirejs/require.js"></script>
+        <script data-main="scripts/d08f905e.main" src="bower_components/requirejs/require.js"></script>
 </body>
 </html>
