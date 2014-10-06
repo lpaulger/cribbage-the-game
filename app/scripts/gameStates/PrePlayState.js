@@ -15,7 +15,7 @@ define(['gameStates/BaseState', 'jquery'],function(BaseState, $){
       wait = true;
     }
     this.game.topCard = result.card;
-    this.game.transitionTo('Play', wait);
+     this.mediator.publish('transition', 'Play', wait);
   }
 
   PrePlayState.prototype.templates = function(){
@@ -32,6 +32,8 @@ define(['gameStates/BaseState', 'jquery'],function(BaseState, $){
     } else {
       this.game.$messages = ['Reveal top card'];
     }
+
+    this.render();
   };
 
   PrePlayState.prototype.deck = function(cardIndex) {

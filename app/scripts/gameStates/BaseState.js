@@ -1,8 +1,9 @@
-define(['jquery', 'mustache'],function($, mustache){
+define(['jquery', 'mustache', 'modules/Mediator'],function($, mustache, mediator){
   'use strict';
   function BaseState(game, name){
     this.game = game;
     this.name = name;
+    this.mediator = mediator;
     this.p1 = game.$player1;
     this.p2 = game.$player2;
   }
@@ -21,7 +22,9 @@ define(['jquery', 'mustache'],function($, mustache){
     };
   };
 
-  BaseState.prototype.init = function() {};
+  BaseState.prototype.init = function() {
+    this.render();
+  };
 
   BaseState.prototype.deck = function() {};
 

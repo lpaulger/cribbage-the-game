@@ -24,7 +24,7 @@ define(['jquery','gameStates/BaseState', 'modules/DeckModule'],function($, BaseS
     this.game.$messages = ['select two cards for ' + this.game.$cribOwner.possessive + ' crib'];
     this.game.$action = {text: 'Select'};
 
-    this.game.transitionTo('Crib');
+    this.mediator.publish('transition', 'Crib');
   };
 
   function sortByValue(a,b){

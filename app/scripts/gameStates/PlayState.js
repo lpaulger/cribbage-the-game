@@ -25,6 +25,8 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
       this.game.$messages = ['Select a card to play'];
 
     setAction.call(this);
+
+    this.render();
   };
 
   PlayState.prototype.selectCard = function(options) {
@@ -41,7 +43,9 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
       else if(e.message === 'Invalid Playable Card')
         this.game.$messages = ['Try another card'];
     }
-    this.game.transitionTo('Play', true);
+
+    this.render();
+    this.mediator.publish('transition', 'Play', true);
   };
 
   PlayState.prototype.action = function() {
@@ -58,7 +62,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
       }
     }
 
-    this.game.transitionTo(this.nextState, true);
+    this.mediator.publish('transition', this.nextState, true);
 
     if(isEndOfRound.call(this))
       this.nextState = 'Play';

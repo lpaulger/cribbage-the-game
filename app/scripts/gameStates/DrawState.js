@@ -14,7 +14,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
       return this.p1;
     } else {
       this.game.$messages = ['it was a tie'];
-      return this.game.transitionTo('Draw', true);
+      this.mediator.publish('transition', 'Draw', true);
     }
   };
 
@@ -31,14 +31,12 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     this.p1.hand = [this.game.$deck.cut()];
     this.p2.hand = [this.game.$deck.cut()];
     this.game.$cribOwner = compareCards.call(this);
-    if(typeof this.game.$cribOwner === 'function' )
-      console.log('cribOwner is a function?');//this.game.$cribOwner;
     if(!this.game.$cribOwner){
       this.game.$messages = ['It was a Tie, draw again'];
-      this.game.transitionTo('Draw', true);
+      this.mediator.publish('transition', 'Draw', true);
     } else {
       this.game.$messages = [this.game.$cribOwner.name + ' won.'];
-      this.game.transitionTo('Deal', true);
+      this.mediator.publish('transition', 'Deal', true);
     }
 
     this.render();

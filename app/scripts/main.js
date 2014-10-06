@@ -10,8 +10,8 @@ require.config({
   }
 });
 
-require(['app'], function (app) {
+require(['app', 'modules/GameModule'], function (App, Game) {
   'use strict';
-
+  var app = new App(Game);
   app.init();
 });

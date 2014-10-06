@@ -55,7 +55,7 @@ define(['jquery','gameStates/BaseState', 'modules/CountScoreKeeper'], function($
         this.game.$cribOwner = this.p1;
       }
       showPlayerOneHand.call(this);
-      this.game.transitionTo('Deal', true);
+       this.mediator.publish('transition', 'Deal', true);
       this.game.$showTopCard = false;
       this.game.$messages = [];
       this.step = 0;
