@@ -46,8 +46,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
       $player2: _player2,
       $cribOwner: _player2,
       $showTopCard: true,
-      topCard: new Card(10, 'diams'),
-      transitionTo: function(){}
+      topCard: new Card(10, 'diams')
     };
   }
 
@@ -71,6 +70,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
         spyOn(_player1, 'restoreHand');
         spyOn(_player2, 'restoreHand');
         _countState = new CountState(_game);
+        spyOn(_countState.mediator, 'publish');
         _countState.init();
       });
 
@@ -215,8 +215,8 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
         describe('and its third count', function () {
           beforeEach(function () {
             _game.$cribOwner = _game.$player1;
-            spyOn(_game, 'transitionTo');
             _countState = new CountState(_game);
+            spyOn(_countState.mediator, 'publish');
             _countState.init();
             _countState.action();
             _countState.action();
@@ -224,7 +224,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
 
           it('should transition to Deal State', function () {
             _countState.action();
-            expect(_game.transitionTo).toHaveBeenCalledWith('Deal', true);
+            expect(_countState.mediator.publish).toHaveBeenCalledWith('transition', 'Deal', true);
           });
 
           it('should set the crib owner to player2', function () {
@@ -334,8 +334,8 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
         describe('and its third count', function () {
           beforeEach(function () {
             _game.$cribOwner = _game.$player2;
-            spyOn(_game, 'transitionTo');
             _countState = new CountState(_game);
+            spyOn(_countState.mediator, 'publish');
             _countState.init();
             _countState.action();
             _countState.action();
@@ -343,7 +343,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
 
           it('should transition to Deal State', function () {
             _countState.action();
-            expect(_game.transitionTo).toHaveBeenCalledWith('Deal', true);
+            expect(_countState.mediator.publish).toHaveBeenCalledWith('transition', 'Deal', true);
           });
 
           it('should set the crib owner to player2', function () {

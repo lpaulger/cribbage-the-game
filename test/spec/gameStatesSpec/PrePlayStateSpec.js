@@ -13,12 +13,10 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
             $cribOwner: _cribOwner,
             $deck: {
               cards: []
-            },
-            transitionTo: function(){}
+            }
           };
-
-          spyOn(_game, 'transitionTo');
           _prePlayState = new PrePlayState(_game);
+          spyOn(_prePlayState.mediator, 'publish');
         };
       });
 
@@ -66,9 +64,10 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
           });
 
           it('should transitionTo "Play" state', function () {
-            expect(_game.transitionTo).toHaveBeenCalledWith('Play', false);
+            expect(_prePlayState.mediator.publish).toHaveBeenCalledWith('transition', 'Play', false);
           });
         });
+        
         describe('and two for his heels', function(){
           beforeEach(function () {
             _player = _cribOwner = {name: 'test', hand:[], selectOneFromDeck: function(){}, points: 0};

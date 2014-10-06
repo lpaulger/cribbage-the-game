@@ -91,8 +91,8 @@ define(['gameStates/CribState'], function(CribState) {
       beforeEach(function(){
         spyOn(_game.$player1, 'placeCardsInCrib');
         spyOn(_game.$player2, 'placeCardsInCrib');
-        spyOn(_game, 'transitionTo');
         _cribState = new CribState(_game);
+        spyOn(_cribState.mediator, 'publish');
       });
       describe('if two cards are selected', function(){
         beforeEach(function(){
@@ -107,8 +107,8 @@ define(['gameStates/CribState'], function(CribState) {
 
         it('should transition to PrePlay', function(){
           _cribState.action();
-          expect(_game.transitionTo.calls.count()).toBe(1);
-          expect(_game.transitionTo).toHaveBeenCalledWith('PrePlay');
+          expect(_cribState.mediator.publish.calls.count()).toBe(1);
+          expect(_cribState.mediator.publish).toHaveBeenCalledWith('transition', 'PrePlay');
         });
       });
       describe('if no cards are selected', function(){
@@ -120,7 +120,7 @@ define(['gameStates/CribState'], function(CribState) {
 
         it('should transition to PrePlay', function(){
           _cribState.action();
-          expect(_game.transitionTo.calls.count()).toBe(0);
+          expect(_cribState.mediator.publish.calls.count()).toBe(0);
         });
       });
     });
