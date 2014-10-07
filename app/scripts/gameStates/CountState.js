@@ -57,7 +57,7 @@ define(['jquery','gameStates/BaseState', 'modules/CountScoreKeeper'], function($
       showPlayerOneHand.call(this);
       this.game.$showTopCard = false;
       this.step = 0;
-      this.mediator.publish('transition', 'Deal', true);
+      this.mediator.publish('transition', 'Deal');
     }
   };
 

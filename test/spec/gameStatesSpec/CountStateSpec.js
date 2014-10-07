@@ -187,7 +187,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
 
           it('should transition to Deal State', function () {
             _countState.action();
-            expect(_countState.mediator.publish).toHaveBeenCalledWith('transition', 'Deal', true);
+            expect(_countState.mediator.publish).toHaveBeenCalledWith('transition', 'Deal');
           });
 
           it('should set the crib owner to player2', function () {
@@ -290,7 +290,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
 
           it('should transition to Deal State', function () {
             _countState.action();
-            expect(_countState.mediator.publish).toHaveBeenCalledWith('transition', 'Deal', true);
+            expect(_countState.mediator.publish).toHaveBeenCalledWith('transition', 'Deal');
           });
 
           it('should set the crib owner to player2', function () {
