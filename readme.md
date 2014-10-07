@@ -1,4 +1,4 @@
-#Card-Game [![Build Status](https://travis-ci.org/lpaulger/card-game.svg?branch=refactor)](https://travis-ci.org/lpaulger/card-game) [![Coverage Status](https://coveralls.io/repos/lpaulger/card-game/badge.png?branch=master)](https://coveralls.io/r/lpaulger/card-game?branch=master) [![Code Climate](https://codeclimate.com/github/lpaulger/card-game/badges/gpa.svg)](https://codeclimate.com/github/lpaulger/card-game)
+#Card-Game [![Build Status](https://travis-ci.org/lpaulger/card-game.svg?branch=refactor)](https://travis-ci.org/lpaulger/card-game) [![Coverage Status](https://img.shields.io/coveralls/lpaulger/card-game.svg)](https://coveralls.io/r/lpaulger/card-game?branch=master) [![Code Climate](https://codeclimate.com/github/lpaulger/card-game/badges/gpa.svg)](https://codeclimate.com/github/lpaulger/card-game)
 
 Auto Deployments to http://lucaspaulger.com/card-game/ after successful build.
 
