@@ -10,14 +10,14 @@ define(['gameStates/DealState'], function(DealState) {
       $player2: {},
       options: {
         showOpponentsHand: false
-      },
-      transitionTo: function(){}
+      }
     },
     dealState;
 
     describe('Constructor', function(){
       it('should create DealState Obj', function(){
         dealState = new DealState(game);
+        spyOn(dealState.mediator, 'publish');
         expect(dealState).toBeDefined();
         expect(typeof dealState).toEqual('object');
       });
@@ -25,13 +25,14 @@ define(['gameStates/DealState'], function(DealState) {
     
     describe('init', function(){
       beforeEach(function(){
-        spyOn(game, 'transitionTo');
         dealState = new DealState(game);
+        spyOn(dealState.mediator, 'publish');
         spyOn(game.$deck, 'shuffle');
         spyOn(game.$deck, 'deal').and.returnValue({
           topHand: [{faceValue: 1},{faceValue: 4},{faceValue: 1},{faceValue: 2},{faceValue: 6},{faceValue: 1}],
           bottomHand: [{faceValue: 10},{faceValue: 1},{faceValue: 6},{faceValue: 6},{faceValue: 9},{faceValue: 1}]
         });
+
         game.$cribOwner = game.$player1;
         dealState.init();
       });
@@ -51,11 +52,11 @@ define(['gameStates/DealState'], function(DealState) {
       });
 
       it('should display a message', function(){
-        expect(game.$messages[0]).toEqual('select two cards for your crib');
+        expect(dealState.mediator.publish).toHaveBeenCalledWith('messages-add', 'select two cards for your crib');
       });
       
       it('should transitionTo Crib State', function(){
-        expect(game.transitionTo).toHaveBeenCalledWith('Crib');
+        expect(dealState.mediator.publish).toHaveBeenCalledWith('transition', 'Crib');
       });
     });
   });

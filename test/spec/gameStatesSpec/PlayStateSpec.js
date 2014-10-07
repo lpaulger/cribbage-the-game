@@ -39,10 +39,9 @@ define(['gameStates/PlayState'], function (PlayState) {
 
     describe('When player selects a valid card', function () {
       beforeEach(function () {
-        spyOn(_game, 'transitionTo');
         spyOn(_player, 'playCard');
-
         _playState = new PlayState(_game);
+        spyOn(_playState.mediator, 'publish');
         _playState.selectCard({index: 1});
       });
 
@@ -51,16 +50,15 @@ define(['gameStates/PlayState'], function (PlayState) {
       });
 
       it('should transition back to Play', function () {
-        expect(_game.transitionTo).toHaveBeenCalledWith('Play', true);
+        expect(_playState.mediator.publish).toHaveBeenCalledWith('transition', 'Play', true);
       });
     });
 
     describe('when player selects invalid card', function () {
       beforeEach(function () {
-        spyOn(_game, 'transitionTo');
         spyOn(_player, 'playCard').and.throwError('No Playable Cards');
-
         _playState = new PlayState(_game);
+        spyOn(_playState.mediator, 'publish');
         _playState.selectCard({index: 1});
       });
 
@@ -75,16 +73,15 @@ define(['gameStates/PlayState'], function (PlayState) {
 
     describe('is end of round', function () {
       beforeEach(function () {
-        spyOn(_game, 'transitionTo');
-
         _playState = new PlayState(_game);
+        spyOn(_playState.mediator, 'publish');
         _playState.init();
       });
 
       it('should transition to Count state', function () {
         expect(_playState.nextState).toBe('Count');
         _playState.action();
-        expect(_game.transitionTo).toHaveBeenCalledWith('Count', true);
+        expect(_playState.mediator.publish).toHaveBeenCalledWith('transition', 'Count', true);
         expect(_playState.nextState).toBe('Play');
       });
     });

@@ -12,10 +12,12 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
       return this.p2;
     } else if(this.p1.hand[0].faceValue > this.p2.hand[0].faceValue){
       return this.p1;
-    } else {
-      this.game.$messages = ['it was a tie'];
-      return this.game.transitionTo('Draw', true);
     }
+  };
+
+  DrawState.prototype.init = function(){
+    this.mediator.publish('messages-add', 'Click the Deck to Start');
+    this.render();
   };
 
   DrawState.prototype.templates = function(){
@@ -31,14 +33,11 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     this.p1.hand = [this.game.$deck.cut()];
     this.p2.hand = [this.game.$deck.cut()];
     this.game.$cribOwner = compareCards.call(this);
-    if(typeof this.game.$cribOwner === 'function' )
-      console.log('cribOwner is a function?');//this.game.$cribOwner;
     if(!this.game.$cribOwner){
-      this.game.$messages = ['It was a Tie, draw again'];
-      this.game.transitionTo('Draw', true);
+      this.mediator.publish('messages-add', 'It was a Tie, draw again');
     } else {
-      this.game.$messages = [this.game.$cribOwner.name + ' won.'];
-      this.game.transitionTo('Deal', true);
+      this.mediator.publish('messages-add', this.game.$cribOwner.name + ' won.');
+      this.mediator.publish('transition', 'Deal', true);
     }
 
     this.render();

@@ -2,12 +2,13 @@
 // http://karma-runner.github.io/0.10/config/configuration-file.html
 
 module.exports = function(config) {
+  'use strict';
   config.set({
     // base path, that will be used to resolve files and exclude
     basePath: '',
 
     // testing framework to use (jasmine/mocha/qunit/...)
-    frameworks: ['jasmine', 'requirejs'],
+    frameworks: ['jasmine-jquery', 'jasmine', 'requirejs'],
 
     // list of files / patterns to load in the browser
     files: [
@@ -17,7 +18,8 @@ module.exports = function(config) {
       {pattern:'app/scripts/**/*.js', included: false},
       {pattern:'test/**/*Spec.js', included: false},
       {pattern:'test/**/*Mock.js', included: false},
-      {pattern:'test/test-main.js', included: true}
+      {pattern:'test/test-main.js', included: true},
+      {pattern:'test/fixtures/*.html', included: true}
     ],
 
     // list of files / patterns to exclude

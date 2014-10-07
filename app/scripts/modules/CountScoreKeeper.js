@@ -169,7 +169,8 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
     //console.log('handFlush: ' + gainedPoints);
     gainedPoints += this.getNobs(player.hand, starter);
     //console.log('nobs: ' + gainedPoints);
-    return gainedPoints;
+    player.points += gainedPoints;
+    this.mediator.publish('messages-add', player.name + ' scored ' + gainedPoints + ' points.');
   };
 
   return CountScoreKeeper;

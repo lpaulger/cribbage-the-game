@@ -97,12 +97,12 @@ define(['modules/PlayerModule'], function(Player) {
         });
 
         it('should return the card for selected index', function(){
-          expect(_player.selectOneFromDeck(_deck, 2)).toEqual({card: card, isTwoForHisHeels: undefined});
+          expect(_player.selectOneFromDeck(_deck, 2)).toEqual(card);
         });
 
         it('should check if TwoForHisHeels', function(){
-          var result = _player.selectOneFromDeck(_deck, 2);
-          expect(_player.scoreKeeper.TwoForHisHeels).toHaveBeenCalledWith(result.card, _player);
+          _player.selectOneFromDeck(_deck, 2);
+          expect(_player.scoreKeeper.TwoForHisHeels).toHaveBeenCalledWith(_player, card);
         });
       });
 
@@ -118,7 +118,7 @@ define(['modules/PlayerModule'], function(Player) {
         describe('plays any card', function(){
           beforeEach(function(){
             spyOn(_player.playRules, 'isCardPlayable').and.returnValue(true);
-            points =_player.playCard(0);
+            _player.playCard(0);
           });
 
           it('should find the card in the hand', function(){
@@ -130,7 +130,7 @@ define(['modules/PlayerModule'], function(Player) {
           });
 
           it('should return the points', function(){
-            expect(points).toEqual(0);
+            expect(_player.points).toEqual(0);
           });
         });
         
@@ -203,10 +203,12 @@ define(['modules/PlayerModule'], function(Player) {
             beforeEach(function(){
               spyOn(_player.playRules, 'hasPlayableCards').and.returnValue(false);
               spyOn(_player.board, 'announceGo').and.returnValue(undefined);
+              spyOn(_player.mediator, 'publish');
             });
 
             it('should return a message', function(){
-              expect(_player.announceGo()).toEqual('test said GO');
+              _player.announceGo();
+              expect(_player.mediator.publish).toHaveBeenCalledWith('messages-add', 'test said GO');
             });
           });
 
@@ -228,10 +230,12 @@ define(['modules/PlayerModule'], function(Player) {
             beforeEach(function(){
               spyOn(_player.playRules, 'hasPlayableCards').and.returnValue(false);
               spyOn(_player.board, 'announceGo').and.returnValue(1);
+              spyOn(_player.mediator, 'publish');
             });
 
             it('should return a message', function(){
-              expect(_player.announceGo()).toEqual('test scored 1 point for GO');
+              _player.announceGo();
+              expect(_player.mediator.publish).toHaveBeenCalledWith('messages-add', 'test said GO');
             });
           });
 
