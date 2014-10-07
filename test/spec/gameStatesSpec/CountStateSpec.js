@@ -80,9 +80,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
           _game.$cribOwner = _game.$player1;
           _countState = new CountState(_game);
           //spyOn(_countState.mediator, 'publish');
-          spyOn(_countState.scoreKeeper, 'evaluateHand').and.callFake(function(){
-            return 15;
-          });
+          spyOn(_countState.scoreKeeper, 'evaluateHand');
           _countState.init();
         });
 
@@ -94,23 +92,13 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
         it('should call scoreKeeper.evaluateHand fo player2', function(){
           expect(_countState.scoreKeeper.evaluateHand).toHaveBeenCalledWith(_player2, _game.topCard);
         });
-        
-        it('should set player2\'s score', function(){
-          expect(_player2.points).toEqual(15);
-        });
-        
-        it('should show a message with player 2\'s score', function(){
-          expect(_countState.mediator.publish).toHaveBeenCalledWith('messages-add', 'sally scored 15 points.');
-        });
       });
 
       describe('and player2 is crib owner', function(){
         beforeEach(function(){
           createBasicGame();
           _countState = new CountState(_game);
-          spyOn(_countState.scoreKeeper, 'evaluateHand').and.callFake(function(){
-            return 15;
-          });
+          spyOn(_countState.scoreKeeper, 'evaluateHand');
           _countState.init();
         });
 
@@ -121,14 +109,6 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
 
         it('should call scoreKeeper.evaluateHand for player1', function(){
           expect(_countState.scoreKeeper.evaluateHand).toHaveBeenCalledWith(_player1, _game.topCard);
-        });
-
-        it('should set player1\'s score', function(){
-          expect(_player1.points).toEqual(15);
-        });
-
-        it('should show a message with player 1\'s score', function(){
-          expect(_countState.mediator.publish).toHaveBeenCalledWith('messages-add', 'bob scored 15 points.');
         });
       });
 
@@ -146,9 +126,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             _game.$cribOwner = _game.$player1;
             _countState = new CountState(_game);
             _countState.init();
-            spyOn(_countState.scoreKeeper, 'evaluateHand').and.callFake(function(){
-              return 15;
-            });
+            spyOn(_countState.scoreKeeper, 'evaluateHand');
             spyOn(_countState.mediator, 'publish');
             _game.$player1.hand = _game.$player1.handInMemory;
             _game.$player2.hand = _game.$player2.handInMemory;
@@ -167,24 +145,12 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             expect(_game.$player1HandVisible).toBe(true);
             expect(_game.$player2HandVisible).toBe(false);
           });
-          
-          it('should calculate player1\'s hand', function(){
-            _countState.action();
-            expect(_player1.points).toEqual(15);
-          });
-
-          it('should show p1\'s score in a message', function(){
-            _countState.action();
-            expect(_countState.mediator.publish).toHaveBeenCalledWith('messages-add', _player1.name + ' scored ' + _player1.points + ' points.');
-          });
         });
         describe('and its second count', function(){
           beforeEach(function () {
             _game.$cribOwner = _game.$player1;
             _countState = new CountState(_game);
-            spyOn(_countState.scoreKeeper, 'evaluateHand').and.callFake(function(){
-              return 15;
-            });
+            spyOn(_countState.scoreKeeper, 'evaluateHand');
             _countState.init();
             _game.$player1.hand = _game.$player1.handInMemory;
             _game.$player1.crib = new Array(4);
@@ -201,11 +167,6 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
           it('should empty the crib', function () {
             _countState.action();
             expect(_game.$player1.crib).toEqual([]);
-          });
-          
-          it('should set player1 points', function(){
-            _countState.action();
-            expect(_player1.points).toEqual(30);
           });
           
           it('should evaluate player1\'s hand for points', function(){
@@ -259,9 +220,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             _game.$cribOwner = _game.$player2;
             _countState = new CountState(_game);
             spyOn(_countState.mediator, 'publish');
-            spyOn(_countState.scoreKeeper, 'evaluateHand').and.callFake(function(){
-              return 15;
-            });
+            spyOn(_countState.scoreKeeper, 'evaluateHand');
             _countState.init();
             _game.$player1.hand = _game.$player1.handInMemory;
             _game.$player2.hand = _game.$player2.handInMemory;
@@ -281,10 +240,6 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             expect(_game.$player1HandVisible).toBe(false);
           });
 
-          it('should show p1\'s score in a message', function () {
-            expect(_countState.mediator.publish).toHaveBeenCalledWith('messages-add', _player1.name + ' scored 15 points.');
-          });
-
           it('should be on step 1', function () {
             expect(_countState.step).toEqual(0);
             _countState.action();
@@ -297,9 +252,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             _game.$cribOwner = _game.$player2;
             _countState = new CountState(_game);
             _countState.init();
-            spyOn(_countState.scoreKeeper, 'evaluateHand').and.callFake(function(){
-              return 15;
-            });
+            spyOn(_countState.scoreKeeper, 'evaluateHand');
             spyOn(_countState.mediator, 'publish');
             _game.$player1.hand = _game.$player1.handInMemory;
             _game.$player1.crib = new Array(4);
@@ -322,16 +275,6 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             expect(_countState.step).toEqual(1);
             _countState.action();
             expect(_countState.step).toEqual(2);
-          });
-
-          it('should add points to player2\'s hand', function(){
-            _countState.action();
-            expect(_game.$player2.points).toBe(30);
-          });
-
-          it('it should display message', function(){
-            _countState.action();
-            expect(_countState.mediator.publish).toHaveBeenCalledWith('messages-add', 'her crib scored 15 points.');
           });
         });
 

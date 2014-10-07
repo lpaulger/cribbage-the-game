@@ -10,7 +10,7 @@ define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper,
         var player = {points: 0, hand: [new Card(2, 'diamonds'), new Card(4, 'hearts'), new Card(6, 'clubs'), new Card(8, 'hearts')]};
         var starter = new Card(10, 'diamonds');
 
-        player.points += scoreKeeper.evaluateHand(player, starter);
+        scoreKeeper.evaluateHand(player, starter);
         expect(player.points).toEqual(0);
       });
     });
@@ -22,7 +22,7 @@ define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper,
           hand: [new Card(2, 'diamonds'), new Card(2, 'hearts'), new Card(6, 'clubs'), new Card(8, 'hearts')]};
           var starter = new Card(10, 'diamonds');
 
-          player.points += scoreKeeper.evaluateHand(player, starter);
+          scoreKeeper.evaluateHand(player, starter);
           expect(player.points).toEqual(2);
         });
 
@@ -32,7 +32,7 @@ define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper,
               hand:[new Card(2, 'diamonds'), new Card(10, 'hearts'), new Card(6, 'clubs'), new Card(8, 'hearts')]};
             var starter = new Card(2, 'diamonds');
 
-            player.points += scoreKeeper.evaluateHand(player, starter);
+            scoreKeeper.evaluateHand(player, starter);
             expect(player.points).toEqual(2);
           });
         });
@@ -43,7 +43,7 @@ define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper,
             hand:[new Card(2, 'diamonds'), new Card(10, 'hearts'), new Card(8, 'clubs'), new Card(8, 'hearts')]};
             var starter = new Card(2, 'diamonds');
 
-            player.points += scoreKeeper.evaluateHand(player, starter);
+            scoreKeeper.evaluateHand(player, starter);
             expect(player.points).toEqual(4);
           });
         });
@@ -53,7 +53,7 @@ define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper,
             var player = {points: 0,hand: [new Card(2, 'diamonds'), new Card(10, 'hearts'), new Card(2, 'clubs'), new Card(8, 'hearts')]};
             var starter = new Card(2, 'diamonds');
 
-            player.points += scoreKeeper.evaluateHand(player, starter);
+            scoreKeeper.evaluateHand(player, starter);
             expect(player.points).toEqual(6);
           });
         });
@@ -66,7 +66,7 @@ define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper,
           var player = {points: 0, hand: [new Card(11, 'diamonds'), new Card(12, 'hearts'), new Card(8, 'clubs'), new Card(1, 'hearts')]};
           var starter = new Card(10, 'clubs');
 
-          player.points += scoreKeeper.evaluateHand(player, starter);
+          scoreKeeper.evaluateHand(player, starter);
           expect(player.points).toEqual(3);
         });
       });
@@ -80,7 +80,7 @@ define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper,
           //10,10 pair (2)
           //10d, J, Q run of 3 (3)
           //10h, J, Q run of 3 (3)
-          player.points += scoreKeeper.evaluateHand(player, starter);
+          scoreKeeper.evaluateHand(player, starter);
           expect(player.points).toEqual(8);
         });
       });
@@ -92,7 +92,7 @@ define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper,
           var player = {points: 0, hand: [new Card(2, 'hearts'), new Card(4, 'hearts'), new Card(6, 'hearts'), new Card(8, 'hearts')]};
           var starter = new Card(10, 'diamonds');
 
-          player.points += scoreKeeper.evaluateHand(player, starter);
+          scoreKeeper.evaluateHand(player, starter);
           expect(player.points).toEqual(4);
         });
       });
@@ -102,7 +102,7 @@ define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper,
           var player = {points: 0, hand: [new Card(2, 'hearts'), new Card(4, 'hearts'), new Card(6, 'hearts'), new Card(8, 'hearts')]};
           var starter = new Card(10, 'hearts');
 
-          player.points += scoreKeeper.evaluateHand(player, starter);
+          scoreKeeper.evaluateHand(player, starter);
           expect(player.points).toEqual(5);
         });
       });
@@ -114,7 +114,7 @@ define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper,
           var player = {points: 0, hand: [new Card(11, 'diamonds'), new Card(4, 'hearts'), new Card(6, 'hearts'), new Card(8, 'hearts')]};
           var starter = new Card(10, 'diamonds');
 
-          player.points += scoreKeeper.evaluateHand(player, starter);
+          scoreKeeper.evaluateHand(player, starter);
           expect(player.points).toEqual(1);
         });
       });
@@ -124,7 +124,7 @@ define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper,
           var player = {points: 0, hand: [new Card(6, 'diamonds'), new Card(4, 'hearts'), new Card(12, 'hearts'), new Card(8, 'hearts')]};
           var starter = new Card(10, 'diamonds');
 
-          player.points += scoreKeeper.evaluateHand(player, starter);
+          scoreKeeper.evaluateHand(player, starter);
           expect(player.points).toEqual(0);
         });
       });
@@ -136,7 +136,7 @@ define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper,
           var player = {points: 0, hand: [new Card(5, 'diamonds'), new Card(3, 'hearts'), new Card(8, 'clubs'), new Card(6, 'diamonds')]};
           var starter = new Card(11, 'diamonds');
 
-          player.points += scoreKeeper.evaluateHand(player, starter);
+          scoreKeeper.evaluateHand(player, starter);
           expect(player.points).toEqual(2);
         });
       });
@@ -146,7 +146,7 @@ define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper,
           var player = {points: 0, hand: [new Card(5, 'diamonds'), new Card(1, 'hearts'), new Card(8, 'clubs'), new Card(9, 'diamonds')]};
           var starter = new Card(3, 'diamonds');
 
-          player.points += scoreKeeper.evaluateHand(player, starter);
+          scoreKeeper.evaluateHand(player, starter);
           expect(player.points).toEqual(2);
         });
       });
@@ -156,7 +156,7 @@ define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper,
           var player = {points: 0, hand: [new Card(5, 'diamonds'), new Card(1, 'hearts'), new Card(13, 'clubs'), new Card(9, 'diamonds')]};
           var starter = new Card(10, 'diamonds');
 
-          player.points += scoreKeeper.evaluateHand(player, starter);
+          scoreKeeper.evaluateHand(player, starter);
           expect(player.points).toEqual(6);
         });
       });
@@ -167,7 +167,7 @@ define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper,
           var starter = new Card(5, 'diamonds');
 
           //5 points from run, 2 from 15 (total of all cards)
-          player.points += scoreKeeper.evaluateHand(player, starter);
+          scoreKeeper.evaluateHand(player, starter);
           expect(player.points).toEqual(7);
         });
       });
@@ -184,7 +184,7 @@ define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper,
           //7, 4, 4 15 (2)
           //2,3,4 run of 3 (3)
           //2,3,4 run of 3 (3)
-          player.points += scoreKeeper.evaluateHand(player, starter);
+          scoreKeeper.evaluateHand(player, starter);
           expect(player.points).toEqual(10);
         });
       });

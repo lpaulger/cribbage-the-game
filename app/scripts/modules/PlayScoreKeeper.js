@@ -112,8 +112,9 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
   };
   PlayScoreKeeper.prototype.pointForGo = function(player){
     this.mediator.publish('messages-add', player.name + ' scored 1 point.');
-    return 1;
+    player.points += 1;
   };
+  
   PlayScoreKeeper.prototype.evaluatePlay = function(player, playCards, totalPlayedCards){
     var points = 0;
     if(this.is15(playCards))
@@ -130,7 +131,7 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
       this.mediator.publish('messages-add', player.name + ' scored ' + points + ' point.');
     else if(points > 1)
       this.mediator.publish('messages-add', player.name + ' scored ' + points + ' points.');
-    return points;
+    player.points += points;
   };
 
   return PlayScoreKeeper;
