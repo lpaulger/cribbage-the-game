@@ -94,11 +94,13 @@ define(['gameStates/CribState'], function(CribState) {
         _cribState = new CribState(_game);
         spyOn(_cribState.mediator, 'publish');
       });
+
       describe('if two cards are selected', function(){
         beforeEach(function(){
           _cribState.selectCard({index:1});
           _cribState.selectCard({index:2});
         });
+
         it('should place two cards in crib', function(){
           _cribState.action();
           expect(_game.$player1.placeCardsInCrib.calls.count()).toBe(1);
@@ -106,11 +108,13 @@ define(['gameStates/CribState'], function(CribState) {
         });
 
         it('should transition to PrePlay', function(){
+          expect(_cribState.mediator.publish.calls.count()).toBe(2);//messages-clear
           _cribState.action();
-          expect(_cribState.mediator.publish.calls.count()).toBe(1);
+          expect(_cribState.mediator.publish.calls.count()).toBe(3);
           expect(_cribState.mediator.publish).toHaveBeenCalledWith('transition', 'PrePlay');
         });
       });
+
       describe('if no cards are selected', function(){
         it('should place two cards in crib', function(){
           _cribState.action();
@@ -120,7 +124,7 @@ define(['gameStates/CribState'], function(CribState) {
 
         it('should transition to PrePlay', function(){
           _cribState.action();
-          expect(_cribState.mediator.publish.calls.count()).toBe(0);
+          expect(_cribState.mediator.publish.calls.count()).toBe(2);//messages-clear
         });
       });
     });

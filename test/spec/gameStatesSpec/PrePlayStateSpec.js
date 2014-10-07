@@ -34,7 +34,7 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
           it('should set message to "Reveal top card"', function () {
             expect(_game.$messages).toEqual(['default']);
             _prePlayState.init();
-            expect(_game.$messages).toEqual(['Reveal top card']);
+            expect(_prePlayState.mediator.publish).toHaveBeenCalledWith('messages-add', 'Reveal top card');
           });
         });
 
@@ -49,7 +49,7 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
           it('should set message to "They will reveal top card"', function () {
             expect(_game.$messages).toEqual(['default']);
             _prePlayState.init();
-            expect(_game.$messages).toEqual(['They will reveal top card']);
+            expect(_prePlayState.mediator.publish).toHaveBeenCalledWith('messages-add', 'They will reveal top card');
           });
         });
       });
@@ -65,23 +65,6 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
 
           it('should transitionTo "Play" state', function () {
             expect(_prePlayState.mediator.publish).toHaveBeenCalledWith('transition', 'Play', false);
-          });
-        });
-        
-        describe('and two for his heels', function(){
-          beforeEach(function () {
-            _player = _cribOwner = {name: 'test', hand:[], selectOneFromDeck: function(){}, points: 0};
-            spyOn(_cribOwner, 'selectOneFromDeck').and.returnValue({card: {}, isTwoForHisHeels: 2});
-            _setup();
-            _prePlayState.deck();
-          });
-
-          it('should award crib owner 2 points', function(){
-            expect(_game.$cribOwner.points).toEqual(2);
-          });
-
-          it('should display message', function(){
-            expect(_game.$messages[0]).toEqual('test scored two for his heels');
           });
         });
       });

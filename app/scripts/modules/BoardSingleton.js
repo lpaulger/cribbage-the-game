@@ -28,7 +28,7 @@ define(['modules/PlayScoreKeeper'], function (ScoreKeeper) {
 
         if(otherPlayerAnnouncedGo.call(this)){
           this.resetBoard();
-          return scoreKeeper.pointForGo(player);
+          scoreKeeper.pointForGo(player);
         } else {
           this.playersWhoSaidGo.push(player);
         }

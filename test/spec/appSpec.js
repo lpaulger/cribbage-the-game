@@ -3,7 +3,9 @@ define(['app', 'modules/Mediator'], function(App, Mediator) {
   describe('App', function() {
     var app, Game, _mediator, StateRegistry;
     beforeEach(function(){
-      Game = function(){};
+      Game = function(){
+        this.$messages = [];
+      };
       _mediator = {
         subscribe: jasmine.createSpy('subscribe'),
         publish: jasmine.createSpy('publish')
@@ -24,7 +26,7 @@ define(['app', 'modules/Mediator'], function(App, Mediator) {
       });
 
       it('should call mediator subscribe to events', function(){
-        expect(_mediator.subscribe.calls.count()).toEqual(2);
+        expect(_mediator.subscribe.calls.count()).toEqual(4);
       });
 
       it('should publish start', function(){
@@ -85,6 +87,42 @@ define(['app', 'modules/Mediator'], function(App, Mediator) {
 
       it('should call init on the first state', function(){
         expect(app.states[0].init).toHaveBeenCalled();
+      });
+    });
+    
+    describe('message', function(){
+      beforeEach(function(){
+        StateRegistry = function(){
+          return [{init: jasmine.createSpy('init'), name: 'Draw'}, {init: jasmine.createSpy('init'), name: 'Play'}];
+        };
+        app = new App(Game, Mediator, StateRegistry);
+      });
+
+      describe('and add one message', function(){
+        it('should add the message to the game\'s messages', function(){
+          Mediator.publish('messages-add', 'test message');
+          expect(app.game.$messages.length).toEqual(1);
+          expect(app.game.$messages[0]).toEqual('test message');
+        });
+      });
+      
+      describe('and has one message, then clear messages', function(){
+        it('should have a 1 message, then none', function(){
+          Mediator.publish('messages-add', 'test message');
+          Mediator.publish('messages-clear');
+          expect(app.game.$messages.length).toEqual(0);
+        });
+      });
+      
+      describe('push 3 messages and then clear', function(){
+        it('should have a length of 3, and then 0', function(){
+          Mediator.publish('messages-add', 'test message');
+          Mediator.publish('messages-add', 'test message');
+          Mediator.publish('messages-add', 'test message');
+          expect(app.game.$messages.length).toEqual(3);
+          Mediator.publish('messages-clear');
+          expect(app.game.$messages.length).toEqual(0);
+        });
       });
     });
   });

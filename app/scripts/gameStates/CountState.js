@@ -46,7 +46,7 @@ define(['jquery','gameStates/BaseState', 'modules/CountScoreKeeper'], function($
       this.game.$cribOwner.hand = this.game.$cribOwner.crib;
       this.game.$cribOwner.crib = [];
       this.game.$cribOwner.points += points = this.scoreKeeper.evaluateHand(this.game.$cribOwner, this.game.topCard);
-      this.game.$messages = [this.game.$cribOwner.possessive + ' crib scored ' + points + ' points.'];
+      this.mediator.publish('messages-add', this.game.$cribOwner.possessive + ' crib scored ' + points + ' points.');
       this.game.$action = {text: 'Next Round'};
       this.step += 1;
       this.render();
@@ -58,7 +58,7 @@ define(['jquery','gameStates/BaseState', 'modules/CountScoreKeeper'], function($
       }
       showPlayerOneHand.call(this);
       this.game.$showTopCard = false;
-      this.game.$messages = [];
+      //clear messages?
       this.step = 0;
       this.mediator.publish('transition', 'Deal', true);
     }
@@ -67,14 +67,14 @@ define(['jquery','gameStates/BaseState', 'modules/CountScoreKeeper'], function($
   function evaluatePlayerOneScore(points){
     showPlayerOneHand.call(this);
     this.p1.points += points = this.scoreKeeper.evaluateHand(this.p1, this.game.topCard);
-    this.game.$messages = [this.p1.name + ' scored ' + points + ' points.'];
+    this.mediator.publish('messages-add', this.p1.name + ' scored ' + points + ' points.');
     return points;
   }
 
   function evaluatePlayerTwoScore(points){
     showPlayerTwoHand.call(this);
     this.p2.points += points = this.scoreKeeper.evaluateHand(this.p2, this.game.topCard);
-    this.game.$messages = [this.p2.name + ' scored ' + points + ' points.'];
+    this.mediator.publish('messages-add', this.p2.name + ' scored ' + points + ' points.');
     return points;
   }
 

@@ -42,6 +42,7 @@ define(['jquery', 'mustache', 'modules/Mediator'],function($, mustache, mediator
     var rendered = mustache.render($('#stateTemplate').html(), this.game, this.templates());
     $('#content').html(rendered);
     this.bindEvents();
+    this.mediator.publish('messages-clear');
   };
 
   BaseState.prototype.bindEvents = function(){

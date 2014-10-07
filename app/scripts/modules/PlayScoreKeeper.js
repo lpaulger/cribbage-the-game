@@ -12,9 +12,10 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
     return card.faceValue === 11;
   };
 
-  PlayScoreKeeper.prototype.TwoForHisHeels = function(card){
+  PlayScoreKeeper.prototype.TwoForHisHeels = function(player, card){
     if(this.isTwoForHisHeels(card)){
-      return 2;
+      this.mediator.publish('messages-add', player.name + ' scored two for his heels');
+      player.points += 2;
     }
   };
   PlayScoreKeeper.prototype.playCount = function (playCards) {
@@ -91,7 +92,6 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
     var count = this.iterateCardsForRun(playCards);
 
     if(count > 2){
-      //console.log('hasARun for ' + player.name + ' ' + count + ' points');
       return count;
     }
   };
@@ -110,30 +110,26 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
 
     return ((matches+1) * matches);
   };
-  PlayScoreKeeper.prototype.pointForGo = function(){
+  PlayScoreKeeper.prototype.pointForGo = function(player){
+    this.mediator.publish('messages-add', player.name + ' scored 1 point.');
     return 1;
   };
-  PlayScoreKeeper.prototype.evaluatePlay = function(playCards, totalPlayedCards){
+  PlayScoreKeeper.prototype.evaluatePlay = function(player, playCards, totalPlayedCards){
     var points = 0;
-    if(this.is15(playCards)){
-      //console.log('is15 for ' + player.name + ' 2 points');
+    if(this.is15(playCards))
       points += 2;
-    }
-
-    if(this.is31(playCards)){
-      //console.log('is31 for ' + player.name + ' 2 points');
+    if(this.is31(playCards))
       points += 2;
-    }
-
     if(this.hasAtLeastOnePair(playCards))
       points += this.scorePairs(playCards);
     if(this.hasARun(playCards))
       points += this.scoreRun(playCards);
-    if(this.isLastCard(totalPlayedCards)){
-      //console.log('isLastCard for ' + player.name + ' 1 point');
+    if(this.isLastCard(totalPlayedCards))
       points += 1;
-    }
-
+    if(points === 1)
+      this.mediator.publish('messages-add', player.name + ' scored ' + points + ' point.');
+    else if(points > 1)
+      this.mediator.publish('messages-add', player.name + ' scored ' + points + ' points.');
     return points;
   };
 

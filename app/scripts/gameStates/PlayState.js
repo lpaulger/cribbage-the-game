@@ -22,7 +22,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     if(this.game.currentPlayer === this.p2)
       processAiTurn.call(this);
     else
-      this.game.$messages = ['Select a card to play'];
+      this.mediator.publish('messages-add', 'Select a card to play');
 
     setAction.call(this);
 
@@ -31,17 +31,14 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
 
   PlayState.prototype.selectCard = function(options) {
     try {
-      var points = this.p1.playCard(options.index);
+      this.p1.playCard(options.index);
       this.game.currentPlayer = this.p2;
-      if(points > 0)
-        this.game.$messages = [this.p1.possessive + ' scored ' + points + ' points.'];
-      else
-        this.game.$messages = ['Their Turn'];
+      this.mediator.publish('messages-add', 'Their Turn');
     } catch(e) {
       if(e.message === 'No Playable Cards')
-        this.game.$messages = ['No Playable Cards, Press \'Go!\''];
+        this.mediator.publish('messages-add', 'No Playable Cards, Press \'Go!\'');
       else if(e.message === 'Invalid Playable Card')
-        this.game.$messages = ['Try another card'];
+        this.mediator.publish('messages-add', 'Try another card');
     }
 
     this.render();
@@ -51,14 +48,14 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
   PlayState.prototype.action = function() {
     if(this.nextState === 'Play'){
       try {
-        var response = this.p1.announceGo();
+        this.p1.announceGo();//TODO: make sure response gets into messages
         this.game.currentPlayer = this.p2;
-        this.game.$messages = [response, 'Their Turn'];
+        this.mediator.publish('messages-add', 'Their Turn');
       } catch(e) {
         if(e.message === 'No Playable Cards')
-          this.game.$messages = ['No Playable Cards, Press \'Go!\''];
+          this.mediator.publish('messages-add', 'No Playable Cards, Press \'Go!\'');
         else if(e.message === 'Playable Cards')
-          this.game.$messages = [this.name + ' can\'t go, you have playable cards.'];
+          this.mediator.publish('messages-add', this.name + ' can\'t go, you have playable cards.');
       }
     }
 
@@ -81,16 +78,9 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
 
   function processAiTurn(){
     try{
-      var response = this.p2.playCard();
+      this.p2.playCard();
       this.game.currentPlayer = this.p1;
-      this.game.$messages = [];
-      if(response > 0)
-        this.game.$messages.push(this.p2.name + ' scored ' + response + ' points');
-      else if(typeof response === 'string'){
-        this.game.$messages.push(response);
-      }
-
-      this.game.$messages.push('Your Turn.');
+      this.mediator.publish('messages-add', 'Your Turn.');
     } catch(e){
       console.log(e);
     }
@@ -98,7 +88,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
 
   function setAction(){
     if(isEndOfRound.call(this)){
-      this.game.$messages.push('Round Over!');
+      this.mediator.publish('messages-add', 'Round Over!');
       this.game.$action = {text:'Ok'};
       this.nextState = 'Count';
       this.game.currentPlayer = undefined;
