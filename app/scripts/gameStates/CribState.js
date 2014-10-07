@@ -54,6 +54,7 @@ define(['gameStates/BaseState'],function(BaseState){
        this.mediator.publish('transition', 'PrePlay');
     } else {
       this.game.$messages = ['Please select two cards for ' + this.game.$cribOwner.possessive + ' crib.'];
+      this.render();
     }
   };
 

@@ -30,6 +30,7 @@ define(['jquery','gameStates/BaseState', 'modules/CountScoreKeeper'], function($
   };
 
   CountState.prototype.action = function(){
+    console.log(this.step);
     var points = 0;
     if(this.step === 0){
       if(isPlayerOneCribOwner.call(this)){
@@ -41,6 +42,7 @@ define(['jquery','gameStates/BaseState', 'modules/CountScoreKeeper'], function($
       }
       points = 0;
       this.step += 1;
+      this.render();
     } else if(this.step === 1) {
       this.game.$cribOwner.hand = this.game.$cribOwner.crib;
       this.game.$cribOwner.crib = [];
@@ -48,6 +50,7 @@ define(['jquery','gameStates/BaseState', 'modules/CountScoreKeeper'], function($
       this.game.$messages = [this.game.$cribOwner.possessive + ' crib scored ' + points + ' points.'];
       this.game.$action = {text: 'Next Round'};
       this.step += 1;
+      this.render();
     } else {
       if(isPlayerOneCribOwner.call(this)){
         this.game.$cribOwner = this.p2;
@@ -55,12 +58,11 @@ define(['jquery','gameStates/BaseState', 'modules/CountScoreKeeper'], function($
         this.game.$cribOwner = this.p1;
       }
       showPlayerOneHand.call(this);
-       this.mediator.publish('transition', 'Deal', true);
       this.game.$showTopCard = false;
       this.game.$messages = [];
       this.step = 0;
+      this.mediator.publish('transition', 'Deal', true);
     }
-    this.render();
   };
 
   function evaluatePlayerOneScore(points){

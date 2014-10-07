@@ -26,28 +26,49 @@ define(['jquery', 'mustache', 'modules/Mediator'],function($, mustache, mediator
     this.render();
   };
 
-  BaseState.prototype.deck = function() {};
+  BaseState.prototype.deck = function() {
+    this.render();
+  };
 
-  BaseState.prototype.selectCard = function() {};
+  BaseState.prototype.selectCard = function() {
+    this.render();
+  };
 
-  BaseState.prototype.action = function() {};
+  BaseState.prototype.action = function() {
+    this.render();
+  };
 
   BaseState.prototype.render = function() {
     var rendered = mustache.render($('#stateTemplate').html(), this.game, this.templates());
     $('#content').html(rendered);
+    this.bindEvents();
+  };
+
+  BaseState.prototype.bindEvents = function(){
     $('#deck').on('click', function(e){
+      this.unbindEvents();
       var cardIndex = $($(e.currentTarget).children('ul')[0]).children('li').children('a').index(e.target);
       $(e.target).addClass('selected');
       this.deck(cardIndex);
     }.bind(this));
 
     $('#bottomHand').on('click', 'li', function(event){
+      this.unbindEvents();
       var index = $('#bottomHand').find('li').index(event.currentTarget);
       var card = $(event.currentTarget).find('a');
       this.selectCard({index: index, card: card, event: event});
     }.bind(this));
 
-    $('#controls').on('click', 'button', this.action.bind(this));
+    $('#controls').on('click', 'button', function(){
+      this.unbindEvents();
+      this.action();
+    }.bind(this));
+  };
+
+  BaseState.prototype.unbindEvents = function(){
+    $('#deck').off('click');
+    $('#bottomHand').off('click', 'li');
+    $('#controls').off('click', 'button');
   };
 
   return BaseState;

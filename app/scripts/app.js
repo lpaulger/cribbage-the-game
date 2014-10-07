@@ -2,6 +2,27 @@ define([],
   function(){
     'use strict';
 
+    function App(Game, Mediator, StateRegistry){
+      this.game = new Game();
+      this.mediator = Mediator;
+      this.states = new StateRegistry(this.game);
+
+      this.mediator.subscribe('start', startGame.bind(this));
+
+      this.mediator.subscribe('transition', transitionTo.bind(this));
+
+//      this.mediator.subscribe('winner', function(player){
+//        console.log('winner');
+//        console.log(player);
+//
+//        this.mediator.publish('transition', 'Summary');
+//      });
+    }
+
+    App.prototype.init = function(){
+      this.mediator.publish('start');
+    };
+
     function transitionTo(stateName, wait){
       var state;
       function process(){
@@ -26,27 +47,6 @@ define([],
     function startGame(){
       this.states[0].init();
     }
-
-    function App(Game, Mediator, StateRegistry){
-      this.game = new Game();
-      this.mediator = Mediator;
-      this.states = new StateRegistry(this.game);
-
-      this.mediator.subscribe('start', startGame.bind(this));
-
-      this.mediator.subscribe('transition', transitionTo.bind(this));
-
-//      this.mediator.subscribe('winner', function(player){
-//        console.log('winner');
-//        console.log(player);
-//
-//        this.mediator.publish('transition', 'Summary');
-//      });
-    }
-
-    App.prototype.init = function(){
-      this.mediator.publish('start');
-    };
 
     return App;
   });
