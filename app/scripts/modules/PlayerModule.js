@@ -33,7 +33,7 @@ define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlaySco
 
     Player.prototype.selectOneFromDeck = function(deck, cardIndex) {
       var card = deck.selectOne(cardIndex);
-     this.scoreKeeper.TwoForHisHeels(this, card);
+      this.scoreKeeper.TwoForHisHeels(this, card);
       return card;
     };
 

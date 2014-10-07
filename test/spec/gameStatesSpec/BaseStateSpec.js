@@ -81,7 +81,7 @@ define(['gameStates/BaseState', 'jquery'], function (BaseState, $) {
         });
         
         it('should call the state deck method', function(){
-           expect(baseState.deck).toHaveBeenCalled();
+          expect(baseState.deck).toHaveBeenCalled();
         });
       });
 
