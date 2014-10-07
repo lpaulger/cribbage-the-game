@@ -32,6 +32,8 @@ require.config({
   callback: window.__karma__.start
 });
 
+jasmine.getFixtures().fixturesPath = 'base/test/fixtures';
+
 if (!Function.prototype.bind) {
   Function.prototype.bind = function (oThis) {
     'use strict';

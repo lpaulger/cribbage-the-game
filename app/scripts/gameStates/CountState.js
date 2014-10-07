@@ -30,7 +30,6 @@ define(['jquery','gameStates/BaseState', 'modules/CountScoreKeeper'], function($
   };
 
   CountState.prototype.action = function(){
-    console.log(this.step);
     var points = 0;
     if(this.step === 0){
       if(isPlayerOneCribOwner.call(this)){
