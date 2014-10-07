@@ -62,6 +62,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
       }
     }
 
+    this.render();
     this.mediator.publish('transition', this.nextState, true);
 
     if(isEndOfRound.call(this))
