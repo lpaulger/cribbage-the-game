@@ -8,6 +8,9 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
       possessive: 'his',
       hand: [],
       points: 0,
+      isWinner: function(){
+        return false;
+      },
       handInMemory: [
         new Card(1, 'hearts'),
         new Card(3, 'hearts'),
@@ -27,6 +30,9 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
       possessive: 'her',
       hand: [],
       points: 0,
+      isWinner: function(){
+        return false;
+      },
       handInMemory: [
         new Card(1, 'clubs'),
         new Card(3, 'clubs'),

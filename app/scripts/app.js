@@ -13,13 +13,6 @@ define([],
 
       this.mediator.subscribe('messages-add', setMessages.bind(this));
       this.mediator.subscribe('messages-clear', clearMessages.bind(this));
-
-//      this.mediator.subscribe('winner', function(player){
-//        console.log('winner');
-//        console.log(player);
-//
-//        this.mediator.publish('transition', 'Summary');
-//      });
     }
 
     App.prototype.init = function(){

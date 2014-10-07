@@ -10,6 +10,7 @@ define(['jquery', 'mustache', 'modules/Mediator'],function($, mustache, mediator
 
   BaseState.prototype.templates = function(){
     return {
+      page: $('#stateTemplate').html(),
       p1Hand: $('#visibleHandTemplate').html(),
       p2Hand: $('#hiddenHandTemplate').html(),
       p1Score: $('#scoreboardTemplate').html(),
@@ -39,7 +40,7 @@ define(['jquery', 'mustache', 'modules/Mediator'],function($, mustache, mediator
   };
 
   BaseState.prototype.render = function() {
-    var rendered = mustache.render($('#stateTemplate').html(), this.game, this.templates());
+    var rendered = mustache.render(this.templates().page, this.game, this.templates());
     $('#content').html(rendered);
     this.bindEvents();
     this.mediator.publish('messages-clear');

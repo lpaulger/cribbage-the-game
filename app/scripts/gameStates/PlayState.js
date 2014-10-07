@@ -42,7 +42,10 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     }
 
     this.render();
-    this.mediator.publish('transition', 'Play', true);
+    if(this.p1.isWinner())
+      this.mediator.publish('transition', 'Summary');
+    else
+      this.mediator.publish('transition', 'Play', true);
   };
 
   PlayState.prototype.action = function() {
@@ -60,7 +63,10 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     }
 
     this.render();
-    this.mediator.publish('transition', this.nextState, true);
+    if(this.p1.isWinner())
+      this.mediator.publish('transition', 'Summary');
+    else
+      this.mediator.publish('transition', this.nextState, true);
 
     if(isEndOfRound.call(this))
       this.nextState = 'Play';
@@ -81,6 +87,8 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
       this.p2.playCard();
       this.game.currentPlayer = this.p1;
       this.mediator.publish('messages-add', 'Your Turn.');
+      if(this.p1.isWinner())
+        this.mediator.publish('transition', 'Summary');
     } catch(e){
       console.log(e);
     }

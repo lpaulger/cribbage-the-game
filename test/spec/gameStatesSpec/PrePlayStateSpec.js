@@ -1,5 +1,3 @@
-/* global describe, it */
-
 define(['gameStates/PrePlayState'], function(PrePlayState) {
     'use strict';
 
@@ -27,7 +25,9 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
       describe('init', function () {
         describe('if Player is CribOwner', function () {
           beforeEach(function () {
-            _player = _cribOwner = {hand:[], selectOneFromDeck: function(){}};
+            _player = _cribOwner = {hand:[],isWinner: function(){
+              return false;
+            }, selectOneFromDeck: function(){}};
             _setup();
           });
 
@@ -40,7 +40,9 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
 
         describe('if Player is not CribOwner', function () {
           beforeEach(function () {
-            _cribOwner = {name: 'Robo', selectOneFromDeck: function(){}};
+            _cribOwner = {name: 'Robo', selectOneFromDeck: function(){},isWinner: function(){
+              return false;
+            }};
             spyOn(_cribOwner, 'selectOneFromDeck').and.returnValue({card: {}, isTwoForHisHeels: undefined});
             _player = {name: 'User'};
             _setup();
@@ -57,7 +59,9 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
       describe('deck', function () {
         describe('and is not two for his heels', function(){
           beforeEach(function () {
-            _player = _cribOwner = {name: 'test', hand:[], selectOneFromDeck: function(){}, points: 0};
+            _player = _cribOwner = {name: 'test',isWinner: function(){
+              return false;
+            }, hand:[], selectOneFromDeck: function(){}, points: 0};
             spyOn(_cribOwner, 'selectOneFromDeck').and.returnValue({card: {}, isTwoForHisHeels: 0});
             _setup();
             _prePlayState.deck();
