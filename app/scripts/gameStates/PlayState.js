@@ -43,7 +43,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
 
     this.render();
     if(this.p1.isWinner())
-      this.mediator.publish('transition', 'Summary');
+      this.mediator.publish('transition', 'Summary', true);
     else
       this.mediator.publish('transition', 'Play', true);
   };
@@ -64,7 +64,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
 
     this.render();
     if(this.p1.isWinner())
-      this.mediator.publish('transition', 'Summary');
+      this.mediator.publish('transition', 'Summary', true);
     else
       this.mediator.publish('transition', this.nextState, true);
 
@@ -88,7 +88,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
       this.game.currentPlayer = this.p1;
       this.mediator.publish('messages-add', 'Your Turn.');
       if(this.p2.isWinner())
-        this.mediator.publish('transition', 'Summary');
+        this.mediator.publish('transition', 'Summary', true);
     } catch(e){
       console.log(e);
     }

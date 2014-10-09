@@ -47,7 +47,7 @@ define(['gameStates/SummaryState', 'jquery'], function(SummaryState, $){
         });
 
         it('should publish transition event, to draw', function(){
-          expect(summaryState.mediator.publish).toHaveBeenCalledWith('transition', 'Draw');
+          expect(summaryState.mediator.publish).toHaveBeenCalledWith('start');
         });
       });
 

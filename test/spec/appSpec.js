@@ -1,48 +1,40 @@
-define(['app', 'modules/Mediator'], function(App, Mediator) {
+define(['app'], function(App) {
   'use strict';
   describe('App', function() {
-    var app, Game, _mediator, StateRegistry;
-    beforeEach(function(){
-      Game = function(){
-        this.$messages = [];
-      };
-      _mediator = {
-        subscribe: jasmine.createSpy('subscribe'),
-        publish: jasmine.createSpy('publish')
-      };
-      StateRegistry = function(){
-        return [{init: jasmine.createSpy('init')}];
-      };
-    });
-
+    var app;
+    
     describe('init', function(){
       beforeEach(function(){
-        app = new App(Game, _mediator, StateRegistry);
+        app = new App();
+        spyOn(app.mediator, 'publish');
         app.init();
       });
 
-      it('should create a game', function(){
-        expect(app.game).toBeDefined();
-      });
-
-      it('should call mediator subscribe to events', function(){
-        expect(_mediator.subscribe.calls.count()).toEqual(5);
-      });
-
       it('should publish start', function(){
-        expect(_mediator.publish.calls.count()).toEqual(1);
-        expect(_mediator.publish).toHaveBeenCalledWith('start');
+        expect(app.mediator.publish.calls.count()).toEqual(1);
+        expect(app.mediator.publish).toHaveBeenCalledWith('start');
+      });
+
+      afterEach(function(){
+        app.game = {
+          $messages: []
+        };
+        app.states = [
+          {name: 'Draw', init: jasmine.createSpy('init')},
+          {name:'Play', init: jasmine.createSpy('init')}];
       });
     });
 
     describe('transitionTo', function(){
       beforeEach(function(){
         jasmine.clock().install();
-
-        StateRegistry = function(){
-          return [{init: jasmine.createSpy('init'), name: 'Draw'}, {init: jasmine.createSpy('init'), name: 'Play'}];
+        app = new App();
+        app.game = {
+          $messages: []
         };
-        app = new App(Game, Mediator, StateRegistry);
+        app.states = [
+          {name: 'Draw', init: jasmine.createSpy('init')},
+          {name:'Play', init: jasmine.createSpy('init')}];
       });
 
       afterEach(function() {
@@ -51,7 +43,7 @@ define(['app', 'modules/Mediator'], function(App, Mediator) {
 
       describe('and wait is true', function(){
         it('should call render', function(){
-          Mediator.publish('transition', 'Play', true);
+          app.mediator.publish('transition', 'Play', true);
           expect(app.states[1].init).not.toHaveBeenCalled();
           jasmine.clock().tick(1001);
           expect(app.states[1].init).toHaveBeenCalled();
@@ -60,7 +52,7 @@ define(['app', 'modules/Mediator'], function(App, Mediator) {
 
       describe('and wait is false', function(){
         it('should call render', function(){
-          Mediator.publish('transition', 'Play', false);
+          app.mediator.publish('transition', 'Play', false);
           expect(app.states[1].init).toHaveBeenCalled();
           jasmine.clock().tick(1001);
           expect(app.states[1].init).toHaveBeenCalled();
@@ -70,7 +62,7 @@ define(['app', 'modules/Mediator'], function(App, Mediator) {
       describe('and state doesn\'t exist', function(){
         it('should throw error', function(){
           expect(function(){
-            Mediator.publish('transition', 'FAKE', false);
+            app.mediator.publish('transition', 'FAKE', false);
           }).toThrowError('State FAKE Not Found');
         });
       });
@@ -78,51 +70,73 @@ define(['app', 'modules/Mediator'], function(App, Mediator) {
 
     describe('startGame published', function(){
       beforeEach(function(){
-        StateRegistry = function(){
-          return [{init: jasmine.createSpy('init')}];
+        app = new App();
+        app.game = {
+          $messages: []
         };
-        app = new App(Game, Mediator, StateRegistry);
-        app.init();
+        app.states = [
+          {name: 'Draw', init: function(){}},
+          {name:'Play', init: function(){}}];
+
+        spyOn(app.states[0], 'init');
+        app.mediator.publish('start');
       });
 
-      it('should call init on the first state', function(){
-        expect(app.states[0].init).toHaveBeenCalled();
+      it('should create a new game', function(){
+        expect(app.game).toBeDefined();
       });
     });
-    
+
     describe('message', function(){
       beforeEach(function(){
-        StateRegistry = function(){
-          return [{init: jasmine.createSpy('init'), name: 'Draw'}, {init: jasmine.createSpy('init'), name: 'Play'}];
+        app = new App();
+        app.game = {
+          $messages: []
         };
-        app = new App(Game, Mediator, StateRegistry);
       });
 
       describe('and add one message', function(){
         it('should add the message to the game\'s messages', function(){
-          Mediator.publish('messages-add', 'test message');
+          app.mediator.publish('messages-add', 'test message');
           expect(app.game.$messages.length).toEqual(1);
           expect(app.game.$messages[0]).toEqual('test message');
         });
       });
-      
+
       describe('and has one message, then clear messages', function(){
         it('should have a 1 message, then none', function(){
-          Mediator.publish('messages-add', 'test message');
-          Mediator.publish('messages-clear');
+          app.mediator.publish('messages-add', 'test message');
+          app.mediator.publish('messages-clear');
           expect(app.game.$messages.length).toEqual(0);
         });
       });
-      
+
       describe('push 3 messages and then clear', function(){
         it('should have a length of 3, and then 0', function(){
-          Mediator.publish('messages-add', 'test message');
-          Mediator.publish('messages-add', 'test message');
-          Mediator.publish('messages-add', 'test message');
+          app.mediator.publish('messages-add', 'test message');
+          app.mediator.publish('messages-add', 'test message');
+          app.mediator.publish('messages-add', 'test message');
           expect(app.game.$messages.length).toEqual(3);
-          Mediator.publish('messages-clear');
+          app.mediator.publish('messages-clear');
           expect(app.game.$messages.length).toEqual(0);
         });
+      });
+    });
+
+    describe('winner', function(){
+      var player;
+      beforeEach(function(){
+        player = {name: 'test'};
+        app = new App();
+        app.game = {
+          winner: {}
+        };
+      });
+
+      it('should set the game.winner to the player', function(){
+        expect(app.game.winner).not.toEqual(player);
+        app.mediator.publish('winner', player);
+        expect(app.game.winner).toEqual(player);
       });
     });
   });

@@ -16,7 +16,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
 
   SummaryState.prototype.bindEvents = function(){
     $('#newGameButton').on('click', function(){
-      this.mediator.publish('transition', 'Draw');
+      this.mediator.publish('start');
     }.bind(this));
 
     $('#homeButton').on('click', function(){
