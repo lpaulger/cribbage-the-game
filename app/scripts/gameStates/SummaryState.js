@@ -14,5 +14,15 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     return templates;
   };
 
+  SummaryState.prototype.bindEvents = function(){
+    $('#newGameButton').on('click', function(){
+      this.mediator.publish('transition', 'Draw');
+    }.bind(this));
+
+    $('#homeButton').on('click', function(){
+      this.mediator.publish('transition', 'Home');
+    }.bind(this));
+  };
+
   return SummaryState;
 });

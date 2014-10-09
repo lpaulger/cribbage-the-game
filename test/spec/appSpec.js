@@ -26,7 +26,7 @@ define(['app', 'modules/Mediator'], function(App, Mediator) {
       });
 
       it('should call mediator subscribe to events', function(){
-        expect(_mediator.subscribe.calls.count()).toEqual(4);
+        expect(_mediator.subscribe.calls.count()).toEqual(5);
       });
 
       it('should publish start', function(){

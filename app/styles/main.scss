@@ -24,6 +24,23 @@ body {
   position: relative;
 }
 
+h1, h3, h4 {
+  text-align: center;
+}
+
+#bottomControls {
+  position: absolute;
+  bottom: 2em;
+  text-align: center;
+  width: 100%;
+
+  button {
+    width: 70%;
+    font-size: 1.7em;
+    padding: .2em;
+  }
+}
+
 #messageContainer {
   position: absolute;
   list-style: none;

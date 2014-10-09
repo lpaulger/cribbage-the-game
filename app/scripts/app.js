@@ -13,6 +13,8 @@ define([],
 
       this.mediator.subscribe('messages-add', setMessages.bind(this));
       this.mediator.subscribe('messages-clear', clearMessages.bind(this));
+
+      this.mediator.subscribe('winner', setWinner.bind(this));
     }
 
     App.prototype.init = function(){
@@ -25,6 +27,10 @@ define([],
 
     function clearMessages(){
       this.game.$messages = [];
+    }
+
+    function setWinner(player){
+      this.game.winner = player;
     }
 
     function transitionTo(stateName, wait){

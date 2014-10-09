@@ -19,6 +19,18 @@
     </head>
     <body>
     <div id="content"></div>
+    <script id="summaryTemplate" type="x-tmpl-mustache">
+        <h1>{{winner.name}} Won!</h1>
+        <h3>{{$player1.possessive}} points:</h3>
+        <h4>{{$player1.points}}</h4>
+        <h3>{{$player2.possessive}} points:</h3>
+        <h4>{{$player2.points}}</h4>
+
+        <div id="bottomControls">
+            <button id="newGameButton">Play again?</button>
+            <button id="homeButton">Home</button>
+        </div>
+    </script>
     <script id="stateTemplate" type="x-tmpl-mustache">
         <ul id="messageContainer">{{> messages}}</ul>
         <div id="player2" class="player">
