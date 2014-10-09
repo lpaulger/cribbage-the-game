@@ -9,9 +9,9 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
 
   var compareCards = function() {
     if(this.p1.hand[0].faceValue < this.p2.hand[0].faceValue){
-      return this.p2;
-    } else if(this.p1.hand[0].faceValue > this.p2.hand[0].faceValue){
       return this.p1;
+    } else if(this.p1.hand[0].faceValue > this.p2.hand[0].faceValue){
+      return this.p2;
     }
   };
 
