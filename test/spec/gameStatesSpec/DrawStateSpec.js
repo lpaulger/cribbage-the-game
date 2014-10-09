@@ -10,8 +10,7 @@ define(['gameStates/DrawState'], function(DrawState){
         return this.cards.pop();
       }
     }
-  },
-  _newGame = {};
+  };
 
   describe('Draw', function () {
     it('should create Draw State', function () {

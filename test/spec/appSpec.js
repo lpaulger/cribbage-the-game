@@ -21,7 +21,8 @@ define(['app'], function(App) {
         };
         app.states = [
           {name: 'Draw', init: jasmine.createSpy('init')},
-          {name:'Play', init: jasmine.createSpy('init')}];
+          {name:'Play', init: jasmine.createSpy('init')}
+        ];
       });
     });
 
@@ -34,7 +35,8 @@ define(['app'], function(App) {
         };
         app.states = [
           {name: 'Draw', init: jasmine.createSpy('init')},
-          {name:'Play', init: jasmine.createSpy('init')}];
+          {name:'Play', init: jasmine.createSpy('init')}
+        ];
       });
 
       afterEach(function() {
@@ -76,7 +78,8 @@ define(['app'], function(App) {
         };
         app.states = [
           {name: 'Draw', init: function(){}},
-          {name:'Play', init: function(){}}];
+          {name:'Play', init: function(){}}
+        ];
 
         spyOn(app.states[0], 'init');
         app.mediator.publish('start');
