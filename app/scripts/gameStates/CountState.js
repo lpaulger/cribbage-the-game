@@ -42,7 +42,7 @@ define(['jquery','gameStates/BaseState', 'modules/CountScoreKeeper'], function($
       this.step += 1;
       this.render();
       if(this.p2.isWinner())
-        this.mediator.publish('transition', 'Summary');
+        this.mediator.publish('transition', 'Summary', true);
     } else if(this.step === 1) {
       this.game.$cribOwner.hand = this.game.$cribOwner.crib;
       this.game.$cribOwner.crib = [];
@@ -51,7 +51,7 @@ define(['jquery','gameStates/BaseState', 'modules/CountScoreKeeper'], function($
       this.step += 1;
       this.render();
       if(this.game.$cribOwner.isWinner())
-        this.mediator.publish('transition', 'Summary');
+        this.mediator.publish('transition', 'Summary', true);
     } else {
       if(isPlayerOneCribOwner.call(this)){
         this.game.$cribOwner = this.p2;
@@ -62,7 +62,7 @@ define(['jquery','gameStates/BaseState', 'modules/CountScoreKeeper'], function($
       this.game.$showTopCard = false;
       this.step = 0;
       if(this.game.$cribOwner.isWinner())
-        this.mediator.publish('transition', 'Summary');
+        this.mediator.publish('transition', 'Summary', true);
       else
         this.mediator.publish('transition', 'Deal');
     }
