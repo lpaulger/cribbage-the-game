@@ -12,11 +12,26 @@
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link rel="stylesheet" href="styles/878c8ae0.main.css">
+        <link rel="stylesheet" href="styles/c20be16e.main.css">
         <script src="scripts/vendor/d7100892.modernizr.js"></script>
     </head>
     <body>
     <div id="content"></div>
+    <script id="homeTemplate" type="x-tmpl-mustache">
+        <header>
+            <h1>Cribbage</h1>
+            <h4> The Game.</h4>
+        </header>
+        <div id="homeDeck" class="playingCards rotateHand">
+            <ul class="hand">
+                {{#.}}{{> p1Hand}}{{/.}}
+            </ul>
+        </div>
+        <div id="bottomControls">
+            <button id="newGameButton">New Game</button>
+            <!--<button id="settingsButton">Settings</button>-->
+        </div>
+    </script>
     <script id="summaryTemplate" type="x-tmpl-mustache">
         <h1>{{winner.name}} Won!</h1>
         <h3>{{$player1.possessive}} points:</h3>
@@ -129,6 +144,6 @@
             s.parentNode.insertBefore(g,s)}(document,'script'));
         </script>
 
-        <script data-main="scripts/d1612d71.main" src="bower_components/requirejs/require.js"></script>
+        <script data-main="scripts/2ca1fe3b.main" src="bower_components/requirejs/require.js"></script>
 </body>
 </html>
