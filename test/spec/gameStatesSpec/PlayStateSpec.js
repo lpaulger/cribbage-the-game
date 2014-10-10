@@ -6,11 +6,17 @@ define(['gameStates/PlayState'], function (PlayState) {
   function setupBasicGame() {
     _player = {
       hand: [],
+      isWinner: function(){
+        return false;
+      },
       playCard: function () {
       }
     };
     _bot = {
       hand: [],
+      isWinner: function(){
+        return false;
+      },
       playCard: function () {
       }
     };

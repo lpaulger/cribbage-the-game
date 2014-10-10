@@ -10,7 +10,10 @@ define(['gameStates/BaseState', 'jquery'],function(BaseState, $){
   function selectTopCard(index, wait){
     var card = this.game.$cribOwner.selectOneFromDeck(this.game.$deck, index);
     this.game.topCard = card;
-    this.mediator.publish('transition', 'Play', wait);
+    if(this.game.$cribOwner.isWinner())
+      this.mediator.publish('transition', 'Summary');
+    else
+      this.mediator.publish('transition', 'Play', wait);
   }
 
   PrePlayState.prototype.templates = function(){

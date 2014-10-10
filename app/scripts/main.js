@@ -10,8 +10,8 @@ require.config({
   }
 });
 
-require(['app', 'modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry'], function (App, Game, Mediator, StateRegistry) {
+require(['app'], function (App) {
   'use strict';
-  var app = new App(Game, Mediator, StateRegistry);
+  var app = new App();
   app.init();
 });

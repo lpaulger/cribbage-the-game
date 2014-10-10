@@ -18,6 +18,7 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
       player.points += 2;
     }
   };
+
   PlayScoreKeeper.prototype.playCount = function (playCards) {
     return playCards.reduce(function (a, b) {
       if (typeof(a) === 'number')
@@ -25,20 +26,25 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
       return a.value + b.value;
     });
   };
+
   PlayScoreKeeper.prototype.is15 = function(playCards){
     return this.playCount(playCards) === 15;
   };
+
   PlayScoreKeeper.prototype.is31 = function(playCards){
     return this.playCount(playCards) === 31;
   };
+
   PlayScoreKeeper.prototype.hasAtLeastOnePair = function(playCards){
     if(playCards.length > 1)
       return playCards[playCards.length - 1].faceValue === playCards[playCards.length - 2].faceValue;
     return false;
   };
+
   PlayScoreKeeper.prototype.isLastCard = function(totalPlayedCards){
     return totalPlayedCards.length === 8;
   };
+
   PlayScoreKeeper.prototype.iterateCardsForRun = function (playedCards) {
     var runValue = 0;
     var _sortedCards, _subSet;
@@ -79,6 +85,7 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
 
     return runValue;
   };
+
   PlayScoreKeeper.prototype.hasARun = function(playCards){
     var count = this.iterateCardsForRun(playCards);
 
@@ -88,6 +95,7 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
 
     return atLeastTwoSequencesOfCardsForRun();
   };
+
   PlayScoreKeeper.prototype.scoreRun = function(playCards){
     var count = this.iterateCardsForRun(playCards);
 
@@ -95,6 +103,7 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
       return count;
     }
   };
+
   PlayScoreKeeper.prototype.scorePairs = function(playCards){
     var topCard = playCards[playCards.length - 1];
 
@@ -110,6 +119,7 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
 
     return ((matches+1) * matches);
   };
+
   PlayScoreKeeper.prototype.pointForGo = function(player){
     this.mediator.publish('messages-add', player.name + ' scored 1 point.');
     player.points += 1;
@@ -127,6 +137,7 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
       points += this.scoreRun(playCards);
     if(this.isLastCard(totalPlayedCards))
       points += 1;
+
     if(points === 1)
       this.mediator.publish('messages-add', player.name + ' scored ' + points + ' point.');
     else if(points > 1)

@@ -66,6 +66,7 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
 
     return arrayOfMatches.length * 2;
   };
+
   CountScoreKeeper.prototype.getPairs = function(hand, starter){
     var pairs = [];
     var cards = hand.concat(starter);
@@ -79,6 +80,7 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
 
     return pairs.length * 2;
   };
+
   CountScoreKeeper.prototype.getRuns = function(hand, starter){
     function sortByFaceValue(a, b){
       if(a.faceValue < b.faceValue)
@@ -107,6 +109,7 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
         //points += _sortedCards.length;
       }
     });
+
     var tempArray = [];
     var uniques = [];
     var isSubRun = false;
@@ -134,8 +137,8 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
     });
 
     return points;
-
   };
+
   CountScoreKeeper.prototype.getHandFlush = function(hand, starter){
 
     function isFlush(card, index, array){
@@ -151,12 +154,14 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
 
     return 0;
   };
+
   CountScoreKeeper.prototype.getNobs = function(hand, starter){
     var hasMatchingJack = hand.some(function(card){
       return card.faceValue === 11 && card.suit === starter.suit;
     });
     return hasMatchingJack ? 1 : 0;
   };
+
   CountScoreKeeper.prototype.evaluateHand = function(player, starter){
     var gainedPoints = 0;
     gainedPoints += this.get15s(player.hand,starter);
@@ -170,6 +175,7 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
     gainedPoints += this.getNobs(player.hand, starter);
     //console.log('nobs: ' + gainedPoints);
     player.points += gainedPoints;
+
     this.mediator.publish('messages-add', player.name + ' scored ' + gainedPoints + ' points.');
   };
 

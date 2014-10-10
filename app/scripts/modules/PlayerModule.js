@@ -67,6 +67,13 @@ define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlaySco
       }
     };
 
+    Player.prototype.isWinner = function(){
+      var isWinner = this.points >= 121;
+      if(isWinner)
+        Mediator.publish('winner', this);
+      return isWinner;
+    };
+
     Player.prototype.restoreHand = function(){
       this.hand = this.handInMemory;
     };

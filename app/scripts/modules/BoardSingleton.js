@@ -33,6 +33,10 @@ define(['modules/PlayScoreKeeper'], function (ScoreKeeper) {
           this.playersWhoSaidGo.push(player);
         }
       },
+      clearBoard: function(){
+        this.totalPlayedCardsForRound = [];
+        this.resetBoard();
+      },
       resetBoard: function(){
         this.currentBoardValue = 0;
         this.playedCards = [];

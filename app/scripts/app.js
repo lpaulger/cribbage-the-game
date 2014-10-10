@@ -1,25 +1,14 @@
-define([],
-  function(){
+define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry'],
+  function(Game, Mediator, StateRegistry){
     'use strict';
 
-    function App(Game, Mediator, StateRegistry){
-      this.game = new Game();
+    function App(){
       this.mediator = Mediator;
-      this.states = new StateRegistry(this.game);
-
       this.mediator.subscribe('start', startGame.bind(this));
-
       this.mediator.subscribe('transition', transitionTo.bind(this));
-
       this.mediator.subscribe('messages-add', setMessages.bind(this));
       this.mediator.subscribe('messages-clear', clearMessages.bind(this));
-
-//      this.mediator.subscribe('winner', function(player){
-//        console.log('winner');
-//        console.log(player);
-//
-//        this.mediator.publish('transition', 'Summary');
-//      });
+      this.mediator.subscribe('winner', setWinner.bind(this));
     }
 
     App.prototype.init = function(){
@@ -32,6 +21,10 @@ define([],
 
     function clearMessages(){
       this.game.$messages = [];
+    }
+
+    function setWinner(player){
+      this.game.winner = player;
     }
 
     function transitionTo(stateName, wait){
@@ -56,7 +49,10 @@ define([],
     }
 
     function startGame(){
-      this.states[0].init();
+      this.game = new Game();
+      this.game.$board.clearBoard();
+      this.states = new StateRegistry(this.game);
+      this.mediator.publish('transition', 'Draw');
     }
 
     return App;
