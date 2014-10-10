@@ -71,12 +71,16 @@ define(['jquery','gameStates/BaseState', 'modules/CountScoreKeeper'], function($
   function evaluatePlayerOneScore(points){
     showPlayerOneHand.call(this);
     this.scoreKeeper.evaluateHand(this.p1, this.game.topCard);
+    if(this.p1.isWinner())
+      this.mediator.publish('transition', 'Summary', true);
     return points;
   }
 
   function evaluatePlayerTwoScore(points){
     showPlayerTwoHand.call(this);
     this.scoreKeeper.evaluateHand(this.p2, this.game.topCard);
+    if(this.p2.isWinner())
+      this.mediator.publish('transition', 'Summary', true);
     return points;
   }
 
