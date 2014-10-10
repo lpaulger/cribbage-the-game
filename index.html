@@ -12,11 +12,23 @@
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link rel="stylesheet" href="styles/3a88cd84.main.css">
+        <link rel="stylesheet" href="styles/878c8ae0.main.css">
         <script src="scripts/vendor/d7100892.modernizr.js"></script>
     </head>
     <body>
     <div id="content"></div>
+    <script id="summaryTemplate" type="x-tmpl-mustache">
+        <h1>{{winner.name}} Won!</h1>
+        <h3>{{$player1.possessive}} points:</h3>
+        <h4>{{$player1.points}}</h4>
+        <h3>{{$player2.possessive}} points:</h3>
+        <h4>{{$player2.points}}</h4>
+
+        <div id="bottomControls">
+            <button id="newGameButton">Play again?</button>
+            <button id="homeButton">Home</button>
+        </div>
+    </script>
     <script id="stateTemplate" type="x-tmpl-mustache">
         <ul id="messageContainer">{{> messages}}</ul>
         <div id="player2" class="player">
@@ -117,6 +129,6 @@
             s.parentNode.insertBefore(g,s)}(document,'script'));
         </script>
 
-        <script data-main="scripts/6949c5fd.main" src="bower_components/requirejs/require.js"></script>
+        <script data-main="scripts/17bbcdf9.main" src="bower_components/requirejs/require.js"></script>
 </body>
 </html>
