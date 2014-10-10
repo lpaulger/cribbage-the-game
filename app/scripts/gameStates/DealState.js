@@ -16,7 +16,8 @@ define(['jquery','gameStates/BaseState', 'modules/DeckModule'],function($, BaseS
 
   DealState.prototype.init = function(){
     this.game.$player2HandVisible = false;
-    var hands = this.game.$deck.shuffle().deal();
+    this.game.$deck.shuffle();
+    var hands = this.game.$deck.deal();
     this.p1.hand = hands.bottomHand.sort(sortByValue);
     this.p2.hand = hands.topHand.sort(sortByValue);
 
