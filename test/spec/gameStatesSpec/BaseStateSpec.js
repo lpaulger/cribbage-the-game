@@ -1,15 +1,32 @@
 define(['gameStates/BaseState', 'jquery'], function (BaseState, $) {
   'use strict';
+
   describe('BaseState', function () {
-    var game = {};
+    var game = {$player1: {}, $player2: {}};
     var baseState;
     beforeEach(function(){
       baseState = new BaseState(game);
     });
 
     describe('Constructor', function(){
-      it('should return a base State', function(){
-        expect(baseState).toBeDefined();
+      describe('and game is passed', function(){
+        it('should return a base State', function(){
+          expect(baseState).toBeDefined();
+          expect(baseState.p1).toBeDefined();
+          expect(baseState.p2).toBeDefined();
+        });
+      });
+      
+      describe('if no game object passed', function(){
+        beforeEach(function(){
+          baseState = new BaseState();
+        });
+
+        it('should not set player1 or player2', function(){
+          expect(baseState).toBeDefined();
+          expect(baseState.p1).not.toBeDefined();
+          expect(baseState.p2).not.toBeDefined();
+        });
       });
     });
 

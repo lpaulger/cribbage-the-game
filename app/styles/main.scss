@@ -24,6 +24,28 @@ body {
   position: relative;
 }
 
+header {
+  h1 {
+    font-size: 3em;
+    margin-bottom: 0;
+  }
+
+  h4 {
+    margin: 0;
+  }
+}
+
+#homeDeck {
+  position: relative;
+  top: 25%;
+  transform: translateY(-50%);
+  font-size: 1.7em;
+  ul.hand{
+    margin-left: -1.5em;
+    transform: translate(1.9em, .9em) rotate(22deg);
+  }
+}
+
 h1, h3, h4 {
   text-align: center;
 }

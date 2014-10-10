@@ -10,9 +10,9 @@ define(['app'], function(App) {
         app.init();
       });
 
-      it('should publish start', function(){
+      it('should publish transition Home', function(){
         expect(app.mediator.publish.calls.count()).toEqual(1);
-        expect(app.mediator.publish).toHaveBeenCalledWith('start');
+        expect(app.mediator.publish).toHaveBeenCalledWith('transition', 'Home');
       });
 
       afterEach(function(){
