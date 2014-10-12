@@ -4,8 +4,11 @@ define(['jquery', 'mustache', 'modules/Mediator'],function($, mustache, mediator
     this.game = game;
     this.name = name;
     this.mediator = mediator;
-    this.p1 = game.$player1;
-    this.p2 = game.$player2;
+    if(game){
+      this.p1 = game.$player1;
+      this.p2 = game.$player2;
+      this.data = this.game;
+    }
   }
 
   BaseState.prototype.templates = function(){
@@ -40,7 +43,7 @@ define(['jquery', 'mustache', 'modules/Mediator'],function($, mustache, mediator
   };
 
   BaseState.prototype.render = function() {
-    var rendered = mustache.render(this.templates().page, this.game, this.templates());
+    var rendered = mustache.render(this.templates().page, this.data, this.templates());
     $('#content').html(rendered);
     this.bindEvents();
     this.mediator.publish('messages-clear');

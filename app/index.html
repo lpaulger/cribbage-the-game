@@ -19,6 +19,21 @@
     </head>
     <body>
     <div id="content"></div>
+    <script id="homeTemplate" type="x-tmpl-mustache">
+        <header>
+            <h1>Cribbage</h1>
+            <h4> The Game.</h4>
+        </header>
+        <div id="homeDeck" class="playingCards rotateHand">
+            <ul class="hand">
+                {{#.}}{{> p1Hand}}{{/.}}
+            </ul>
+        </div>
+        <div id="bottomControls">
+            <button id="newGameButton">New Game</button>
+            <!--<button id="settingsButton">Settings</button>-->
+        </div>
+    </script>
     <script id="summaryTemplate" type="x-tmpl-mustache">
         <h1>{{winner.name}} Won!</h1>
         <h3>{{$player1.possessive}} points:</h3>

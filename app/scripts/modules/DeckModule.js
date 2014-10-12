@@ -11,6 +11,7 @@ define(['modules/CardModule'], function (Card) {
     if(this.cards.length < 52)
       this.cards = createDeck(this.deckType);
     for(var j, x, i = this.cards.length; i; j = Math.floor(Math.random() * i), x = this.cards[--i], this.cards[i] = this.cards[j], this.cards[j] = x);
+    return this;
   };
 
   Deck.prototype.cut = function(){

@@ -4,6 +4,8 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry'],
 
     function App(){
       this.mediator = Mediator;
+      this.game = new Game();
+      this.states = new StateRegistry(this.game);
       this.mediator.subscribe('start', startGame.bind(this));
       this.mediator.subscribe('transition', transitionTo.bind(this));
       this.mediator.subscribe('messages-add', setMessages.bind(this));
@@ -12,7 +14,7 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry'],
     }
 
     App.prototype.init = function(){
-      this.mediator.publish('start');
+      this.mediator.publish('transition', 'Home');
     };
 
     function setMessages(message){
