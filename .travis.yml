@@ -8,7 +8,7 @@ install:
 - npm install
 - bower install
 script:
-- grunt
+- grunt --verbose
 cache:
   bundler: true
   directories:
