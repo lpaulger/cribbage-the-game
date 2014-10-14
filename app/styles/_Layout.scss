@@ -1,0 +1,213 @@
+/*
+Variables
+*/
+$home-cards-font-size-large: 1.6em;
+$home-cards-font-size-small: 1em;
+
+/*
+General Layout
+*/
+
+html, body, #content {
+  height: 100%;
+  margin: 0;
+}
+
+html {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  min-width: 320px;
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: white;
+
+  @media screen and (max-height: $break-mobile-small) {
+    font-size: .8em;
+  }
+
+  @media screen and (min-height: $break-tablet) {
+    font-size: 1.4em;
+  }
+}
+
+#content{
+  background: #b48484;
+  overflow: hidden;
+  position: relative;
+}
+
+
+/*
+Home Page
+*/
+
+header {
+  h1 {
+    font-size: 3em;
+    margin-bottom: 0;
+  }
+
+  h4 {
+    margin: 0;
+  }
+}
+
+h1, h3, h4 {
+  text-align: center;
+}
+
+#homeDeck {
+  position: relative;
+  margin: 0 auto;
+  width: 12em;
+  top: 42%;
+  transform: translateY(-50%);
+  > div {
+    position: relative;
+    font-size: $home-cards-font-size-small;
+    top: 50%;
+    height: 100%;
+    transform: translateY(-50%);
+    ul.hand{
+      margin-left: -1.5em;
+      transform: translate(1.9em, .9em) rotate(22deg);
+    }
+  }
+  
+  @media screen and (min-height: $break-mobile-small) {
+
+
+    width: 20em;
+    top: 50%;
+    > div {
+      font-size: $home-cards-font-size-large;
+    }
+  }
+}
+
+/*
+Cribbage Board
+*/
+
+#bottomControls {
+  position: absolute;
+  bottom: 2em;
+  text-align: center;
+  width: 100%;
+
+  button {
+    width: 70%;
+    font-size: 1.7em;
+    padding: .2em;
+  }
+}
+
+#messageContainer {
+  position: absolute;
+  list-style: none;
+  background-color: rgba(0,0,0,0.3);
+  margin: 0;
+  padding: 0;
+  top: 20%;
+  width: 100%;
+  z-index: 1;
+
+  li {
+    font-size: 1.3em;
+    line-height: 2em;
+    text-align: center;
+  }
+}
+
+.scoreboard {
+  position: absolute;
+  width: 100%;
+  background-color: rgba(0,0,0,0.3);
+  &:first-child{
+    top: 0;
+  }
+
+  &:last-child{
+    bottom: 0;
+  }
+  label{
+    padding: .2em;
+    float: left;
+
+    &:last-child{
+      float: right;
+    }
+  }
+
+}
+
+#table {
+  position: relative;
+  height: 33.33%;
+
+  #deck{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  //height: 8em;
+  //margin: 0 0 1.5em 0;
+}
+
+#play {
+  position: absolute;
+  top: 60%;
+  left: 6em;
+  transform: translateY(-50%);
+}
+
+.player {
+  height: 33.33%;// 8em;
+  //margin-bottom: 1.7em;
+  position: relative;
+
+  .playingCards {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    .crib{
+      right: 5em;
+      position: absolute;
+      top: 0;
+    }
+  }
+  .playingCards:first-child{
+    left:0;
+  }
+}
+
+#count {
+  position: absolute;
+  bottom: 0;
+  label {
+    position: relative;
+    left: .4em;
+    padding: .2em;
+    display: inline-block;
+    background-color: rgba(0,0,0,0.3);
+  }
+}
+
+#controls {
+  position: absolute;
+  right: 0;
+  top: 34%;
+
+  button {
+    height: 3em;
+    width: 4em;
+    background-color: rgba(0,0,0,0.3);
+    color: white;
+    border: none;
+    font-size: 2em;
+  }
+}

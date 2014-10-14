@@ -503,6 +503,12 @@
   .playingCards ul.hand li:nth-child(#{$i+1}){
     left:#{$i * 1.1}em;
   }
+
+  #player1, #player2{
+    .playingCards ul.hand:not(.crib) li:nth-child(#{$i+1}){
+      left:#{$i * 2.2}em;
+    }
+  }
 }
 
 /* rotate cards if rotateHand option is on */
