@@ -363,7 +363,6 @@ module.exports = function(grunt) {
         'clean:server',
         'concurrent:test',
         'connect:test',
-        'jshint',
         'karma',
         'coveralls'
     ]);
