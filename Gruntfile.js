@@ -362,7 +362,7 @@ module.exports = function(grunt) {
     grunt.registerTask('test', function(target){
       //because travis-ci runs out of memory using concurrent
       if(target === 'dist'){
-        grunt.task.run([
+        return grunt.task.run([
           'clean:server',
           'compass',
           'connect:test',
