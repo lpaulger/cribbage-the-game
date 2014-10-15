@@ -359,15 +359,49 @@ module.exports = function(grunt) {
         ]);
     });
 
-    grunt.registerTask('test', [
+    grunt.registerTask('test', function(target){
+      //because travis-ci runs out of memory using concurrent
+      if(target === 'dist'){
+        grunt.task.run([
+          'clean:server',
+          'compass',
+          'connect:test',
+          'jshint',
+          'karma',
+          'coveralls'
+        ]);
+      }
+      grunt.task.run([
         'clean:server',
         'concurrent:test',
         'connect:test',
+        'jshint',
         'karma',
         'coveralls'
-    ]);
+      ]);
+    });
 
-    grunt.registerTask('build', [
+    grunt.registerTask('build', function(target){
+      //because travis-ci runs out of memory using concurrent
+      if(target === 'dist'){
+        return grunt.task.run([
+          'clean:dist',
+          'useminPrepare',
+          'compass:dist',
+          'imagemin',
+          'svgmin',
+          'htmlmin',
+          'requirejs',
+          'cssmin',
+          'concat',
+          'uglify',
+          'copy',
+          'rev',
+          'usemin'
+        ]);
+      }
+
+      grunt.task.run([
         'clean:dist',
         'useminPrepare',
         'concurrent:dist',
@@ -378,7 +412,8 @@ module.exports = function(grunt) {
         'copy',
         'rev',
         'usemin'
-    ]);
+      ]);
+    });
 
     grunt.registerTask('default', [
         'jshint',
