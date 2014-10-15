@@ -12,7 +12,7 @@
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link rel="stylesheet" href="styles/c20be16e.main.css">
+        <link rel="stylesheet" href="styles/1d4622b2.main.css">
         <script src="scripts/vendor/d7100892.modernizr.js"></script>
     </head>
     <body>
@@ -22,10 +22,12 @@
             <h1>Cribbage</h1>
             <h4> The Game.</h4>
         </header>
-        <div id="homeDeck" class="playingCards rotateHand">
-            <ul class="hand">
-                {{#.}}{{> p1Hand}}{{/.}}
-            </ul>
+        <div id="homeDeck">
+            <div class="playingCards rotateHand">
+                <ul class="hand">
+                    {{#.}}{{> p1Hand}}{{/.}}
+                </ul>
+            </div>
         </div>
         <div id="bottomControls">
             <button id="newGameButton">New Game</button>
@@ -51,7 +53,7 @@
         <div class="scoreboard">{{> p2Score}}</div>
         <div class="playingCards">
                 <ul id="topHand" class="hand">{{#hand}}{{> p2Hand}}{{/hand}}</ul>
-        <ul class="crib hand">{{#crib}}{{> crib}}{{/crib}}</ul>
+        <ul class="crib deck">{{#crib}}{{> crib}}{{/crib}}</ul>
         </div>
         {{/$player2}}
         </div>
@@ -67,7 +69,7 @@
         {{#$player1}}
         <div class="playingCards">
                     <ul id="bottomHand" class="hand">{{#hand}}{{> p1Hand}}{{/hand}}</ul>
-        <ul class="crib hand">{{#crib}}{{> crib}}{{/crib}}</ul>
+        <ul class="crib deck">{{#crib}}{{> crib}}{{/crib}}</ul>
         </div>
         <div class="scoreboard">{{> p1Score}}</div>
         {{/$player1}}
