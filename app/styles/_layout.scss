@@ -1,3 +1,4 @@
+@import "compass/css3/transform";
 /*
 Variables
 */
@@ -65,16 +66,16 @@ h1, h3, h4 {
   margin: 0 auto;
   width: 12em;
   top: 42%;
-  transform: translateY(-50%);
+  @include translateY(-50%);
   > div {
     position: relative;
     font-size: $home-cards-font-size-small;
     top: 50%;
     height: 100%;
-    transform: translateY(-50%);
+    @include translateY(-50%);
     ul.hand{
       margin-left: -1.5em;
-      transform: translate(1.9em, .9em) rotate(22deg);
+      @include transform(translate(1.9em, .9em) rotate(22deg));
     }
   }
   
@@ -152,7 +153,7 @@ Cribbage Board
   #deck{
     position: relative;
     top: 50%;
-    transform: translateY(-50%);
+    @include translateY(-50%);
   }
   //height: 8em;
   //margin: 0 0 1.5em 0;
@@ -162,7 +163,7 @@ Cribbage Board
   position: absolute;
   top: 60%;
   left: 6em;
-  transform: translateY(-50%);
+  @include translateY(-50%);
 }
 
 .player {
@@ -173,7 +174,7 @@ Cribbage Board
   .playingCards {
     position: relative;
     top: 50%;
-    transform: translateY(-50%);
+    @include translateY(-50%);
     .crib{
       right: 5em;
       position: absolute;
