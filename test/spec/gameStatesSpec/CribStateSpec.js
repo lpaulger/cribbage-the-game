@@ -45,6 +45,17 @@ define(['gameStates/CribState'], function(CribState) {
       });
     });
 
+    describe('init', function(){
+      beforeEach(function(){
+        spyOn(_cribState.p2, 'placeCardsInCrib');
+        _cribState.init();
+      });
+
+      it('should place the ai crib cards in the crib', function(){
+        expect(_cribState.p2.placeCardsInCrib).toHaveBeenCalled();
+      });  
+    });
+    
     describe('SelectOne', function(){
       beforeEach(function(){
         gameSetup();
@@ -104,7 +115,6 @@ define(['gameStates/CribState'], function(CribState) {
         it('should place two cards in crib', function(){
           _cribState.action();
           expect(_game.$player1.placeCardsInCrib.calls.count()).toBe(1);
-          expect(_game.$player2.placeCardsInCrib.calls.count()).toBe(1);
         });
 
         it('should transition to PrePlay', function(){

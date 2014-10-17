@@ -7,6 +7,12 @@ define(['gameStates/BaseState'],function(BaseState){
   CribState.prototype = Object.create(BaseState.prototype);
   CribState.prototype.constructor = CribState;
 
+  CribState.prototype.init = function(){
+    this.p2.placeCardsInCrib(this.game.$cribOwner);
+    this.p2.handInMemory = this.p2.hand.slice();
+    this.render();
+  };
+
   CribState.prototype.selectCard = function(options) {
     function replaceOldCard(){
       _hand[_hand.indexOf(selectedCards[0])].selected = '';
@@ -48,9 +54,7 @@ define(['gameStates/BaseState'],function(BaseState){
   CribState.prototype.action = function() {
     if(this.game.$player1.cardsForCrib.length === 2){
       this.p1.placeCardsInCrib(this.game.$cribOwner);
-      this.p2.placeCardsInCrib(this.game.$cribOwner);
       this.p1.handInMemory = this.p1.hand.slice();
-      this.p2.handInMemory = this.p2.hand.slice();
       this.mediator.publish('transition', 'PrePlay');
     } else {
       this.mediator.publish('messages-add', 'Please select two cards for ' + this.game.$cribOwner.possessive + ' crib.');
