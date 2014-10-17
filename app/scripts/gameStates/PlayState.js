@@ -42,6 +42,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     }
 
     this.render();
+    this.unbindEvents();
     if(this.p1.isWinner())
       this.mediator.publish('transition', 'Summary', true);
     else
@@ -55,14 +56,13 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
         this.game.currentPlayer = this.p2;
         this.mediator.publish('messages-add', 'Their Turn');
       } catch(e) {
-        if(e.message === 'No Playable Cards')
-          this.mediator.publish('messages-add', 'No Playable Cards, Press \'Go!\'');
-        else if(e.message === 'Playable Cards')
-          this.mediator.publish('messages-add', this.name + ' can\'t go, you have playable cards.');
+        if(e.message === 'Playable Cards')
+          this.mediator.publish('messages-add', 'You can\'t go, you have playable cards.');
       }
     }
 
     this.render();
+    this.unbindEvents();
     if(this.p1.isWinner())
       this.mediator.publish('transition', 'Summary', true);
     else
