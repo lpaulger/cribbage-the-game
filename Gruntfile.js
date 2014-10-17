@@ -33,7 +33,7 @@ module.exports = function(grunt) {
         // TODO: Make this conditional
         watch: {
           files: ['<%= yeoman.app %>/*.html',
-            '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.{scss,sass, css}',
+            '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.{scss, sass, css}',
             '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
             '<%= yeoman.test %>/spec/{,*/}*.js',
             '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'],

@@ -53,7 +53,7 @@ define(['gameStates/CribState'], function(CribState) {
 
       it('should place the ai crib cards in the crib', function(){
         expect(_cribState.p2.placeCardsInCrib).toHaveBeenCalled();
-      });  
+      });
     });
     
     describe('SelectOne', function(){

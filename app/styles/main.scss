@@ -1,8 +1,32 @@
 @import 'cards';
 
+@media
+only screen and (-webkit-min-device-pixel-ratio: 3),
+only screen and (   min--moz-device-pixel-ratio: 3),
+only screen and (     -o-min-device-pixel-ratio: 3/1),
+only screen and (        min-device-pixel-ratio: 3){
+
+  @for $i from 2 through 10 {
+    .playingCards .card.rank-#{$i} .suit:after {
+      margin-top: -1em;
+      line-height: 1.5em;
+
+      @if $i == 10 {
+        line-height: 1.8em;
+      }
+    }
+
+    .playingCards .card.rank-#{$i} .suit{
+      font-size: .6em;
+    }
+  }
+  .playingCards .card.rank-J .suit:after{
+    right: .1em;
+  }
+}
+
 //responsive portrait
 $break-mobile-small: 361px;
 $break-tablet: 768px;
-
 
 @import 'layout';
