@@ -52,19 +52,21 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
   PlayState.prototype.action = function() {
     if(this.nextState === 'Play'){
       try {
-        this.p1.announceGo();//TODO: make sure response gets into messages
+        this.p1.announceGo();
         this.game.currentPlayer = this.p2;
         this.mediator.publish('messages-add', 'Their Turn');
       } catch(e) {
         if(e.message === 'Playable Cards')
           this.mediator.publish('messages-add', 'You can\'t go, you have playable cards.');
       }
+    } else {
+      this.mediator.publish('board-clear');
     }
 
     this.render();
     this.unbindEvents();
     if(this.p1.isWinner())
-      this.mediator.publish('transition', 'Summary', true);
+      this.mediator.publish('transition', 'Summary', false);
     else
       this.mediator.publish('transition', this.nextState, true);
 

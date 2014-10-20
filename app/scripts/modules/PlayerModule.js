@@ -46,9 +46,6 @@ define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlaySco
         this.scoreKeeper.evaluatePlay(this, this.board.playedCards, this.board.totalPlayedCardsForRound);
         if(this.board.currentBoardValue === 31){
           this.board.resetBoard();
-        } else if(this.board.isEndOfRound()){
-          this.board.totalPlayedCardsForRound = [];
-          this.board.resetBoard();
         }
         this.hand.splice(index, 1);
       } else if(!this.playRules.hasPlayableCards(this)){

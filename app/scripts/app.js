@@ -11,6 +11,10 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry'],
       this.mediator.subscribe('messages-add', setMessages.bind(this));
       this.mediator.subscribe('messages-clear', clearMessages.bind(this));
       this.mediator.subscribe('winner', setWinner.bind(this));
+      this.mediator.subscribe('board-clear', function(){
+        this.game.$board.clearBoard();
+        console.log('board-clear');
+      }.bind(this));
     }
 
     App.prototype.init = function(){

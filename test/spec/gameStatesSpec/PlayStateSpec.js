@@ -137,6 +137,11 @@ define(['gameStates/PlayState'], function (PlayState) {
         expect(_playState.mediator.publish).toHaveBeenCalledWith('transition', 'Count', true);
         expect(_playState.nextState).toBe('Play');
       });
+
+      it('should clear the board', function(){
+        _playState.action();
+        expect(_playState.mediator.publish).toHaveBeenCalledWith('board-clear');
+      });
     });
   });
 });

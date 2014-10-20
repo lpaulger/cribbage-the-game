@@ -133,23 +133,6 @@ define(['modules/PlayerModule'], function(Player) {
             expect(_player.points).toEqual(0);
           });
         });
-        
-        describe('and player plays last card for round', function(){
-          beforeEach(function(){
-            spyOn(_player.playRules, 'isCardPlayable').and.returnValue(true);
-            spyOn(_player.board, 'isEndOfRound').and.returnValue(true);
-            _player.board.totalPlayedCardsForRound = [card, card, card, card, card, card, card];
-            points =_player.playCard(0);
-          });
-
-          it('should reset totalPlayedCardsForRound', function(){
-            expect(_player.board.totalPlayedCardsForRound).toEqual([]);
-          });
-
-          it('should reset the board', function(){
-            expect(_player.board.resetBoard).toHaveBeenCalled();
-          });
-        });
 
         describe('and player plays card totalling 31 count', function(){
           beforeEach(function(){
