@@ -18,11 +18,13 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     this.game.$showTopCard = true;
     this.game.$action = {text:'Go'};
 
-    setCurrentPlayer.call(this);
-    if(this.game.currentPlayer === this.p2)
-      processAiTurn.call(this);
-    else
-      this.mediator.publish('messages-add', 'Select a card to play');
+    if(!isEndOfRound.call(this)){
+      setCurrentPlayer.call(this);
+      if(this.game.currentPlayer === this.p2)
+        processAiTurn.call(this);
+      else
+        this.mediator.publish('messages-add', 'Select a card to play');
+    }
 
     setAction.call(this);
 
@@ -33,20 +35,23 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     try {
       this.p1.playCard(options.index);
       this.game.currentPlayer = this.p2;
-      this.mediator.publish('messages-add', 'Their Turn');
+      if(!isEndOfRound.call(this))
+        this.mediator.publish('messages-add', 'Their Turn');
     } catch(e) {
       if(e.message === 'No Playable Cards')
         this.mediator.publish('messages-add', 'No Playable Cards, Press \'Go!\'');
       else if(e.message === 'Invalid Playable Card')
         this.mediator.publish('messages-add', 'Try another card');
     }
-
-    this.render();
-    this.unbindEvents();
     if(this.p1.isWinner())
       this.mediator.publish('transition', 'Summary', true);
-    else
+    else if(!isEndOfRound.call(this)){
+      this.render();
+      this.unbindEvents();
       this.mediator.publish('transition', 'Play', true);
+    } else {
+      this.mediator.publish('transition', 'Play', false);
+    }
   };
 
   PlayState.prototype.action = function() {
@@ -54,7 +59,8 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
       try {
         this.p1.announceGo();
         this.game.currentPlayer = this.p2;
-        this.mediator.publish('messages-add', 'Their Turn');
+        if(!isEndOfRound.call(this))
+          this.mediator.publish('messages-add', 'Their Turn');
       } catch(e) {
         if(e.message === 'Playable Cards')
           this.mediator.publish('messages-add', 'You can\'t go, you have playable cards.');
@@ -88,7 +94,8 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     try{
       this.p2.playCard();
       this.game.currentPlayer = this.p1;
-      this.mediator.publish('messages-add', 'Your Turn.');
+      if(!isEndOfRound.call(this))
+        this.mediator.publish('messages-add', 'Your Turn.');
       if(this.p2.isWinner())
         this.mediator.publish('transition', 'Summary', true);
     } catch(e){
