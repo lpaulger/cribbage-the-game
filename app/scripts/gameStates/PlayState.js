@@ -15,7 +15,6 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
   };
 
   PlayState.prototype.init = function(){
-    this.game.$showTopCard = true;
     this.game.$action = {text:'Go'};
 
     if(!isEndOfRound.call(this)){

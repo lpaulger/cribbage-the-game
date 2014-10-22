@@ -46,24 +46,41 @@ define(['gameStates/PlayState'], function (PlayState) {
     });
 
     describe('When player selects a valid card', function () {
-      beforeEach(function () {
+      function setup(){
         spyOn(_player, 'playCard');
         _playState = new PlayState(_game);
         spyOn(_playState.mediator, 'publish');
         spyOn(_playState, 'unbindEvents').and.callThrough();
         _playState.selectCard({index: 1});
+      }
+
+      describe('and is end of the round', function(){
+        beforeEach(function () {
+          setup();
+        });
+
+        it('should play card', function () {
+          expect(_player.playCard).toHaveBeenCalledWith(1);
+        });
+
+        it('should transition back to Play without waiting', function () {
+          expect(_playState.mediator.publish).toHaveBeenCalledWith('transition', 'Play', false);
+        });
       });
 
-      it('should play card', function () {
-        expect(_player.playCard).toHaveBeenCalledWith(1);
-      });
+      describe('and not the end of the round', function(){
+        beforeEach(function(){
+          _player.hand = [{value: 10}];
+          setup();
+        });
 
-      it('should transition back to Play', function () {
-        expect(_playState.mediator.publish).toHaveBeenCalledWith('transition', 'Play', true);
-      });
+        it('should transition back to Play and wait', function () {
+          expect(_playState.mediator.publish).toHaveBeenCalledWith('transition', 'Play', true);
+        });
 
-      it('should prevent the user from making another action until the AI has gone', function(){
-        expect(_playState.unbindEvents).toHaveBeenCalled();
+        it('should prevent the user from making another action until the AI has gone', function(){
+          expect(_playState.unbindEvents).toHaveBeenCalled();
+        });
       });
     });
 
