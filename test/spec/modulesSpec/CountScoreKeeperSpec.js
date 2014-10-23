@@ -4,7 +4,9 @@ define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper,
   describe('CountScoreKeeper', function () {
     beforeEach(function(){
       scoreKeeper = new ScoreKeeper();
+      spyOn(scoreKeeper.mediator, 'publish');
     });
+
     describe('When 0 point hand', function(){
       it('should award 0 points', function(){
         var player = {points: 0, hand: [new Card(2, 'diamonds'), new Card(4, 'hearts'), new Card(6, 'clubs'), new Card(8, 'hearts')]};

@@ -6,6 +6,9 @@ require.config({
   shim: {
     'jquery': {
       exports: '$'
+    },
+    'localStorage':{
+      exports: 'localStorage'
     }
   }
 });

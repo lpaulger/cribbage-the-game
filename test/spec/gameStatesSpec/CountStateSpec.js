@@ -52,6 +52,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
       $player2: _player2,
       $cribOwner: _player2,
       $showTopCard: true,
+      $messages: [],
       topCard: new Card(10, 'diams')
     };
   }
@@ -131,9 +132,9 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             createBasicGame();
             _game.$cribOwner = _game.$player1;
             _countState = new CountState(_game);
-            _countState.init();
-            spyOn(_countState.scoreKeeper, 'evaluateHand');
             spyOn(_countState.mediator, 'publish');
+            spyOn(_countState.scoreKeeper, 'evaluateHand');
+            _countState.init();
             _game.$player1.hand = _game.$player1.handInMemory;
             _game.$player2.hand = _game.$player2.handInMemory;
           });
@@ -156,6 +157,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
           beforeEach(function () {
             _game.$cribOwner = _game.$player1;
             _countState = new CountState(_game);
+            spyOn(_countState.mediator, 'publish');
             spyOn(_countState.scoreKeeper, 'evaluateHand');
             _countState.init();
             _game.$player1.hand = _game.$player1.handInMemory;
@@ -257,9 +259,9 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
           beforeEach(function () {
             _game.$cribOwner = _game.$player2;
             _countState = new CountState(_game);
-            _countState.init();
             spyOn(_countState.scoreKeeper, 'evaluateHand');
             spyOn(_countState.mediator, 'publish');
+            _countState.init();
             _game.$player1.hand = _game.$player1.handInMemory;
             _game.$player1.crib = new Array(4);
             _game.$player2.hand = _game.$player2.handInMemory;

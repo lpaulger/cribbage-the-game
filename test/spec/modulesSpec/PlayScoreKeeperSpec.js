@@ -6,6 +6,7 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
     beforeEach(function(){
       player = {points: 0};
       scoreKeeper = new ScoreKeeper();
+      spyOn(scoreKeeper.mediator, 'publish');
     });
 
     describe('Two For His Heels', function(){

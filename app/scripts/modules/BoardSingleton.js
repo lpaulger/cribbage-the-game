@@ -1,10 +1,10 @@
 define(['modules/PlayScoreKeeper'], function (ScoreKeeper) {
   'use strict';
-  var instance,
-    scoreKeeper = new ScoreKeeper();
+  var instance;
 
   function init() {
     return {
+      scoreKeeper: new ScoreKeeper(),
       display: function(){
         return this.currentBoardValue > 0? 'inline-block':'none';
       },
@@ -12,9 +12,6 @@ define(['modules/PlayScoreKeeper'], function (ScoreKeeper) {
       totalPlayedCardsForRound: [],
       playedCards: [],
       playersWhoSaidGo: [],
-      isEndOfRound: function () {
-        return this.totalPlayedCardsForRound.length === 8;
-      },
       placeCard: function(card){
         this.playedCards.push(card);
         this.totalPlayedCardsForRound.push(card);
@@ -28,7 +25,7 @@ define(['modules/PlayScoreKeeper'], function (ScoreKeeper) {
 
         if(otherPlayerAnnouncedGo.call(this)){
           this.resetBoard();
-          scoreKeeper.pointForGo(player);
+          this.scoreKeeper.pointForGo(player);
         } else {
           this.playersWhoSaidGo.push(player);
         }

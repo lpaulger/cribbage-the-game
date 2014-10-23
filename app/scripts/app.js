@@ -4,7 +4,6 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry'],
 
     function App(){
       this.mediator = Mediator;
-      this.game = new Game();
       this.stateRegistry = new StateRegistry();
       this.mediator.subscribe('start', startGame.bind(this));
       this.mediator.subscribe('transition', transitionTo.bind(this));
@@ -25,7 +24,8 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry'],
     }
 
     function clearMessages(){
-      this.game.$messages = [];
+      if(this.game)
+        this.game.$messages = [];
     }
 
     function setWinner(player){
@@ -37,6 +37,7 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry'],
       function process(){
         state = this.stateRegistry.initState(stateName, this.game);
         state.init();
+        //save game here
       }
 
       if(wait){

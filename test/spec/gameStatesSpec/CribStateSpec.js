@@ -4,6 +4,7 @@ define(['gameStates/CribState'], function(CribState) {
       _game,
       gameSetup = function(){
         _game = {
+          $messages: [],
           $player1:{
             hand:[
               {value:1},
@@ -48,6 +49,7 @@ define(['gameStates/CribState'], function(CribState) {
     describe('init', function(){
       beforeEach(function(){
         spyOn(_cribState.p2, 'placeCardsInCrib');
+        spyOn(_cribState.mediator, 'publish');
         _cribState.init();
       });
 
@@ -60,6 +62,7 @@ define(['gameStates/CribState'], function(CribState) {
       beforeEach(function(){
         gameSetup();
         _cribState = new CribState(_game);
+        spyOn(_cribState.mediator, 'publish');
       });
 
       afterEach(function(){

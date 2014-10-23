@@ -45,6 +45,7 @@ define(['modules/BoardSingleton'], function(Board){
         _player = {name: 'test'};
         spyOn(_board, 'resetBoard');
       });
+
       it('should record player stating Go', function () {
         _board.announceGo(_player);
         expect(_board.playersWhoSaidGo.length).toBe(1);
@@ -56,11 +57,19 @@ define(['modules/BoardSingleton'], function(Board){
         beforeEach(function () {
           _player = {name: 'test'};
           _player2 = {name: 'player2'};
+          spyOn(_board.scoreKeeper, 'pointForGo');
         });
+
         it('should reset the game', function () {
           _board.announceGo(_player);
           _board.announceGo(_player2);
           expect(_board.resetBoard).toHaveBeenCalled();
+        });
+        
+        it('should award a point for go', function(){
+          _board.announceGo(_player);
+          _board.announceGo(_player2);
+          expect(_board.scoreKeeper.pointForGo).toHaveBeenCalled();
         });
       });
     });

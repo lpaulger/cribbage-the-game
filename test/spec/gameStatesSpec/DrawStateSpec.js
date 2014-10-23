@@ -33,6 +33,7 @@ define(['gameStates/DrawState'], function(DrawState){
     describe('Draw Methods', function(){
       beforeEach(function(){
         _draw = new DrawState(_game);
+        spyOn(_draw.mediator, 'publish');
       });
 
       describe('Click Deck', function(){
