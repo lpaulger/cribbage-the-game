@@ -5,7 +5,7 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry'],
     function App(){
       this.mediator = Mediator;
       this.game = new Game();
-      this.states = new StateRegistry(this.game);
+      this.stateRegistry = new StateRegistry();
       this.mediator.subscribe('start', startGame.bind(this));
       this.mediator.subscribe('transition', transitionTo.bind(this));
       this.mediator.subscribe('messages-add', setMessages.bind(this));
@@ -35,12 +35,7 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry'],
     function transitionTo(stateName, wait){
       var state;
       function process(){
-        state = this.states.filter(function(state){
-          return state.name === stateName;
-        })[0];
-        if(!state)
-          throw new Error('State ' + stateName + ' Not Found');
-
+        state = this.stateRegistry.initState(stateName, this.game);
         state.init();
       }
 
@@ -56,7 +51,7 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry'],
     function startGame(){
       this.game = new Game();
       this.game.$board.clearBoard();
-      this.states = new StateRegistry(this.game);
+      this.stateRegistry = new StateRegistry();
       this.mediator.publish('transition', 'Draw');
     }
 

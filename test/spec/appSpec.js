@@ -1,11 +1,16 @@
 define(['app'], function(App) {
   'use strict';
+
   describe('App', function() {
-    var app;
-    
+    var app = new App();
+    beforeEach(function(){
+      spyOn(app.stateRegistry, 'initState').and.returnValue({
+        init: jasmine.createSpy('init')
+      });
+    });
+
     describe('init', function(){
       beforeEach(function(){
-        app = new App();
         spyOn(app.mediator, 'publish');
         app.init();
       });
@@ -14,29 +19,11 @@ define(['app'], function(App) {
         expect(app.mediator.publish.calls.count()).toEqual(1);
         expect(app.mediator.publish).toHaveBeenCalledWith('transition', 'Home');
       });
-
-      afterEach(function(){
-        app.game = {
-          $messages: []
-        };
-        app.states = [
-          {name: 'Draw', init: jasmine.createSpy('init')},
-          {name:'Play', init: jasmine.createSpy('init')}
-        ];
-      });
     });
 
     describe('transitionTo', function(){
       beforeEach(function(){
         jasmine.clock().install();
-        app = new App();
-        app.game = {
-          $messages: []
-        };
-        app.states = [
-          {name: 'Draw', init: jasmine.createSpy('init')},
-          {name:'Play', init: jasmine.createSpy('init')}
-        ];
       });
 
       afterEach(function() {
@@ -46,42 +33,24 @@ define(['app'], function(App) {
       describe('and wait is true', function(){
         it('should call render', function(){
           app.mediator.publish('transition', 'Play', true);
-          expect(app.states[1].init).not.toHaveBeenCalled();
           jasmine.clock().tick(1001);
-          expect(app.states[1].init).toHaveBeenCalled();
+          expect(app.stateRegistry.initState).toHaveBeenCalledWith('Play', app.game);
         });
       });
 
       describe('and wait is false', function(){
         it('should call render', function(){
           app.mediator.publish('transition', 'Play', false);
-          expect(app.states[1].init).toHaveBeenCalled();
+          expect(app.stateRegistry.initState).toHaveBeenCalledWith('Play', app.game);
           jasmine.clock().tick(1001);
-          expect(app.states[1].init).toHaveBeenCalled();
-        });
-      });
-
-      describe('and state doesn\'t exist', function(){
-        it('should throw error', function(){
-          expect(function(){
-            app.mediator.publish('transition', 'FAKE', false);
-          }).toThrowError('State FAKE Not Found');
+          expect(app.stateRegistry.initState.calls.count()).toEqual(1);
         });
       });
     });
 
     describe('startGame published', function(){
-      beforeEach(function(){
-        app = new App();
-        app.game = {
-          $messages: []
-        };
-        app.states = [
-          {name: 'Draw', init: function(){}},
-          {name:'Play', init: function(){}}
-        ];
 
-        spyOn(app.states[0], 'init');
+      beforeEach(function(){
         app.mediator.publish('start');
       });
 
@@ -91,13 +60,6 @@ define(['app'], function(App) {
     });
 
     describe('message', function(){
-      beforeEach(function(){
-        app = new App();
-        app.game = {
-          $messages: []
-        };
-      });
-
       describe('and add one message', function(){
         it('should add the message to the game\'s messages', function(){
           app.mediator.publish('messages-add', 'test message');
@@ -130,7 +92,6 @@ define(['app'], function(App) {
       var player;
       beforeEach(function(){
         player = {name: 'test'};
-        app = new App();
         app.game = {
           winner: {}
         };

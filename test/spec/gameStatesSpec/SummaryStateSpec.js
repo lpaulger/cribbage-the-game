@@ -16,7 +16,7 @@ define(['gameStates/SummaryState', 'jquery'], function(SummaryState, $){
 
     describe('template', function(){
       beforeEach(function(){
-        loadFixtures('summaryTemplate.html');
+        setFixtures(sandbox({id: 'summaryTemplate'}));
         summaryState = new SummaryState(game);
       });
 
@@ -26,19 +26,17 @@ define(['gameStates/SummaryState', 'jquery'], function(SummaryState, $){
     });
 
     describe('bindEvents', function(){
-      var newGameSpy, homeSpy;
       beforeEach(function(){
-        loadFixtures('summaryTemplate.html');
-        newGameSpy = spyOnEvent('#newGameButton', 'click');
-        homeSpy = spyOnEvent('#homeButton', 'click');
-
         summaryState = new SummaryState(game);
         spyOn(summaryState.mediator, 'publish');
-        summaryState.bindEvents();
       });
 
       describe('newGameButton', function(){
+        var newGameSpy;
         beforeEach(function(){
+          setFixtures(sandbox({id: 'newGameButton'}));
+          newGameSpy = spyOnEvent('#newGameButton', 'click');
+          summaryState.bindEvents();
           $('#newGameButton').click();
         });
 
@@ -52,7 +50,11 @@ define(['gameStates/SummaryState', 'jquery'], function(SummaryState, $){
       });
 
       describe('homeButton', function(){
+        var homeSpy;
         beforeEach(function(){
+          setFixtures(sandbox({id: 'homeButton'}));
+          homeSpy = spyOnEvent('#homeButton', 'click');
+          summaryState.bindEvents();
           $('#homeButton').click();
         });
 
