@@ -1,11 +1,13 @@
-define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry'],
-  function(Game, Mediator, StateRegistry){
+define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry', 'modules/StorageModule'],
+  function(Game, Mediator, StateRegistry, Storage){
     'use strict';
 
     function App(){
       this.mediator = Mediator;
+      this.storage = Storage;
       this.stateRegistry = new StateRegistry();
       this.mediator.subscribe('start', startGame.bind(this));
+      this.mediator.subscribe('continue', continueGame.bind(this));
       this.mediator.subscribe('transition', transitionTo.bind(this));
       this.mediator.subscribe('messages-add', setMessages.bind(this));
       this.mediator.subscribe('messages-clear', clearMessages.bind(this));
@@ -37,7 +39,7 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry'],
       function process(){
         state = this.stateRegistry.initState(stateName, this.game);
         state.init();
-        //save game here
+        this.storage.saveGame(this.game, state.name);
       }
 
       if(wait){
@@ -47,6 +49,13 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry'],
       } else {
         process.call(this);
       }
+    }
+
+    function continueGame(){
+      var data = this.storage.loadGame();
+      this.game = data.game;
+      this.stateRegistry = new StateRegistry();
+      this.mediator.publish('transition', data.state);
     }
 
     function startGame(){

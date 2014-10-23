@@ -5,7 +5,18 @@ define(['app'], function(App) {
     var app = new App();
     beforeEach(function(){
       spyOn(app.stateRegistry, 'initState').and.returnValue({
-        init: jasmine.createSpy('init')
+        init: jasmine.createSpy('init'),
+        name: 'Play'
+      });
+    });
+
+    describe('constructor', function(){
+      it('should create App', function(){
+        expect(typeof app).toBe('object');
+      });
+      
+      it('should have access to storage', function(){
+        expect(app.storage).toBeDefined();
       });
     });
 
@@ -21,13 +32,21 @@ define(['app'], function(App) {
       });
     });
 
+
+
     describe('transitionTo', function(){
       beforeEach(function(){
         jasmine.clock().install();
+        spyOn(app.storage, 'saveGame');
       });
 
       afterEach(function() {
         jasmine.clock().uninstall();
+      });
+      
+      it('should save the game', function(){
+        app.mediator.publish('transition', 'Play', false);
+        expect(app.storage.saveGame).toHaveBeenCalledWith( app.game, 'Play');
       });
 
       describe('and wait is true', function(){
@@ -59,7 +78,26 @@ define(['app'], function(App) {
       });
     });
 
+    describe('continueGame published', function(){
+      beforeEach(function(){
+        spyOn(app.storage, 'loadGame').and.returnValue({
+          game: {},
+          state: 'Play'
+        });
+      });
+
+      it('should load the saved game', function(){
+        app.mediator.publish('continue');
+        expect(app.storage.loadGame).toHaveBeenCalled();
+      });
+    });
+    
     describe('message', function(){
+      beforeEach(function(){
+        app.game = {
+          $messages: []
+        };
+      });
       describe('and add one message', function(){
         it('should add the message to the game\'s messages', function(){
           app.mediator.publish('messages-add', 'test message');
