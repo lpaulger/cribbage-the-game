@@ -30,7 +30,7 @@ define(['modules/StorageModule', 'modules/GameModule'], function(Storage, Game){
       describe('and the data exists', function(){
         beforeEach(function(){
           game = new Game({});
-          Storage.saveGame(game, 'play');
+          Storage.saveGame(game, 'Play');
         });
 
         it('should get the data', function(){

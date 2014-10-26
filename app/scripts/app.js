@@ -6,6 +6,7 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry', 'm
       this.mediator = Mediator;
       this.storage = Storage;
       this.stateRegistry = new StateRegistry();
+
       this.mediator.subscribe('start', startGame.bind(this));
       this.mediator.subscribe('continue', continueGame.bind(this));
       this.mediator.subscribe('transition', transitionTo.bind(this));

@@ -4,7 +4,7 @@ define(
 
     'use strict';
     function Game(options){
-      this.$deck = options.$deck || new Deck();
+      this.$deck = new Deck(options.$deck);
 
       var boardSettings = {scoreKeeper:new ScoreKeeper()};
       for(var attrname in options.$board){
