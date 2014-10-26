@@ -17,7 +17,7 @@ define(
         possessive:'Your',
         board:     this.$board
       };
-      for(var attrname in options.$player1){
+      for(attrname in options.$player1){
         player1Settings[attrname] = options.$player1[attrname];
       }
       this.$player1 = new Player(player1Settings);
@@ -27,7 +27,7 @@ define(
         possessive:'his',
         board:     this.$board
       };
-      for(var attrname in options.$player2){
+      for(attrname in options.$player2){
         player2Settings[attrname] = options.$player2[attrname];
       }
       this.$player2 = new PlayerAi(player2Settings);
