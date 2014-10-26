@@ -5,15 +5,19 @@ define(
     'use strict';
     function Game(options){
       this.$deck = options.$deck || new Deck();
-      this.$board = options.$board || new Board({
-        scoreKeeper: new ScoreKeeper()
-      });
-      this.$player1 = options.$player1 || new Player({
+
+      options.$board.scoreKeeper = new ScoreKeeper();
+      this.$board = new Board(options.$board);
+
+      options.$player1.board = this.$board;
+      this.$player1 = new Player(options.$player1 || {
         name: 'You',
         possessive: 'Your',
         board: this.$board
       });
-      this.$player2 = options.$player2 || new PlayerAi({
+
+      options.$player2.board = this.$board;
+      this.$player2 = new PlayerAi(options.$player2 || {
         name: 'Roboto',
         possessive: 'his',
         board: this.$board

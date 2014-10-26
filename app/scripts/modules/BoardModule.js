@@ -2,10 +2,10 @@ define([], function(){
   'use strict';
 
   function Board(options){
-    this.currentBoardValue = 0;
-    this.totalPlayedCardsForRound = [];
-    this.playedCards = [];
-    this.playersWhoSaidGo = [];
+    this.currentBoardValue = options.currentBoardValue || 0;
+    this.totalPlayedCardsForRound = options.totalPlayedCardsForRound || [];
+    this.playedCards = options.playedCards || [];
+    this.playersWhoSaidGo = options.playersWhoSaidGo || [];
     this.scoreKeeper = options.scoreKeeper;
   }
 

@@ -20,7 +20,7 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry', 'm
     App.prototype.init = function(){
       var data = this.storage.loadGame();
       if(data.game){
-        this.game = data.game;
+        this.game = new Game(data.game);
         this.stateRegistry = new StateRegistry();
         this.mediator.publish('transition', data.state);
       } else {
@@ -43,6 +43,7 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry', 'm
 
     function transitionTo(stateName, wait){
       var state;
+
       function process(){
         state = this.stateRegistry.initState(stateName, this.game);
         state.init();
@@ -60,10 +61,10 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry', 'm
     }
 
     function continueGame(){
-      var data = this.storage.loadGame();
-      this.game = data.game;
+      var storage = this.storage.loadGame();
+      this.game = new Game(storage.game);
       this.stateRegistry = new StateRegistry();
-      this.mediator.publish('transition', data.state);
+      this.mediator.publish('transition', storage.state);
     }
 
     function startGame(){
