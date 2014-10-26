@@ -18,7 +18,14 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry', 'm
     }
 
     App.prototype.init = function(){
-      this.mediator.publish('transition', 'Home');
+      var data = this.storage.loadGame();
+      if(data.game){
+        this.game = data.game;
+        this.stateRegistry = new StateRegistry();
+        this.mediator.publish('transition', data.state);
+      } else {
+        this.mediator.publish('transition', 'Home');
+      }
     };
 
     function setMessages(message){
@@ -39,7 +46,8 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry', 'm
       function process(){
         state = this.stateRegistry.initState(stateName, this.game);
         state.init();
-        this.storage.saveGame(this.game, state.name);
+        if(this.game)
+          this.storage.saveGame(this.game, state.name);
       }
 
       if(wait){
@@ -59,7 +67,7 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry', 'm
     }
 
     function startGame(){
-      this.game = new Game();
+      this.game = new Game({});
       this.game.$board.clearBoard();
       this.stateRegistry = new StateRegistry();
       this.mediator.publish('transition', 'Draw');

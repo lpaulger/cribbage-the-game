@@ -1,16 +1,16 @@
-define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlayScoreKeeper', 'modules/Mediator'], function (PlayRules, Board, ScoreKeeper, Mediator) {
+define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/Mediator'], function (PlayRules, ScoreKeeper, Mediator) {
     'use strict';
-    function Player(name, possessive){
-      this.name = name;
-      this.possessive = possessive;
-      this.hand = [];
-      this.handInMemory = [];
-      this.crib = [];
-      this.cardsForCrib = [];
-      this.points = 0;
+    function Player(options){
+      this.name = options.name; //required
+      this.possessive = options.possessive; //required
+      this.hand = options.hand || [];
+      this.handInMemory = options.handInMemory || [];
+      this.crib = options.crib || [];
+      this.cardsForCrib = options.cardsForCrib || [];
+      this.points = options.points || 0;
+      this.board = options.board;//required
+      this.playRules = new PlayRules({board: options.board});
       this.scoreKeeper = new ScoreKeeper();
-      this.playRules = PlayRules.getInstance();
-      this.board = Board.getInstance();
       this.mediator = Mediator;
     }
 

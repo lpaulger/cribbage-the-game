@@ -15,7 +15,16 @@ define(['modules/PlayerModule'], function(Player) {
           topHand: [card, card, card, card, card, card],
           bottomHand: [card, card, card, card, card, card]
         });
-        _player = new Player('test', 'tests');
+        _player = new Player({
+          name: 'test',
+          possessive: 'tests',
+          board: {
+            placeCard: jasmine.createSpy('placeCard'),
+            resetBoard: jasmine.createSpy('resetBoard'),
+            announceGo: jasmine.createSpy('announceGo'),
+            currentBoardValue: 31
+          }
+        });
         spyOn(_player.scoreKeeper, 'TwoForHisHeels');
       });
 
@@ -110,8 +119,6 @@ define(['modules/PlayerModule'], function(Player) {
         var points;
         beforeEach(function(){
           _player.hand = [card, card, card, card, card, card];
-          spyOn(_player.board, 'placeCard');
-          spyOn(_player.board, 'resetBoard');
           spyOn(_player.scoreKeeper, 'evaluatePlay').and.returnValue(0);
         });
 
@@ -137,7 +144,6 @@ define(['modules/PlayerModule'], function(Player) {
         describe('and player plays card totalling 31 count', function(){
           beforeEach(function(){
             spyOn(_player.playRules, 'isCardPlayable').and.returnValue(true);
-            _player.board.currentBoardValue = 31;
             points =_player.playCard(0);
           });
 
@@ -185,7 +191,6 @@ define(['modules/PlayerModule'], function(Player) {
           describe('and has no playable cards', function(){
             beforeEach(function(){
               spyOn(_player.playRules, 'hasPlayableCards').and.returnValue(false);
-              spyOn(_player.board, 'announceGo').and.returnValue(undefined);
               spyOn(_player.mediator, 'publish');
             });
 
@@ -212,7 +217,6 @@ define(['modules/PlayerModule'], function(Player) {
           describe('and has no playable cards', function(){
             beforeEach(function(){
               spyOn(_player.playRules, 'hasPlayableCards').and.returnValue(false);
-              spyOn(_player.board, 'announceGo').and.returnValue(1);
               spyOn(_player.mediator, 'publish');
             });
 

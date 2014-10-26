@@ -1,14 +1,11 @@
-define(['modules/PlayRulesSingleton'], function(PlayRules) {
+define(['modules/PlayRulesModule'], function(PlayRules) {
   'use strict';
   var _logic;
   describe('PlayRules', function () {
-    describe('getInstance', function () {
-      var _logicInstanceTwo;
-      it('should always return the same instance', function () {
-        _logic = PlayRules.getInstance();
-        _logicInstanceTwo = PlayRules.getInstance();
-
-        expect(_logic).toEqual(_logicInstanceTwo);
+    describe('constructor', function(){
+      it('should create an instance of PlayRules', function(){
+        _logic = new PlayRules({board: {currentValue: 10}});
+        expect(typeof _logic).toEqual('object');
       });
     });
   });

@@ -1,7 +1,7 @@
 define(['app'], function(App) {
   'use strict';
 
-  describe('App', function() {
+  xdescribe('App', function() {
     var app = new App();
     beforeEach(function(){
       spyOn(app.stateRegistry, 'initState').and.returnValue({
@@ -14,7 +14,7 @@ define(['app'], function(App) {
       it('should create App', function(){
         expect(typeof app).toBe('object');
       });
-      
+
       it('should have access to storage', function(){
         expect(app.storage).toBeDefined();
       });
@@ -43,7 +43,7 @@ define(['app'], function(App) {
       afterEach(function() {
         jasmine.clock().uninstall();
       });
-      
+
       it('should save the game', function(){
         app.mediator.publish('transition', 'Play', false);
         expect(app.storage.saveGame).toHaveBeenCalledWith( app.game, 'Play');
@@ -91,7 +91,7 @@ define(['app'], function(App) {
         expect(app.storage.loadGame).toHaveBeenCalled();
       });
     });
-    
+
     describe('message', function(){
       beforeEach(function(){
         app.game = {

@@ -4,7 +4,7 @@ define(['modules/GameModule'], function(Game){
 
   describe('Game', function () {
     beforeEach(function () {
-      _game = new Game();
+      _game = new Game({});
     });
 
     afterEach(function(){
