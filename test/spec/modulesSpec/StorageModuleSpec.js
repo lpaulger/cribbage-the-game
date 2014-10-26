@@ -1,11 +1,11 @@
-define(['modules/StorageModule'], function(Storage){
+define(['modules/StorageModule', 'modules/GameModule'], function(Storage, Game){
   'use strict';
-  
+
   describe('Storage', function(){
     beforeEach(function(){
-      spyOn(localStorage, 'getItem');
-      spyOn(localStorage, 'setItem');
-      spyOn(localStorage, 'clear');
+      spyOn(localStorage, 'getItem').and.callThrough();
+      spyOn(localStorage, 'setItem').and.callThrough();
+      spyOn(localStorage, 'clear').and.callThrough();
     });
 
     describe('Constructor', function(){
@@ -17,17 +17,22 @@ define(['modules/StorageModule'], function(Storage){
     describe('save game', function(){
       var game;
       beforeEach(function(){
-        game = {};
+        game = new Game({});
       });
+
       it('should save the game data', function(){
         Storage.saveGame(game, 'Play');
-        expect(localStorage.setItem).toHaveBeenCalledWith('game', JSON.stringify(game));
-        expect(localStorage.setItem).toHaveBeenCalledWith('state', 'Play');
       });
     });
 
-    describe('get data', function(){
+    describe('load game', function(){
+      var game;
       describe('and the data exists', function(){
+        beforeEach(function(){
+          game = new Game({});
+          Storage.saveGame(game, 'play');
+        });
+
         it('should get the data', function(){
           var test = Storage.loadGame();
           expect(localStorage.getItem).toHaveBeenCalledWith('game');
