@@ -49,7 +49,7 @@ define(['modules/BoardModule'], function(Board){
       it('should record player stating Go', function () {
         _board.announceGo(_player);
         expect(_board.playersWhoSaidGo.length).toBe(1);
-        expect(_board.playersWhoSaidGo[0]).toBe(_player);
+        expect(_board.playersWhoSaidGo[0]).toBe(_player.name);
         expect(_board.resetBoard).not.toHaveBeenCalled();
       });
 

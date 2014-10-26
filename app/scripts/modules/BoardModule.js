@@ -21,7 +21,7 @@ define([], function(){
 
   Board.prototype.announceGo = function(player){
     function otherPlayerAnnouncedGo(){
-      return this.playersWhoSaidGo.indexOf(player) === -1 &&
+      return this.playersWhoSaidGo.indexOf(player.name) === -1 &&
         this.playersWhoSaidGo.length > 0;
     }
 
@@ -29,7 +29,7 @@ define([], function(){
       this.resetBoard();
       this.scoreKeeper.pointForGo(player);
     } else {
-      this.playersWhoSaidGo.push(player);
+      this.playersWhoSaidGo.push(player.name);
     }
   };
 

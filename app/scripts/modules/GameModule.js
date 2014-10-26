@@ -6,25 +6,45 @@ define(
     function Game(options){
       this.$deck = options.$deck || new Deck();
 
-      options.$board.scoreKeeper = new ScoreKeeper();
-      this.$board = new Board(options.$board);
+      var boardSettings = {scoreKeeper:new ScoreKeeper()};
+      for(var attrname in options.$board){
+        boardSettings[attrname] = options.$board[attrname];
+      }
+      this.$board = new Board(boardSettings);
 
-      options.$player1.board = this.$board;
-      this.$player1 = new Player(options.$player1 || {
-        name: 'You',
-        possessive: 'Your',
-        board: this.$board
-      });
+      var player1Settings = {
+        name:      'You',
+        possessive:'Your',
+        board:     this.$board
+      };
+      for(var attrname in options.$player1){
+        player1Settings[attrname] = options.$player1[attrname];
+      }
+      this.$player1 = new Player(player1Settings);
 
-      options.$player2.board = this.$board;
-      this.$player2 = new PlayerAi(options.$player2 || {
-        name: 'Roboto',
-        possessive: 'his',
-        board: this.$board
-      });
+      var player2Settings = {
+        name:      'Roboto',
+        possessive:'his',
+        board:     this.$board
+      };
+      for(var attrname in options.$player2){
+        player2Settings[attrname] = options.$player2[attrname];
+      }
+      this.$player2 = new PlayerAi(player2Settings);
+
+      if(options.$cribOwner){
+        this.$cribOwner = [this.$player1, this.$player2].filter(function(player){
+          return player.name === options.$cribOwner;
+        })[0];
+      }
+
       this.$player1HandVisible = options.$player1HandVisible || true;
       this.$player2HandVisible = options.$player2HandVisible || true;
       this.$messages = options.$messages || [];
+
+      this.topCard = options.topCard || undefined;
+      this.$showTopCard = options.$showTopCard || undefined;
+      this.$action = options.$action || undefined;
     }
 
     return Game;

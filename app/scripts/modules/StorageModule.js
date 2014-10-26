@@ -34,17 +34,8 @@ define([], function(){
   }
 
   function saveCribOwner(game){
-    if(game.$cribOwner){
-      return {
-        name:        game.$cribOwner.name,
-        possessive:  game.$cribOwner.possessive,
-        hand:        game.$cribOwner.hand,
-        handInMemory:game.$cribOwner.handInMemory,
-        crib:        game.$cribOwner.crib,
-        cardsForCrib:game.$cribOwner.cardsForCrib,
-        points:      game.$cribOwner.points
-      };
-    }
+    if(game.$cribOwner)
+      return game.$cribOwner.name;
   }
 
   function saveBoard(game){
@@ -52,7 +43,7 @@ define([], function(){
       currentBoardValue:       game.$board.currentBoardValue,
       totalPlayedCardsForRound:game.$board.totalPlayedCardsForRound,
       playedCards:             game.$board.playedCards,
-      playersWhoSaidGo:        game.$board.playersWhoSaidGo
+      playersWhoSaidGo:        game.$board.playersWhoSaidGo //not simple object
     };
   }
 
@@ -71,8 +62,11 @@ define([], function(){
         $cribOwner:         saveCribOwner(game),
         $player1HandVisible:game.$player1HandVisible,
         $player2HandVisible:game.$player2HandVisible,
+        topCard:            game.topCard,
+        showTopCard:        game.$showTopCard,
         $board:             saveBoard(game),
-        $messages:          game.$messages
+        $messages:          game.$messages,
+        $action: game.$action
       }));
       set('state', state);
     }
