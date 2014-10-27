@@ -46,6 +46,7 @@ define(['jquery', 'mustache', 'modules/Mediator'],function($, mustache, mediator
     var rendered = mustache.render(this.templates().page, this.data, this.templates());
     $('#content').html(rendered);
     this.bindEvents();
+    this.mediator.publish('render', this.name, this.game);
     this.mediator.publish('messages-clear');
   };
 

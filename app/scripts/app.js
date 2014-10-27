@@ -16,6 +16,10 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry', 'm
       this.mediator.subscribe('board-clear', function(){
         this.game.$board.clearBoard();
       }.bind(this));
+      this.mediator.subscribe('render', function(state, game){
+        if(this.game)
+          this.storage.saveGame(game, state);
+      }.bind(this));
     }
 
     App.prototype.init = function(){
@@ -30,7 +34,8 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry', 'm
     };
 
     function setMessages(message){
-      this.game.$messages.push(message);
+      if(this.game.$messages.indexOf(message) === -1)
+        this.game.$messages.push(message);
     }
 
     function clearMessages(){
@@ -48,8 +53,6 @@ define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry', 'm
       function process(){
         state = this.stateRegistry.initState(stateName, this.game);
         state.init();
-        if(this.game)
-          this.storage.saveGame(this.game, state.name);
       }
 
       if(wait){
