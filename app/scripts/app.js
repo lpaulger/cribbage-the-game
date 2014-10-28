@@ -1,9 +1,9 @@
-define(['modules/GameModule', 'modules/Mediator', 'gameStates/StateRegistry', 'modules/StorageModule'],
-  function(Game, Mediator, StateRegistry, Storage){
+define(['modules/GameModule', 'modules/PubSub', 'gameStates/StateRegistry', 'modules/StorageModule'],
+  function(Game, PubSub, StateRegistry, Storage){
     'use strict';
 
     function App(){
-      this.mediator = Mediator;
+      this.mediator = PubSub;
       this.storage = Storage;
       this.stateRegistry = new StateRegistry();
 

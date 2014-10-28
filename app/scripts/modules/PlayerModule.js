@@ -1,4 +1,4 @@
-define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/Mediator'], function (PlayRules, ScoreKeeper, Mediator) {
+define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'], function (PlayRules, ScoreKeeper, PubSub) {
     'use strict';
     function Player(options){
       this.name = options.name; //required
@@ -11,7 +11,7 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/Mediator'
       this.board = options.board;//required
       this.playRules = new PlayRules({board: options.board});
       this.scoreKeeper = new ScoreKeeper();
-      this.mediator = Mediator;
+      this.mediator = PubSub;
     }
 
     Player.prototype.placeCardsInCrib = function(cribOwner) {
@@ -67,7 +67,7 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/Mediator'
     Player.prototype.isWinner = function(){
       var isWinner = this.points >= 121;
       if(isWinner)
-        Mediator.publish('winner', this);
+        this.mediator.publish('winner', this);
       return isWinner;
     };
 
