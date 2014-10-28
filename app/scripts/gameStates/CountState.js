@@ -2,7 +2,13 @@ define(['jquery','gameStates/BaseState', 'modules/CountScoreKeeper'], function($
   'use strict';
   function CountState(game){
     BaseState.call(this, game, 'Count');
-    this.step = 0;
+    /*
+    Step - Description
+      0  - Pone counts hand
+      1  - Dealer counts hand
+      2  - Dealer counts crib
+     */
+    game.countStateStep = game.countStateStep || 0;
     this.scoreKeeper = new ScoreKeeper();
   }
 
@@ -20,37 +26,50 @@ define(['jquery','gameStates/BaseState', 'modules/CountScoreKeeper'], function($
   CountState.prototype.init = function(){
     this.p1.restoreHand();
     this.p2.restoreHand();
-    var points = 0;
-    if(isPlayerOneCribOwner.call(this)){
+
+    //process logic here, same call as action
+
+    this.render();
+  };
+
+  function processFirstStep(points){
+    if(isPlayerOneCribOwner.call(this)) {
       evaluatePlayerTwoScore.call(this, points);
     } else {
       evaluatePlayerOneScore.call(this, points);
     }
-    this.render();
-  };
+    this.game.countStateStep += 1;
+  }
+
+  function processSecondStep(points){
+    if(isPlayerOneCribOwner.call(this)) {
+      evaluatePlayerOneScore.call(this, points);
+      this.p2.hand = [];
+    } else {
+      evaluatePlayerTwoScore.call(this, points);
+      this.p1.hand = [];
+    }
+    this.game.countStateStep += 1;
+  }
+
+  function processThirdStep(){
+    this.game.$cribOwner.hand = this.game.$cribOwner.crib;
+    this.game.$cribOwner.crib = [];
+    this.scoreKeeper.evaluateHand(this.game.$cribOwner, this.game.topCard);
+    this.game.$action = {text: 'Next Round'};
+    this.game.countStateStep += 1;
+  }
 
   CountState.prototype.action = function(){
     var points = 0;
-    if(this.step === 0){
-      if(isPlayerOneCribOwner.call(this)){
-        evaluatePlayerOneScore.call(this, points);
-        this.p2.hand = [];
-      } else {
-        evaluatePlayerTwoScore.call(this, points);
-        this.p1.hand = [];
-      }
-      this.step += 1;
+    if(this.game.countStateStep === 0)
+      processFirstStep.call(this, points);
+    else if(this.game.countStateStep === 1)
+      processSecondStep.call(this, points);
+    else if(this.game.countStateStep === 2) {
+      processThirdStep.call(this);
       this.render();
-      if(this.p2.isWinner())
-        this.mediator.publish('transition', 'Summary', true);
-    } else if(this.step === 1) {
-      this.game.$cribOwner.hand = this.game.$cribOwner.crib;
-      this.game.$cribOwner.crib = [];
-      this.scoreKeeper.evaluateHand(this.game.$cribOwner, this.game.topCard);
-      this.game.$action = {text: 'Next Round'};
-      this.step += 1;
-      this.render();
-      if(this.game.$cribOwner.isWinner())
+      if(this.game.$cribOwner.isWinner() || this.p2.isWinner())
         this.mediator.publish('transition', 'Summary', true);
     } else {
       if(isPlayerOneCribOwner.call(this)){
@@ -60,7 +79,7 @@ define(['jquery','gameStates/BaseState', 'modules/CountScoreKeeper'], function($
       }
       showPlayerOneHand.call(this);
       this.game.$showTopCard = false;
-      this.step = 0;
+      this.game.countStateStep = 0;
       if(this.game.$cribOwner.isWinner())
         this.mediator.publish('transition', 'Summary', true);
       else

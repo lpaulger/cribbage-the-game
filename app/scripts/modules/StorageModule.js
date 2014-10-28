@@ -62,6 +62,7 @@ define([], function(){
         $cribOwner:         saveCribOwner(game),
         $player1HandVisible:game.$player1HandVisible,
         $player2HandVisible:game.$player2HandVisible,
+        countStateStep:     game.countStateStep,
         topCard:            game.topCard,
         showTopCard:        game.$showTopCard,
         $board:             saveBoard(game),

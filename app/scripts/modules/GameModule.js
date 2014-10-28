@@ -37,13 +37,20 @@ define(
           return player.name === options.$cribOwner;
         })[0];
       }
-
-      this.$player1HandVisible = options.$player1HandVisible || true;
-      this.$player2HandVisible = options.$player2HandVisible || true;
       this.$messages = options.$messages || [];
 
+      //countState && DrawState
+      this.$player1HandVisible = options.$player1HandVisible || true;
+      this.$player2HandVisible = options.$player2HandVisible || true;
+
+      //countState
+      this.countStateStep = options.countStateStep || undefined;
+
+      //countState && prePlayState
       this.topCard = options.topCard || undefined;
       this.$showTopCard = options.$showTopCard || undefined;
+
+      //countState && dealState && playState
       this.$action = options.$action || undefined;
     }
 
