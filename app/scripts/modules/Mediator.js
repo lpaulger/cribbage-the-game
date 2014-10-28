@@ -4,7 +4,7 @@ define(['modules/PubSub', 'modules/GameModule', 'gameStates/StateRegistry', 'mod
 
     function Mediator(){
       PubSub.installTo(this);
-      
+
       PubSub.subscribe('App:Start', this.appInit);
       PubSub.subscribe('start', this.startGame);
       PubSub.subscribe('continue', this.continueGame);
