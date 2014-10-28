@@ -106,6 +106,10 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             _countState.game.countStateStep = 1;
           });
 
+          afterEach(function(){
+            _countState.game.countStateStep = 0;
+          });
+
           it('p2\'s hand should be empty', function(){
             _countState.init();
             expect(_game.$player2.hand.length).toBe(0);
@@ -267,9 +271,9 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
           });
 
           it('should be on step 1', function () {
-            expect(_countState.game.countStateStep).toEqual(0);
+            expect(_countState.game.countStateStep).toEqual(1);//on step 1
             _countState.action();
-            expect(_countState.game.countStateStep).toEqual(1);
+            expect(_countState.game.countStateStep).toEqual(2);//proceed to step 2 after action
           });
         });
 
@@ -298,9 +302,9 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
           });
 
           it('should be on step 2', function () {
-            expect(_countState.game.countStateStep).toEqual(1);
+            expect(_countState.game.countStateStep).toEqual(2);//on step 2
             _countState.action();
-            expect(_countState.game.countStateStep).toEqual(2);
+            expect(_countState.game.countStateStep).toEqual(3);//proceed to step 3
           });
         });
 
@@ -335,7 +339,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
           });
 
           it('should set step to 0', function () {
-            expect(_countState.game.countStateStep).toEqual(2);
+            expect(_countState.game.countStateStep).toEqual(3);
             _countState.action();
             expect(_countState.game.countStateStep).toEqual(0);
           });
