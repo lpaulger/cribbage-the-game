@@ -50,13 +50,7 @@ define(['modules/PubSub', 'modules/GameModule', 'gameStates/StateRegistry', 'mod
         state.init();
       }
 
-      if(wait){
-        setTimeout(function(){
-          process.call(this);
-        }.bind(this), 1000);
-      } else {
-        process.call(this);
-      }
+      wait ? setTimeout(process.bind(this), 1000) : process.call(this);
     };
 
     Mediator.prototype.setMessages = function(message){
@@ -78,7 +72,7 @@ define(['modules/PubSub', 'modules/GameModule', 'gameStates/StateRegistry', 'mod
     };
 
     Mediator.prototype.saveGame = function(state, game){
-      if(this.game)
+      if(game)
         Storage.saveGame(game, state);
     };
 
