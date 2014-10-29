@@ -50,7 +50,10 @@ define(['modules/PubSub', 'modules/GameModule', 'gameStates/StateRegistry', 'mod
         state.init();
       }
 
-      wait ? setTimeout(process.bind(this), 1000) : process.call(this);
+      if(wait)
+        setTimeout(process.bind(this), 1000);
+      else
+        process.call(this);
     };
 
     Mediator.prototype.setMessages = function(message){
