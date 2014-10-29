@@ -3,8 +3,11 @@ define(['modules/CardModule'], function (Card) {
   'use strict';
 
   function Deck(options){
-    this.deckType = (options && options.deckType) ? options.deckType : '52-card';
-    this.cards = createDeck(this.deckType);
+    options = options || {};
+    this.deckType = options.deckType || '52-card';
+    this.cards = options.cards || createDeck(this.deckType);
+    this.topHand = options.topHand || undefined;
+    this.bottomHand = options.bottomHand || undefined;
   }
 
   Deck.prototype.shuffle = function(){

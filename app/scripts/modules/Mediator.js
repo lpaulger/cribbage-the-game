@@ -1,47 +1,83 @@
-define([], function(){
-  'use strict';
+define(['modules/PubSub', 'modules/GameModule', 'gameStates/StateRegistry', 'modules/StorageModule'],
+  function(PubSub, Game, StateRegistry, Storage){
+    'use strict';
 
-  var channels = {};
-  var subscribe = function(channel, fn){
-      if (!channels[channel]) channels[channel] = [];
-      channels[channel].push({ context: this, callback: fn });
-      return this;
-    },
+    function Mediator(){
+      PubSub.installTo(this);
 
-    unsubscribe = function(channel, fn){
-      if( !channels.hasOwnProperty( channel ) ) {
-        return false;
+      PubSub.subscribe('App:Start', this.appInit);
+      PubSub.subscribe('start', this.startGame);
+      PubSub.subscribe('continue', this.continueGame);
+      PubSub.subscribe('transition', this.transitionTo);
+      PubSub.subscribe('messages-add', this.setMessages);
+      PubSub.subscribe('messages-clear', this.clearMessages);
+      PubSub.subscribe('winner', this.setWinner);
+      PubSub.subscribe('board-clear', this.clearBoard);
+      PubSub.subscribe('render', this.saveGame);
+    }
+
+    Mediator.prototype.appInit = function(){
+      this.stateRegistry = new StateRegistry();
+
+      var data = Storage.loadGame();
+      if(data.game){
+        this.game = new Game(data.game);
+        PubSub.publish('transition', data.state);
+      } else {
+        PubSub.publish('transition', 'Home');
       }
-
-      for( var i = 0, len = channels[ channel ].length; i < len; i++ ) {
-
-        if( channels[ channel ][ i ].callback === fn ) {
-          channels[ channel ].splice( i, 1 );
-          return true;
-        }
-      }
-
-      return false;
-    },
-
-    publish = function(channel){
-      if (!channels[channel] || channels[channel].length === 0) return false;
-      var args = Array.prototype.slice.call(arguments, 1);
-      for (var i = 0, l = channels[channel].length; i < l; i++) {
-        var subscription = channels[channel][i];
-        subscription.callback.apply(subscription.context, args);
-      }
-      return this;
     };
 
-  return {
-    channels: channels,
-    publish: publish,
-    subscribe: subscribe,
-    unsubscribe: unsubscribe,
-    installTo: function(obj){
-      obj.subscribe = subscribe;
-      obj.publish = publish;
-    }
-  };
-});
+    Mediator.prototype.startGame = function(){
+      this.game = new Game({});
+      this.game.$board.clearBoard();
+      this.stateRegistry = new StateRegistry();
+      PubSub.publish('transition', 'Draw');
+    };
+
+    Mediator.prototype.continueGame = function(){
+      var storage = Storage.loadGame();
+      this.game = new Game(storage.game);
+      this.stateRegistry = new StateRegistry();
+      PubSub.publish('transition', storage.state);
+    };
+
+    Mediator.prototype.transitionTo = function(stateName, wait){
+      var state;
+
+      function process(){
+        state = this.stateRegistry.initState(stateName, this.game);
+        state.init();
+      }
+
+      if(wait)
+        setTimeout(process.bind(this), 1000);
+      else
+        process.call(this);
+    };
+
+    Mediator.prototype.setMessages = function(message){
+      if(this.game.$messages.indexOf(message) === -1)
+        this.game.$messages.push(message);
+    };
+
+    Mediator.prototype.clearMessages = function(){
+      if(this.game)
+        this.game.$messages = [];
+    };
+
+    Mediator.prototype.setWinner = function(player){
+      this.game.winner = player;
+    };
+
+    Mediator.prototype.clearBoard = function(){
+      this.game.$board.clearBoard();
+    };
+
+    Mediator.prototype.saveGame = function(state, game){
+      if(game)
+        Storage.saveGame(game, state);
+    };
+
+    return Mediator;
+  });

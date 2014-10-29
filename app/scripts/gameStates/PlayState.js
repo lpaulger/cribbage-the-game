@@ -18,7 +18,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     this.game.$action = {text:'Go'};
 
     if(!isEndOfRound.call(this)){
-      setCurrentPlayer.call(this);
+      setInitialCurrentPlayer.call(this);
       if(this.game.currentPlayer === this.p2)
         processAiTurn.call(this);
       else
@@ -33,9 +33,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
   PlayState.prototype.selectCard = function(options) {
     try {
       this.p1.playCard(options.index);
-      this.game.currentPlayer = this.p2;
-      if(!isEndOfRound.call(this))
-        this.mediator.publish('messages-add', 'Their Turn');
+      switchPlayer.call(this);
     } catch(e) {
       if(e.message === 'No Playable Cards')
         this.mediator.publish('messages-add', 'No Playable Cards, Press \'Go!\'');
@@ -57,9 +55,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     if(this.nextState === 'Play'){
       try {
         this.p1.announceGo();
-        this.game.currentPlayer = this.p2;
-        if(!isEndOfRound.call(this))
-          this.mediator.publish('messages-add', 'Their Turn');
+        switchPlayer.call(this);
       } catch(e) {
         if(e.message === 'Playable Cards')
           this.mediator.publish('messages-add', 'You can\'t go, you have playable cards.');
@@ -78,8 +74,14 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     if(isEndOfRound.call(this))
       this.nextState = 'Play';
   };
+  function switchPlayer(){
+    this.game.currentPlayer = this.p2;
+    if(!isEndOfRound.call(this))
+      this.mediator.publish('messages-add', 'Their Turn');
+  }
 
-  function setCurrentPlayer(){
+
+  function setInitialCurrentPlayer(){
     if(!this.game.currentPlayer){
       if(this.game.$cribOwner === this.p1){
         this.game.currentPlayer = this.p2;

@@ -16,6 +16,9 @@ require.config({
   },
   map: {
     'app': {
+      'modules/Mediator': '../../test/mocks/MediatorMock',
+    },
+    'modules/Mediator': {
       'modules/GameModule': '../../test/mocks/GameModuleMock'
     }
   },

@@ -1,9 +1,9 @@
-define(['jquery', 'mustache', 'modules/Mediator'],function($, mustache, mediator){
+define(['jquery', 'mustache', 'modules/PubSub'],function($, mustache, PubSub){
   'use strict';
   function BaseState(game, name){
     this.game = game;
     this.name = name;
-    this.mediator = mediator;
+    this.mediator = PubSub;
     if(game){
       this.p1 = game.$player1;
       this.p2 = game.$player2;
@@ -46,6 +46,7 @@ define(['jquery', 'mustache', 'modules/Mediator'],function($, mustache, mediator
     var rendered = mustache.render(this.templates().page, this.data, this.templates());
     $('#content').html(rendered);
     this.bindEvents();
+    this.mediator.publish('render', this.name, this.game);
     this.mediator.publish('messages-clear');
   };
 

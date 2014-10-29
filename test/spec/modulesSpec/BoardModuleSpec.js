@@ -1,12 +1,12 @@
-define(['modules/BoardSingleton'], function(Board){
+define(['modules/BoardModule'], function(Board){
   'use strict';
   var _board, _card, _player, _player2;
 
   describe('BoardSingleton', function () {
     beforeEach(function () {
-      _board = Board.getInstance();
-      _board.resetBoard();
-      _board.totalPlayedCardsForRound = [];
+      _board = new Board({scoreKeeper: {
+        pointForGo: jasmine.createSpy('pointForGo')
+      }});
       _player = {points: 0};
     });
 
@@ -45,10 +45,11 @@ define(['modules/BoardSingleton'], function(Board){
         _player = {name: 'test'};
         spyOn(_board, 'resetBoard');
       });
+
       it('should record player stating Go', function () {
         _board.announceGo(_player);
         expect(_board.playersWhoSaidGo.length).toBe(1);
-        expect(_board.playersWhoSaidGo[0]).toBe(_player);
+        expect(_board.playersWhoSaidGo[0]).toBe(_player.name);
         expect(_board.resetBoard).not.toHaveBeenCalled();
       });
 
@@ -57,10 +58,17 @@ define(['modules/BoardSingleton'], function(Board){
           _player = {name: 'test'};
           _player2 = {name: 'player2'};
         });
+
         it('should reset the game', function () {
           _board.announceGo(_player);
           _board.announceGo(_player2);
           expect(_board.resetBoard).toHaveBeenCalled();
+        });
+
+        it('should award a point for go', function(){
+          _board.announceGo(_player);
+          _board.announceGo(_player2);
+          expect(_board.scoreKeeper.pointForGo).toHaveBeenCalled();
         });
       });
     });

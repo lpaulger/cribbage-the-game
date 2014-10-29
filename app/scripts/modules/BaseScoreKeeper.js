@@ -1,7 +1,7 @@
-define(['modules/Mediator'],function(Mediator){
+define(['modules/PubSub'],function(PubSub){
   'use strict';
   function BaseScoreKeeper(){
-    this.mediator = Mediator;
+    this.mediator = PubSub;
   }
 
   return BaseScoreKeeper;

@@ -2,7 +2,7 @@ define(['jquery','gameStates/BaseState', 'modules/DeckModule'],function($, BaseS
   'use strict';
 
   function HomeState(){
-    BaseState.call(this, {}, 'Home');
+    BaseState.call(this, undefined, 'Home');
     this.data =  new Deck().shuffle().cards.splice(0,6);
   }
 

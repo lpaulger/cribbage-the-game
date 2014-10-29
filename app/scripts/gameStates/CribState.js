@@ -8,8 +8,10 @@ define(['gameStates/BaseState'],function(BaseState){
   CribState.prototype.constructor = CribState;
 
   CribState.prototype.init = function(){
-    this.p2.placeCardsInCrib(this.game.$cribOwner);
-    this.p2.handInMemory = this.p2.hand.slice();
+    if(this.p2.hand.length === 6){
+      this.p2.placeCardsInCrib(this.game.$cribOwner);
+      this.p2.handInMemory = this.p2.hand.slice();
+    }
     this.render();
   };
 

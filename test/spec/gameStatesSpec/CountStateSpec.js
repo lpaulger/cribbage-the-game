@@ -52,6 +52,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
       $player2: _player2,
       $cribOwner: _player2,
       $showTopCard: true,
+      $messages: [],
       topCard: new Card(10, 'diams')
     };
   }
@@ -87,16 +88,38 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
           _countState = new CountState(_game);
           //spyOn(_countState.mediator, 'publish');
           spyOn(_countState.scoreKeeper, 'evaluateHand');
-          _countState.init();
         });
 
         it('show non crib holders hand', function () {
+          _countState.init();
           expect(_game.$player1HandVisible).toBe(false);
           expect(_game.$player2HandVisible).toBe(true);
         });
-        
+
         it('should call scoreKeeper.evaluateHand fo player2', function(){
+          _countState.init();
           expect(_countState.scoreKeeper.evaluateHand).toHaveBeenCalledWith(_player2, _game.topCard);
+        });
+
+        describe('and on step 1', function(){
+          beforeEach(function(){
+            _countState.game.countStateStep = 1;
+          });
+
+          afterEach(function(){
+            _countState.game.countStateStep = 0;
+          });
+
+          it('p2\'s hand should be empty', function(){
+            _countState.init();
+            expect(_game.$player2.hand.length).toBe(0);
+          });
+
+          it('should show p1\'s hand', function(){
+            _countState.init();
+            expect(_game.$player1HandVisible).toBe(true);
+            expect(_game.$player2HandVisible).toBe(false);
+          });
         });
       });
 
@@ -131,9 +154,9 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             createBasicGame();
             _game.$cribOwner = _game.$player1;
             _countState = new CountState(_game);
-            _countState.init();
-            spyOn(_countState.scoreKeeper, 'evaluateHand');
             spyOn(_countState.mediator, 'publish');
+            spyOn(_countState.scoreKeeper, 'evaluateHand');
+            _countState.init();
             _game.$player1.hand = _game.$player1.handInMemory;
             _game.$player2.hand = _game.$player2.handInMemory;
           });
@@ -156,6 +179,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
           beforeEach(function () {
             _game.$cribOwner = _game.$player1;
             _countState = new CountState(_game);
+            spyOn(_countState.mediator, 'publish');
             spyOn(_countState.scoreKeeper, 'evaluateHand');
             _countState.init();
             _game.$player1.hand = _game.$player1.handInMemory;
@@ -174,7 +198,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             _countState.action();
             expect(_game.$player1.crib).toEqual([]);
           });
-          
+
           it('should evaluate player1\'s hand for points', function(){
             _countState.action();
             expect(_countState.scoreKeeper.evaluateHand.calls.count()).toBe(3);
@@ -231,7 +255,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             _game.$player1.hand = _game.$player1.handInMemory;
             _game.$player2.hand = _game.$player2.handInMemory;
           });
-          
+
           it('should remove the cards from p1\'s hand', function () {
             expect(_game.$player1.hand.length).toBe(4);
             _countState.action();
@@ -247,9 +271,9 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
           });
 
           it('should be on step 1', function () {
-            expect(_countState.step).toEqual(0);
+            expect(_countState.game.countStateStep).toEqual(1);//on step 1
             _countState.action();
-            expect(_countState.step).toEqual(1);
+            expect(_countState.game.countStateStep).toEqual(2);//proceed to step 2 after action
           });
         });
 
@@ -257,9 +281,9 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
           beforeEach(function () {
             _game.$cribOwner = _game.$player2;
             _countState = new CountState(_game);
-            _countState.init();
             spyOn(_countState.scoreKeeper, 'evaluateHand');
             spyOn(_countState.mediator, 'publish');
+            _countState.init();
             _game.$player1.hand = _game.$player1.handInMemory;
             _game.$player1.crib = new Array(4);
             _game.$player2.hand = _game.$player2.handInMemory;
@@ -278,9 +302,9 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
           });
 
           it('should be on step 2', function () {
-            expect(_countState.step).toEqual(1);
+            expect(_countState.game.countStateStep).toEqual(2);//on step 2
             _countState.action();
-            expect(_countState.step).toEqual(2);
+            expect(_countState.game.countStateStep).toEqual(3);//proceed to step 3
           });
         });
 
@@ -315,9 +339,9 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
           });
 
           it('should set step to 0', function () {
-            expect(_countState.step).toEqual(2);
+            expect(_countState.game.countStateStep).toEqual(3);
             _countState.action();
-            expect(_countState.step).toEqual(0);
+            expect(_countState.game.countStateStep).toEqual(0);
           });
         });
       });

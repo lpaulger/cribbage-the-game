@@ -1,16 +1,57 @@
 define(
-  ['modules/DeckModule', 'modules/PlayerModule', 'modules/PlayerAiModule', 'modules/BoardSingleton'],
-  function(Deck, Player, PlayerAi, Board){
+  ['modules/DeckModule', 'modules/PlayerModule', 'modules/PlayerAiModule', 'modules/BoardModule', 'modules/PlayScoreKeeper'],
+  function(Deck, Player, PlayerAi, Board, ScoreKeeper){
 
     'use strict';
-    function Game(){
-      this.$deck = new Deck();
-      this.$player1 = new Player('You', 'your');
-      this.$player2 = new PlayerAi('Roboto', 'his');
-      this.$player1HandVisible = true;
-      this.$player2HandVisible = true;
-      this.$board = Board.getInstance();
-      this.$messages = [];
+    function Game(options){
+      this.$deck = new Deck(options.$deck);
+
+      var boardSettings = {scoreKeeper:new ScoreKeeper()};
+      for(var attrname in options.$board){
+        boardSettings[attrname] = options.$board[attrname];
+      }
+      this.$board = new Board(boardSettings);
+
+      var player1Settings = {
+        name:      'You',
+        possessive:'Your',
+        board:     this.$board
+      };
+      for(attrname in options.$player1){
+        player1Settings[attrname] = options.$player1[attrname];
+      }
+      this.$player1 = new Player(player1Settings);
+
+      var player2Settings = {
+        name:      'Roboto',
+        possessive:'his',
+        board:     this.$board
+      };
+      for(attrname in options.$player2){
+        player2Settings[attrname] = options.$player2[attrname];
+      }
+      this.$player2 = new PlayerAi(player2Settings);
+
+      if(options.$cribOwner){
+        this.$cribOwner = [this.$player1, this.$player2].filter(function(player){
+          return player.name === options.$cribOwner;
+        })[0];
+      }
+      this.$messages = options.$messages || [];
+
+      //countState && DrawState
+      this.$player1HandVisible = options.$player1HandVisible || true;
+      this.$player2HandVisible = options.$player2HandVisible || true;
+
+      //countState
+      this.countStateStep = options.countStateStep || undefined;
+
+      //countState && prePlayState
+      this.topCard = options.topCard || undefined;
+      this.$showTopCard = options.$showTopCard || undefined;
+
+      //countState && dealState && playState
+      this.$action = options.$action || undefined;
     }
 
     return Game;

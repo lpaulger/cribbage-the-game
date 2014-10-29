@@ -3,11 +3,7 @@ define([],function(){
     function Game(){
       this.$messages = [];
       this.$board = {
-        clearBoard: function(){}
-      };
-      this.mediator = {
-        subscribe: function(){},
-        publish: function(){}
+        clearBoard: jasmine.createSpy('clearBoard')
       };
     }
 

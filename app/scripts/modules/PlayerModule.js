@@ -1,17 +1,17 @@
-define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlayScoreKeeper', 'modules/Mediator'], function (PlayRules, Board, ScoreKeeper, Mediator) {
+define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'], function (PlayRules, ScoreKeeper, PubSub) {
     'use strict';
-    function Player(name, possessive){
-      this.name = name;
-      this.possessive = possessive;
-      this.hand = [];
-      this.handInMemory = [];
-      this.crib = [];
-      this.cardsForCrib = [];
-      this.points = 0;
+    function Player(options){
+      this.name = options.name; //required
+      this.possessive = options.possessive; //required
+      this.hand = options.hand || [];
+      this.handInMemory = options.handInMemory || [];
+      this.crib = options.crib || [];
+      this.cardsForCrib = options.cardsForCrib || [];
+      this.points = options.points || 0;
+      this.board = options.board;//required
+      this.playRules = new PlayRules({board: options.board});
       this.scoreKeeper = new ScoreKeeper();
-      this.playRules = PlayRules.getInstance();
-      this.board = Board.getInstance();
-      this.mediator = Mediator;
+      this.mediator = PubSub;
     }
 
     Player.prototype.placeCardsInCrib = function(cribOwner) {
@@ -67,7 +67,7 @@ define(['modules/PlayRulesSingleton', 'modules/BoardSingleton', 'modules/PlaySco
     Player.prototype.isWinner = function(){
       var isWinner = this.points >= 121;
       if(isWinner)
-        Mediator.publish('winner', this);
+        this.mediator.publish('winner', this);
       return isWinner;
     };
 
