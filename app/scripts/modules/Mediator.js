@@ -17,10 +17,11 @@ define(['modules/PubSub', 'modules/GameModule', 'gameStates/StateRegistry', 'mod
     }
 
     Mediator.prototype.appInit = function(){
+      this.stateRegistry = new StateRegistry();
+
       var data = Storage.loadGame();
       if(data.game){
         this.game = new Game(data.game);
-        this.stateRegistry = new StateRegistry();
         PubSub.publish('transition', data.state);
       } else {
         PubSub.publish('transition', 'Home');
@@ -31,14 +32,14 @@ define(['modules/PubSub', 'modules/GameModule', 'gameStates/StateRegistry', 'mod
       this.game = new Game({});
       this.game.$board.clearBoard();
       this.stateRegistry = new StateRegistry();
-      this.mediator.publish('transition', 'Draw');
+      PubSub.publish('transition', 'Draw');
     };
 
     Mediator.prototype.continueGame = function(){
       var storage = Storage.loadGame();
       this.game = new Game(storage.game);
       this.stateRegistry = new StateRegistry();
-      this.mediator.publish('transition', storage.state);
+      PubSub.publish('transition', storage.state);
     };
 
     Mediator.prototype.transitionTo = function(stateName, wait){
