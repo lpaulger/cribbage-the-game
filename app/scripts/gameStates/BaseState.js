@@ -50,6 +50,11 @@ define(['jquery', 'mustache', 'modules/PubSub'],function($, mustache, PubSub){
     this.mediator.publish('messages-clear');
   };
 
+  BaseState.prototype.renderOnly = function(){
+    this.render();
+    this.unbindEvents();
+  };
+
   BaseState.prototype.bindEvents = function(){
     $('#deck').on('click', function(e){
       this.unbindEvents();

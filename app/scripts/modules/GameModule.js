@@ -13,8 +13,8 @@ define(
       this.$board = new Board(boardSettings);
 
       var player1Settings = {
-        name:      'You',
-        possessive:'Your',
+        name:      'you',
+        possessive:'your',
         board:     this.$board
       };
       for(attrname in options.$player1){

@@ -43,8 +43,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     if(this.p1.isWinner())
       this.mediator.publish('transition', 'Summary', true);
     else if(!isEndOfRound.call(this)){
-      this.render();
-      this.unbindEvents();
+      this.renderOnly();
       this.mediator.publish('transition', 'Play', true);
     } else {
       this.mediator.publish('transition', 'Play', false);
@@ -64,8 +63,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
       this.mediator.publish('board-clear');
     }
 
-    this.render();
-    this.unbindEvents();
+    this.renderOnly();
     if(this.p1.isWinner())
       this.mediator.publish('transition', 'Summary', false);
     else

@@ -35,12 +35,13 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     this.game.$cribOwner = compareCards.call(this);
     if(!this.game.$cribOwner){
       this.mediator.publish('messages-add', 'It was a Tie, draw again');
+      this.render();
+
     } else {
       this.mediator.publish('messages-add', this.game.$cribOwner.name + ' won.');
+      this.renderOnly();
       this.mediator.publish('transition', 'Deal', true);
     }
-
-    this.render();
   };
 
   return DrawState;

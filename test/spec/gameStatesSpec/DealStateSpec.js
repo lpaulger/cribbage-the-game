@@ -22,7 +22,7 @@ define(['gameStates/DealState'], function(DealState) {
         expect(typeof dealState).toEqual('object');
       });
     });
-    
+
     describe('init', function(){
       beforeEach(function(){
         dealState = new DealState(game);
@@ -36,16 +36,16 @@ define(['gameStates/DealState'], function(DealState) {
         game.$cribOwner = game.$player1;
         dealState.init();
       });
-      
+
       it('should create a deck', function(){
         expect(game.$deck).toBeDefined();
       });
-      
+
       it('should shuffle the deck', function(){
         expect(game.$deck.shuffle).toHaveBeenCalled();
         expect(game.$deck.shuffle.calls.count()).toEqual(1);
       });
-      
+
       it('should deal two hands', function(){
         expect(game.$deck.deal).toHaveBeenCalled();
         expect(game.$deck.deal.calls.count()).toEqual(1);
@@ -54,9 +54,9 @@ define(['gameStates/DealState'], function(DealState) {
       it('should display a message', function(){
         expect(dealState.mediator.publish).toHaveBeenCalledWith('messages-add', 'select two cards for your crib');
       });
-      
+
       it('should transitionTo Crib State', function(){
-        expect(dealState.mediator.publish).toHaveBeenCalledWith('transition', 'Crib');
+        expect(dealState.mediator.publish).toHaveBeenCalledWith('transition', 'Crib', true);
       });
     });
   });
