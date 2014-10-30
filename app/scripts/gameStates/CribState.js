@@ -8,6 +8,8 @@ define(['gameStates/BaseState'],function(BaseState){
   CribState.prototype.constructor = CribState;
 
   CribState.prototype.init = function(){
+    this.mediator.publish('messages-add', 'Select two cards for ' + this.game.$cribOwner.possessive + ' crib');
+
     if(this.p2.hand.length === 6){
       this.p2.placeCardsInCrib(this.game.$cribOwner);
       this.p2.handInMemory = this.p2.hand.slice();
@@ -49,6 +51,13 @@ define(['gameStates/BaseState'],function(BaseState){
     else if(hasTwoCards())
       replaceOldCard.apply(this);
     else addNewCard.apply(this);
+
+    if(selectedCards.length === 2){
+      this.mediator.publish('messages-add', 'When you\'re ready, continue');
+      this.game.$action = {text: 'Select'};
+    }
+    else
+      this.mediator.publish('messages-add', 'Select one more card');
 
     this.render();
   };

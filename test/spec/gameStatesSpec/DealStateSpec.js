@@ -52,7 +52,7 @@ define(['gameStates/DealState'], function(DealState) {
       });
 
       it('should display a message', function(){
-        expect(dealState.mediator.publish).toHaveBeenCalledWith('messages-add', 'select two cards for your crib');
+        expect(dealState.mediator.publish).toHaveBeenCalledWith('messages-add', 'Dealing cards');
       });
 
       it('should transitionTo Crib State', function(){

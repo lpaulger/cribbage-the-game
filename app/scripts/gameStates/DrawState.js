@@ -16,7 +16,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
   };
 
   DrawState.prototype.init = function(){
-    this.mediator.publish('messages-add', 'Click the Deck to Start');
+    this.mediator.publish('messages-add', 'Click the deck to start');
     this.render();
   };
 
@@ -34,7 +34,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     this.p2.hand = [this.game.$deck.cut()];
     this.game.$cribOwner = compareCards.call(this);
     if(!this.game.$cribOwner){
-      this.mediator.publish('messages-add', 'It was a Tie, draw again');
+      this.mediator.publish('messages-add', 'It was a tie, draw again');
       this.render();
 
     } else {

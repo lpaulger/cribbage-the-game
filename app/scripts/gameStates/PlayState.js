@@ -75,7 +75,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
   function switchPlayer(){
     this.game.currentPlayer = this.p2;
     if(!isEndOfRound.call(this))
-      this.mediator.publish('messages-add', 'Their Turn');
+      this.mediator.publish('messages-add', this.p2.possessive + ' turn.');
   }
 
 
@@ -94,7 +94,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
       this.p2.playCard();
       this.game.currentPlayer = this.p1;
       if(!isEndOfRound.call(this))
-        this.mediator.publish('messages-add', 'Your Turn.');
+        this.mediator.publish('messages-add', this.p1.possessive + ' turn.');
       if(this.p2.isWinner())
         this.mediator.publish('transition', 'Summary', true);
     } catch(e){
@@ -104,7 +104,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
 
   function setAction(){
     if(isEndOfRound.call(this)){
-      this.mediator.publish('messages-add', 'Round Over!');
+      this.mediator.publish('messages-add', 'Round over!');
       this.game.$action = {text:'Ok'};
       this.nextState = 'Count';
       this.game.currentPlayer = undefined;

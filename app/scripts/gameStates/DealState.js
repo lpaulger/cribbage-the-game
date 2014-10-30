@@ -15,16 +15,14 @@ define(['jquery','gameStates/BaseState', 'modules/DeckModule'],function($, BaseS
   };
 
   DealState.prototype.init = function(){
-    this.mediator.publish('messages-add', 'Dealing Cards');
+    delete this.game.$action;
+    this.mediator.publish('messages-add', 'Dealing cards');
     this.renderOnly();
     this.game.$player2HandVisible = false;
     this.game.$deck.shuffle();
     var hands = this.game.$deck.deal();
     this.p1.hand = hands.bottomHand.sort(sortByValue);
     this.p2.hand = hands.topHand.sort(sortByValue);
-
-    this.mediator.publish('messages-add', 'select two cards for ' + this.game.$cribOwner.possessive + ' crib');
-    this.game.$action = {text: 'Select'};
 
     this.mediator.publish('transition', 'Crib', true);
   };

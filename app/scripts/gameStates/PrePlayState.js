@@ -30,6 +30,7 @@ define(['gameStates/BaseState', 'jquery'],function(BaseState, $){
   };
 
   PrePlayState.prototype.init = function(){
+    delete this.game.$action;
     if(this.game.$cribOwner !== this.game.$player1){
       this.mediator.publish('messages-add', 'They will reveal top card');
       var index = Math.floor(Math.random() * this.game.$deck.cards.length);

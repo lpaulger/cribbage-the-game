@@ -124,7 +124,7 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
     this.mediator.publish('messages-add', player.name + ' scored 1 point.');
     player.points += 1;
   };
-  
+
   PlayScoreKeeper.prototype.evaluatePlay = function(player, playCards, totalPlayedCards){
     var points = 0;
     if(this.is15(playCards))

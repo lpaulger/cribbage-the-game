@@ -122,9 +122,7 @@ define(['gameStates/CribState'], function(CribState) {
         });
 
         it('should transition to PrePlay', function(){
-          expect(_cribState.mediator.publish.calls.count()).toBe(0);
           _cribState.action();
-          expect(_cribState.mediator.publish.calls.count()).toBe(1);
           expect(_cribState.mediator.publish).toHaveBeenCalledWith('transition', 'PrePlay');
         });
       });
