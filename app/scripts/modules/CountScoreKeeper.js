@@ -8,27 +8,6 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
   CountScoreKeeper.prototype = Object.create(BaseScoreKeeper.prototype);
   CountScoreKeeper.prototype.constructor = CountScoreKeeper;
 
-  function combine(a, min) {
-    var fn = function(n, src, got, all) {
-      if (n === 0) {
-        if (got.length > 0) {
-          all[all.length] = got;
-        }
-        return;
-      }
-      for (var j = 0; j < src.length; j++) {
-        fn(n - 1, src.slice(j + 1), got.concat([src[j]]), all);
-      }
-      return;
-    };
-    var all = [];
-    for (var i = min; i < a.length; i++) {
-      fn(i, a, [], all);
-    }
-    all.push(a);
-    return all;
-  }
-
   function combinationUtil(inputArray, sizeOfInputArray, sizeOfCombination, index, tempArray, indexOfCurrentElementOfInputArray, matchesArr, matchCondition)
   {
     // Current combination is ready, check it
@@ -82,6 +61,31 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
   };
 
   CountScoreKeeper.prototype.getRuns = function(hand, starter){
+    var points = 0;
+
+    var cards = hand.concat(starter);
+
+    function combine(a, min) {
+      var fn = function(n, src, got, all) {
+        if (n === 0) {
+          if (got.length > 0) {
+            all[all.length] = got;
+          }
+          return;
+        }
+        for (var j = 0; j < src.length; j++) {
+          fn(n - 1, src.slice(j + 1), got.concat([src[j]]), all);
+        }
+        return;
+      };
+      var all = [];
+      for (var i = min; i < a.length; i++) {
+        fn(i, a, [], all);
+      }
+      all.push(a);
+      return all;
+    }
+
     function sortByFaceValue(a, b){
       if(a.faceValue < b.faceValue)
         return -1;
@@ -90,49 +94,35 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
       return 0;
     }
 
+    function sortComboByFaceValue(array){
+      array.sort(sortByFaceValue);
+      return array;
+    }
+
     function isSequential(card, i, arr){
       if(i === arr.length - 1)//isLastCard
         return true;
       return card.faceValue + 1 === arr[i + 1].faceValue;
     }
 
-    var cards = hand.concat(starter);
-    var subsets = combine(cards, 3);
-    var points = 0;
-    var runs = [];
-    subsets.forEach(function(ele){
-      //console.log(ele);
-      var _sortedCards = ele.sort(sortByFaceValue);
-      //console.log(_sortedCards);
-      if(_sortedCards.every(isSequential)){
-        runs.push(_sortedCards.splice(0, _sortedCards.length));
-        //points += _sortedCards.length;
-      }
+    var combinations = combine(cards, 3);
+    combinations.forEach(sortComboByFaceValue);
+
+    var sequentialCombos = combinations.filter(function(array){
+      return array.every(isSequential);
     });
 
-    var tempArray = [];
-    var uniques = [];
-    var isSubRun = false;
-    //for each run
+    var largestSize = 0;
+    sequentialCombos.forEach(function(value){
+      if(value.length > largestSize)
+        largestSize = value.length;
+    });
 
-    for(var i = runs.length-1; i >= 0; i--){
-      for(var j = runs[i].length-1; j >= 0; j--){
-        if(tempArray.length < runs[i].length){
-          tempArray.push(runs[i][j]);
-        } else if(tempArray.indexOf(runs[i][j]) === -1){
-          isSubRun = false;
-          break;
-        } else {
-          //console.log('true');
-          isSubRun = true;
-        }
-      }
-      if(!isSubRun){
-        uniques.push(runs[i]);
-      }
-    }
+    var filtered = sequentialCombos.filter(function(array){
+      return array.length === largestSize;
+    });
 
-    uniques.forEach(function(set){
+    filtered.forEach(function(set){
       points += set.length;
     });
 

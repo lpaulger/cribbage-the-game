@@ -193,17 +193,29 @@ define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper,
 
       describe('and cards are 3,4,5,6 and 5 starter', function(){
         it('should be 14 points', function(){
-          //var player = {points: 0,
-          //  hand: [new Card(3, 'spades'), new Card(4, 'hearts'), new Card(5, 'spades'), new Card(6, 'hearts')]};
-          //var starter = new Card(5, 'hearts');
+          var player = {points: 0,
+            hand: [new Card(3, 'spades'), new Card(4, 'hearts'), new Card(5, 'spades'), new Card(6, 'hearts')]};
+          var starter = new Card(5, 'hearts');
 
           //5,5 pair (2)
           //4, 5, 6 15 (2)
           //4, 5, 6 15 (2)
           //3,4,5,6 run of 4 (4)
           //3,4,5,6 run of 4 (4)
-          //scoreKeeper.evaluateHand(player, starter);
-          //expect(player.points).toEqual(14);
+          scoreKeeper.evaluateHand(player, starter);
+          expect(player.points).toEqual(14);
+        });
+      });
+
+      describe('and cards are 3,4,5,6 and 7 starter', function(){
+        it('should be 14 points', function(){
+          var player = {points: 0,
+            hand: [new Card(9, 'spades'), new Card(10, 'hearts'), new Card(11, 'spades'), new Card(12, 'hearts')]};
+          var starter = new Card(13, 'hearts');
+
+          //9,10,11,12,13 run of 5 (5)
+          scoreKeeper.evaluateHand(player, starter);
+          expect(player.points).toEqual(5);
         });
       });
     });

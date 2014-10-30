@@ -137,11 +137,7 @@ module.exports = function(grunt) {
         },
         karma: {
             unit: {
-                configFile: 'karma.conf.js',
-                runnerPort: 9090,
-                singleRun: true,
-                browsers: ['PhantomJS'],
-                logLevel: 'ERROR'
+                configFile: 'karma.conf.js'
             }
         },
         coveralls: {
