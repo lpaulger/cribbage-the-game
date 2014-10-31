@@ -1,4 +1,4 @@
-define(['modules/PlayRulesModule'], function(PlayRules) {
+define(['scripts/modules/PlayRulesModule'], function(PlayRules) {
   'use strict';
   var _logic;
   describe('PlayRules', function () {

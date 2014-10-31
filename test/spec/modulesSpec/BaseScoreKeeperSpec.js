@@ -1,4 +1,4 @@
-define(['modules/BaseScoreKeeper'], function(ScoreKeeper){
+define(['scripts/modules/BaseScoreKeeper'], function(ScoreKeeper){
   'use strict';
 
 

@@ -1,4 +1,4 @@
-define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'], function (PlayRules, ScoreKeeper, PubSub) {
+define(['scripts/modules/PlayRulesModule', 'scripts/modules/PlayScoreKeeper', 'scripts/modules/PubSub'], function (PlayRules, ScoreKeeper, PubSub) {
     'use strict';
     function Player(options){
       this.name = options.name; //required

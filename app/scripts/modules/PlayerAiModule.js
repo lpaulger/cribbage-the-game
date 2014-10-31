@@ -1,4 +1,4 @@
-define(['modules/PlayerModule'], function (Player) {
+define(['scripts/modules/PlayerModule'], function (Player) {
   'use strict';
   function PlayerAi(options){
     Player.call(this, options);

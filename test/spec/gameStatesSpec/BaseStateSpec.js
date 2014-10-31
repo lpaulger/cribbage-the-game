@@ -1,4 +1,4 @@
-define(['gameStates/BaseState', 'jquery'], function (BaseState, $) {
+define(['scripts/gameStates/BaseState', 'jquery'], function (BaseState, $) {
   'use strict';
 
   describe('BaseState', function () {
@@ -16,7 +16,7 @@ define(['gameStates/BaseState', 'jquery'], function (BaseState, $) {
           expect(baseState.p2).toBeDefined();
         });
       });
-      
+
       describe('if no game object passed', function(){
         beforeEach(function(){
           baseState = new BaseState();
@@ -80,7 +80,7 @@ define(['gameStates/BaseState', 'jquery'], function (BaseState, $) {
         expect(baseState.render).toHaveBeenCalled();
       });
     });
-    
+
     describe('bindEvents', function(){
       var spyEvent;
       describe('deck click', function(){
@@ -96,7 +96,7 @@ define(['gameStates/BaseState', 'jquery'], function (BaseState, $) {
         it('should unbind the events', function(){
           expect(spyEvent).toHaveBeenTriggered();
         });
-        
+
         it('should call the state deck method', function(){
           expect(baseState.deck).toHaveBeenCalled();
         });

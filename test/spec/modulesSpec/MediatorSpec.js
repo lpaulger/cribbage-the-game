@@ -1,4 +1,4 @@
-define(['modules/Mediator', 'modules/PubSub', 'modules/StorageModule'],
+define(['scripts/modules/Mediator', 'scripts/modules/PubSub', 'scripts/modules/StorageModule'],
   function(Mediator, PubSub, Storage){
     //NOTE: Game Object is Mocked -- see test/mocks and test-main.js
     'use strict';

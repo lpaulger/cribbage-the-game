@@ -1,4 +1,4 @@
-define(['modules/PubSub'], function(PubSub) {
+define(['scripts/modules/PubSub'], function(PubSub) {
   'use strict';
   describe('PubSub', function() {
     describe('Constructor', function(){

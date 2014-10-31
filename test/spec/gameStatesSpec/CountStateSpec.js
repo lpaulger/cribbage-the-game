@@ -1,4 +1,4 @@
-define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Card){
+define(['scripts/gameStates/CountState', 'scripts/modules/CardModule'], function(CountState, Card){
   'use strict';
   var _countState, _game, _player1, _player2;
 

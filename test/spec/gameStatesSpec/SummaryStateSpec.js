@@ -1,4 +1,4 @@
-define(['gameStates/SummaryState', 'jquery'], function(SummaryState, $){
+define(['scripts/gameStates/SummaryState', 'jquery'], function(SummaryState, $){
   'use strict';
 
   describe('SummaryState', function(){

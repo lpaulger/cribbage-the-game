@@ -1,4 +1,4 @@
-define(['gameStates/StateRegistry'], function(StateRegistry){
+define(['scripts/gameStates/StateRegistry'], function(StateRegistry){
   'use strict';
   var stateRegistry;
   describe('StateRegistry', function(){
@@ -8,7 +8,7 @@ define(['gameStates/StateRegistry'], function(StateRegistry){
         expect(stateRegistry).toBeDefined();
       });
     });
-    
+
     describe('initializing a state', function(){
       beforeEach(function(){
         stateRegistry = new StateRegistry();

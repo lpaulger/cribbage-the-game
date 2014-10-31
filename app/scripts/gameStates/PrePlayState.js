@@ -1,4 +1,4 @@
-define(['gameStates/BaseState', 'jquery'],function(BaseState, $){
+define(['scripts/gameStates/BaseState', 'jquery'],function(BaseState, $){
   'use strict';
   function PrePlayState(game){
     BaseState.call(this, game, 'PrePlay');

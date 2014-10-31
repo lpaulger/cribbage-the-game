@@ -1,4 +1,4 @@
-define(['gameStates/DealState'], function(DealState) {
+define(['scripts/gameStates/DealState'], function(DealState) {
   'use strict';
 
   describe('DealState', function () {

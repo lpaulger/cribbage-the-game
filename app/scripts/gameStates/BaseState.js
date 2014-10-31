@@ -1,4 +1,4 @@
-define(['jquery', 'mustache', 'modules/PubSub'],function($, mustache, PubSub){
+define(['jquery', 'mustache', 'scripts/modules/PubSub'],function($, mustache, PubSub){
   'use strict';
   function BaseState(game, name){
     this.game = game;

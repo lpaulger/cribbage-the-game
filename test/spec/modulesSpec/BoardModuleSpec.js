@@ -1,4 +1,4 @@
-define(['modules/BoardModule'], function(Board){
+define(['scripts/modules/BoardModule'], function(Board){
   'use strict';
   var _board, _card, _player, _player2;
 

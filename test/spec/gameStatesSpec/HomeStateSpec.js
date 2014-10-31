@@ -1,4 +1,4 @@
-define(['gameStates/HomeState', 'jquery'], function(HomeState, $){
+define(['scripts/gameStates/HomeState', 'jquery'], function(HomeState, $){
   'use strict';
 
   describe('HomeState', function(){

@@ -1,4 +1,4 @@
-define(['gameStates/PrePlayState'], function(PrePlayState) {
+define(['scripts/gameStates/PrePlayState'], function(PrePlayState) {
     'use strict';
 
     describe('PrePlayState', function () {

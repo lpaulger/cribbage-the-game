@@ -1,4 +1,4 @@
-define(['gameStates/DrawState'], function(DrawState){
+define(['scripts/gameStates/DrawState'], function(DrawState){
   'use strict';
   var _draw,
   _game = {

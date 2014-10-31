@@ -1,4 +1,4 @@
-define(['gameStates/PlayState'], function (PlayState) {
+define(['scripts/gameStates/PlayState'], function (PlayState) {
   'use strict';
 
   var _playState, _game, _player, _bot;
@@ -111,7 +111,7 @@ define(['gameStates/PlayState'], function (PlayState) {
           _playState.nextState = 'Play';
           _playState.action();
         });
-        
+
         it('should announce go for the player', function(){
           expect(_playState.p1.announceGo).toHaveBeenCalled();
         });

@@ -1,4 +1,4 @@
-define(['modules/StorageModule', 'modules/GameModule'], function(Storage, Game){
+define(['scripts/modules/StorageModule', 'scripts/modules/GameModule'], function(Storage, Game){
   'use strict';
 
   describe('Storage', function(){

@@ -1,5 +1,5 @@
 define(
-  ['modules/DeckModule', 'modules/PlayerModule', 'modules/PlayerAiModule', 'modules/BoardModule', 'modules/PlayScoreKeeper'],
+  ['scripts/modules/DeckModule', 'scripts/modules/PlayerModule', 'scripts/modules/PlayerAiModule', 'scripts/modules/BoardModule', 'scripts/modules/PlayScoreKeeper'],
   function(Deck, Player, PlayerAi, Board, ScoreKeeper){
 
     'use strict';

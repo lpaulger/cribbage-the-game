@@ -1,4 +1,4 @@
-define(['modules/PubSub', 'modules/GameModule', 'gameStates/StateRegistry', 'modules/StorageModule'],
+define(['scripts/modules/PubSub', 'scripts/modules/GameModule', 'scripts/gameStates/StateRegistry', 'scripts/modules/StorageModule'],
   function(PubSub, Game, StateRegistry, Storage){
     'use strict';
 
