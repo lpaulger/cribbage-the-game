@@ -193,28 +193,13 @@ module.exports = function(grunt) {
         },
         useminPrepare: {
             options: {
-              dest: '<%= config.dist %>',
-              flow: {
-                steps: {
-                  versioning: ['concat'],
-                  js: ['concat', 'uglifyjs'],
-                  css: ['concat', 'cssmin']
-                },
-                post: {}
-              }
+              dest: '<%= config.dist %>'
             },
             html: '<%= config.app %>/index.html'
         },
         usemin: {
             options: {
-                dirs: ['<%= config.dist %>'],
-                blockReplacements: {
-                  versioning: function(block){
-                    console.log('hello from versioning');
-                    console.log(block);
-                    return '<span>Version: ' + grunt.file.readJSON('package.json').version.toString() + '</span>';
-                  }
-                }
+                dirs: ['<%= config.dist %>']
             },
             html: ['<%= config.dist %>/{,*/}*.html'],
             css: ['<%= config.dist %>/styles/{,*/}*.css']
