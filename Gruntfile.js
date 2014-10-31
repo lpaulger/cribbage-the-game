@@ -170,9 +170,6 @@ module.exports = function(grunt) {
         },
         // not used since Uglify task does concat,
         // but still available if needed
-        /*concat: {
-            dist: {}
-        },*/
         requirejs: {
             dist: {
                 // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
@@ -206,13 +203,28 @@ module.exports = function(grunt) {
         },
         useminPrepare: {
             options: {
-                dest: '<%= yeoman.dist %>'
+              dest: '<%= yeoman.dist %>',
+              flow: {
+                steps: {
+                  versioning: ['concat'],
+                  js: ['concat', 'uglifyjs'],
+                  css: ['concat', 'cssmin']
+                },
+                post: {}
+              }
             },
             html: '<%= yeoman.app %>/index.html'
         },
         usemin: {
             options: {
-                dirs: ['<%= yeoman.dist %>']
+                dirs: ['<%= yeoman.dist %>'],
+                blockReplacements: {
+                  versioning: function(block){
+                    console.log('hello from versioning');
+                    console.log(block);
+                    return '<span>Version: ' + grunt.file.readJSON('package.json').version.toString() + '</span>';
+                  }
+                }
             },
             html: ['<%= yeoman.dist %>/{,*/}*.html'],
             css: ['<%= yeoman.dist %>/styles/{,*/}*.css']
