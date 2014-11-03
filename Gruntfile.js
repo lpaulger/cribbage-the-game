@@ -366,22 +366,23 @@ module.exports = function(grunt) {
 
     grunt.registerTask('build', function(target){
       //because travis-ci runs out of memory using concurrent
-      if(target === 'dist'){
-        return grunt.task.run([
-          'clean:dist',
-          'useminPrepare',
-          'compass:dist',
-          'imagemin',
-          'svgmin',
-          'htmlmin',
-          'cssmin',
-          'concat',
-          'uglify',
-          'copy',
-          'rev',
-          'usemin'
-        ]);
-      }
+      //if(target === 'dist'){
+      //  return grunt.task.run([
+      //    'clean:dist',
+      //    'useminPrepare',
+      //    'compass:dist',
+      //    'imagemin',
+      //    'svgmin',
+      //    'htmlmin',
+      //    'cssmin',
+      //    'concat',
+      //    'uglify',
+      //    'copy',
+      //    'requirejs',
+      //    'rev',
+      //    'usemin'
+      //  ]);
+      //}
 
       grunt.task.run([
         'clean:dist',
