@@ -12,7 +12,7 @@
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link rel="stylesheet" href="styles/dc3774ba.main.css">
+        <link rel="stylesheet" href="styles/eb4efff2.main.css">
         <script src="scripts/vendor/d7100892.modernizr.js"></script>
     </head>
     <body>
@@ -48,152 +48,12 @@
     </script>
     <script id="stateTemplate" type="x-tmpl-mustache">
         <div id="cribbageBoard">
-          <ul>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-          </ul>
-          <ul>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-          </ul>
+          {{#$player1}}
+            {{> p1Score}}
+          {{/$player1}}
+          {{#$player2}}
+            {{> p2Score}}
+          {{/$player2}}
         </div>
         <div id="player2" class="player">
         {{#$player2}}
@@ -277,8 +137,84 @@
       {{/playedCards}}
     </script>
     <script id="scoreboardTemplate" type="x-tmple-mustache">
-      <label>score: <span>{{points}}</span></label>
-      <label>games won: <span>0</span></label>
+      <style>
+       li:nth-child({{points}}){
+        color: red;
+      }
+      </style>
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
     </script>
     <!--[if lt IE 7]>
         <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
