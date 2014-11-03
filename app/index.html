@@ -49,10 +49,156 @@
         </div>
     </script>
     <script id="stateTemplate" type="x-tmpl-mustache">
-        <ul id="messageContainer">{{> messages}}</ul>
+        <div id="cribbageBoard">
+          <ul>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+          </ul>
+          <ul>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+          </ul>
+        </div>
         <div id="player2" class="player">
         {{#$player2}}
-        <div class="scoreboard">{{> p2Score}}</div>
         <div class="playingCards">
                 <ul id="topHand" class="hand">{{#hand}}{{> p2Hand}}{{/hand}}</ul>
         <ul class="crib deck">{{#crib}}{{> crib}}{{/crib}}</ul>
@@ -73,9 +219,9 @@
                     <ul id="bottomHand" class="hand">{{#hand}}{{> p1Hand}}{{/hand}}</ul>
         <ul class="crib deck">{{#crib}}{{> crib}}{{/crib}}</ul>
         </div>
-        <div class="scoreboard">{{> p1Score}}</div>
         {{/$player1}}
         </div>
+        <ul id="messageContainer">{{> messages}}</ul>
     </script>
     <script id="visibleHandTemplate" type="x-tmpl-mustache">
         <li>
