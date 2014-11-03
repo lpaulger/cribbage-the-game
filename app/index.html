@@ -50,6 +50,7 @@
     </script>
     <script id="stateTemplate" type="x-tmpl-mustache">
         <div id="cribbageBoard">
+          {{#someFunction}}someValue{{/someFunction}}
           {{#$player1}}
             {{> p1Score}}
           {{/$player1}}
@@ -138,12 +139,32 @@
         </li>
       {{/playedCards}}
     </script>
-    <script id="scoreboardTemplate" type="x-tmple-mustache">
+    <script id="p1ScoreTemplate" type="x-tmple-mustache">
       <style>
-       li:nth-child({{points}}){
-        color: red;
-      }
+        #cribbageBoard ul:first-of-type li:nth-child({{#showPoints}}{{/showPoints}}){
+          color: red;
+        }
+        #cribbageBoard ul:first-of-type li:nth-child({{#showCurrentPoints}}{{/showCurrentPoints}}){
+          color: red;
+        }
       </style>
+
+      {{> board}}
+    </script>
+    <script id="p2ScoreTemplate" type="x-tmple-mustache">
+          <style>
+            #cribbageBoard ul:nth-of-type(2) li:nth-child({{#showPoints}}{{/showPoints}}){
+              color: orange;
+            }
+            #cribbageBoard ul:nth-of-type(2) li:nth-child({{#showCurrentPoints}}{{/showCurrentPoints}}){
+              color: orange;
+            }
+          </style>
+
+          {{> board}}
+        </script>
+
+    <script id="scoreboardTemplate" type="x-tmple-mustache">
       <ul>
         <li></li>
         <li></li>

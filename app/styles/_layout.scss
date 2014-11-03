@@ -221,12 +221,12 @@ Cribbage Board
   li {
     float: left;
     list-style-position: inside;
-    width: .51em;
+    width: 0.49em;
     transition: color 0.2s linear;
 
     &:nth-child(5n){
-      border-right:1px solid white;
-
+      border-right:.1em solid white;
+      margin-right: .1em;
     }
   }
 }

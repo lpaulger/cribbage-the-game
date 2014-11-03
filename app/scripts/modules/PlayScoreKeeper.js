@@ -15,6 +15,7 @@ define(['scripts/modules/BaseScoreKeeper'], function(BaseScoreKeeper){
   PlayScoreKeeper.prototype.TwoForHisHeels = function(player, card){
     if(this.isTwoForHisHeels(card)){
       this.mediator.publish('messages-add', player.name + ' scored two for his heels');
+      player.currentPoints = player.points;
       player.points += 2;
     }
   };
@@ -122,6 +123,7 @@ define(['scripts/modules/BaseScoreKeeper'], function(BaseScoreKeeper){
 
   PlayScoreKeeper.prototype.pointForGo = function(player){
     this.mediator.publish('messages-add', player.name + ' scored 1 point.');
+    player.currentPoints = player.points;
     player.points += 1;
   };
 
@@ -142,6 +144,8 @@ define(['scripts/modules/BaseScoreKeeper'], function(BaseScoreKeeper){
       this.mediator.publish('messages-add', player.name + ' scored ' + points + ' point.');
     else if(points > 1)
       this.mediator.publish('messages-add', player.name + ' scored ' + points + ' points.');
+    if(points !== 0)
+      player.currentPoints = player.points;
     player.points += points;
   };
 
