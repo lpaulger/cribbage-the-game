@@ -222,9 +222,7 @@ Cribbage Board
     float: left;
     list-style-position: inside;
     width: .51em;
-    &:nth-child(33){
-      color: red;
-    }
+    transition: color 0.2s linear;
 
     &:nth-child(5n){
       border-right:1px solid white;
