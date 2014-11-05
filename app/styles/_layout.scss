@@ -202,9 +202,18 @@ Cribbage Board
   }
 }
 
+.player1-board-peg{
+  color: red;
+}
+
+.player2-board-peg{
+  color: orange;
+}
+
 #cribbageBoard {
   height: 6em;
   background-color: #376745;
+  font-size: .8em;
   ul{
     margin: 0 auto;
     padding: .5em;

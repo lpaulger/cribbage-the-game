@@ -13,31 +13,6 @@ define(['scripts/modules/PlayRulesModule', 'scripts/modules/PlayScoreKeeper', 's
     this.playRules = new PlayRules({board:options.board});
     this.scoreKeeper = new ScoreKeeper();
     this.mediator = PubSub;
-
-    //UI attributes only
-    this.showPoints = calculateShowPoints.bind(this);
-    this.showCurrentPoints = calculateCurrentPoints.bind(this);
-  }
-
-  function calculatePoints(points){
-    return function(){
-      if(points > 30 && points < 60){
-        return (61 - (points - 30));
-      } else if(points > 60 && points < 90){
-        return points - 60;
-      } else if(points > 90){
-        return (61 - (points - 60));
-      }
-      return points;
-    };
-  }
-
-  function calculateCurrentPoints(){
-    return calculatePoints(this.currentPoints);
-  }
-
-  function calculateShowPoints(){
-    return calculatePoints(this.points);
   }
 
   Player.prototype.placeCardsInCrib = function(cribOwner){

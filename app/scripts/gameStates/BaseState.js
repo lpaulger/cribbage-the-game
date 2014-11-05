@@ -16,9 +16,9 @@ define(['jquery', 'mustache', 'scripts/modules/PubSub'],function($, mustache, Pu
       page: $('#stateTemplate').html(),
       p1Hand: $('#visibleHandTemplate').html(),
       p2Hand: $('#hiddenHandTemplate').html(),
-      p1Score: $('#p1ScoreTemplate').html(),
-      p2Score: $('#p2ScoreTemplate').html(),
-      board: $('#scoreboardTemplate').html(),
+      p1Score: $('#scoreboardTemplate').html(),
+      p2Score: $('#scoreboardTemplate').html(),
+
       play: $('#playTemplate').html(),
       deck: $('#hiddenDeckTemplate').html(),
       crib: $('#hiddenHandTemplate').html(),
@@ -43,12 +43,42 @@ define(['jquery', 'mustache', 'scripts/modules/PubSub'],function($, mustache, Pu
     this.render();
   };
 
+  function calculatePegPosition(points){
+    if(points < 31)
+      return points;
+    if(points >= 31 && points < 61)
+      return (61 - (points - 30));
+    else if(points >= 61 && points < 91)
+      return points - 60;
+    else if(points >= 91 && points <121)
+      return (61 - (points - 90));
+    else
+      return 0;
+  }
+
+  function renderBoardPegs(data){
+    var p1 = {
+      leadPoint: calculatePegPosition(data.$player1.points),
+      currentPoint: calculatePegPosition(data.$player1.currentPoints)
+    };
+    var p2 = {
+      leadPoint: calculatePegPosition(data.$player2.points),
+      currentPoint: calculatePegPosition(data.$player2.currentPoints)
+    };
+    $('#cribbageBoard ul:first-of-type li:nth-child(' + p1.leadPoint + ')').addClass('player1-board-peg');
+    $(' #cribbageBoard ul:first-of-type li:nth-child(' + p1.currentPoint + ')').addClass('player1-board-peg');
+
+    $('#cribbageBoard ul:nth-of-type(2) li:nth-child(' + p2.leadPoint + ')').addClass('player2-board-peg');
+    $(' #cribbageBoard ul:nth-of-type(2) li:nth-child(' + p2.currentPoint + ')').addClass('player2-board-peg');
+  }
+
   BaseState.prototype.render = function() {
     var rendered = mustache.render(this.templates().page, this.data, this.templates());
     $('#content').html(rendered);
     this.bindEvents();
     this.mediator.publish('render', this.name, this.game);
     this.mediator.publish('messages-clear');
+    renderBoardPegs(this.data);
   };
 
   BaseState.prototype.renderOnly = function(){

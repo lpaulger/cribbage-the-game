@@ -139,30 +139,6 @@
         </li>
       {{/playedCards}}
     </script>
-    <script id="p1ScoreTemplate" type="x-tmple-mustache">
-      <style>
-        #cribbageBoard ul:first-of-type li:nth-child({{#showPoints}}{{/showPoints}}){
-          color: red;
-        }
-        #cribbageBoard ul:first-of-type li:nth-child({{#showCurrentPoints}}{{/showCurrentPoints}}){
-          color: red;
-        }
-      </style>
-
-      {{> board}}
-    </script>
-    <script id="p2ScoreTemplate" type="x-tmple-mustache">
-          <style>
-            #cribbageBoard ul:nth-of-type(2) li:nth-child({{#showPoints}}{{/showPoints}}){
-              color: orange;
-            }
-            #cribbageBoard ul:nth-of-type(2) li:nth-child({{#showCurrentPoints}}{{/showCurrentPoints}}){
-              color: orange;
-            }
-          </style>
-
-          {{> board}}
-        </script>
 
     <script id="scoreboardTemplate" type="x-tmple-mustache">
       <ul>
