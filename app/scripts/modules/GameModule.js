@@ -23,8 +23,8 @@ define(
       this.$player1 = new Player(player1Settings);
 
       var player2Settings = {
-        name:      'Roboto',
-        possessive:'his',
+        name:      'Opponent',
+        possessive:'their',
         board:     this.$board
       };
       for(attrname in options.$player2){

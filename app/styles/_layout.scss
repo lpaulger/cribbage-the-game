@@ -248,10 +248,9 @@ Cribbage Board
 
 #count {
   position: absolute;
-  bottom: 0;
+  bottom: -1.2em;
   label {
     position: relative;
-    left: .4em;
     padding: .2em;
     display: inline-block;
     background-color: rgba(0,0,0,0.3);
@@ -260,15 +259,27 @@ Cribbage Board
 
 #controls {
   position: absolute;
-  right: 0;
   top: 0;
+  right: 0;
 
   button {
-    height: 3em;
-    width: 4em;
+    height: 2em;
+    width: 3.4em;
     background-color: rgba(0,0,0,0.3);
     color: white;
     border: none;
     font-size: 2em;
+  }
+
+  span {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    background: rgba(0,0,0,.4);
+    color: orange;
+
+    &:nth-child(3){
+      color: red;
+    }
   }
 }

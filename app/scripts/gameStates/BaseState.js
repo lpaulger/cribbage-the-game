@@ -22,7 +22,7 @@ define(['jquery', 'mustache', 'scripts/modules/PubSub'],function($, mustache, Pu
       play: $('#playTemplate').html(),
       deck: $('#hiddenDeckTemplate').html(),
       crib: $('#hiddenHandTemplate').html(),
-      controls: '<button style="display:{{display}}">{{text}}</button>',
+      controls: $('#controlsTemplate').html(),
       messages: '{{#$messages}}<li>{{.}}</li>{{/$messages}}'
     };
   };
@@ -65,11 +65,11 @@ define(['jquery', 'mustache', 'scripts/modules/PubSub'],function($, mustache, Pu
       leadPoint: calculatePegPosition(data.$player2.points),
       currentPoint: calculatePegPosition(data.$player2.currentPoints)
     };
-    $('#cribbageBoard ul:first-of-type li:nth-child(' + p1.leadPoint + ')').addClass('player1-board-peg');
-    $(' #cribbageBoard ul:first-of-type li:nth-child(' + p1.currentPoint + ')').addClass('player1-board-peg');
+    $('#cribbageBoard ul:first-of-type li:nth-child(' + p2.leadPoint + ')').addClass('player2-board-peg');
+    $(' #cribbageBoard ul:first-of-type li:nth-child(' + p2.currentPoint + ')').addClass('player2-board-peg');
 
-    $('#cribbageBoard ul:nth-of-type(2) li:nth-child(' + p2.leadPoint + ')').addClass('player2-board-peg');
-    $(' #cribbageBoard ul:nth-of-type(2) li:nth-child(' + p2.currentPoint + ')').addClass('player2-board-peg');
+    $('#cribbageBoard ul:nth-of-type(2) li:nth-child(' + p1.leadPoint + ')').addClass('player1-board-peg');
+    $(' #cribbageBoard ul:nth-of-type(2) li:nth-child(' + p1.currentPoint + ')').addClass('player1-board-peg');
   }
 
   BaseState.prototype.render = function() {
