@@ -12,7 +12,7 @@
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link rel="stylesheet" href="styles/8b762370.main.css">
+        <link rel="stylesheet" href="styles/fcbfd0da.main.css">
         <script src="scripts/vendor/d7100892.modernizr.js"></script>
     </head>
     <body>
@@ -58,27 +58,27 @@
         </div>
         <div id="player2" class="player">
         {{#$player2}}
-        <div class="playingCards">
-                <ul id="topHand" class="hand">{{#hand}}{{> p2Hand}}{{/hand}}</ul>
-        <ul class="crib deck">{{#crib}}{{> crib}}{{/crib}}</ul>
-        </div>
+          <div class="playingCards">
+            <ul id="topHand" class="hand">{{#hand}}{{> p2Hand}}{{/hand}}</ul>
+            <ul class="crib deck">{{#crib}}{{> crib}}{{/crib}}</ul>
+          </div>
         {{/$player2}}
         </div>
-            <div id="table">
-                    <div id="deck" class="playingCards">{{> deck}}</div>
-        <div id="count">{{#$board}}<label style="display: {{display}}">Count: <span>{{currentBoardValue}}</span></label>{{/$board}}</div>
-        <div id="play" class="playingCards">
-                <ul class="hand play">{{#$board}}{{> play}}{{/$board}}</ul>
-        </div>
-        <div id="controls">{{#$action}}{{> controls}}{{/$action}}</div>
+          <div id="table">
+            <div id="deck" class="playingCards">{{> deck}}</div>
+            <div id="count">{{#$board}}<label style="display: {{display}}">Count: <span>{{currentBoardValue}}</span></label>{{/$board}}</div>
+            <div id="play" class="playingCards">
+              <ul class="hand play">{{#$board}}{{> play}}{{/$board}}</ul>
+            </div>
+            <div id="controls">{{#$action}}{{> controls}}{{/$action}}</div>
         </div>
         <div id="player1" class="player">
-        {{#$player1}}
-        <div class="playingCards">
-                    <ul id="bottomHand" class="hand">{{#hand}}{{> p1Hand}}{{/hand}}</ul>
-        <ul class="crib deck">{{#crib}}{{> crib}}{{/crib}}</ul>
-        </div>
-        {{/$player1}}
+          {{#$player1}}
+          <div class="playingCards">
+            <ul id="bottomHand" class="hand">{{#hand}}{{> p1Hand}}{{/hand}}</ul>
+            <ul class="crib deck">{{#crib}}{{> crib}}{{/crib}}</ul>
+          </div>
+          {{/$player1}}
         </div>
         <ul id="messageContainer">{{> messages}}</ul>
     </script>
@@ -137,7 +137,6 @@
         </li>
       {{/playedCards}}
     </script>
-
     <script id="scoreboardTemplate" type="x-tmple-mustache">
       <ul>
         <li></li>
@@ -213,13 +212,18 @@
         <li></li>
       </ul>
     </script>
+    <script id="controlsTemplate" type="x-tmple-mustache">
+      <span>{{$player2.name}}: {{$player2.points}}</span>
+      <button style="display:{{display}}">{{text}}</button>
+      <span>{{$player1.name}}: {{$player1.points}}</span>
+    </script>
     <!--[if lt IE 7]>
         <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
     <![endif]-->
 
 
 
-    <script src="scripts/8eb75138.main.js"></script>
+    <script src="scripts/2770b004.main.js"></script>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
