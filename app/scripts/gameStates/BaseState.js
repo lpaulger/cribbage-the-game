@@ -78,7 +78,8 @@ define(['jquery', 'mustache', 'scripts/modules/PubSub'],function($, mustache, Pu
     this.bindEvents();
     this.mediator.publish('render', this.name, this.game);
     this.mediator.publish('messages-clear');
-    renderBoardPegs(this.data);
+    if(this.data)
+      renderBoardPegs(this.data);
   };
 
   BaseState.prototype.renderOnly = function(){
