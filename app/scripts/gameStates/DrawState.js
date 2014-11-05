@@ -38,7 +38,7 @@ define(['jquery','scripts/gameStates/BaseState'],function($, BaseState){
       this.render();
 
     } else {
-      this.mediator.publish('messages-add', this.game.$cribOwner.name + ' won.');
+      this.mediator.publish('messages-add', this.game.$cribOwner.name + ' won');
       this.renderOnly();
       this.mediator.publish('transition', 'Deal', true);
     }
