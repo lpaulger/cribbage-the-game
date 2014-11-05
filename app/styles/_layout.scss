@@ -1,5 +1,10 @@
 @import "compass/css3/transform";
 /*
+Colors
+*/
+$table-background-color: #b48484 !default;
+$navigation-home-link-active: $table-background-color !default;
+/*
 Variables
 */
 $home-cards-font-size-large: 1.6em;
@@ -36,7 +41,7 @@ body {
 }
 
 #content{
-  background: #b48484;
+  background: $table-background-color;
   overflow: hidden;
   position: relative;
 }
@@ -100,6 +105,16 @@ h1, h3, h4 {
 /*
 Cribbage Board
 */
+
+a.home-link{
+  position: absolute;
+  margin: .7em;
+  font-size: 2em;
+
+  &:active {
+    color: $navigation-home-link-active;
+  }
+}
 
 #bottomControls {
   position: absolute;

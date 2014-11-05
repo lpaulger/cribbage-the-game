@@ -8,6 +8,7 @@
   },
   "devDependencies": {
     "requirejs": "~2.1.4",
-    "almond": "~0.3.0"
+    "almond": "~0.3.0",
+    "Font-Awesome": "~4.2.0"
   }
 }

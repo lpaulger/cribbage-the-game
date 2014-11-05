@@ -106,12 +106,17 @@ define(['jquery', 'mustache', 'scripts/modules/PubSub'],function($, mustache, Pu
       this.unbindEvents();
       this.action();
     }.bind(this));
+
+    $('a.home-link').on('click', function(){
+      this.mediator.publish('transition', 'Home');
+    }.bind(this));
   };
 
   BaseState.prototype.unbindEvents = function(){
     $('#deck').off('click');
     $('#bottomHand').off('click', 'li');
     $('#controls').off('click', 'button');
+    $('a.home-link').off('click');
   };
 
   return BaseState;
