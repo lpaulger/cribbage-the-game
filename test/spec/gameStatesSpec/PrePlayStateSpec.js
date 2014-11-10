@@ -2,12 +2,13 @@ define(['scripts/gameStates/PrePlayState'], function(PrePlayState) {
     'use strict';
 
     describe('PrePlayState', function () {
-      var _prePlayState, _game, _player, _cribOwner, _setup;
+      var _prePlayState, _game, _player,_player2, _cribOwner, _setup;
       beforeEach(function () {
         _setup = function(){
           _game = {
             $messages: ['default'],
             $player1: _player,
+            $player2: _player2,
             $cribOwner: _cribOwner,
             $deck: {
               cards: []
@@ -28,6 +29,7 @@ define(['scripts/gameStates/PrePlayState'], function(PrePlayState) {
             _player = _cribOwner = {hand:[],isWinner: function(){
               return false;
             }, selectOneFromDeck: function(){}};
+            _player2 = {};
             _setup();
           });
 

@@ -72,7 +72,7 @@ define(['jquery', 'scripts/gameStates/BaseState', 'scripts/modules/CountScoreKee
     this.game.$cribOwner.hand = this.game.$cribOwner.crib;
     this.game.$cribOwner.crib = [];
     this.scoreKeeper.evaluateHand(this.game.$cribOwner, this.game.topCard);
-    this.game.$action = {text:'Next Round'};
+    this.game.$action = {text:'Cont.'};
     this.game.countStateStep += 1;
     this.render();
   }

@@ -19,6 +19,10 @@ define(['jquery','scripts/gameStates/BaseState', 'scripts/modules/DeckModule'],f
     $('#newGameButton').on('click', function(){
       this.mediator.publish('start');
     }.bind(this));
+
+    $('#continueGameButton').on('click', function(){
+      this.mediator.publish('continue');
+    }.bind(this));
   };
 
   return HomeState;
