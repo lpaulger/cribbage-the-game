@@ -102,6 +102,8 @@ h1, h3, h4 {
 Cribbage Board
 */
 
+<<<<<<< Updated upstream
+=======
 a.home-link{
   position: absolute;
   margin: .62em .4em;
@@ -116,6 +118,7 @@ a.home-link{
   }
 }
 
+>>>>>>> Stashed changes
 #bottomControls {
   position: absolute;
   bottom: 2em;
@@ -195,6 +198,11 @@ a.home-link{
 
   .playingCards {
     position: relative;
+<<<<<<< Updated upstream
+    top: 50%;
+    @include translateY(-50%);
+=======
+>>>>>>> Stashed changes
     .crib{
       right: 5em;
       position: absolute;
@@ -206,6 +214,8 @@ a.home-link{
   }
 }
 
+<<<<<<< Updated upstream
+=======
 .player1-board-peg{
   color: red;
 }
@@ -248,6 +258,7 @@ a.home-link{
   }
 }
 
+>>>>>>> Stashed changes
 #count {
   position: absolute;
   bottom: 0;
