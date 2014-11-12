@@ -15,7 +15,7 @@ define(['jquery','scripts/gameStates/BaseState', 'scripts/modules/DeckModule'],f
   };
 
   DealState.prototype.init = function(){
-    delete this.game.$action;
+    this.game.$action = {text: '...'};
     this.mediator.publish('messages-add', 'Dealing cards');
     this.renderOnly();
     this.game.$player2HandVisible = false;

@@ -267,7 +267,7 @@ module.exports = function(grunt) {
                         '*.{ico,png,txt}',
                         '.htaccess',
                         'images/{,*/}*.{webp,gif}',
-                        'styles/fonts/*'
+                        'bower_components/Font-Awesome/fonts/*'
                     ]
                 }, {
                     expand: true,
@@ -364,26 +364,7 @@ module.exports = function(grunt) {
       ]);
     });
 
-    grunt.registerTask('build', function(target){
-      //because travis-ci runs out of memory using concurrent
-      //if(target === 'dist'){
-      //  return grunt.task.run([
-      //    'clean:dist',
-      //    'useminPrepare',
-      //    'compass:dist',
-      //    'imagemin',
-      //    'svgmin',
-      //    'htmlmin',
-      //    'cssmin',
-      //    'concat',
-      //    'uglify',
-      //    'copy',
-      //    'requirejs',
-      //    'rev',
-      //    'usemin'
-      //  ]);
-      //}
-
+    grunt.registerTask('build', function(){
       grunt.task.run([
         'clean:dist',
         'useminPrepare',

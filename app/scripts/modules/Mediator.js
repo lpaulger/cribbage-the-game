@@ -56,9 +56,15 @@ define(['scripts/modules/PubSub', 'scripts/modules/GameModule', 'scripts/gameSta
         process.call(this);
     };
 
+
+
     Mediator.prototype.setMessages = function(message){
+      function applySentenceCase(str) {
+        return str.charAt(0).toUpperCase() + str.substr(1);
+      }
+
       if(this.game.$messages.indexOf(message) === -1)
-        this.game.$messages.push(message);
+        this.game.$messages.push(applySentenceCase(message));
     };
 
     Mediator.prototype.clearMessages = function(){

@@ -155,15 +155,17 @@ define(['scripts/modules/BaseScoreKeeper'], function(BaseScoreKeeper){
   CountScoreKeeper.prototype.evaluateHand = function(player, starter){
     var gainedPoints = 0;
     gainedPoints += this.get15s(player.hand,starter);
-    //console.log('15-2: ' + gainedPoints);
+
     gainedPoints += this.getPairs(player.hand, starter);
-    //console.log('pairs: ' + gainedPoints);
+
     gainedPoints += this.getRuns(player.hand, starter);
-    //console.log('runs: ' + gainedPoints);
+
     gainedPoints += this.getHandFlush(player.hand, starter);
-    //console.log('handFlush: ' + gainedPoints);
+
     gainedPoints += this.getNobs(player.hand, starter);
-    //console.log('nobs: ' + gainedPoints);
+
+    if(gainedPoints !== 0)
+      player.currentPoints = player.points;
     player.points += gainedPoints;
 
     this.mediator.publish('messages-add', player.name + ' scored ' + gainedPoints + ' points.');

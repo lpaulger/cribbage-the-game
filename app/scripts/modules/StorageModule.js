@@ -11,25 +11,27 @@ define([], function(){
 
   function savePlayerOne(game){
     return {
-      name:        game.$player1.name,
-      possessive:  game.$player1.possessive,
-      hand:        game.$player1.hand,
-      handInMemory:game.$player1.handInMemory,
-      crib:        game.$player1.crib,
-      cardsForCrib:game.$player1.cardsForCrib,
-      points:      game.$player1.points
+      name:         game.$player1.name,
+      possessive:   game.$player1.possessive,
+      hand:         game.$player1.hand,
+      handInMemory: game.$player1.handInMemory,
+      crib:         game.$player1.crib,
+      cardsForCrib: game.$player1.cardsForCrib,
+      points:       game.$player1.points,
+      currentPoints:game.$player1.currentPoints
     };
   }
 
   function savePlayerTwo(game){
     return {
-      name:        game.$player2.name,
-      possessive:  game.$player2.possessive,
-      hand:        game.$player2.hand,
-      handInMemory:game.$player2.handInMemory,
-      crib:        game.$player2.crib,
-      cardsForCrib:game.$player2.cardsForCrib,
-      points:      game.$player2.points
+      name:         game.$player2.name,
+      possessive:   game.$player2.possessive,
+      hand:         game.$player2.hand,
+      handInMemory: game.$player2.handInMemory,
+      crib:         game.$player2.crib,
+      cardsForCrib: game.$player2.cardsForCrib,
+      points:       game.$player2.points,
+      currentPoints:game.$player2.currentPoints
     };
   }
 
@@ -67,7 +69,7 @@ define([], function(){
         showTopCard:        game.$showTopCard,
         $board:             saveBoard(game),
         $messages:          game.$messages,
-        $action: game.$action
+        $action:            game.$action
       }));
       set('state', state);
     }

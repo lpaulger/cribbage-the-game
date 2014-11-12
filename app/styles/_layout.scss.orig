@@ -1,5 +1,10 @@
 @import "compass/css3/transform";
 /*
+Colors
+*/
+$table-background-color: #b48484 !default;
+$navigation-home-link-active: $table-background-color !default;
+/*
 Variables
 */
 $home-cards-font-size-large: 1.6em;
@@ -37,7 +42,7 @@ body {
 }
 
 #content{
-  background: #b48484;
+  background: $table-background-color;
   overflow: hidden;
   position: relative;
 }
@@ -79,7 +84,7 @@ h1, h3, h4 {
       @include transform(translate(1.9em, .9em) rotate(22deg));
     }
   }
-  
+
   @media screen and (min-height: $break-mobile-small) {
 
 
@@ -102,10 +107,9 @@ h1, h3, h4 {
 Cribbage Board
 */
 
-<<<<<<< Updated upstream
-=======
 a.home-link{
   position: absolute;
+<<<<<<< HEAD
   margin: .62em .4em;
   font-size: 2em;
 
@@ -113,12 +117,16 @@ a.home-link{
     margin: .62em .7em;
   }
 
+=======
+  margin: .7em;
+  font-size: 2em;
+
+>>>>>>> origin/master
   &:active {
     color: $navigation-home-link-active;
   }
 }
 
->>>>>>> Stashed changes
 #bottomControls {
   position: absolute;
   bottom: 2em;
@@ -133,14 +141,13 @@ a.home-link{
 }
 
 #messageContainer {
-  position: absolute;
   list-style: none;
   background-color: rgba(0,0,0,0.3);
   margin: 0;
   padding: 0;
-  top: 20%;
   width: 100%;
   z-index: 1;
+  position: absolute;
 
   li {
     font-size: 1.3em;
@@ -172,16 +179,14 @@ a.home-link{
 }
 
 #table {
-  position: relative;
-  height: 33.33%;
+  position: absolute;
+  bottom: 7.6em;
+  height: 6.6em;
+  width: 100%;
 
   #deck{
     position: relative;
-    top: 50%;
-    @include translateY(-50%);
   }
-  //height: 8em;
-  //margin: 0 0 1.5em 0;
 }
 
 #play {
@@ -191,22 +196,34 @@ a.home-link{
   @include translateY(-50%);
 }
 
-.player {
-  height: 33.33%;// 8em;
-  //margin-bottom: 1.7em;
-  position: relative;
+@mixin player{
+  height: 6.6em;
+  width: 100%;
+  position: absolute;
+}
 
+#player1{
+  @include player;
+  bottom: 0;
+}
+
+#player2{
+  @include player;
+  bottom: 14.6em;
+}
+
+.player {
   .playingCards {
     position: relative;
-<<<<<<< Updated upstream
-    top: 50%;
-    @include translateY(-50%);
+<<<<<<< HEAD
 =======
->>>>>>> Stashed changes
+    //top: 50%;
+    //@include translateY(-50%);
+>>>>>>> origin/master
     .crib{
       right: 5em;
       position: absolute;
-      top: 0;
+      top: 0em;
     }
   }
   .playingCards:first-child{
@@ -214,8 +231,6 @@ a.home-link{
   }
 }
 
-<<<<<<< Updated upstream
-=======
 .player1-board-peg{
   color: red;
 }
@@ -230,9 +245,17 @@ a.home-link{
   font-size: .8em;
   ul{
     margin: 0 auto;
+<<<<<<< HEAD
     padding: .6em 0;
     width: 16em;
     height: 1.4em;
+=======
+    padding: .5em;
+    clear: both;
+    display: block;
+    width: 16em;
+    height: 1em;
+>>>>>>> origin/master
   }
 
   span {
@@ -258,13 +281,11 @@ a.home-link{
   }
 }
 
->>>>>>> Stashed changes
 #count {
   position: absolute;
-  bottom: 0;
+  bottom: -1.2em;
   label {
     position: relative;
-    left: .4em;
     padding: .2em;
     display: inline-block;
     background-color: rgba(0,0,0,0.3);
@@ -273,15 +294,27 @@ a.home-link{
 
 #controls {
   position: absolute;
+  top: 0;
   right: 0;
-  top: 34%;
 
   button {
-    height: 3em;
-    width: 4em;
+    height: 2em;
+    width: 3.4em;
     background-color: rgba(0,0,0,0.3);
     color: white;
     border: none;
     font-size: 2em;
+  }
+
+  span {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    background: rgba(0,0,0,.4);
+    color: orange;
+
+    &:nth-child(3){
+      color: red;
+    }
   }
 }
