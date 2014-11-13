@@ -1,7 +1,7 @@
 require.config({
   paths: {
     baseUrl: 'app',
-    jquery: 'bower_components/jquery/dist/jquery',
+    jquery: 'modules/DOMulator',
     mustache: 'bower_components/mustache/mustache'
   },
   shim: {

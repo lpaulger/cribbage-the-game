@@ -11,7 +11,7 @@ require.config({
 
   // example of using shim, to load non AMD libraries (such as underscore and jquery)
   paths: {
-    'jquery': '../app/bower_components/jquery/dist/jquery',
+    'jquery': '../app/scripts/modules/DOMulator',
     'mustache': '../app/bower_components/mustache/mustache'
   },
   map: {
@@ -35,7 +35,6 @@ require.config({
   callback: window.__karma__.start
 });
 
-jasmine.getFixtures().fixturesPath = 'base/test/fixtures';
 
 if (!Function.prototype.bind) {
   Function.prototype.bind = function (oThis) {

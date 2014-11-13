@@ -90,19 +90,19 @@ define(['jquery', 'mustache', 'scripts/modules/PubSub'],function($, mustache, Pu
   BaseState.prototype.bindEvents = function(){
     $('#deck').on('click', function(e){
       this.unbindEvents();
-      var cardIndex = $($(e.currentTarget).children('ul')[0]).children('li').children('a').index(e.target);
+      var cardIndex = [].slice.call(e.path[2].children).indexOf(e.path[1]);
       $(e.target).addClass('selected');
       this.deck(cardIndex);
     }.bind(this));
 
-    $('#bottomHand').on('click', 'li', function(event){
+    $('#bottomHand').on('click', function(event){
       this.unbindEvents();
-      var index = $('#bottomHand').find('li').index(event.currentTarget);
-      var card = $(event.currentTarget).find('a');
+      var index = [].slice.call(event.path[3].children).indexOf(event.path[2]);
+      var card = event.path[1];
       this.selectCard({index: index, card: card, event: event});
     }.bind(this));
 
-    $('#controls').on('click', 'button', function(){
+    $('#controls button').on('click', function(){
       this.unbindEvents();
       this.action();
     }.bind(this));
