@@ -166,7 +166,7 @@ define(['scripts/modules/Mediator', 'scripts/modules/PubSub', 'scripts/modules/S
 
           describe('and the game doesn\'t exist', function(){
             beforeEach(function(){
-              mediator.saveGame('Draw', undefined);
+              mediator.saveGame('Home', undefined);
             });
 
             it('should not save the game', function(){
