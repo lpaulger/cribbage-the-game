@@ -1,9 +1,9 @@
 define(['jquery','scripts/gameStates/BaseState', 'scripts/modules/DeckModule'],function($, BaseState, Deck){
   'use strict';
 
-  function HomeState(){
-    BaseState.call(this, undefined, 'Home');
-    this.data =  new Deck().shuffle().cards.splice(0,6);
+  function HomeState(game){
+    BaseState.call(this, game, 'Home');
+    this.data = new Deck().shuffle().cards.splice(0,6);
   }
 
   HomeState.prototype = Object.create(BaseState.prototype);
@@ -12,6 +12,7 @@ define(['jquery','scripts/gameStates/BaseState', 'scripts/modules/DeckModule'],f
   HomeState.prototype.templates = function(){
     var templates = BaseState.prototype.templates();
     templates.page =  $('#homeTemplate').html();
+    templates.continue = !!this.game ? '<button id="continueGameButton">Continue Game</button>' : '';
     return templates;
   };
 

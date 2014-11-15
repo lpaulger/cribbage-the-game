@@ -81,7 +81,8 @@ define(['scripts/modules/PubSub', 'scripts/modules/GameModule', 'scripts/gameSta
     };
 
     Mediator.prototype.saveGame = function(state, game){
-      if(game)
+      var saveGame = state !== 'Home';
+      if(saveGame)
         Storage.saveGame(game, state);
     };
 
