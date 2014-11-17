@@ -25,7 +25,8 @@ module.exports = function(grunt) {
     var dirConfig = {
         app: 'app',
         dist: 'dist',
-        test: 'test'
+        test: 'test',
+        cordova: 'www'
     };
 
     grunt.initConfig({
@@ -100,6 +101,7 @@ module.exports = function(grunt) {
                     ]
                 }]
             },
+          cordova: '<%= config.cordova %>/*',
             server: '.tmp'
         },
         browser_sync: {
@@ -277,6 +279,29 @@ module.exports = function(grunt) {
                         'generated/*'
                     ]
                 }]
+            },
+            cordova: {
+              files: [{
+                expand: true,
+                dot: true,
+                cwd: '<%= config.dist %>',
+                dest: '<%= config.cordova %>',
+                src: [
+                  '*.html',
+                  'scripts/{,*/}*.*.js',
+                  'styles/{,*/}*.*.css',
+                  '*.{ico,png,txt}',
+                  'images/{,*/}*.{webp,gif}',
+                  'bower_components/Font-Awesome/fonts/*'
+                ]
+              }, {
+                expand: true,
+                cwd: '.tmp/images',
+                dest: '<%= config.cordova %>/images',
+                src: [
+                  'generated/*'
+                ]
+              }]
             }
         },
         concurrent: {
@@ -364,19 +389,23 @@ module.exports = function(grunt) {
       ]);
     });
 
-    grunt.registerTask('build', function(){
-      grunt.task.run([
-        'clean:dist',
-        'useminPrepare',
-        'concurrent:dist',
-        'cssmin',
-        'concat',
-        'uglify',
-        'copy',
-        'requirejs',
-        'rev',
-        'usemin'
-      ]);
+    grunt.registerTask('build', function(target){
+      if(target === 'cordova'){
+        grunt.task.run(['clean:cordova','build:dist','copy:cordova']);
+      } else {
+        grunt.task.run([
+          'clean:dist',
+          'useminPrepare',
+          'concurrent:dist',
+          'cssmin',
+          'concat',
+          'uglify',
+          'copy',
+          'requirejs',
+          'rev',
+          'usemin'
+        ]);
+      }
     });
 
     grunt.registerTask('default', [
