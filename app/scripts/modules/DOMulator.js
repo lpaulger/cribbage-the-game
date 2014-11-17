@@ -8,7 +8,7 @@ define([], function(){
   function DOMulator(selector){
     if(typeof selector === 'string') {
       this.selector = selector;
-      this.element = document.querySelectorAll(selector)[0];
+      this.element = document.querySelector(selector);
     }
     else if(typeof selector === 'object')
       this.element = selector;

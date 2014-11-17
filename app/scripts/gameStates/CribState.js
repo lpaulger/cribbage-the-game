@@ -41,7 +41,9 @@ define(['scripts/gameStates/BaseState'],function(BaseState){
     }
 
     function isAlreadySelected(){
-      return selectedCards.indexOf(_hand[options.index]) !== -1;
+      return selectedCards.filter(function(element){
+        return element.suit === _hand[options.index].suit && element.value === _hand[options.index].value;
+      }).length > 0;
     }
 
     var selectedCards = this.game.$player1.cardsForCrib;

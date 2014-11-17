@@ -90,15 +90,23 @@ define(['jquery', 'mustache', 'scripts/modules/PubSub'],function($, mustache, Pu
   BaseState.prototype.bindEvents = function(){
     $('#deck').on('click', function(e){
       this.unbindEvents();
-      var cardIndex = [].slice.call(e.path[2].children).indexOf(e.path[1]);
+      var cardIndex = [].slice.call(e.target.parentNode.children).indexOf(e.target);
       $(e.target).addClass('selected');
       this.deck(cardIndex);
     }.bind(this));
 
     $('#bottomHand').on('click', function(event){
       this.unbindEvents();
-      var index = [].slice.call(event.path[3].children).indexOf(event.path[2]);
-      var card = event.path[1];
+      var listItem = event.target;
+      var card;
+      while(listItem.nodeName !== 'LI'){
+        if(listItem.nodeName === 'A')
+          card = listItem;
+
+        listItem = listItem.parentNode;
+      }
+
+      var index = [].slice.call($('#bottomHand').element.children).indexOf(listItem);
       this.selectCard({index: index, card: card, event: event});
     }.bind(this));
 
