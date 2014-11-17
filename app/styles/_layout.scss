@@ -5,6 +5,8 @@ Colors
 $table-background-color: #b48484 !default;
 $alternative-color: #376745 !default;
 $text-color: white !default;
+$player-color: red !default;
+$opponent-color: orange !default;
 
 $navigation-home-link-active: $table-background-color !default;
 /*
@@ -240,11 +242,11 @@ a.link{
 }
 
 .player1-board-peg{
-  color: red;
+  color: $player-color;
 }
 
 .player2-board-peg{
-  color: orange;
+  color: $opponent-color;
 }
 
 #cribbageBoard {
@@ -317,10 +319,10 @@ a.link{
     text-align: center;
     font-weight: bold;
     background: rgba(0,0,0,.4);
-    color: orange;
+    color: $opponent-color;
 
     &:nth-child(3){
-      color: red;
+      color: $player-color;
     }
   }
 }

@@ -60,8 +60,15 @@
       <h2><i class="fa fa-wrench"></i> <a href="https://github.com/lpaulger/card-game/issues">Report bugs</a></h2>
       <p>If something doesn't seem to be working correctly, or you'd like to see improvements then please head over to log an issue.</p>
 
-      <h2><i class="fa fa-money"></i> <a href="">Donate</a></h2>
-      <p>If you enjoy this game, please donate! The more support, the better it will become.</p>
+      <h2><i class="fa fa-money"></i> <a href="javascript:document.querySelector('form').submit();">Donate</a></h2>
+      <p>If you enjoy this game, please donate! The more support, the better the game.</p>
+      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+        <input type="hidden" name="cmd" value="_s-xclick">
+        <input type="hidden" name="hosted_button_id" value="MWE8QZ9MC3UVN">
+        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+      </form>
+
 
       <span>Made with <i class="fa fa-heart"></i> in Europe</span>
       </div>
