@@ -44,6 +44,9 @@ define(['scripts/modules/PubSub', 'scripts/modules/GameModule', 'scripts/gameSta
 
     Mediator.prototype.transitionTo = function(stateName, wait){
       var state;
+      if(stateName === 'Back'){
+        stateName = Storage.loadGame().state;
+      }
 
       function process(){
         state = this.stateRegistry.initState(stateName, this.game);
@@ -62,9 +65,9 @@ define(['scripts/modules/PubSub', 'scripts/modules/GameModule', 'scripts/gameSta
       function applySentenceCase(str) {
         return str.charAt(0).toUpperCase() + str.substr(1);
       }
-
+      message = applySentenceCase(message);
       if(this.game.$messages.indexOf(message) === -1)
-        this.game.$messages.push(applySentenceCase(message));
+        this.game.$messages.push(message);
     };
 
     Mediator.prototype.clearMessages = function(){
@@ -81,9 +84,9 @@ define(['scripts/modules/PubSub', 'scripts/modules/GameModule', 'scripts/gameSta
     };
 
     Mediator.prototype.saveGame = function(state, game){
-      var saveGame = state !== 'Home';
-      if(saveGame)
+      if(state !== 'Home' && state !== 'Info'){
         Storage.saveGame(game, state);
+      }
     };
 
     return Mediator;

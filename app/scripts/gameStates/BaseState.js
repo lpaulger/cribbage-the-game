@@ -118,6 +118,14 @@ define(['jquery', 'mustache', 'scripts/modules/PubSub'],function($, mustache, Pu
     $('a.home-link').on('click', function(){
       this.mediator.publish('transition', 'Home');
     }.bind(this));
+
+    $('a.help-link').on('click', function(){
+      this.mediator.publish('transition', 'Info');
+    }.bind(this));
+
+    $('a.back-link').on('click', function(){
+      this.mediator.publish('transition', 'Back');
+    }.bind(this));
   };
 
   BaseState.prototype.unbindEvents = function(){
