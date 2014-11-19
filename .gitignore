@@ -7,3 +7,5 @@ test/coverage
 .idea
 *.TMP
 secret.txt
+platforms/*
+www/*

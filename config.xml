@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.lucaspaulger.cardgame" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>CardGame</name>
+    <description>
+        A simple HTML5/JS Cribbage game
+    </description>
+    <author email="lucas.paulger@gmail.com" href="http://lucaspaulger.com">
+        Lucas Paulger
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+</widget>
