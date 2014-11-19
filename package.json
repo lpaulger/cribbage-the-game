@@ -1,9 +1,9 @@
 {
-  "name": "card-game",
+  "name": "cribbage-the-game",
   "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "git@github.com:lpaulger/card-game.git"
+    "url": "git@github.com:lpaulger/cribbage-the-game.git"
   },
   "scripts": {
     "test": "karma start --single-run --browsers PhantomJS"

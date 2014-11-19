@@ -1,11 +1,11 @@
 #Cribbage, The Game 
-[![Build Status](https://travis-ci.org/lpaulger/card-game.svg?branch=refactor)](https://travis-ci.org/lpaulger/card-game)
-[![Coverage Status](https://img.shields.io/coveralls/lpaulger/card-game.svg)](https://coveralls.io/r/lpaulger/card-game?branch=master)
-[![Code Climate](https://codeclimate.com/github/lpaulger/card-game/badges/gpa.svg)](https://codeclimate.com/github/lpaulger/card-game)
-[![Dev Dependencies](https://david-dm.org/lpaulger/card-game/dev-status.svg)](https://david-dm.org/lpaulger/card-game#info=devDependencies&view=table)
+[![Build Status](https://travis-ci.org/lpaulger/cribbage-the-game.svg?branch=refactor)](https://travis-ci.org/lpaulger/cribbage-the-game)
+[![Coverage Status](https://img.shields.io/coveralls/lpaulger/cribbage-the-game.svg)](https://coveralls.io/r/lpaulger/cribbage-the-game?branch=master)
+[![Code Climate](https://codeclimate.com/github/lpaulger/cribbage-the-game/badges/gpa.svg)](https://codeclimate.com/github/lpaulger/cribbage-the-game)
+[![Dev Dependencies](https://david-dm.org/lpaulger/cribbage-the-game/dev-status.svg)](https://david-dm.org/lpaulger/cribbage-the-game#info=devDependencies&view=table)
 
 A simple cribbage game built using javascript, no frameworks and only mustache as a templating library.
-You can view the latest preview here http://lucaspaulger.com/card-game/ after each successful build.
+You can view the latest preview here http://lucaspaulger.com/cribbage-the-game/ after each successful build.
 
 ## Getting Started
 <img align="right" height="480" src="http://lucaspaulger.com/images/2014-11-19/cribbage-the-game-demo.gif">

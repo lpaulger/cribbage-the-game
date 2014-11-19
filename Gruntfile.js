@@ -335,7 +335,7 @@ module.exports = function(grunt) {
           },
           pages: {
             options: {
-              remote: 'https://' + process.env.GH_TOKEN + '@github.com/lpaulger/card-game.git',
+              remote: 'https://' + process.env.GH_TOKEN + '@github.com/lpaulger/cribbage-the-game.git',
               branch: 'gh-pages'
             }
           }
