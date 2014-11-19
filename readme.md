@@ -7,7 +7,7 @@
 A simple cribbage game built using javascript, no frameworks and only mustache as a templating library.
 You can view the latest preview here http://lucaspaulger.com/card-game/ after each successful build.
 
-<img align="right" height="260" src="http://lucaspaulger.com/images/2014-11-19/cribbage-the-game-demo.gif">
+<img align="right" height="480" src="http://lucaspaulger.com/images/2014-11-19/cribbage-the-game-demo.gif">
 
 ## Getting Started
 This project uses ruby for compass, and node for grunt. Additionally there is configuration for Cordova when I am creating native apps.
