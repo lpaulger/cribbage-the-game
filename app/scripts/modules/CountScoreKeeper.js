@@ -87,11 +87,7 @@ define(['scripts/modules/BaseScoreKeeper'], function(BaseScoreKeeper){
     }
 
     function sortByFaceValue(a, b){
-      if(a.faceValue < b.faceValue)
-        return -1;
-      if(a.faceValue > b.faceValue)
-        return 1;
-      return 0;
+      return a.faceValue - b.faceValue;
     }
 
     function sortComboByFaceValue(array){

@@ -28,7 +28,7 @@ define(['jquery','scripts/gameStates/BaseState', 'scripts/modules/DeckModule'],f
   };
 
   function sortByValue(a,b){
-    return a.faceValue > b.faceValue;
+    return a.faceValue - b.faceValue;
   }
 
   return DealState;
