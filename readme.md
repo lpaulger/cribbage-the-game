@@ -42,6 +42,18 @@ grunt test
 
 Please feel free to contribute, no guidelines defined yet :).
 
+Donations are appreciated but not necessary
+
+<a href="https://www.bountysource.com/cart?amount=5&amp;currency=USD&amp;team_id=lucas-paulger" target="_blank">
+  <img alt="Click here to donate $5" border="0" src="http://img.shields.io/badge/donate-$5-brightgreen.svg">
+</a>
+<a href="https://www.bountysource.com/cart?amount=10&amp;currency=USD&amp;team_id=lucas-paulger" target="_blank">
+  <img alt="Click here to donate $10" border="0" src="http://img.shields.io/badge/donate-$10-brightgreen.svg">
+</a>
+<a href="https://www.bountysource.com/cart?amount=20&amp;currency=USD&amp;team_id=lucas-paulger" target="_blank">
+  <img alt="Click here to donate $20" border="0" src="http://img.shields.io/badge/donate-$20-brightgreen.svg">
+</a>
+
 ### resources
 
 http://selfthinker.github.io/CSS-Playing-Cards/ but with a few modifications, primarily converting to sass.
