@@ -41,7 +41,12 @@ define([], function(){
 
   DOMulator.prototype.off = function(eventName, handler){
     if(this.element)
-      return this.element.removeEventListener(eventName, handler);
+      try{
+        return this.element.removeEventListener(eventName, handler);
+      } catch(e){
+        return;
+      }
+
     else
       return;
   };

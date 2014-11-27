@@ -11,3 +11,4 @@ secret.txt
 .sass-cache
 .idea
 *.TMP
+*.log
