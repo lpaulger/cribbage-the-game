@@ -1,4 +1,4 @@
-define(['scripts/gameStates/SummaryState'], function(SummaryState){
+define(['gameStates/SummaryState'], function(SummaryState){
   'use strict';
 
   describe('SummaryState', function(){

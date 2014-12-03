@@ -1,6 +1,6 @@
 /* global describe, it */
 
-define(['scripts/modules/PlayerAiModule'], function(PlayerAi) {
+define(['modules/PlayerAiModule'], function(PlayerAi) {
   'use strict';
   var _playerAi, _deck, card, _hands, _cribOwner;
   describe('PlayerAiModule', function() {

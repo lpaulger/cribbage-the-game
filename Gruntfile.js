@@ -173,10 +173,10 @@ module.exports = function(grunt) {
         requirejs: {
           main: {
             options: {
-              baseUrl: '<%= config.app %>',
+              baseUrl: '<%= config.app %>/scripts',
               mainConfigFile: "<%= config.app %>/scripts/require.config.js",
-              name: 'bower_components/almond/almond',
-              include: 'scripts/main',
+              name: '../bower_components/almond/almond',
+              include: 'main',
               out: '<%= config.dist %>/scripts/main.js'
             }
           }

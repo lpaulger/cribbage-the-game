@@ -1,5 +1,5 @@
 /*global define */
-define(['scripts/modules/CardModule'], function (Card) {
+define(['modules/CardModule'], function (Card) {
   'use strict';
 
   function Deck(options){

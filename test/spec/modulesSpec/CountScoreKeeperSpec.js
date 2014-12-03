@@ -1,4 +1,4 @@
-define(['scripts/modules/CountScoreKeeper', 'scripts/modules/CardModule'], function(ScoreKeeper, Card) {
+define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, Card) {
   'use strict';
   var scoreKeeper;
   describe('CountScoreKeeper', function () {

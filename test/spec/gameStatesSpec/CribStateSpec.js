@@ -1,4 +1,4 @@
-define(['scripts/gameStates/CribState'], function(CribState) {
+define(['gameStates/CribState'], function(CribState) {
   'use strict';
   var _cribState,
       _game,

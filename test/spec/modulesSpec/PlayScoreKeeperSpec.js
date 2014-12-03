@@ -1,4 +1,4 @@
-define(['scripts/modules/PlayScoreKeeper', 'scripts/modules/CardModule'], function(ScoreKeeper, Card) {
+define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, Card) {
   'use strict';
 
   describe('ScoreKeeperModule', function () {

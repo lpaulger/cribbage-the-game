@@ -3,10 +3,11 @@
   "version": "0.0.1",
   "dependencies": {
     "modernizr": "~2.6.2",
+    "zepto": "1.1.4",
     "mustache": "~0.8.1"
   },
   "devDependencies": {
-    "requirejs": "~2.1.4",
+    "requirejs": "~2.1.10",
     "almond": "~0.3.0",
     "Font-Awesome": "~4.2.0"
   }

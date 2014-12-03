@@ -1,4 +1,4 @@
-define(['scripts/gameStates/BaseState'], function (BaseState) {
+define(['gameStates/BaseState'], function (BaseState) {
   'use strict';
 
   describe('BaseState', function () {

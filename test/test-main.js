@@ -7,19 +7,19 @@ for (var file in window.__karma__.files) {
 
 require.config({
   // Karma serves files under /base, which is the basePath from your config file
-  baseUrl: '/base/app',
+  baseUrl: '/base/app/scripts',
 
   // example of using shim, to load non AMD libraries (such as underscore and jquery)
   paths: {
-    'jquery': '../app/scripts/modules/DOMulator',
-    'mustache': '../app/bower_components/mustache/mustache'
+    'jquery': '../bower_components/zepto/zepto',
+    'mustache': '../bower_components/mustache/mustache'
   },
   map: {
-    'scripts/app': {
-      'scripts/modules/Mediator': '../test/mocks/MediatorMock'
+    'app': {
+      'modules/Mediator': '../../test/mocks/MediatorMock'
     },
-    'scripts/modules/Mediator': {
-      'scripts/modules/GameModule': '../test/mocks/GameModuleMock'
+    'modules/Mediator': {
+      'modules/GameModule': '../../test/mocks/GameModuleMock'
     }
   },
   shim: {

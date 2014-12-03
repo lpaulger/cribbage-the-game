@@ -1,4 +1,4 @@
-define(['scripts/modules/PlayerModule'], function(Player) {
+define(['modules/PlayerModule'], function(Player) {
     'use strict';
 
     describe('PlayerModule', function() {

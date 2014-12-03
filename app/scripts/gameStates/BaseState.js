@@ -1,4 +1,4 @@
-define(['jquery', 'mustache', 'scripts/modules/PubSub'],function($, mustache, PubSub){
+define(['jquery', 'mustache', 'modules/PubSub'],function($, mustache, PubSub){
   'use strict';
   function BaseState(game, name){
     this.game = game;
@@ -106,7 +106,7 @@ define(['jquery', 'mustache', 'scripts/modules/PubSub'],function($, mustache, Pu
         listItem = listItem.parentNode;
       }
 
-      var index = [].slice.call($('#bottomHand').element.children).indexOf(listItem);
+      var index = [].slice.call($('#bottomHand').children()).indexOf(listItem);
       this.selectCard({index: index, card: card, event: event});
     }.bind(this));
 
@@ -130,7 +130,7 @@ define(['jquery', 'mustache', 'scripts/modules/PubSub'],function($, mustache, Pu
 
   BaseState.prototype.unbindEvents = function(){
     $('#deck').off('click');
-    $('#bottomHand').off('click', 'li');
+    $('#bottomHand').off('click');
     $('#controls').off('click', 'button');
     $('a.home-link').off('click');
   };

@@ -1,4 +1,4 @@
-define(['scripts/modules/GameModule'], function(Game){
+define(['modules/GameModule'], function(Game){
   'use strict';
   var _game;
 

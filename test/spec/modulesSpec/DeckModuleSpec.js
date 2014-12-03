@@ -1,6 +1,6 @@
 /* global describe, it */
 
-define(['scripts/modules/DeckModule'], function(Deck) {
+define(['modules/DeckModule'], function(Deck) {
   'use strict';
   var _deck;
 

@@ -1,4 +1,4 @@
-define(['scripts/app'], function(App){
+define(['app'], function(App){
   'use strict';
 
   describe('App', function(){

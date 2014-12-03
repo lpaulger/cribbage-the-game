@@ -1,4 +1,4 @@
-define(['scripts/gameStates/HomeState'], function(HomeState){
+define(['gameStates/HomeState'], function(HomeState){
   'use strict';
 
   describe('HomeState', function(){

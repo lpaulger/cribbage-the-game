@@ -1,7 +1,7 @@
 /*jshint -W098 */
-define(['scripts/gameStates/DrawState', 'scripts/gameStates/DealState', 'scripts/gameStates/CribState',
-        'scripts/gameStates/PrePlayState', 'scripts/gameStates/PlayState', 'scripts/gameStates/CountState',
-        'scripts/gameStates/SummaryState', 'scripts/gameStates/HomeState', 'scripts/gameStates/InfoState'],
+define(['gameStates/DrawState', 'gameStates/DealState', 'gameStates/CribState',
+        'gameStates/PrePlayState', 'gameStates/PlayState', 'gameStates/CountState',
+        'gameStates/SummaryState', 'gameStates/HomeState', 'gameStates/InfoState'],
   function (DrawState, DealState, CribState, PrePlayState, PlayState, CountState, SummaryState, HomeState, InfoState) {
     'use strict';
 

@@ -1,4 +1,4 @@
-define(['jquery','scripts/gameStates/BaseState'],function($, BaseState){
+define(['jquery','gameStates/BaseState'],function($, BaseState){
   'use strict';
   function DrawState(game){
     BaseState.call(this, game, 'Draw');

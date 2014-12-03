@@ -1,4 +1,4 @@
-define(['scripts/modules/Mediator'],
+define(['modules/Mediator'],
   function(Mediator){
     'use strict';
 

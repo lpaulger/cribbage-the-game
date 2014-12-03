@@ -1,4 +1,4 @@
-define(['scripts/gameStates/StateRegistry'], function(StateRegistry){
+define(['gameStates/StateRegistry'], function(StateRegistry){
   'use strict';
   var stateRegistry;
   describe('StateRegistry', function(){
