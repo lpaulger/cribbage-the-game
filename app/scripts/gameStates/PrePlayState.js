@@ -32,13 +32,13 @@ define(['gameStates/BaseState', 'jquery'],function(BaseState, $){
   PrePlayState.prototype.init = function(){
     this.game.$action = {text: '...'};
     if(this.game.$cribOwner !== this.game.$player1){
-      this.mediator.publish('messages-add', 'They will reveal top card');
+      this.mediator.publish('messages-add', 'Cut the deck');
+      this.render();
+    } else {
+      this.mediator.publish('messages-add', 'They will cut the deck');
       var index = Math.floor(Math.random() * this.game.$deck.cards.length);
       this.render();
       selectTopCard.call(this, index, false);
-    } else {
-      this.mediator.publish('messages-add', 'Reveal top card');
-      this.render();
     }
   };
 

@@ -33,10 +33,10 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
             _setup();
           });
 
-          it('should set message to "Reveal top card"', function () {
+          it('should set message to "They will reveal top card"', function () {
             expect(_game.$messages).toEqual(['default']);
             _prePlayState.init();
-            expect(_prePlayState.mediator.publish).toHaveBeenCalledWith('messages-add', 'Reveal top card');
+            expect(_prePlayState.mediator.publish).toHaveBeenCalledWith('messages-add', 'They will cut the deck');
           });
         });
 
@@ -50,10 +50,10 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
             _setup();
           });
 
-          it('should set message to "They will reveal top card"', function () {
+          it('should set message to "Reveal top card"', function () {
             expect(_game.$messages).toEqual(['default']);
             _prePlayState.init();
-            expect(_prePlayState.mediator.publish).toHaveBeenCalledWith('messages-add', 'They will reveal top card');
+            expect(_prePlayState.mediator.publish).toHaveBeenCalledWith('messages-add', 'Cut the deck');
           });
         });
       });
