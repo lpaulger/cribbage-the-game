@@ -1,0 +1,61 @@
+#table {
+  position: absolute;
+  bottom: 7.6em;
+  height: 6.6em;
+  width: 100%;
+}
+
+#deck > .deck{
+  position: absolute;
+  right: 5em;
+
+  &.strait{
+    right: 17em;
+  }
+}
+
+#play {
+  position: absolute;
+  top: 60%;
+  left: 7em;
+  @include translateY(-50%);
+}
+
+#count {
+  position: absolute;
+  top: -.9em;
+  left: 1.024em;
+  label {
+    position: relative;
+    padding: 0 .2em;
+    display: inline-block;
+    background-color: rgba(0,0,0,0.3);
+  }
+}
+
+#controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  button {
+    height: 2em;
+    width: 3.4em;
+    background-color: rgba(0,0,0,0.3);
+    color: $text-color;
+    border: none;
+    font-size: 2em;
+  }
+
+  span {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    background: rgba(0,0,0,.4);
+    color: $opponent-color;
+
+    &:nth-child(3){
+      color: $player-color;
+    }
+  }
+}

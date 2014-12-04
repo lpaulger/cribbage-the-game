@@ -50,7 +50,7 @@
     </script>
     <script id="infoTemplate" type="x-tmpl-mustache">
       <a class="link back-link"><i class="fa fa-chevron-left"></i></a>
-      <div id="cribbageBoard">
+      <div id="titleBar">
         <h1>Info</h1>
       </div>
       <div class="paragraph-container">
@@ -68,6 +68,7 @@
       </div>
     </script>
     <script id="stateTemplate" type="x-tmpl-mustache">
+      <div id="gameContainer">
         <a class="link home-link"><i class="fa fa-home"></i></a>
         <div id="cribbageBoard">
           {{#someFunction}}someValue{{/someFunction}}
@@ -104,6 +105,7 @@
           {{/$player1}}
         </div>
         <ul id="messageContainer">{{> messages}}</ul>
+      </div>
     </script>
     <script id="visibleHandTemplate" type="x-tmpl-mustache">
         <li>

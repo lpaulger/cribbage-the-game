@@ -19,7 +19,7 @@ $home-cards-font-size-small: 1em;
 General Layout
 */
 
-html, body, #content {
+html, body, #content , #gameContainer{
   height: 100%;
   margin: 0;
 }
@@ -36,17 +36,9 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: $text-color;
   font-size: .8em;
-
-  @media screen and (min-height: $break-mobile-small) {
-    font-size: 1em;
-  }
-
-  @media screen and (min-height: $break-tablet) {
-    font-size: 1.4em;
-  }
 }
 
-#content{
+#content, #gameContainer{
   background: $table-background-color;
   overflow: hidden;
   position: relative;
@@ -190,26 +182,9 @@ a.link{
       float: right;
     }
   }
-
 }
 
-#table {
-  position: absolute;
-  bottom: 7.6em;
-  height: 6.6em;
-  width: 100%;
-
-  #deck{
-    position: relative;
-  }
-}
-
-#play {
-  position: absolute;
-  top: 60%;
-  left: 6em;
-  @include translateY(-50%);
-}
+@import "layout.table";
 
 @mixin player{
   height: 6.6em;
@@ -249,15 +224,16 @@ a.link{
   color: $opponent-color;
 }
 
-#cribbageBoard {
+#cribbageBoard, #titleBar {
   height: 6em;
   background-color: $alternative-color;
   font-size: .8em;
+
   ul{
     margin: 0 auto;
-    padding: .6em 0;
     width: 16em;
-    height: 1.4em;
+    height: 50%;
+    padding: 0;
   }
 
   span {
@@ -269,6 +245,9 @@ a.link{
     list-style-position: inside;
     width: 0.49em;
     transition: color 0.2s linear;
+    position: relative;
+    top: 50%;
+    transform: translateY(-100%);
 
     &:nth-child(5n){
       border-right:.1em solid white;
@@ -289,44 +268,6 @@ a.link{
   }
 }
 
-#count {
-  position: absolute;
-  bottom: -1.2em;
-  label {
-    position: relative;
-    padding: .2em;
-    display: inline-block;
-    background-color: rgba(0,0,0,0.3);
-  }
-}
-
-#controls {
-  position: absolute;
-  top: 0;
-  right: 0;
-
-  button {
-    height: 2em;
-    width: 3.4em;
-    background-color: rgba(0,0,0,0.3);
-    color: $text-color;
-    border: none;
-    font-size: 2em;
-  }
-
-  span {
-    display: block;
-    text-align: center;
-    font-weight: bold;
-    background: rgba(0,0,0,.4);
-    color: $opponent-color;
-
-    &:nth-child(3){
-      color: $player-color;
-    }
-  }
-}
-
 .paragraph-container{
   padding: .2em;
 
@@ -340,5 +281,58 @@ a.link{
     position: absolute;
     bottom: 0;
     width: 100%;
+  }
+}
+
+//Mobile Responsive design
+
+@media screen and (orientation: landscape) {
+  #messageContainer{
+    margin-top: 5em;
+  }
+
+  #gameContainer {
+    margin-right: 7.8em;
+  }
+
+  #cribbageBoard{
+    transform: rotate(270deg);
+    position: fixed;
+    //determine sizes later
+    height: 6em;
+    width: 57em;
+    top: 38%;
+    right: -25.5em;
+    font-size: 1.3em;
+  }
+}
+
+@media screen and (min-height: $break-mobile-small) {
+  body {
+    font-size: 1em;
+  }
+
+  #deck > .deck.strait{
+    right: 14em;
+  }
+}
+
+@media screen and (min-height: $break-mobile-small) and (orientation: landscape) {
+  body {
+    font-size: 1.3em;
+  }
+
+  #deck > .deck.strait{
+    right: 12em;
+  }
+}
+
+@media screen and (min-height: $break-tablet) {
+  body {
+    font-size: 1.7em;
+  }
+
+  #deck > .deck.strait{
+    right: 10em;
   }
 }
