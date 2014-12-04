@@ -288,7 +288,9 @@ a.link{
 
 @media screen and (orientation: landscape) {
   #messageContainer{
-    margin-top: 5em;
+    position: relative;
+    width: auto;
+    margin: auto 5em;
   }
 
   #gameContainer {
