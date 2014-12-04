@@ -1,36 +1,34 @@
-define(['gameStates/CribState'], function(CribState) {
+define(['gameStates/CribState', 'modules/PlayerModule'], function(CribState, Player) {
   'use strict';
   var _cribState,
       _game,
       gameSetup = function(){
         _game = {
           $messages: [],
-          $player1:{
-            hand:[
+          $player1: new Player({
+            name: 'p1',
+            possessive: 'his',
+            hand: [
               {value:1},
               {value:2},
               {value:3},
               {value:4},
               {value:5},
               {value:6}
-            ],
-            cardsForCrib:[],
-            possessive:'his',
-            placeCardsInCrib: function(){}
-          },
-          $player2: {
-            hand:[
+            ]
+          }),
+          $player2: new Player({
+            name: 'p2',
+            possessive: 'his',
+            hand: [
               {value:1},
               {value:2},
               {value:3},
               {value:4},
               {value:5},
               {value:6}
-            ],
-            cardsForCrib:[],
-            possessive:'his',
-            placeCardsInCrib: function(){}
-          },
+            ]
+          }),
           $cribOwner: {possessive:'his'},
           transitionTo: function(){}
         };
@@ -72,7 +70,7 @@ define(['gameStates/CribState'], function(CribState) {
       describe('if no cards selected', function(){
         it('should add to selectedCards', function(){
           _cribState.selectCard({index: 1});
-          expect(_game.$player1.cardsForCrib.length).toBe(1);
+          expect(_game.$player1.getSelectedCards().length).toBe(1);
         });
       });
 
@@ -83,20 +81,20 @@ define(['gameStates/CribState'], function(CribState) {
         });
 
         it('should replace the first card', function(){
-          expect(_game.$player1.cardsForCrib.length).toBe(2);
+          expect(_game.$player1.getSelectedCards().length).toBe(2);
           _cribState.selectCard({index: 3});
-          expect(_game.$player1.cardsForCrib.length).toBe(2);
-          expect(_game.$player1.cardsForCrib[0]).toEqual({value:3, selected: 'selected'});
-          expect(_game.$player1.cardsForCrib[1]).toEqual({value:4, selected: 'selected'});
+          expect(_game.$player1.getSelectedCards().length).toBe(2);
+          expect(_game.$player1.getSelectedCards()[0]).toEqual({value:3, selected: 'selected'});
+          expect(_game.$player1.getSelectedCards()[1]).toEqual({value:4, selected: 'selected'});
         });
       });
 
       describe('if selectedCard is removed', function(){
         it('should remove the card', function(){
           _cribState.selectCard({index:1});
-          expect(_game.$player1.cardsForCrib.length).toBe(1);
+          expect(_game.$player1.getSelectedCards().length).toBe(1);
           _cribState.selectCard({index:1});
-          expect(_game.$player1.cardsForCrib.length).toBe(0);
+          expect(_game.$player1.getSelectedCards().length).toBe(0);
         });
       });
     });

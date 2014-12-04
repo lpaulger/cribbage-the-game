@@ -6,7 +6,6 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
     this.hand = options.hand || [];
     this.handInMemory = options.handInMemory || [];
     this.crib = options.crib || [];
-    this.cardsForCrib = options.cardsForCrib || [];
     this.currentPoints = options.currentPoints || 0;
     this.points = options.points || 0;
     this.board = options.board;//required
@@ -14,6 +13,12 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
     this.scoreKeeper = new ScoreKeeper();
     this.mediator = PubSub;
   }
+
+  Player.prototype.getSelectedCards = function(){
+    return this.hand.filter(function(card){
+      return card.selected === 'selected';
+    });
+  };
 
   Player.prototype.placeCardsInCrib = function(cribOwner){
 
@@ -23,12 +28,11 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
     }
 
     function unselectCurrentCard(card){
-      this.hand[this.hand.indexOf(card)].selected = '';
+      delete this.hand[this.hand.indexOf(card)].selected;
     }
 
-    if(this.cardsForCrib.length === 2){
-      this.cardsForCrib.forEach(removeFromHand.bind(this));
-      this.cardsForCrib = [];
+    if(this.getSelectedCards().length === 2){
+      this.getSelectedCards().forEach(removeFromHand.bind(this));
     }
   };
 

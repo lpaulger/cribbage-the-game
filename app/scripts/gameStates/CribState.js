@@ -23,11 +23,11 @@ define(['gameStates/BaseState'],function(BaseState){
       _hand[_hand.indexOf(selectedCards[0])].selected = '';
       _hand[options.index].selected = 'selected';
       selectedCards.splice(0, 1);
-      selectedCards.push(this.game.$player1.hand[options.index]);
+      selectedCards.push(this.p1.hand[options.index]);
     }
 
     function removeCard(){
-      this.game.$player1.hand[options.index].selected = '';
+      this.p1.hand[options.index].selected = '';
       selectedCards.splice(selectedCards.indexOf(options.index), 1);
     }
 
@@ -46,8 +46,9 @@ define(['gameStates/BaseState'],function(BaseState){
       }).length > 0;
     }
 
-    var selectedCards = this.game.$player1.cardsForCrib;
-    var _hand = this.game.$player1.hand;
+    var selectedCards = this.p1.getSelectedCards();
+
+    var _hand = this.p1.hand;
 
     if(isAlreadySelected.apply(this))
       removeCard.apply(this);
@@ -59,14 +60,16 @@ define(['gameStates/BaseState'],function(BaseState){
       this.mediator.publish('messages-add', 'When you\'re ready, continue');
       this.game.$action = {text: 'Cont.'};
     }
-    else
+    else if(selectedCards.length === 1)
       this.mediator.publish('messages-add', 'Pick one more card');
+     else
+      this.mediator.publish('messages-add', 'Pick two cards for ' + this.game.$cribOwner.possessive + ' crib');
 
     this.render();
   };
 
   CribState.prototype.action = function() {
-    if(this.game.$player1.cardsForCrib.length === 2){
+    if(this.p1.getSelectedCards().length === 2){
       this.p1.placeCardsInCrib(this.game.$cribOwner);
       this.p1.handInMemory = this.p1.hand.slice();
       this.mediator.publish('transition', 'PrePlay');

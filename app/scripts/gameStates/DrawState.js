@@ -8,9 +8,9 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
   DrawState.prototype.constructor = DrawState;
 
   var compareCards = function() {
-    if(this.p1.hand[0].faceValue < this.p2.hand[0].faceValue){
+    if(this.p1.crib[0].faceValue < this.p2.crib[0].faceValue){
       return this.p1;
-    } else if(this.p1.hand[0].faceValue > this.p2.hand[0].faceValue){
+    } else if(this.p1.crib[0].faceValue > this.p2.crib[0].faceValue){
       return this.p2;
     }
   };
@@ -22,7 +22,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
 
   DrawState.prototype.templates = function(){
     var templates = BaseState.prototype.templates();
-    templates.p2Hand = $('#visibleHandTemplate').html();
+    templates.crib = $('#visibleHandTemplate').html();
     return templates;
   };
 
@@ -30,8 +30,8 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     this.game.$deck.shuffle();
     this.game.$player1HandVisible = true;
     this.game.$player2HandVisible = true;
-    this.p1.hand = [this.game.$deck.cut()];
-    this.p2.hand = [this.game.$deck.cut()];
+    this.p1.crib = [this.game.$deck.cut()];
+    this.p2.crib = [this.game.$deck.cut()];
     this.game.$cribOwner = compareCards.call(this);
     if(!this.game.$cribOwner){
       this.mediator.publish('messages-add', 'It was a tie, draw again');
@@ -42,6 +42,9 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
       this.renderOnly();
       this.mediator.publish('transition', 'Deal', true);
     }
+
+    this.p1.crib = [];
+    this.p2.crib = [];
   };
 
   return DrawState;
