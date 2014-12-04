@@ -298,14 +298,22 @@ a.link{
   }
 
   #cribbageBoard{
-    transform: rotate(270deg);
-    position: fixed;
-    //determine sizes later
-    height: 6em;
-    width: 57em;
-    top: 8em;
-    right: -25.5em;
     font-size: 1.3em;
+    width: 6em;
+    height: 100%;
+    right: 0;
+    position: fixed;
+
+    ul{
+      transform: rotate(-90deg);
+      margin: 0 auto;
+      width: 16em;
+      padding: 0;
+      left: -6em;
+      position: relative;
+      bottom: -50%;
+      height: auto;
+    }
   }
 }
 
@@ -319,7 +327,7 @@ a.link{
   }
 }
 
-@media screen and (min-height: $break-mobile-small) and (orientation: landscape) {
+@media screen and (min-height: $break-mobile-large) and (orientation: landscape) {
   body {
     font-size: 1.3em;
   }

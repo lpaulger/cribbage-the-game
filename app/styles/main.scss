@@ -30,6 +30,7 @@ only screen and (        min-device-pixel-ratio: 3){
 //responsive portrait
 $break-mobile-x-small: 321px;
 $break-mobile-small: 361px;
+$break-mobile-large: 450px;
 $break-tablet: 768px;
 
 @import 'layout';
