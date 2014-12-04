@@ -1,3 +1,9 @@
+v0.0.2:
+  date: 2014-12-04
+  changes:
+    - General bug fixes
+    - UI enhancement for landscape users
+    - swapped deck and control for usability
 v0.0.1:
   date: 2014-11-19
   changes:
