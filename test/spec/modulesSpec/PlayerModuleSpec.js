@@ -79,8 +79,8 @@ define(['modules/PlayerModule'], function(Player) {
         describe('if 2 cards selected', function(){
 
           beforeEach(function(){
-           _player.hand[0].selected = 'selected';
-           _player.hand[1].selected = 'selected';
+            _player.hand[0].selected = 'selected';
+            _player.hand[1].selected = 'selected';
           });
 
           it('should put cards in crib owners crib', function() {

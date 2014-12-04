@@ -21,8 +21,6 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
       setInitialCurrentPlayer.call(this);
       if(this.game.currentPlayer === this.p2)
         processAiTurn.call(this);
-      else
-        this.mediator.publish('messages-add', 'Select a card to play');
     }
 
     setAction.call(this);
@@ -34,18 +32,21 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     try {
       this.p1.playCard(options.index);
       switchPlayer.call(this);
+
+      if(this.p1.isWinner())
+        this.mediator.publish('transition', 'Summary', true);
+      else if(!isEndOfRound.call(this)){
+        this.renderOnly();
+        this.mediator.publish('transition', 'Play', true);
+      } else {
+        this.mediator.publish('transition', 'Play', false);
+      }
     } catch(e) {
       if(e.message === 'No Playable Cards')
         this.mediator.publish('messages-add', 'No Playable Cards, Press \'Go!\'');
       else if(e.message === 'Invalid Playable Card')
         this.mediator.publish('messages-add', 'Try another card');
-    }
-    if(this.p1.isWinner())
-      this.mediator.publish('transition', 'Summary', true);
-    else if(!isEndOfRound.call(this)){
-      this.renderOnly();
-      this.mediator.publish('transition', 'Play', true);
-    } else {
+
       this.mediator.publish('transition', 'Play', false);
     }
   };
