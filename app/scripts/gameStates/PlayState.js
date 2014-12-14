@@ -72,7 +72,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
           if(index !== -1)
             playCard.call(this, index);
           else {
-            this.mediator.publish('messages-add', 'Select a card first');
+            this.mediator.publish('messages-add', 'You can\'t go, you have playable cards.');
           }
         }
       }

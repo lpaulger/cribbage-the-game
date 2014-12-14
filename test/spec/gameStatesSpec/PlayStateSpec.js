@@ -1,17 +1,17 @@
-/*globals xdescribe, xit */
 define(['gameStates/PlayState', 'modules/PlayerModule'], function (PlayState, Player) {
   'use strict';
 
   var _playState, _game, _player, _bot;
 
   function setupBasicGame() {
-    var board = {};
+    var board = {currentBoardValue: 0};
     _player = new Player({name: 'test', possessive: 'his', hand: [{value: 3}], board: board});
     _bot = new Player({name: 'test', possessive: 'his', hand: [{value: 2}], board: board});
 
     _game = {
       transitionTo: function () {
       },
+      settings: {autoSelectCard: false},
       currentPlayer: _player,
       $player1: _player,
       $player2: _bot
@@ -32,8 +32,10 @@ define(['gameStates/PlayState', 'modules/PlayerModule'], function (PlayState, Pl
       expect(typeof _playState).toBe('object');
     });
 
-    //turning off while action only handles auto-select off
-    xdescribe('Manual counting disabled', function(){
+    describe('Auto select card enabled', function(){
+      beforeEach(function(){
+        _game.settings.autoSelectCard = true;
+      });
       describe('When player selects a valid card', function () {
         function setup(){
           spyOn(_player, 'playCard');
@@ -45,6 +47,9 @@ define(['gameStates/PlayState', 'modules/PlayerModule'], function (PlayState, Pl
 
         describe('and is end of the round', function(){
           beforeEach(function () {
+            //empty hands indicated end of round
+            _player.hand = [];
+            _bot.hand = [];
             setup();
           });
 
@@ -97,6 +102,7 @@ define(['gameStates/PlayState', 'modules/PlayerModule'], function (PlayState, Pl
         beforeEach(function(){
           spyOn(_player, 'announceGo');
           spyOn(_player, 'getSelectedCards').and.returnValue([]);
+          _player.hand = [];
           _playState = new PlayState(_game);
           spyOn(_playState.mediator, 'publish');
           spyOn(_playState, 'unbindEvents');
@@ -115,21 +121,18 @@ define(['gameStates/PlayState', 'modules/PlayerModule'], function (PlayState, Pl
 
       describe('and they have playable cards', function(){
         beforeEach(function(){
-          spyOn(_player, 'announceGo').and.throwError('Playable Cards');
           _playState = new PlayState(_game);
           spyOn(_playState.mediator, 'publish');
-          spyOn(_playState, 'unbindEvents');
+          spyOn(_player, 'playCard');
           _playState.nextState = 'Play';
+          _playState.action();
         });
 
         it('should not announce go for the player', function(){
-          expect(function(){
-            _playState.action();
-          }).toThrowError('Playable Cards');
+          expect(_player.playCard).not.toHaveBeenCalled();
         });
 
-        //turning off while action only handles auto-select off
-        xit('should let the user know it has playable cards', function(){
+        it('should let the user know it has playable cards', function(){
           expect(_playState.mediator.publish).toHaveBeenCalledWith('messages-add', 'You can\'t go, you have playable cards.');
         });
       });
