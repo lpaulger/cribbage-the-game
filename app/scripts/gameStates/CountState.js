@@ -87,7 +87,7 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
     this.game.$showTopCard = false;
     this.game.countStateStep = 0;
     this.render();
-    if(this.game.$cribOwner.isWinner() || this.p2.isWinner())
+    if(this.p1.isWinner() || this.p2.isWinner())
       this.mediator.publish('transition', 'Summary', true);
     this.mediator.publish('transition', 'Deal');
   }

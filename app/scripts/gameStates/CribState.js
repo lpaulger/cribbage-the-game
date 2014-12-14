@@ -19,42 +19,7 @@ define(['gameStates/BaseState'],function(BaseState){
   };
 
   CribState.prototype.selectCard = function(options) {
-    function replaceOldCard(){
-      _hand[_hand.indexOf(selectedCards[0])].selected = '';
-      _hand[options.index].selected = 'selected';
-      selectedCards.splice(0, 1);
-      selectedCards.push(this.p1.hand[options.index]);
-    }
-
-    function removeCard(){
-      this.p1.hand[options.index].selected = '';
-      selectedCards.splice(selectedCards.indexOf(options.index), 1);
-    }
-
-    function addNewCard(){
-      selectedCards.push(_hand[options.index]);
-      _hand[options.index].selected = 'selected';
-    }
-
-    function hasTwoCards(){
-      return selectedCards.length > 1 && selectedCards.indexOf(options.index) === -1;
-    }
-
-    function isAlreadySelected(){
-      return selectedCards.filter(function(element){
-        return element.suit === _hand[options.index].suit && element.value === _hand[options.index].value;
-      }).length > 0;
-    }
-
-    var selectedCards = this.p1.getSelectedCards();
-
-    var _hand = this.p1.hand;
-
-    if(isAlreadySelected.apply(this))
-      removeCard.apply(this);
-    else if(hasTwoCards())
-      replaceOldCard.apply(this);
-    else addNewCard.apply(this);
+    var selectedCards = this.p1.selectCribCard(options.index);
 
     if(selectedCards.length === 2){
       this.mediator.publish('messages-add', 'When you\'re ready, continue');
