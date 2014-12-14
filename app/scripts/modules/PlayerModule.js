@@ -50,9 +50,7 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
     var hand = this.hand;
 
     if(this.playRules.isCardPlayable(this, card)){
-      if(HandHelper.isSelected(hand, index))
-        HandHelper.unSelectCard(hand, index);
-      else if(HandHelper.isOneSelected(hand, index))
+      if(HandHelper.isOneSelected(hand, index))
         HandHelper.replaceOldCard(hand, index);
       else HandHelper.selectCard(hand, index);
     } else if(!this.playRules.hasPlayableCards(this)){

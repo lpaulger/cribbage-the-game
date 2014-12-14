@@ -54,7 +54,8 @@ define(
       this.$action = options.$action || undefined;
 
       this.settings = {
-        countPointsManually: true
+        countPointsManually: true,
+        autoSelectCard: false
       };
     }
 

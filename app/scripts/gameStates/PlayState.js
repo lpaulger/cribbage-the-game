@@ -34,13 +34,16 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
 
   PlayState.prototype.selectCard = function(options) {
     try {
-      this.p1.selectCard(options.index);
-      this.mediator.publish('messages-add', 'Tap OK to continue');
-      this.game.$action = {text:'Ok'};
-      this.render();
-
-      //playCard.call(this, options.index);
-
+      if(this.game.settings.autoSelectCard){
+        playCard.call(this, options.index);
+        switchPlayer.call(this);
+        finishTurn.call(this);
+      } else {
+        this.p1.selectCard(options.index);
+        this.mediator.publish('messages-add', 'Tap OK to continue');
+        this.game.$action = {text:'Ok'};
+        this.render();
+      }
     } catch(e) {
       if(e.message === 'No Playable Cards')
         this.mediator.publish('messages-add', 'No Playable Cards, Press \'Go!\'');
@@ -62,11 +65,15 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
         switchPlayer.call(this);
       }
       else{
-        var index = this.p1.hand.indexOf(this.p1.getSelectedCards()[0]);
-        if(index !== -1)
-          playCard.call(this, index);
-        else {
-          this.mediator.publish('messages-add', 'Select a card first');
+        if(this.game.settings.autoSelectCard){
+          this.mediator.publish('messages-add', 'You have playable cards');
+        } else {
+          var index = this.p1.hand.indexOf(this.p1.getSelectedCards()[0]);
+          if(index !== -1)
+            playCard.call(this, index);
+          else {
+            this.mediator.publish('messages-add', 'Select a card first');
+          }
         }
       }
 
