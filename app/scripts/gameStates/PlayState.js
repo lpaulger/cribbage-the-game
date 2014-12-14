@@ -89,9 +89,10 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
 
   function switchPlayer(){
     this.game.currentPlayer = this.p2;
-    if(!isEndOfRound.call(this))
+    if(!isEndOfRound.call(this)){
       this.mediator.publish('messages-add', this.p2.possessive + ' turn');
       this.game.$action = {text:'...'};
+    }
   }
 
 
