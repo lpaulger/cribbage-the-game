@@ -57,14 +57,18 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
       this.mediator.publish('transition', this.nextState, false);
       this.nextState = 'Play';
     } else {
-      var index = this.p1.hand.indexOf(this.p1.getSelectedCards()[0]);
-
       if(!this.p1.playRules.hasPlayableCards(this.p1)){
         this.p1.announceGo();
         switchPlayer.call(this);
       }
-      else
-        playCard.call(this, index);
+      else{
+        var index = this.p1.hand.indexOf(this.p1.getSelectedCards()[0]);
+        if(index !== -1)
+          playCard.call(this, index);
+        else {
+          this.mediator.publish('messages-add', 'Select a card first');
+        }
+      }
 
       finishTurn.call(this);
     }

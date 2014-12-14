@@ -46,6 +46,7 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
     var _tempHand = this.hand.slice();
     var card = _tempHand.splice(index, 1)[0];//selectCardFromHand
 
+
     var hand = this.hand;
 
     if(this.playRules.isCardPlayable(this, card)){

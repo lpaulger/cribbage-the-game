@@ -89,7 +89,9 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
     this.render();
     if(this.p1.isWinner() || this.p2.isWinner())
       this.mediator.publish('transition', 'Summary', true);
-    this.mediator.publish('transition', 'Deal');
+    else {
+      this.mediator.publish('transition', 'Deal');
+    }
   }
 
 
