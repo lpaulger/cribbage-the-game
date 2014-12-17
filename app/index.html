@@ -101,6 +101,7 @@
           <div class="playingCards">
             <ul id="bottomHand" class="hand">{{#hand}}{{> p1Hand}}{{/hand}}</ul>
             <ul class="crib deck">{{#crib}}{{> crib}}{{/crib}}</ul>
+            {{> scoreControl}}
           </div>
           {{/$player1}}
         </div>
@@ -162,6 +163,15 @@
         </li>
       {{/playedCards}}
     </script>
+
+    <script id="scoreControlTemplate" type="x-tmpl-mustache">
+      <div id="scoreControl">
+        <input type="range" min="0" max="15" value="{{selectedScore}}" step="1">
+        <!--<input type="text" value="{{selectedScore}}">-->
+        <span>{{selectedScore}}</span>
+      </div>
+    </script>
+
     <script id="scoreboardTemplate" type="x-tmple-mustache">
       <ul>
         <li></li>

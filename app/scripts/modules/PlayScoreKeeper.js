@@ -136,12 +136,16 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
     if(this.isLastCard(totalPlayedCards))
       points += 1;
 
-    if(points === 1)
-      this.mediator.publish('messages-add', player.name + ' scored ' + points + ' point.');
-    else if(points > 1)
-      this.mediator.publish('messages-add', player.name + ' scored ' + points + ' points.');
+    if(player.selectedScore <= points)
+      this.mediator.publish('messages-add', player.name + ' scored ' + points + ' point(s)');
+    else {
+      points = points - player.selectedScore;
+      this.mediator.publish('messages-add', player.name + ' overscored by' + points + ' point(s)');
+    }
+
+
     if(points !== 0)
-      player.currentPoints = player.points;
+      player.currentPoints = player.points;//update leading board peg
     player.points += points;
   };
 

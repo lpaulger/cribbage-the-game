@@ -60,12 +60,32 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
     }
   };
 
-  Player.prototype.playCard = function(index){
+  Player.prototype.placeCardOnTable = function(index){
     var _tempHand = this.hand.slice();
     var card = _tempHand.splice(index, 1)[0];//selectCardFromHand
 
     if(this.playRules.isCardPlayable(this, card)){
       this.board.placeCard(card, this);
+      this.hand.splice(index, 1);
+    }
+  };
+
+  Player.prototype.playCard = function(index){
+    var _tempHand = this.hand.slice();
+    var card = _tempHand.splice(index, 1)[0];//selectCardFromHand
+
+    if(this.selectedScore !== undefined){
+      this.board.playedCards[this.board.playedCards.length-1];
+      this.scoreKeeper.evaluatePlay(this, this.board.playedCards, this.board.totalPlayedCardsForRound);
+      if(this.board.currentBoardValue === 31){
+        this.board.resetBoard();
+      }
+
+      delete this.selectedScore;
+    } else {
+      if(this.playRules.isCardPlayable(this, card)){
+      this.board.placeCard(card, this);
+
       this.scoreKeeper.evaluatePlay(this, this.board.playedCards, this.board.totalPlayedCardsForRound);
       if(this.board.currentBoardValue === 31){
         this.board.resetBoard();
@@ -75,6 +95,7 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
       throw new Error('No Playable Cards');
     } else {
       throw new Error('Invalid Playable Card');
+    }
     }
   };
 

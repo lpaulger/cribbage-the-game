@@ -3,6 +3,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
   function PlayState(game){
     BaseState.call(this, game, 'Play');
     this.nextState = 'Play';
+    this.isScorePoints = false;
   }
 
   PlayState.prototype = Object.create(BaseState.prototype);
@@ -11,7 +12,15 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
   PlayState.prototype.templates = function(){
     var templates = BaseState.prototype.templates();
     templates.deck =  $('#visibleDeckTemplate').html();
+    if(this.isScorePoints)
+      templates.scoreControl = $('#scoreControlTemplate').html();
     return templates;
+  };
+
+  PlayState.prototype.updateScoreControl = function(value){
+    this.p1.selectedScore = value;
+    this.mediator.publish('messages-add', 'tap ok to score ' + this.p1.selectedScore + ' point(s)');
+    this.render();
   };
 
   PlayState.prototype.init = function(){
@@ -55,20 +64,29 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
   };
 
   PlayState.prototype.action = function() {
+    var index = this.p1.hand.indexOf(this.p1.getSelectedCards()[0]);
+
+    //end of round
     if(this.nextState === 'Count'){
       this.mediator.publish('board-clear');
       this.mediator.publish('transition', this.nextState, false);
       this.nextState = 'Play';
     } else {
+      //score points
+      if(this.isScorePoints){
+        playCard.call(this, index);
+      }
+      //announce go
       if(!this.p1.playRules.hasPlayableCards(this.p1)){
         this.p1.announceGo();
         switchPlayer.call(this);
-      }
-      else{
+        finishTurn.call(this);
+      } else {
+        //announce go autoplay cards ?? is this still applicable?
         if(this.game.settings.autoSelectCard){
           this.mediator.publish('messages-add', 'You have playable cards');
         } else {
-          var index = this.p1.hand.indexOf(this.p1.getSelectedCards()[0]);
+          //approving selection
           if(index !== -1)
             playCard.call(this, index);
           else {
@@ -76,8 +94,6 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
           }
         }
       }
-
-      finishTurn.call(this);
     }
   };
 
@@ -94,8 +110,17 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
   }
 
   function playCard(index){
-    this.p1.playCard(index);
-    switchPlayer.call(this);
+    if(this.game.settings.countPointsManually && !this.isScorePoints){
+      this.p1.selectedScore = 0;
+      this.isScorePoints = true;
+      this.p1.placeCardOnTable(index);
+      this.render();
+    } else {
+      this.isScorePoints = false;
+      this.p1.playCard(index);
+      switchPlayer.call(this);
+      finishTurn.call(this);
+    }
   }
 
   function switchPlayer(){
@@ -109,6 +134,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
 
   function setInitialCurrentPlayer(){
     if(!this.game.currentPlayer){
+      this.isScorePoints = false;
       if(this.game.$cribOwner === this.p1){
         this.game.currentPlayer = this.p2;
       } else {

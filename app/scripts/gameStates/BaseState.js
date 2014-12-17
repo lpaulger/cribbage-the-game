@@ -23,6 +23,7 @@ define(['jquery', 'mustache', 'modules/PubSub'],function($, mustache, PubSub){
       deck: $('#hiddenDeckTemplate').html(),
       crib: $('#hiddenHandTemplate').html(),
       controls: $('#controlsTemplate').html(),
+      scoreControl: '',
       messages: '{{#$messages}}<li>{{.}}</li>{{/$messages}}'
     };
   };
@@ -125,6 +126,10 @@ define(['jquery', 'mustache', 'modules/PubSub'],function($, mustache, PubSub){
 
     $('a.back-link').on('click', function(){
       this.mediator.publish('transition', 'Back');
+    }.bind(this));
+
+    $('#scoreControl input[type=range]').on('change', function(event){
+      this.updateScoreControl(event.srcElement.valueAsNumber);
     }.bind(this));
   };
 

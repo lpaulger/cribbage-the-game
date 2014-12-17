@@ -204,7 +204,6 @@ a.link{
 
 .player {
   .playingCards {
-    position: relative;
     .crib{
       right: 5em;
       position: absolute;
@@ -281,6 +280,34 @@ a.link{
     position: absolute;
     bottom: 0;
     width: 100%;
+  }
+}
+
+#scoreControl {
+  position: absolute;
+  height: 6.7em;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  width: 100%;
+  line-height: 6.7em;
+
+  input[type=range]{
+    width: calc(100% - 10em);
+    display: inline;
+    vertical-align: middle;
+    margin: .7em;
+  }
+
+  input[type=text], span{
+    right: 0;
+    position: absolute;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 2em;
+    text-align: center;
+    font-size: 3em;
   }
 }
 
