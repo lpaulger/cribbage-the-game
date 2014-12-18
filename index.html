@@ -12,7 +12,7 @@
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link rel="stylesheet" href="styles/6a641f9c.main.css">
+        <link rel="stylesheet" href="styles/4a2cc81e.main.css">
         <script src="scripts/vendor/d7100892.modernizr.js"></script>
     </head>
     <body>
@@ -99,6 +99,7 @@
           <div class="playingCards">
             <ul id="bottomHand" class="hand">{{#hand}}{{> p1Hand}}{{/hand}}</ul>
             <ul class="crib deck">{{#crib}}{{> crib}}{{/crib}}</ul>
+            {{> scoreControl}}
           </div>
           {{/$player1}}
         </div>
@@ -160,6 +161,15 @@
         </li>
       {{/playedCards}}
     </script>
+
+    <script id="scoreControlTemplate" type="x-tmpl-mustache">
+      <div id="scoreControl">
+        <input type="range" min="0" max="15" value="{{selectedScore}}" step="1">
+        <!--<input type="text" value="{{selectedScore}}">-->
+        <span>{{selectedScore}}</span>
+      </div>
+    </script>
+
     <script id="scoreboardTemplate" type="x-tmple-mustache">
       <ul>
         <li></li>
@@ -246,7 +256,7 @@
 
 
     <script type="text/javascript" src="cordova.js"></script>
-    <script src="scripts/7d52a831.main.js"></script>
+    <script src="scripts/5a40dc7d.main.js"></script>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
