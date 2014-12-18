@@ -136,11 +136,14 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
     if(this.isLastCard(totalPlayedCards))
       points += 1;
 
-    if(player.selectedScore <= points)
+    if(player.selectedScore && player.selectedScore <= points) {
+      points = player.selectedScore;
       this.mediator.publish('messages-add', player.name + ' scored ' + points + ' point(s)');
-    else {
+    } else if(player.selectedScore) {
       points = points - player.selectedScore;
-      this.mediator.publish('messages-add', player.name + ' overscored by' + points + ' point(s)');
+      this.mediator.publish('messages-add', player.name + ' overscored by ' + Math.abs(points) + ' point(s)');
+    } else {
+      this.mediator.publish('messages-add', player.name + ' scored ' + points + ' point(s)');
     }
 
 

@@ -75,7 +75,6 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
     var card = _tempHand.splice(index, 1)[0];//selectCardFromHand
 
     if(this.selectedScore !== undefined){
-      this.board.playedCards[this.board.playedCards.length-1];
       this.scoreKeeper.evaluatePlay(this, this.board.playedCards, this.board.totalPlayedCardsForRound);
       if(this.board.currentBoardValue === 31){
         this.board.resetBoard();
@@ -84,7 +83,7 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
       delete this.selectedScore;
     } else {
       if(this.playRules.isCardPlayable(this, card)){
-      this.board.placeCard(card, this);
+        this.board.placeCard(card, this);
 
       this.scoreKeeper.evaluatePlay(this, this.board.playedCards, this.board.totalPlayedCardsForRound);
       if(this.board.currentBoardValue === 31){
