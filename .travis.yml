@@ -20,10 +20,6 @@ after_success:
 - git config --global user.email "lucas.paulger@gmail.com"
 - grunt buildcontrol:pages
 
-branches:
-  only:
-    - master
-
 env:
   global:
     secure: ZOUtcOqHNinpRmZ2/SpYWk787Kg6RN8TlvgalGRaB24JkXh++0i8VV45Jid+CEPxVrs//S6UGd0R5Xxtop9lSLwVVs60NOXKWATt719UdVqlJv9i/7QQ/vmZXZqnX8OaBOU91J8PvfkRpjp9Dd1ECG/Iu1BBDwb2TaEjXVUuwxw=
