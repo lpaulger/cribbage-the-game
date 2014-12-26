@@ -68,7 +68,6 @@ define(['modules/PlayerModule'], function(Player) {
           });
 
           it('should not put cards in crib owners crib', function() {
-            console.log(_player.hand);
             _player.placeCardsInCrib(_cribOwner);
 
             expect(_player.getSelectedCards().length).toBe(1);

@@ -163,22 +163,13 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
     gainedPoints += this.getNobs(player.hand, starter);
 
     if(player.selectedScore){
-      //this.mediator.publish('messages-add', player.name + ' announced ' + player.selectedScore + ' points');
-      //this.mediator.publish('messages-add', gainedPoints + ' point(s) were available');
       pointDifference = player.selectedScore - gainedPoints;//positive, negative 0
-      //positive means you asked for more points than available
-      //negative means you didn't find all the points
-      //0 means you found all the points
       if(pointDifference > 0){
-        //check to never lose points, worst case score 0;
-
-        // they announced {{player.selectedScore}}, but was over by {{difference}} from the actual {{gainedPoints}}
         this.mediator.publish('messages-add', player.name + ' said ' + player.selectedScore + ' points');
         this.mediator.publish('messages-add', 'the actual points were ' + gainedPoints);
         gainedPoints = (gainedPoints - pointDifference) >= 0 ? (gainedPoints - pointDifference) : 0 ;
         additionalMessage = ' (-' + pointDifference + ')';
       } else {
-        // you found {{player.selectedScore}} of the total {{gainedPoints}} points.
         this.mediator.publish('messages-add', player.name + ' found ' + player.selectedScore + ' of the total ' + gainedPoints + ' points');
         additionalMessage = ' (-' + (gainedPoints - player.selectedScore) + ')';
         gainedPoints = player.selectedScore;
