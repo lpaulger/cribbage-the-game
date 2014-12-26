@@ -85,16 +85,16 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
       if(this.playRules.isCardPlayable(this, card)){
         this.board.placeCard(card, this);
 
-      this.scoreKeeper.evaluatePlay(this, this.board.playedCards, this.board.totalPlayedCardsForRound);
-      if(this.board.currentBoardValue === 31){
-        this.board.resetBoard();
+        this.scoreKeeper.evaluatePlay(this, this.board.playedCards, this.board.totalPlayedCardsForRound);
+        if(this.board.currentBoardValue === 31){
+          this.board.resetBoard();
+        }
+        this.hand.splice(index, 1);
+      } else if(!this.playRules.hasPlayableCards(this)){
+        throw new Error('No Playable Cards');
+      } else {
+        throw new Error('Invalid Playable Card');
       }
-      this.hand.splice(index, 1);
-    } else if(!this.playRules.hasPlayableCards(this)){
-      throw new Error('No Playable Cards');
-    } else {
-      throw new Error('Invalid Playable Card');
-    }
     }
   };
 

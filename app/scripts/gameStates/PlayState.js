@@ -19,8 +19,6 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
 
   PlayState.prototype.updateScoreControl = function(value){
     this.p1.selectedScore = value;
-    this.mediator.publish('messages-add', 'tap ok to score ' + this.p1.selectedScore + ' point(s)');
-    this.render();
   };
 
   PlayState.prototype.init = function(){
@@ -90,11 +88,22 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
               playCard.call(this, index);
             else {
               this.mediator.publish('messages-add', 'You can\'t go, you have playable cards.');
+              this.render();
             }
           }
         }
       }
     }
+  };
+
+  PlayState.prototype.bindEvents = function(){
+    //bind defaults
+    BaseState.prototype.bindEvents.call(this);
+
+    $('#scoreControl input[type=range]').on('input change', function(event){
+      this.updateScoreControl(event.srcElement.valueAsNumber);
+      $('#scoreControl span').html(event.srcElement.valueAsNumber);
+    }.bind(this));
   };
 
   function finishTurn(){
