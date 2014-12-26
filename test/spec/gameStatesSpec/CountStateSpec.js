@@ -104,21 +104,16 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
         describe('and on step 1', function(){
           beforeEach(function(){
             _countState.game.countStateStep = 1;
+            spyOn(_countState, 'render');
           });
 
           afterEach(function(){
             _countState.game.countStateStep = 0;
           });
 
-          it('p2\'s hand should be empty', function(){
+          it('should simply render previous messages', function () {
             _countState.init();
-            expect(_game.$player2.hand.length).toBe(0);
-          });
-
-          it('should show p1\'s hand', function(){
-            _countState.init();
-            expect(_game.$player1HandVisible).toBe(true);
-            expect(_game.$player2HandVisible).toBe(false);
+            expect(_countState.render).toHaveBeenCalled();
           });
         });
       });
@@ -160,7 +155,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             _game.$player1.hand = _game.$player1.handInMemory;
             _game.$player2.hand = _game.$player2.handInMemory;
           });
-
+          
           it('should remove the cards from p2\'s hand', function(){
             expect(_game.$player2.hand.length).toBe(4);
             _countState.action();

@@ -26,8 +26,12 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
   CountState.prototype.init = function(){
     this.p1.restoreHand();
     this.p2.restoreHand();
+    if(this.game.countStateStep === 0)
+      processCountStep.call(this);
 
-    processCountStep.call(this);
+    else {
+      this.render();
+    }
   };
 
   CountState.prototype.action = function(){
