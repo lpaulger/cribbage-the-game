@@ -9,7 +9,6 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
      2  - Dealer counts crib
      */
     game.countStateStep = game.countStateStep || 0;
-    this.isScorePoints = false;
     this.p1.maxPoints = 29;
     this.p1.availablePoints = setAvailablePoints(this.p1.maxPoints);
     this.scoreKeeper = new ScoreKeeper();
@@ -33,6 +32,7 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
 
 
   CountState.prototype.init = function(){
+    this.isScorePoints = false;
     this.p1.restoreHand();
     this.p2.restoreHand();
     if(this.game.countStateStep === 0)
@@ -108,8 +108,11 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
   function processThirdStep(){
     this.game.$cribOwner.hand = this.game.$cribOwner.crib;
     this.game.$cribOwner.crib = [];
-    this.scoreKeeper.evaluateHand(this.game.$cribOwner, this.game.topCard);
-    this.game.$action = {text:'Cont.'};
+    if(isPlayerOneCribOwner.call(this)){
+      evaluatePlayerOneScore.call(this);
+    } else {
+      evaluatePlayerTwoScore.call(this);
+    }
     this.game.countStateStep += 1;
     this.render();
   }
@@ -159,7 +162,8 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
     this.game.$player1HandVisible = true;
     if(this.game.settings.countPointsManually){
       this.isScorePoints = this.isScorePoints ? false : true;
-      this.p1.selectedScore = 0;
+      if(this.isScorePoints)
+        this.p1.selectedScore = 0;
     }
   }
 

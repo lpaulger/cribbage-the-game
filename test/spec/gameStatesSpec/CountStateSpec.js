@@ -53,6 +53,9 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
       $cribOwner: _player2,
       $showTopCard: true,
       $messages: [],
+      settings: {
+        countPointsManually: false
+      },
       topCard: new Card(10, 'diams')
     };
   }
@@ -155,7 +158,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             _game.$player1.hand = _game.$player1.handInMemory;
             _game.$player2.hand = _game.$player2.handInMemory;
           });
-          
+
           it('should remove the cards from p2\'s hand', function(){
             expect(_game.$player2.hand.length).toBe(4);
             _countState.action();
