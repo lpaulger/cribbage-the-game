@@ -4,6 +4,8 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     BaseState.call(this, game, 'Play');
     this.nextState = 'Play';
     this.isScorePoints = false;
+    this.p1.maxPoints = 15;
+    this.p1.availablePoints = setAvailablePoints(this.p1.maxPoints);
   }
 
   PlayState.prototype = Object.create(BaseState.prototype);
@@ -105,6 +107,16 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
       $('#scoreControl span').html(event.srcElement.valueAsNumber);
     }.bind(this));
   };
+
+  function setAvailablePoints(size){
+    var i = 0;
+    var arrayPoints = [];
+    while(i < size){
+      i++;
+      arrayPoints.push(i);
+    }
+    return arrayPoints;
+  }
 
   function finishTurn(){
     if(this.p1.isWinner())

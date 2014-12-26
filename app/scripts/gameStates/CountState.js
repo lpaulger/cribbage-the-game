@@ -9,6 +9,9 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
      2  - Dealer counts crib
      */
     game.countStateStep = game.countStateStep || 0;
+    this.isScorePoints = false;
+    this.p1.maxPoints = 29;
+    this.p1.availablePoints = setAvailablePoints(this.p1.maxPoints);
     this.scoreKeeper = new ScoreKeeper();
   }
 
@@ -19,7 +22,13 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
     var templates = BaseState.prototype.templates();
     templates.deck = $('#visibleDeckTemplate').html();
     templates.p2Hand = $('#visibleHandTemplate').html();
+    if(this.isScorePoints)
+      templates.scoreControl = $('#scoreControlTemplate').html();
     return templates;
+  };
+
+  CountState.prototype.updateScoreControl = function(value){
+    this.p1.selectedScore = value;
   };
 
 
@@ -35,8 +44,32 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
   };
 
   CountState.prototype.action = function(){
+    if(this.isScorePoints){
+      this.game.countStateStep--;//hack to fix auto incriment
+    }
+
     processCountStep.call(this);
   };
+
+  CountState.prototype.bindEvents = function(){
+    //bind defaults
+    BaseState.prototype.bindEvents.call(this);
+
+    $('#scoreControl input[type=range]').on('input change', function(event){
+      this.updateScoreControl(event.srcElement.valueAsNumber);
+      $('#scoreControl span').html(event.srcElement.valueAsNumber);
+    }.bind(this));
+  };
+
+  function setAvailablePoints(size){
+    var i = 0;
+    var arrayPoints = [];
+    while(i < size){
+      i++;
+      arrayPoints.push(i);
+    }
+    return arrayPoints;
+  }
 
   function processCountStep(){
     var points = 0;
@@ -101,9 +134,11 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
 
   function evaluatePlayerOneScore(points){
     showPlayerOneHand.call(this);
-    this.scoreKeeper.evaluateHand(this.p1, this.game.topCard);
-    if(this.p1.isWinner())
-      this.mediator.publish('transition', 'Summary', true);
+    if(!this.isScorePoints){
+      this.scoreKeeper.evaluateHand(this.p1, this.game.topCard);
+      if(this.p1.isWinner())
+        this.mediator.publish('transition', 'Summary', true);
+    }
     return points;
   }
 
@@ -122,6 +157,10 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
   function showPlayerOneHand(){
     this.game.$player2HandVisible = false;
     this.game.$player1HandVisible = true;
+    if(this.game.settings.countPointsManually){
+      this.isScorePoints = this.isScorePoints ? false : true;
+      this.p1.selectedScore = 0;
+    }
   }
 
   function showPlayerTwoHand(){
