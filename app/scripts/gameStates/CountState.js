@@ -26,10 +26,6 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
     return templates;
   };
 
-  CountState.prototype.updateScoreControl = function(value){
-    this.p1.selectedScore = value;
-  };
-
 
   CountState.prototype.init = function(){
     this.isScorePoints = false;
@@ -56,7 +52,7 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
     BaseState.prototype.bindEvents.call(this);
 
     $('#scoreControl input[type=range]').on('input change', function(event){
-      this.updateScoreControl(event.srcElement.valueAsNumber);
+      this.p1.selectedScore = event.srcElement.valueAsNumber;
       $('#scoreControl span').html(event.srcElement.valueAsNumber);
     }.bind(this));
   };

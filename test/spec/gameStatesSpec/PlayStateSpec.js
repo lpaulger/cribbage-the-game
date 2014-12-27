@@ -1,24 +1,24 @@
-define(['gameStates/PlayState', 'modules/PlayerModule'], function (PlayState, Player) {
+define(['gameStates/PlayState', 'modules/PlayerModule'], function(PlayState, Player){
   'use strict';
 
   var _playState, _game, _player, _bot;
 
-  function setupBasicGame() {
-    var board = {currentBoardValue: 0};
-    _player = new Player({name: 'test', possessive: 'his', hand: [{value: 3}], board: board});
-    _bot = new Player({name: 'test', possessive: 'his', hand: [{value: 2}], board: board});
+  function setupBasicGame(){
+    var board = {currentBoardValue:0};
+    _player = new Player({name:'test', possessive:'his', hand:[{value:3}], board:board});
+    _bot = new Player({name:'test', possessive:'his', hand:[{value:2}], board:board});
 
     _game = {
-      transitionTo: function () {
+      transitionTo: function(){
       },
-      settings: {autoSelectCard: false},
-      currentPlayer: _player,
-      $player1: _player,
-      $player2: _bot
+      settings:     {autoSelectCard:false},
+      currentPlayer:_player,
+      $player1:     _player,
+      $player2:     _bot
     };
   }
 
-  describe('PlayState', function () {
+  describe('PlayState', function(){
     beforeEach(function(){
       setupBasicGame();
     });
@@ -27,77 +27,12 @@ define(['gameStates/PlayState', 'modules/PlayerModule'], function (PlayState, Pl
       _game = undefined;
     });
 
-    it('should create PlayState', function () {
+    it('should create PlayState', function(){
       _playState = new PlayState(_game);
       expect(typeof _playState).toBe('object');
     });
 
-    describe('Auto select card enabled', function(){
-      beforeEach(function(){
-        _game.settings.autoSelectCard = true;
-      });
-      describe('When player selects a valid card', function () {
-        function setup(){
-          spyOn(_player, 'playCard');
-          _playState = new PlayState(_game);
-          spyOn(_playState.mediator, 'publish');
-          spyOn(_playState, 'unbindEvents').and.callThrough();
-          _playState.selectCard({index: 1});
-        }
-
-        describe('and is end of the round', function(){
-          beforeEach(function () {
-            //empty hands indicated end of round
-            _player.hand = [];
-            _bot.hand = [];
-            setup();
-          });
-
-          it('should play card', function () {
-            expect(_player.playCard).toHaveBeenCalledWith(1);
-          });
-
-          it('should transition back to Play without waiting', function () {
-            expect(_playState.mediator.publish).toHaveBeenCalledWith('transition', 'Play', false);
-          });
-        });
-
-        describe('and not the end of the round', function(){
-          beforeEach(function(){
-            _player.hand = [{value: 10}];
-            setup();
-          });
-
-          it('should transition back to Play and wait', function () {
-            expect(_playState.mediator.publish).toHaveBeenCalledWith('transition', 'Play', true);
-          });
-
-          it('should prevent the user from making another action until the AI has gone', function(){
-            expect(_playState.unbindEvents).toHaveBeenCalled();
-          });
-        });
-      });
-
-      describe('when player selects invalid card', function () {
-        beforeEach(function () {
-          spyOn(_player, 'playCard').and.throwError('No Playable Cards');
-          _playState = new PlayState(_game);
-          spyOn(_playState.mediator, 'publish');
-          _playState.selectCard({index: 1});
-        });
-
-        it('should play card', function () {
-          expect(_player.playCard).toHaveBeenCalledWith(1);
-        });
-
-        it('should throw error', function () {
-          expect(_player.playCard).toThrowError('No Playable Cards');
-        });
-      });
-    });
-
-
-    describe('When the player clicks action', function(){
+    describe('Action Clicked', function(){
       describe('and they have no playable cards', function(){
         beforeEach(function(){
           spyOn(_player, 'announceGo');
@@ -138,15 +73,15 @@ define(['gameStates/PlayState', 'modules/PlayerModule'], function (PlayState, Pl
       });
     });
 
-    describe('is end of round', function () {
-      beforeEach(function () {
+    describe('is end of round', function(){
+      beforeEach(function(){
         _playState = new PlayState(_game);
         _playState.init();
         spyOn(_playState.mediator, 'publish');
         _playState.nextState = 'Count';
       });
 
-      it('should transition to Count state', function () {
+      it('should transition to Count state', function(){
         expect(_playState.nextState).toBe('Count');
         _playState.action();
         expect(_playState.mediator.publish).toHaveBeenCalledWith('transition', 'Count', false);
@@ -156,6 +91,105 @@ define(['gameStates/PlayState', 'modules/PlayerModule'], function (PlayState, Pl
       it('should clear the board', function(){
         _playState.action();
         expect(_playState.mediator.publish).toHaveBeenCalledWith('board-clear');
+      });
+    });
+
+    describe('Auto select card enabled', function(){
+      beforeEach(function(){
+        _game.settings.autoSelectCard = true;
+      });
+
+      describe('When player selects a valid card', function(){
+        function setup(){
+          spyOn(_player, 'playCard');
+          _playState = new PlayState(_game);
+          spyOn(_playState.mediator, 'publish');
+          spyOn(_playState, 'unbindEvents').and.callThrough();
+          _playState.selectCard({index:1});
+        }
+
+        describe('and is end of the round', function(){
+          beforeEach(function(){
+            //empty hands indicated end of round
+            _player.hand = [];
+            _bot.hand = [];
+            setup();
+          });
+
+          it('should play card', function(){
+            expect(_player.playCard).toHaveBeenCalledWith(1);
+          });
+
+          it('should transition back to Play without waiting', function(){
+            expect(_playState.mediator.publish).toHaveBeenCalledWith('transition', 'Play', false);
+          });
+        });
+
+        describe('and not the end of the round', function(){
+          beforeEach(function(){
+            _player.hand = [{value:10}];
+            setup();
+          });
+
+          it('should transition back to Play and wait', function(){
+            expect(_playState.mediator.publish).toHaveBeenCalledWith('transition', 'Play', true);
+          });
+
+          it('should prevent the user from making another action until the AI has gone', function(){
+            expect(_playState.unbindEvents).toHaveBeenCalled();
+          });
+        });
+      });
+
+      describe('when player selects invalid card', function(){
+        beforeEach(function(){
+          spyOn(_player, 'playCard').and.throwError('No Playable Cards');
+          _playState = new PlayState(_game);
+          spyOn(_playState.mediator, 'publish');
+          _playState.selectCard({index:1});
+        });
+
+        it('should play card', function(){
+          expect(_player.playCard).toHaveBeenCalledWith(1);
+        });
+
+        it('should throw error', function(){
+          expect(_player.playCard).toThrowError('No Playable Cards');
+        });
+      });
+    });
+
+    describe('Manual Count Enabled', function(){
+      describe('and Auto Select Disabled', function(){
+        describe('when user confirms a card selection', function(){
+          beforeEach(function(){
+            _game.settings.countPointsManually = true;
+            _game.settings.autoSelectCard = false;
+
+            _playState = new PlayState(_game);
+            _playState.nextState = 'Play';
+            _playState.selectCard({index: 0});
+
+            spyOn(_player, 'placeCardOnTable');
+            spyOn(_player, 'playCard');
+          });
+
+          it('should place the card on the table', function(){
+            _playState.action();
+            expect(_player.placeCardOnTable).toHaveBeenCalledWith(0);
+          });
+
+          it('should display the score control', function(){
+            expect(_playState.isScorePoints).toBe(false);
+            _playState.action();
+            expect(_playState.isScorePoints).toBe(true);
+          });
+
+          it('should not play selected card', function(){
+            _playState.action();
+            expect(_player.playCard).not.toHaveBeenCalled();
+          });
+        });
       });
     });
   });

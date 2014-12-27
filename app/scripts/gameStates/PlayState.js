@@ -19,10 +19,6 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     return templates;
   };
 
-  PlayState.prototype.updateScoreControl = function(value){
-    this.p1.selectedScore = value;
-  };
-
   PlayState.prototype.init = function(){
     this.game.$action = {text:'...'};
     if(!this.p1.playRules.hasPlayableCards(this.p1))
@@ -64,38 +60,38 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
   };
 
   PlayState.prototype.action = function() {
+    var index = this.p1.hand.indexOf(this.p1.getSelectedCards()[0]);
+
     //end of round
     if(this.nextState === 'Count'){
       this.mediator.publish('board-clear');
       this.mediator.publish('transition', this.nextState, false);
       this.nextState = 'Play';
-    } else {
-      //score points
-      if(this.isScorePoints){
-        playCard.call(this);
-      } else {
-        //announce go
-        if(!this.p1.playRules.hasPlayableCards(this.p1)){
-          this.p1.announceGo();
-          switchPlayer.call(this);
-          finishTurn.call(this);
-        } else {
-          //announce go autoplay cards ?? is this still applicable?
-          if(this.game.settings.autoSelectCard){
-            this.mediator.publish('messages-add', 'You have playable cards');
-          } else {
-            var index = this.p1.hand.indexOf(this.p1.getSelectedCards()[0]);
-            //approving selection
-            if(index !== -1)
-              playCard.call(this, index);
-            else {
-              this.mediator.publish('messages-add', 'You can\'t go, you have playable cards.');
-              this.render();
-            }
-          }
-        }
-      }
+      return;
+    } else if(this.isScorePoints){
+      playCard.call(this);//manual points enabled, manual Points value selected
+      return;
     }
+    else if(!this.p1.playRules.hasPlayableCards(this.p1)){
+      //announce go
+      this.p1.announceGo();
+      switchPlayer.call(this);
+      finishTurn.call(this);
+      return;
+    }
+    //announce go autoplay cards ?? is this still applicable?
+    else if(this.game.settings.autoSelectCard){
+      this.mediator.publish('messages-add', 'You have playable cards');
+      return;
+    } else if(this.game.settings.countPointsManually && !this.isScorePoints){
+      selectCardForPlay.call(this, index);
+      return;
+    } else if(index !== -1){
+      playCard.call(this, index);//manual Score disabled, autoSelect disabled
+      return;
+    }
+    this.mediator.publish('messages-add', 'You can\'t go, you have playable cards.');
+    this.render();
   };
 
   PlayState.prototype.bindEvents = function(){
@@ -103,7 +99,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     BaseState.prototype.bindEvents.call(this);
 
     $('#scoreControl input[type=range]').on('input change', function(event){
-      this.updateScoreControl(event.srcElement.valueAsNumber);
+      this.p1.selectedScore = event.srcElement.valueAsNumber;
       $('#scoreControl span').html(event.srcElement.valueAsNumber);
     }.bind(this));
   };
@@ -130,18 +126,18 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
     }
   }
 
+  function selectCardForPlay(index){
+    this.p1.selectedScore = 0;
+    this.isScorePoints = true;
+    this.p1.placeCardOnTable(index);
+    this.render();
+  }
+
   function playCard(index){
-    if(this.game.settings.countPointsManually && !this.isScorePoints){
-      this.p1.selectedScore = 0;
-      this.isScorePoints = true;
-      this.p1.placeCardOnTable(index);
-      this.render();
-    } else {
-      this.isScorePoints = false;
-      this.p1.playCard(index);
-      switchPlayer.call(this);
-      finishTurn.call(this);
-    }
+    this.isScorePoints = false;
+    this.p1.playCard(index);
+    switchPlayer.call(this);
+    finishTurn.call(this);
   }
 
   function switchPlayer(){
