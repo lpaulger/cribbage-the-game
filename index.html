@@ -12,7 +12,7 @@
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link rel="stylesheet" href="styles/4a2cc81e.main.css">
+        <link rel="stylesheet" href="styles/73da762e.main.css">
         <script src="scripts/vendor/d7100892.modernizr.js"></script>
     </head>
     <body>
@@ -164,26 +164,14 @@
 
     <script id="scoreControlTemplate" type="x-tmpl-mustache">
       <div id="scoreControl">
-        <input type="range" min="0" max="15" value="{{selectedScore}}" step="1" list="scoreScale">
+        <input type="range" min="0" max="{{maxPoints}}" value="{{selectedScore}}" step="1" list="scoreScale">
         <!--<input type="text" value="{{selectedScore}}">-->
         <span>{{selectedScore}}</span>
 
         <datalist id="scoreScale">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-          <option>6</option>
-          <option>7</option>
-          <option>8</option>
-          <option>9</option>
-          <option>10</option>
-          <option>11</option>
-          <option>12</option>
-          <option>13</option>
-          <option>14</option>
-          <option>15</option>
+          {{#availablePoints}}
+            <option>{{.}}</option>
+          {{/availablePoints}}
         </datalist>
       </div>
     </script>
@@ -274,7 +262,7 @@
 
 
     <script type="text/javascript" src="cordova.js"></script>
-    <script src="scripts/a1410f04.main.js"></script>
+    <script src="scripts/2f170643.main.js"></script>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
