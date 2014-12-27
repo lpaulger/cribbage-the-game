@@ -202,7 +202,6 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             expect(_countState.scoreKeeper.evaluateHand.calls.count()).toBe(3);
           });
         });
-
         describe('and its third count', function () {
           beforeEach(function () {
             _game.$cribOwner = _game.$player1;
@@ -341,6 +340,32 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             _countState.action();
             expect(_countState.game.countStateStep).toEqual(0);
           });
+        });
+      });
+    });
+
+    describe('Manually score points enabled', function(){
+      beforeEach(function(){
+        _game.settings.countPointsManually = true;
+      });
+
+      describe('and its third count', function(){
+        beforeEach(function(){
+          _game.$cribOwner = _game.$player1;
+          _countState = new CountState(_game);
+          spyOn(_countState.mediator, 'publish');
+          _countState.init(); //0 -> 1
+          _countState.action();//1 -> 2
+          _countState.action();//2 -> 1 -> 2
+        });
+
+        it('should not remove the players hand after player selects score', function(){
+          expect(_player1.crib.length).toEqual(4);
+          _countState.action();
+          expect(_player1.crib.length).toEqual(0);
+          expect(_player1.hand.length).toEqual(4);
+          _countState.action();
+          expect(_player1.hand.length).toEqual(4);
         });
       });
     });

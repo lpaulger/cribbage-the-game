@@ -106,7 +106,7 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
   }
 
   function processThirdStep(){
-    this.game.$cribOwner.hand = this.game.$cribOwner.crib;
+    this.game.$cribOwner.hand = (this.game.$cribOwner.crib.length === 4) ? this.game.$cribOwner.crib : this.game.$cribOwner.hand;
     this.game.$cribOwner.crib = [];
     if(isPlayerOneCribOwner.call(this)){
       evaluatePlayerOneScore.call(this);
