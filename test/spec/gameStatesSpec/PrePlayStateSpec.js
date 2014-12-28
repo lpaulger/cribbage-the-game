@@ -28,8 +28,10 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
           beforeEach(function () {
             _player = _cribOwner = {hand:[],isWinner: function(){
               return false;
-            }, selectOneFromDeck: function(){}};
-            _player2 = {};
+            }, selectOneFromDeck: jasmine.createSpy('selectOneFromDeck')};
+            _player2 = {hand:[],isWinner: function(){
+                          return false;
+                        }, selectOneFromDeck: jasmine.createSpy('selectOneFromDeck')};
             _setup();
           });
 
@@ -37,6 +39,11 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
             expect(_game.$messages).toEqual(['default']);
             _prePlayState.init();
             expect(_prePlayState.mediator.publish).toHaveBeenCalledWith('messages-add', 'They will cut the deck');
+          });
+
+          it('should have the opponent select the card', function(){
+            _prePlayState.init();
+            expect(_player2.selectOneFromDeck).toHaveBeenCalled();
           });
         });
 

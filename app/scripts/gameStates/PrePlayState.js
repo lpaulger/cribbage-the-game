@@ -8,9 +8,11 @@ define(['gameStates/BaseState', 'jquery'],function(BaseState, $){
   PrePlayState.prototype.constructor = PrePlayState;
 
   function selectTopCard(index, needRender){
-    var card = this.game.$cribOwner.selectOneFromDeck(this.game.$deck, index);
+    var notCribOwner = (this.game.$cribOwner === this.game.$player1) ? this.game.$player2 : this.game.$player1;
+
+    var card = notCribOwner.selectOneFromDeck(this.game.$deck, index);
     this.game.topCard = card;
-    if(this.game.$cribOwner.isWinner())
+    if(notCribOwner.isWinner())
       this.mediator.publish('transition', 'Summary');
     else{
       this.game.$showTopCard = true;
@@ -23,9 +25,9 @@ define(['gameStates/BaseState', 'jquery'],function(BaseState, $){
   PrePlayState.prototype.templates = function(){
     var templates = BaseState.prototype.templates();
     if(this.game.$showTopCard)
-      templates.deck =  $('#visibleDeckTemplate').html();
+      templates.deck = $('#visibleDeckTemplate').html();
     else
-      templates.deck =  $('#hiddenStraitDeckTemplate').html();
+      templates.deck = $('#hiddenStraitDeckTemplate').html();
     return templates;
   };
 
