@@ -12,10 +12,12 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      {pattern:'app/bower_components/requirejs-text/text.js', included: false},
       {pattern:'app/bower_components/mustache/mustache.js', included: false},
       {pattern:'app/bower_components/zepto/zepto.js', included: false},
       {pattern:'app/scripts/*.js', included: false},
       {pattern:'app/scripts/**/*.js', included: false},
+      {pattern:'app/scripts/**/*.html', included: false},
       {pattern:'test/**/*Spec.js', included: false},
       {pattern:'test/**/*Mock.js', included: false},
       {pattern:'test/test-main.js', included: true},
