@@ -1,5 +1,6 @@
-define(['jquery','gameStates/BaseState', 'text!templates/game.visibleDeck.html', 'text!templates/game.scoreControl.html'],
-  function($, BaseState, visibleDeckHtml, scoreControlHtml){
+define(['jquery','gameStates/BaseState','modules/SettingsModule',
+  'text!templates/game.visibleDeck.html', 'text!templates/game.scoreControl.html'],
+  function($, BaseState, Settings, visibleDeckHtml, scoreControlHtml){
   'use strict';
   function PlayState(game){
     BaseState.call(this, game, 'Play');
@@ -40,7 +41,7 @@ define(['jquery','gameStates/BaseState', 'text!templates/game.visibleDeck.html',
 
   PlayState.prototype.selectCard = function(options) {
     try {
-      if(this.game.settings.autoSelectCard){
+      if(!Settings.get('action-confirmation')){
         playCard.call(this, options.index);
         switchPlayer.call(this);
         finishTurn.call(this);
@@ -81,10 +82,10 @@ define(['jquery','gameStates/BaseState', 'text!templates/game.visibleDeck.html',
       return;
     }
     //announce go autoplay cards ?? is this still applicable?
-    else if(this.game.settings.autoSelectCard){
+    else if(!Settings.get('action-confirmation')){
       this.mediator.publish('messages-add', 'You have playable cards');
       return;
-    } else if(this.game.settings.countPointsManually && !this.isScorePoints){
+    } else if(Settings.get('manual-count') && !this.isScorePoints){
       selectCardForPlay.call(this, index);
       return;
     } else if(index !== -1){

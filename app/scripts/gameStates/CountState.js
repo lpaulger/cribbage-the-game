@@ -1,6 +1,6 @@
-define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper',
+define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper','modules/SettingsModule',
   'text!templates/game.visibleHand.html', 'text!templates/game.visibleDeck.html', 'text!templates/game.scoreControl.html'],
-  function($, BaseState, ScoreKeeper, visibleHandHtml, visibleDeckHtml, scoreControlHtml){
+  function($, BaseState, ScoreKeeper,Settings, visibleHandHtml, visibleDeckHtml, scoreControlHtml){
   'use strict';
   function CountState(game){
     BaseState.call(this, game, 'Count');
@@ -158,7 +158,7 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper',
   function showPlayerOneHand(){
     this.game.$player2HandVisible = false;
     this.game.$player1HandVisible = true;
-    if(this.game.settings.countPointsManually){
+    if(Settings.get('manual-count')){
       this.isScorePoints = this.isScorePoints ? false : true;
       if(this.isScorePoints)
         this.p1.selectedScore = 0;
