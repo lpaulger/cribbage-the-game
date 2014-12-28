@@ -227,6 +227,49 @@ define(['modules/PlayScoreKeeper', 'modules/CardModule'], function(ScoreKeeper, 
           points = scoreKeeper.evaluatePlay(player, playedCards, totalPlayedCards);
           expect(player.points).toEqual(1);
         });
+
+        afterEach(function(){
+          totalPlayedCards = [];
+        });
+      });
+    });
+
+    describe('Manual Count Enabled', function(){
+      var playCards;
+      describe('and the player over scores the actual points', function(){
+        beforeEach(function(){
+          player.points = 10;
+          player.selectedScore = 3;
+          playCards = [new Card(10, 'hearts'), new Card(5, 'clubs')];
+        });
+
+        it('should show three messages', function(){
+          scoreKeeper.evaluatePlay(player, playCards, totalPlayedCards);
+          expect(scoreKeeper.mediator.publish.calls.count()).toEqual(3);
+        });
+
+        it('should reward him the difference', function(){
+          scoreKeeper.evaluatePlay(player, playCards, totalPlayedCards);
+          expect(player.points).toBe(11);
+        });
+      });
+
+      describe('and the player under scores the actual points', function(){
+        beforeEach(function(){
+          player.points = 10;
+          player.selectedScore = 1;
+          playCards = [new Card(10, 'hearts'), new Card(5, 'clubs')];
+        });
+
+        it('should show two messages', function(){
+          scoreKeeper.evaluatePlay(player, playCards, totalPlayedCards);
+          expect(scoreKeeper.mediator.publish.calls.count()).toEqual(2);
+        });
+
+        it('should reward him the points he found', function(){
+          scoreKeeper.evaluatePlay(player, playCards, totalPlayedCards);
+          expect(player.points).toBe(11);
+        });
       });
     });
   });

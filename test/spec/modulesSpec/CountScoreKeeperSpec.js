@@ -219,5 +219,60 @@ define(['modules/CountScoreKeeper', 'modules/CardModule'], function(ScoreKeeper,
         });
       });
     });
+
+    describe('Manual Count Enabled', function(){
+      var player, starter;
+      describe('and the player over scores the actual points', function(){
+        beforeEach(function(){
+          player = {
+            points: 0,
+            hand: [new Card(2, 'diamonds'), new Card(3, 'hearts'), new Card(4, 'clubs'), new Card(7, 'diamonds')],
+            selectedScore: 11
+          };
+
+          starter = new Card(4, 'diamonds');
+        });
+
+        it('should show three messages', function(){
+          scoreKeeper.evaluateHand(player, starter);
+          expect(scoreKeeper.mediator.publish.calls.count()).toEqual(3);
+        });
+
+        it('should reward him the difference', function(){
+          //4,4 pair (2)
+          //7, 4, 4 15 (2)
+          //2,3,4 run of 3 (3)
+          //2,3,4 run of 3 (3)
+          scoreKeeper.evaluateHand(player, starter);
+          expect(player.points).toEqual(9);
+        });
+      });
+
+      describe('and the player under scores the actual points', function(){
+        beforeEach(function(){
+          player = {
+            points: 0,
+            hand: [new Card(2, 'diamonds'), new Card(3, 'hearts'), new Card(4, 'clubs'), new Card(7, 'diamonds')],
+            selectedScore: 8
+          };
+
+          starter = new Card(4, 'diamonds');
+        });
+
+        it('should show two messages', function(){
+          scoreKeeper.evaluateHand(player, starter);
+          expect(scoreKeeper.mediator.publish.calls.count()).toEqual(2);
+        });
+
+        it('should reward him the points he found', function(){
+          //4,4 pair (2)
+          //7, 4, 4 15 (2)
+          //2,3,4 run of 3 (3)
+          //2,3,4 run of 3 (3)
+          scoreKeeper.evaluateHand(player, starter);
+          expect(player.points).toEqual(8);
+        });
+      });
+    });
   });
 });
