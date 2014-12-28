@@ -1,4 +1,4 @@
-define(['jquery','gameStates/BaseState'],function($, BaseState){
+define(['gameStates/BaseState', 'text!templates/game.visibleHand.html'],function(BaseState, visibleHandHtml){
   'use strict';
   function DrawState(game){
     BaseState.call(this, game, 'Draw');
@@ -22,7 +22,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
 
   DrawState.prototype.templates = function(){
     var templates = BaseState.prototype.templates();
-    templates.crib = $('#visibleHandTemplate').html();
+    templates.crib = visibleHandHtml;
     return templates;
   };
 

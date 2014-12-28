@@ -1,4 +1,4 @@
-define(['jquery','gameStates/BaseState'],function($, BaseState){
+define(['jquery','gameStates/BaseState', 'text!templates/info.html'],function($, BaseState, infoHtml){
   'use strict';
 
   function HelpState(game){
@@ -10,7 +10,7 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
 
   HelpState.prototype.templates = function(){
     var templates = BaseState.prototype.templates();
-    templates.page =  $('#infoTemplate').html();
+    templates.page =  infoHtml;
     return templates;
   };
 

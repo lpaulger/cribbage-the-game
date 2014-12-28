@@ -1,0 +1,10 @@
+<div id="scoreControl">
+  <input type="range" min="0" max="{{maxPoints}}" value="{{selectedScore}}" step="1" list="scoreScale">
+  <span>{{selectedScore}}</span>
+
+  <datalist id="scoreScale">
+    {{#availablePoints}}
+      <option>{{.}}</option>
+    {{/availablePoints}}
+  </datalist>
+</div>

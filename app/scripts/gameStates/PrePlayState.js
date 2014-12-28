@@ -1,4 +1,5 @@
-define(['gameStates/BaseState', 'jquery'],function(BaseState, $){
+define(['gameStates/BaseState', 'text!templates/game.hiddenStraitDeck.html', 'text!templates/game.visibleDeck.html'],
+  function(BaseState, hiddenStraitDeckHtml, visibleDeckHtml){
   'use strict';
   function PrePlayState(game){
     BaseState.call(this, game, 'PrePlay');
@@ -25,9 +26,9 @@ define(['gameStates/BaseState', 'jquery'],function(BaseState, $){
   PrePlayState.prototype.templates = function(){
     var templates = BaseState.prototype.templates();
     if(this.game.$showTopCard)
-      templates.deck = $('#visibleDeckTemplate').html();
+      templates.deck = visibleDeckHtml;
     else
-      templates.deck = $('#hiddenStraitDeckTemplate').html();
+      templates.deck = hiddenStraitDeckHtml;
     return templates;
   };
 

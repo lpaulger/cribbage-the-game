@@ -1,4 +1,6 @@
-define(['jquery','gameStates/BaseState', 'modules/DeckModule'],function($, BaseState, Deck){
+define(['gameStates/BaseState', 'modules/DeckModule',
+  'text!templates/game.visibleHand.html'],
+  function(BaseState, Deck, visibleHandHtml){
   'use strict';
   function DealState(game){
     BaseState.call(this, game, 'Deal');
@@ -10,7 +12,7 @@ define(['jquery','gameStates/BaseState', 'modules/DeckModule'],function($, BaseS
 
   DealState.prototype.templates = function(){
     var templates = BaseState.prototype.templates();
-    templates.p2Hand = $('#visibleHandTemplate').html();
+    templates.p2Hand = visibleHandHtml;
     return templates;
   };
 

@@ -1,4 +1,5 @@
-define(['jquery','gameStates/BaseState'],function($, BaseState){
+define(['jquery','gameStates/BaseState', 'text!templates/game.visibleDeck.html', 'text!templates/game.scoreControl.html'],
+  function($, BaseState, visibleDeckHtml, scoreControlHtml){
   'use strict';
   function PlayState(game){
     BaseState.call(this, game, 'Play');
@@ -13,9 +14,9 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
 
   PlayState.prototype.templates = function(){
     var templates = BaseState.prototype.templates();
-    templates.deck =  $('#visibleDeckTemplate').html();
+    templates.deck =  visibleDeckHtml;
     if(this.isScorePoints)
-      templates.scoreControl = $('#scoreControlTemplate').html();
+      templates.scoreControl = scoreControlHtml;
     return templates;
   };
 

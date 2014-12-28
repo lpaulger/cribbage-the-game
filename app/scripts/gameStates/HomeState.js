@@ -1,4 +1,4 @@
-define(['jquery','gameStates/BaseState', 'modules/DeckModule'],function($, BaseState, Deck){
+define(['jquery','gameStates/BaseState', 'modules/DeckModule', 'text!templates/home.html'],function($, BaseState, Deck, homeHtml){
   'use strict';
 
   function HomeState(game){
@@ -11,7 +11,7 @@ define(['jquery','gameStates/BaseState', 'modules/DeckModule'],function($, BaseS
 
   HomeState.prototype.templates = function(){
     var templates = BaseState.prototype.templates();
-    templates.page =  $('#homeTemplate').html();
+    templates.page =  homeHtml;
     templates.continue = !!this.game ? '<button id="continueGameButton">Continue Game</button>' : '';
     return templates;
   };

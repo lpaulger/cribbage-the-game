@@ -1,4 +1,6 @@
-define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function($, BaseState, ScoreKeeper){
+define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper',
+  'text!templates/game.visibleHand.html', 'text!templates/game.visibleDeck.html', 'text!templates/game.scoreControl.html'],
+  function($, BaseState, ScoreKeeper, visibleHandHtml, visibleDeckHtml, scoreControlHtml){
   'use strict';
   function CountState(game){
     BaseState.call(this, game, 'Count');
@@ -19,10 +21,10 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
 
   CountState.prototype.templates = function(){
     var templates = BaseState.prototype.templates();
-    templates.deck = $('#visibleDeckTemplate').html();
-    templates.p2Hand = $('#visibleHandTemplate').html();
+    templates.deck = visibleDeckHtml;
+    templates.p2Hand = visibleHandHtml;
     if(this.isScorePoints)
-      templates.scoreControl = $('#scoreControlTemplate').html();
+      templates.scoreControl = scoreControlHtml;
     return templates;
   };
 

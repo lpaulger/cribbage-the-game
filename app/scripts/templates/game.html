@@ -1,0 +1,42 @@
+<div id="gameContainer">
+  <a class="link home-link"><i class="fa fa-home"></i></a>
+
+  <div id="cribbageBoard">
+    {{#someFunction}}someValue{{/someFunction}}
+    {{#$player1}}
+    {{> p1Score}}
+    {{/$player1}}
+    {{#$player2}}
+    {{> p2Score}}
+    {{/$player2}}
+  </div>
+  <a class="link help-link"><i class="fa fa-question"></i></a>
+
+  <div id="player2" class="player">
+    {{#$player2}}
+    <div class="playingCards">
+      <ul id="topHand" class="hand">{{#hand}}{{> p2Hand}}{{/hand}}</ul>
+      <ul class="crib deck">{{#crib}}{{> crib}}{{/crib}}</ul>
+    </div>
+    {{/$player2}}
+  </div>
+  <div id="table">
+    <div id="deck" class="playingCards">{{> deck}}</div>
+    <div id="count">{{#$board}}<label style="display: {{display}}">Count: <span>{{currentBoardValue}}</span></label>{{/$board}}
+    </div>
+    <div id="play" class="playingCards">
+      <ul class="hand play">{{#$board}}{{> play}}{{/$board}}</ul>
+    </div>
+    <div id="controls">{{#$action}}{{> controls}}{{/$action}}</div>
+  </div>
+  <div id="player1" class="player">
+    {{#$player1}}
+    <div class="playingCards">
+      <ul id="bottomHand" class="hand">{{#hand}}{{> p1Hand}}{{/hand}}</ul>
+      <ul class="crib deck">{{#crib}}{{> crib}}{{/crib}}</ul>
+      {{> scoreControl}}
+    </div>
+    {{/$player1}}
+  </div>
+  <ul id="messageContainer">{{> messages}}</ul>
+</div>
