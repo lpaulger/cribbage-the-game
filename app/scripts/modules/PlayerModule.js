@@ -73,28 +73,16 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
   Player.prototype.playCard = function(index){
     var _tempHand = this.hand.slice();
     var card = _tempHand.splice(index, 1)[0];//selectCardFromHand
-
     if(this.selectedScore !== undefined){
-      this.scoreKeeper.evaluatePlay(this, this.board.playedCards, this.board.totalPlayedCardsForRound);
-      if(this.board.currentBoardValue === 31){
-        this.board.resetBoard();
-      }
-
+      evaluatePlayForSelectedCard.call(this);
       delete this.selectedScore;
+    } else if(this.playRules.isCardPlayable(this, card)){
+      this.placeCardOnTable(index);
+      evaluatePlayForSelectedCard.call(this);
+    } else if(!this.playRules.hasPlayableCards(this)){
+      throw new Error('No Playable Cards');
     } else {
-      if(this.playRules.isCardPlayable(this, card)){
-        this.board.placeCard(card, this);
-
-        this.scoreKeeper.evaluatePlay(this, this.board.playedCards, this.board.totalPlayedCardsForRound);
-        if(this.board.currentBoardValue === 31){
-          this.board.resetBoard();
-        }
-        this.hand.splice(index, 1);
-      } else if(!this.playRules.hasPlayableCards(this)){
-        throw new Error('No Playable Cards');
-      } else {
-        throw new Error('Invalid Playable Card');
-      }
+      throw new Error('Invalid Playable Card');
     }
   };
 
@@ -131,6 +119,13 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
 
     return this.getSelectedCards();
   };
+
+  function evaluatePlayForSelectedCard(){
+    this.scoreKeeper.evaluatePlay(this, this.board.playedCards, this.board.totalPlayedCardsForRound);
+    if(this.board.currentBoardValue === 31){
+      this.board.resetBoard();
+    }
+  }
 
   var HandHelper = {
     selectCard: function(hand, index){
