@@ -8,7 +8,7 @@ $text-color: white !default;
 $player-color: red !default;
 $opponent-color: orange !default;
 
-$navigation-home-link-active: $table-background-color !default;
+$navigation-home-link-active: darken($table-background-color, 20%) !default;
 /*
 Variables
 */
@@ -22,6 +22,12 @@ General Layout
 html, body, #content , #gameContainer{
   height: 100%;
   margin: 0;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 html {
@@ -117,7 +123,7 @@ a.link{
     color: $navigation-home-link-active;
   }
 
-  &.help-link {
+  &.help-link, &.settings-link {
     top: 0;
     right: 0;
     width: .929em;
@@ -184,36 +190,11 @@ a.link{
   }
 }
 
+@import "layout.settings";
+
 @import "layout.table";
 
-@mixin player{
-  height: 6.6em;
-  width: 100%;
-  position: absolute;
-}
-
-#player1{
-  @include player;
-  bottom: 0;
-}
-
-#player2{
-  @include player;
-  bottom: 14.6em;
-}
-
-.player {
-  .playingCards {
-    .crib{
-      right: 5em;
-      position: absolute;
-      top: 0em;
-    }
-  }
-  .playingCards:first-child{
-    left:0;
-  }
-}
+@import "layout.player";
 
 .player1-board-peg{
   color: $player-color;

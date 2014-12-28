@@ -1,8 +1,9 @@
 /*jshint -W098 */
 define(['gameStates/DrawState', 'gameStates/DealState', 'gameStates/CribState',
         'gameStates/PrePlayState', 'gameStates/PlayState', 'gameStates/CountState',
-        'gameStates/SummaryState', 'gameStates/HomeState', 'gameStates/InfoState'],
-  function (DrawState, DealState, CribState, PrePlayState, PlayState, CountState, SummaryState, HomeState, InfoState) {
+        'gameStates/SummaryState', 'gameStates/HomeState', 'gameStates/InfoState',
+        'gameStates/SettingsState'],
+  function (DrawState, DealState, CribState, PrePlayState, PlayState, CountState, SummaryState, HomeState, InfoState, SettingsState) {
     'use strict';
 
     function StateManager(){

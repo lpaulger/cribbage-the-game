@@ -1,0 +1,28 @@
+@mixin player{
+  height: 6.6em;
+  width: 100%;
+  position: absolute;
+}
+
+#player1{
+  @include player;
+  bottom: 0;
+}
+
+#player2{
+  @include player;
+  bottom: 14.6em;
+}
+
+.player {
+  .playingCards {
+    .crib{
+      right: 5em;
+      position: absolute;
+      top: 0em;
+    }
+  }
+  .playingCards:first-child{
+    left:0;
+  }
+}

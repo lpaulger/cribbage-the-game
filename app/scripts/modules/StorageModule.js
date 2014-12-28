@@ -48,6 +48,13 @@ define([], function(){
   }
 
   return {
+    loadSettings: function(){
+      return JSON.parse(get('settings'));
+    },
+    
+    saveSettings:function(settings){
+      set('settings',JSON.stringify(settings));
+    },
     loadGame:function(){
       return {
         game: JSON.parse(get('game')),

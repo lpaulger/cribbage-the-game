@@ -14,5 +14,12 @@ define(['jquery','gameStates/BaseState', 'text!templates/info.html'],function($,
     return templates;
   };
 
+  HelpState.prototype.bindEvents = function(){
+    BaseState.prototype.bindEvents.call(this);
+    $('a.back-link').on('click', function(){
+      this.mediator.publish('transition', 'Back');
+    }.bind(this));
+  };
+
   return HelpState;
 });
