@@ -162,7 +162,7 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
 
     gainedPoints += this.getNobs(player.hand, starter);
 
-    if(player.selectedScore){
+    if(!isNaN(player.selectedScore)){
       pointDifference = player.selectedScore - gainedPoints;//positive, negative 0
       if(pointDifference > 0){
         this.mediator.publish('messages-add', player.name + ' said ' + player.selectedScore + ' points');
