@@ -1,8 +1,18 @@
-define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Card){
+define(['gameStates/CountState', 'modules/CardModule','modules/SettingsModule'], function(CountState, Card, Settings){
   'use strict';
   var _countState, _game, _player1, _player2;
 
   function createBasicGame() {
+    Settings.save([
+      {
+        id: 'manual-count',
+        value: false
+      },
+      {
+        id: 'action-confirmation',
+        value: false
+      }
+    ]);
     _player1 = {
       name: 'bob',
       possessive: 'his',
@@ -25,6 +35,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
       ],
       restoreHand: function(){}
     };
+
     _player2 = {
       name: 'sally',
       possessive: 'her',
@@ -53,9 +64,6 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
       $cribOwner: _player2,
       $showTopCard: true,
       $messages: [],
-      settings: {
-        countPointsManually: false
-      },
       topCard: new Card(10, 'diams')
     };
   }
@@ -346,7 +354,13 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
 
     describe('Manually score points enabled', function(){
       beforeEach(function(){
-        _game.settings.countPointsManually = true;
+        var settings = [
+          {
+            id:'manual-count',
+            value: true
+          }
+        ];
+        Settings.save(settings);
       });
 
       describe('and its third count', function(){

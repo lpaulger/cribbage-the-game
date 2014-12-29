@@ -29,6 +29,7 @@ define(['modules/StorageModule'], function(Storage){
       return _settings;
     },
     save: function(settings){
+      _settings = settings;
       Storage.saveSettings(settings);
     }
   };

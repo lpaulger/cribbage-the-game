@@ -43,8 +43,6 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule',
     try {
       if(!Settings.get('action-confirmation')){
         playCard.call(this, options.index);
-        switchPlayer.call(this);
-        finishTurn.call(this);
       } else {
         this.p1.selectCard(options.index);
         this.mediator.publish('messages-add', 'Tap OK to continue');
@@ -81,11 +79,7 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule',
       finishTurn.call(this);
       return;
     }
-    //announce go autoplay cards ?? is this still applicable?
-    else if(!Settings.get('action-confirmation')){
-      this.mediator.publish('messages-add', 'You have playable cards');
-      return;
-    } else if(Settings.get('manual-count') && !this.isScorePoints){
+    else if(Settings.get('manual-count') && !this.isScorePoints){
       selectCardForPlay.call(this, index);
       return;
     } else if(index !== -1){

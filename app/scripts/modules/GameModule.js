@@ -52,11 +52,6 @@ define(
 
       //countState && dealState && playState
       this.$action = options.$action || undefined;
-
-      this.settings = {
-        countPointsManually: true,
-        autoSelectCard: false
-      };
     }
 
     return Game;

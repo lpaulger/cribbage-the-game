@@ -1,9 +1,19 @@
-define(['gameStates/PlayState', 'modules/PlayerModule'], function(PlayState, Player){
+define(['gameStates/PlayState', 'modules/PlayerModule','modules/SettingsModule'], function(PlayState, Player, Settings){
   'use strict';
 
   var _playState, _game, _player, _bot;
 
   function setupBasicGame(){
+    Settings.save([
+      {
+        id: 'manual-count',
+        value: false
+      },
+      {
+        id: 'action-confirmation',
+        value: false
+      }
+    ]);
     var board = {currentBoardValue:0};
     _player = new Player({name:'test', possessive:'his', hand:[{value:3}], board:board});
     _bot = new Player({name:'test', possessive:'his', hand:[{value:2}], board:board});
@@ -11,7 +21,6 @@ define(['gameStates/PlayState', 'modules/PlayerModule'], function(PlayState, Pla
     _game = {
       transitionTo: function(){
       },
-      settings:     {autoSelectCard:false},
       currentPlayer:_player,
       $player1:     _player,
       $player2:     _bot
@@ -95,10 +104,6 @@ define(['gameStates/PlayState', 'modules/PlayerModule'], function(PlayState, Pla
     });
 
     describe('Auto select card enabled', function(){
-      beforeEach(function(){
-        _game.settings.autoSelectCard = true;
-      });
-
       describe('When player selects a valid card', function(){
         function setup(){
           spyOn(_player, 'playCard');
@@ -163,8 +168,17 @@ define(['gameStates/PlayState', 'modules/PlayerModule'], function(PlayState, Pla
       describe('and Auto Select Disabled', function(){
         describe('when user confirms a card selection', function(){
           beforeEach(function(){
-            _game.settings.countPointsManually = true;
-            _game.settings.autoSelectCard = false;
+            var settings = [
+              {
+                id:'action-confirmation',
+                value: true
+              },
+              {
+                id: 'manual-count',
+                value: true
+              }
+            ];
+            Settings.save(settings);
 
             _playState = new PlayState(_game);
             _playState.nextState = 'Play';
