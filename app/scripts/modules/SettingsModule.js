@@ -4,13 +4,13 @@ define(['modules/StorageModule'], function(Storage){
   return {
     _defaultSettings: [{
       id:'action-confirmation',
-      name:'Action Confirmation',
-      description: 'additional step to confirm card selection',
+      name:'Confirm Selection',
+      description: 'an additional step to confirm the selected card',
       value: false
     },
     {
       id:'manual-count',
-      name:'Manual Point Counting',
+      name:'Count Manually',
       description: 'Player scores their own points',
       value: false
     }],
