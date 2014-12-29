@@ -54,8 +54,6 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule',
         selectCardForPlay.call(this, options.index);
       } else if(this.game.$action.text === '...'){
         playCard.call(this, options.index);
-      } else {
-        console.log('you shouldn\'t be here');
       }
     } catch(e) {
       if(e.message === 'No Playable Cards')
