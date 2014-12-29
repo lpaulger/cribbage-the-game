@@ -23,7 +23,10 @@ define(['gameStates/PlayState', 'modules/PlayerModule','modules/SettingsModule']
       },
       currentPlayer:_player,
       $player1:     _player,
-      $player2:     _bot
+      $player2:     _bot,
+      $action: {
+        text: '...'
+      }
     };
   }
 
@@ -103,7 +106,11 @@ define(['gameStates/PlayState', 'modules/PlayerModule','modules/SettingsModule']
       });
     });
 
-    describe('Auto select card enabled', function(){
+    describe('Action Confirmation disabled', function(){
+      beforeEach(function(){
+
+      });
+
       describe('When player selects a valid card', function(){
         function setup(){
           spyOn(_player, 'playCard');
@@ -165,7 +172,7 @@ define(['gameStates/PlayState', 'modules/PlayerModule','modules/SettingsModule']
     });
 
     describe('Manual Count Enabled', function(){
-      describe('and Auto Select Disabled', function(){
+      describe('and Action Confirmation Enabled', function(){
         describe('when user confirms a card selection', function(){
           beforeEach(function(){
             var settings = [
@@ -203,6 +210,35 @@ define(['gameStates/PlayState', 'modules/PlayerModule','modules/SettingsModule']
             _playState.action();
             expect(_player.playCard).not.toHaveBeenCalled();
           });
+        });
+      });
+
+      describe('Action Confirmation Disabled', function(){
+        beforeEach(function(){
+          var settings = [
+            {
+              id:   'action-confirmation',
+              value:false
+            },
+            {
+              id:   'manual-count',
+              value:true
+            }
+          ];
+          Settings.save(settings);
+          _playState = new PlayState(_game);
+          _playState.nextState = 'Play';
+
+
+          spyOn(_player, 'placeCardOnTable');
+          spyOn(_player, 'playCard');
+          spyOn(_player, 'selectCard');
+        });
+
+        it('the user shouldn\'t be able to select a card twice', function(){
+          _playState.selectCard({index:0});
+          _playState.selectCard({index:0});
+          expect(_player.selectCard.calls.count()).toEqual(1);
         });
       });
     });

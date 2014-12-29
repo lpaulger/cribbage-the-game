@@ -41,13 +41,21 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule',
 
   PlayState.prototype.selectCard = function(options) {
     try {
-      if(!Settings.get('action-confirmation')){
-        playCard.call(this, options.index);
-      } else {
+      if(Settings.get('action-confirmation')&& this.game.$action.text === '...'){
         this.p1.selectCard(options.index);
         this.mediator.publish('messages-add', 'Tap OK to continue');
         this.game.$action = {text:'Ok'};
         this.render();
+      }
+      else if(Settings.get('manual-count') && this.game.$action.text === '...'){
+        this.p1.selectCard(options.index);
+        this.mediator.publish('messages-add', 'Tap OK to continue');
+        this.game.$action = {text:'Ok'};
+        selectCardForPlay.call(this, options.index);
+      } else if(this.game.$action.text === '...'){
+        playCard.call(this, options.index);
+      } else {
+        console.log('you shouldn\'t be here');
       }
     } catch(e) {
       if(e.message === 'No Playable Cards')
