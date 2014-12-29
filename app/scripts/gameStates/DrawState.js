@@ -16,7 +16,7 @@ define(['gameStates/BaseState', 'text!templates/game.visibleHand.html'],function
   };
 
   DrawState.prototype.init = function(){
-    this.mediator.publish('messages-add', 'Click the deck to start');
+    this.mediator.publish('messages-add', 'Tap the deck to start');
     this.render();
   };
 
