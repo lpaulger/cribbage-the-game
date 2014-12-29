@@ -139,7 +139,7 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
     if(this.isLastCard(totalPlayedCards))
       points += 1;
 
-    if(player.selectedScore){
+    if(!isNaN(player.selectedScore)){
       pointDifference = player.selectedScore - points;//positive, negative 0
       if(pointDifference > 0){
         this.mediator.publish('messages-add', player.name + ' said ' + player.selectedScore + ' points');
