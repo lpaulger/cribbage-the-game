@@ -95,7 +95,7 @@ define(['jquery', 'mustache', 'modules/PubSub',
   BaseState.prototype.bindEvents = function(){
     $('#deck').on('click', function(e){
       this.unbindEvents();
-      var cardIndex = [].slice.call(e.target.parentNode.children).indexOf(e.target);
+      var cardIndex = $('#deck ul').children().indexOf(e.target.parentNode);
       $(e.target).addClass('selected');
       this.deck(cardIndex);
     }.bind(this));
