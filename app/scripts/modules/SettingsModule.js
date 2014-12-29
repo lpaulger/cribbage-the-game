@@ -1,20 +1,19 @@
 define(['modules/StorageModule'], function(Storage){
   'use strict';
   var _settings;
-  var defaultSettings = [{
-    id:'action-confirmation',
-    name:'Action Confirmation',
-    description: 'additional step to confirm card selection',
-    value: false
-  },
-  {
-    id:'manual-count',
-    name:'Manual Point Counting',
-    description: 'Player scores their own points',
-    value: false
-  }];
-
   return {
+    _defaultSettings: [{
+      id:'action-confirmation',
+      name:'Action Confirmation',
+      description: 'additional step to confirm card selection',
+      value: false
+    },
+    {
+      id:'manual-count',
+      name:'Manual Point Counting',
+      description: 'Player scores their own points',
+      value: false
+    }],
     get: function(settingId){
       if(!_settings)
         this.load();
@@ -25,7 +24,7 @@ define(['modules/StorageModule'], function(Storage){
     load: function(){
       _settings = Storage.loadSettings();
       if(!_settings)
-        _settings = defaultSettings;
+        _settings = this._defaultSettings;
       return _settings;
     },
     save: function(settings){
