@@ -19,7 +19,8 @@ define(['gameStates/BaseState', 'text!templates/game.hiddenStraitDeck.html', 'te
       this.game.$showTopCard = true;
       if(needRender)
         this.render();
-      this.mediator.publish('transition', 'Play', true);
+      this.mediator.publish('messages-add', notCribOwner.name + ' begin');
+      this.mediator.publish('transition', 'Play', false);
     }
   }
 

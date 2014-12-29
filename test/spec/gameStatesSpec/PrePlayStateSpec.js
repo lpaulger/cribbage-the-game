@@ -77,7 +77,7 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
           });
 
           it('should transitionTo "Play" state', function () {
-            expect(_prePlayState.mediator.publish).toHaveBeenCalledWith('transition', 'Play', true);
+            expect(_prePlayState.mediator.publish).toHaveBeenCalledWith('transition', 'Play', false);
           });
         });
       });

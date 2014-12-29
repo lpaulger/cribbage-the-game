@@ -30,8 +30,6 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule',
       setInitialCurrentPlayer.call(this);
       if(this.game.currentPlayer === this.p2)
         processAiTurn.call(this);
-      else
-        this.mediator.publish('messages-add', this.p1.possessive + ' turn');
     }
 
     setAction.call(this);
@@ -120,9 +118,8 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule',
     if(this.p1.isWinner())
       this.mediator.publish('transition', 'Summary', true);
     else if(!isEndOfRound.call(this)){
-      this.renderOnly();
       this.nextState = 'Play';
-      this.mediator.publish('transition', 'Play', true);
+      this.mediator.publish('transition', 'Play', false);
     } else {
       this.mediator.publish('transition', 'Play', false);
     }
@@ -144,10 +141,8 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule',
 
   function switchPlayer(){
     this.game.currentPlayer = this.p2;
-    if(!isEndOfRound.call(this)){
-      this.mediator.publish('messages-add', this.p2.possessive + ' turn');
+    if(!isEndOfRound.call(this))
       this.game.$action = {text:'...'};
-    }
   }
 
 
@@ -166,10 +161,9 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule',
     try{
       this.p2.playCard();
       this.game.currentPlayer = this.p1;
-      if(!isEndOfRound.call(this)){
-        this.mediator.publish('messages-add', this.p1.possessive + ' turn');
+      if(!isEndOfRound.call(this))
         this.game.$action = {text:'...'};
-      }
+
       if(this.p2.isWinner())
         this.mediator.publish('transition', 'Summary', true);
     } catch(e){

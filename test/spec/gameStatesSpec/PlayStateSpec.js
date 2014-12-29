@@ -60,10 +60,6 @@ define(['gameStates/PlayState', 'modules/PlayerModule','modules/SettingsModule']
         it('should announce go for the player', function(){
           expect(_playState.p1.announceGo).toHaveBeenCalled();
         });
-
-        it('should prevent the user from taking action', function(){
-          expect(_playState.unbindEvents).toHaveBeenCalled();
-        });
       });
 
       describe('and they have playable cards', function(){
@@ -143,12 +139,8 @@ define(['gameStates/PlayState', 'modules/PlayerModule','modules/SettingsModule']
             setup();
           });
 
-          it('should transition back to Play and wait', function(){
-            expect(_playState.mediator.publish).toHaveBeenCalledWith('transition', 'Play', true);
-          });
-
-          it('should prevent the user from making another action until the AI has gone', function(){
-            expect(_playState.unbindEvents).toHaveBeenCalled();
+          it('should transition back to Play and not wait', function(){
+            expect(_playState.mediator.publish).toHaveBeenCalledWith('transition', 'Play', false);
           });
         });
       });
