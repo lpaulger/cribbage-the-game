@@ -8,6 +8,7 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
     this.crib = options.crib || [];
     this.currentPoints = options.currentPoints || 0;
     this.points = options.points || 0;
+    this.selectedScore = options.selectedScore;
     this.board = options.board;//required
     this.playRules = new PlayRules({board:options.board});
     this.scoreKeeper = new ScoreKeeper();

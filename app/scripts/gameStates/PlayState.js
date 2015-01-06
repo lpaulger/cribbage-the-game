@@ -5,7 +5,6 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule',
   function PlayState(game){
     BaseState.call(this, game, 'Play');
     this.nextState = 'Play';
-    this.isScorePoints = false;
     this.p1.maxPoints = 15;
     this.p1.availablePoints = setAvailablePoints(this.p1.maxPoints);
   }
@@ -16,13 +15,12 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule',
   PlayState.prototype.templates = function(){
     var templates = BaseState.prototype.templates();
     templates.deck =  visibleDeckHtml;
-    if(this.isScorePoints)
+    if(this.game.isScorePoints)
       templates.scoreControl = scoreControlHtml;
     return templates;
   };
 
   PlayState.prototype.init = function(){
-    this.game.$action = {text:'...'};
     if(!this.p1.playRules.hasPlayableCards(this.p1))
       this.game.$action = {text:'Go'};
 
@@ -52,6 +50,8 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule',
         selectCardForPlay.call(this, options.index);
       } else if(this.game.$action.text === '...'){
         playCard.call(this, options.index);
+      } else {
+        this.render();
       }
     } catch(e) {
       if(e.message === 'No Playable Cards')
@@ -72,7 +72,7 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule',
       this.mediator.publish('transition', this.nextState, false);
       this.nextState = 'Play';
       return;
-    } else if(this.isScorePoints){
+    } else if(this.game.isScorePoints){
       playCard.call(this);//manual points enabled, manual Points value selected
       return;
     }
@@ -83,7 +83,7 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule',
       finishTurn.call(this);
       return;
     }
-    else if(Settings.get('manual-count') && !this.isScorePoints){
+    else if(Settings.get('manual-count') && !this.game.isScorePoints){
       selectCardForPlay.call(this, index);
       return;
     } else if(index !== -1){
@@ -127,13 +127,13 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule',
 
   function selectCardForPlay(index){
     this.p1.selectedScore = 0;
-    this.isScorePoints = true;
+    this.game.isScorePoints = true;
     this.p1.placeCardOnTable(index);
     this.render();
   }
 
   function playCard(index){
-    this.isScorePoints = false;
+    this.game.isScorePoints = false;
     this.p1.playCard(index);
     switchPlayer.call(this);
     finishTurn.call(this);
@@ -148,7 +148,7 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule',
 
   function setInitialCurrentPlayer(){
     if(!this.game.currentPlayer){
-      this.isScorePoints = false;
+      this.game.isScorePoints = false;
       if(this.game.$cribOwner === this.p1){
         this.game.currentPlayer = this.p2;
       } else {
