@@ -26,7 +26,8 @@ define(['gameStates/PlayState', 'modules/PlayerModule','modules/SettingsModule']
       $player2:     _bot,
       $action: {
         text: '...'
-      }
+      },
+      isScorePoints: false
     };
   }
 
@@ -193,9 +194,9 @@ define(['gameStates/PlayState', 'modules/PlayerModule','modules/SettingsModule']
           });
 
           it('should display the score control', function(){
-            expect(_playState.isScorePoints).toBe(false);
+            expect(_playState.game.isScorePoints).toBe(false);
             _playState.action();
-            expect(_playState.isScorePoints).toBe(true);
+            expect(_playState.game.isScorePoints).toBe(true);
           });
 
           it('should not play selected card', function(){
