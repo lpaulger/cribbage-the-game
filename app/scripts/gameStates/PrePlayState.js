@@ -8,7 +8,7 @@ define(['gameStates/BaseState', 'text!templates/game.hiddenStraitDeck.html', 'te
   PrePlayState.prototype = Object.create(BaseState.prototype);
   PrePlayState.prototype.constructor = PrePlayState;
 
-  function selectTopCard(index, needRender){
+  function selectTopCard(index){
     var notCribOwner = (this.game.$cribOwner === this.game.$player1) ? this.game.$player2 : this.game.$player1;
 
     var card = notCribOwner.selectOneFromDeck(this.game.$deck, index);
@@ -17,8 +17,6 @@ define(['gameStates/BaseState', 'text!templates/game.hiddenStraitDeck.html', 'te
       this.mediator.publish('transition', 'Summary');
     else{
       this.game.$showTopCard = true;
-      if(needRender)
-        this.render();
       this.mediator.publish('messages-add', notCribOwner.name + ' begin');
       this.mediator.publish('transition', 'Play', false);
     }
@@ -42,12 +40,12 @@ define(['gameStates/BaseState', 'text!templates/game.hiddenStraitDeck.html', 'te
       this.mediator.publish('messages-add', 'They will cut the deck');
       var index = Math.floor(Math.random() * this.game.$deck.cards.length);
       this.render();
-      selectTopCard.call(this, index, false);
+      selectTopCard.call(this, index);
     }
   };
 
   PrePlayState.prototype.deck = function(cardIndex) {
-    selectTopCard.call(this, cardIndex, true);
+    selectTopCard.call(this, cardIndex);
   };
 
   return PrePlayState;
