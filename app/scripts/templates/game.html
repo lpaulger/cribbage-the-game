@@ -20,7 +20,13 @@
     {{/$player2}}
   </div>
   <div id="table">
+    {{#$action}}
+    <span style="display: {{display}}">{{$player2.points}}</span>
+    {{/$action}}
     <div id="deck" class="playingCards">{{> deck}}</div>
+    {{#$action}}
+    <span style="display: {{display}}">{{$player1.points}}</span>
+    {{/$action}}
     <div id="count">{{#$board}}<label style="display: {{display}}">Count: <span>{{currentBoardValue}}</span></label>{{/$board}}
     </div>
     <div id="play" class="playingCards">
