@@ -57,14 +57,15 @@ body {
 Home Page
 */
 
-header {
+header#titleBar {
   h1 {
     font-size: 3em;
     margin-bottom: 0;
+    line-height: 2em;
   }
 
   h4 {
-    margin: 0;
+    margin: -1.5em 0;
   }
 }
 
