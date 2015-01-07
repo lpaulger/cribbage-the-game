@@ -124,6 +124,14 @@ a.link{
   margin: .62em .4em;
   font-size: 2em;
 
+  background: none;
+  color: white;
+
+  &:active{
+    background: none;
+    color: darken(white, 30%);
+  }
+
   @media screen and (min-width: $break-mobile-x-small) {
     margin: .62em .7em;
   }
