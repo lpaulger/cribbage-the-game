@@ -1,6 +1,6 @@
-define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper','modules/SettingsModule',
+define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper','modules/SettingsModule','components/scoreControl',
   'text!templates/game.visibleHand.html', 'text!templates/game.visibleDeck.html', 'text!templates/game.scoreControl.html'],
-  function($, BaseState, ScoreKeeper,Settings, visibleHandHtml, visibleDeckHtml, scoreControlHtml){
+  function($, BaseState, ScoreKeeper, Settings, scoreControlComp, visibleHandHtml, visibleDeckHtml, scoreControlHtml){
   'use strict';
   function CountState(game){
     BaseState.call(this, game, 'Count');
@@ -53,10 +53,7 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper','modules/Se
     //bind defaults
     BaseState.prototype.bindEvents.call(this);
 
-    $('#scoreControl input[type=range]').on('input change', function(event){
-      this.p1.selectedScore = event.srcElement.valueAsNumber;
-      $('#scoreControl span').html(event.srcElement.valueAsNumber);
-    }.bind(this));
+    scoreControlComp.init(this.p1);
   };
 
   function setAvailablePoints(size){

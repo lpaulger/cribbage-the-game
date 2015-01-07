@@ -1,6 +1,6 @@
-define(['jquery','gameStates/BaseState','modules/SettingsModule',
+define(['jquery','gameStates/BaseState','modules/SettingsModule','components/scoreControl',
   'text!templates/game.visibleDeck.html', 'text!templates/game.scoreControl.html'],
-  function($, BaseState, Settings, visibleDeckHtml, scoreControlHtml){
+  function($, BaseState, Settings, scoreControlComp, visibleDeckHtml, scoreControlHtml){
   'use strict';
   function PlayState(game){
     BaseState.call(this, game, 'Play');
@@ -98,10 +98,7 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule',
     //bind defaults
     BaseState.prototype.bindEvents.call(this);
 
-    $('#scoreControl input[type=range]').on('input change', function(event){
-      this.p1.selectedScore = event.srcElement.valueAsNumber;
-      $('#scoreControl span').html(event.srcElement.valueAsNumber);
-    }.bind(this));
+    scoreControlComp.init(this.p1);
   };
 
   function setAvailablePoints(size){

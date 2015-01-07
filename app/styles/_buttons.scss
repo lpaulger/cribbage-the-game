@@ -1,0 +1,24 @@
+$button-background: white !default;
+$button-color: #333 !default;
+
+
+.btn {
+  background: $button-background;
+  color: $button-color;
+  height: 1.2em;
+  width: 1.2em;
+  line-height: 1.2em;
+  margin: .3em .2em;
+  border-radius: 2em;
+  text-align: center;
+  border: 2px outset;
+
+  &:active{
+    border: 2px inset;
+    background: darken($button-background, 30%);
+  }
+}
+
+.btn-error {
+  color: red;
+}

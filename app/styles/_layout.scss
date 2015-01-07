@@ -19,6 +19,8 @@ $home-cards-font-size-small: 1em;
 General Layout
 */
 
+@import "buttons";
+
 html, body, #content , #gameContainer{
   height: 100%;
   margin: 0;
@@ -119,14 +121,9 @@ a.link{
     margin: .62em .7em;
   }
 
-  &:active {
-    color: $navigation-home-link-active;
-  }
-
   &.help-link, &.settings-link {
     top: 0;
     right: 0;
-    width: .929em;
   }
 }
 
@@ -267,28 +264,27 @@ a.link{
 #scoreControl {
   position: absolute;
   height: 3.7em;
+  line-height: 3.7em;
   bottom: 0;
   background: rgba(0,0,0,0.5);
   width: 100%;
-  line-height: 3.7em;
+  text-align: center;
 
-  input[type=range]{
-    width: calc(100% - 10em);
-    display: inline;
-    vertical-align: middle;
-    margin: .7em;
+  a, input{
+    display: inline-block;
+    font-size: 2em;
+  }
+  input[type=number] {
+    text-align: center;
+    width: 2em;
+    margin: 0 .2em;
+    border-radius: 2em;
   }
 
-  input[type=text], span{
-    right: 0;
-    position: absolute;
-    height: 100%;
+  input[type=number]::-webkit-outer-spin-button,
+  input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
     margin: 0;
-    padding: 0;
-    border: 0;
-    width: 2em;
-    text-align: center;
-    font-size: 3em;
   }
 }
 
