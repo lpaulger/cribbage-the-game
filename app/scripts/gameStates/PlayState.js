@@ -83,7 +83,7 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule','components/sco
       finishTurn.call(this);
       return;
     }
-    else if(Settings.get('manual-count') && !this.game.isScorePoints){
+    else if(Settings.get('manual-count') && Settings.get('action-confirmation') && index !== -1 && !this.game.isScorePoints){
       selectCardForPlay.call(this, index);
       return;
     } else if(index !== -1){
