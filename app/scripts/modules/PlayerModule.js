@@ -34,6 +34,7 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
 
     if(this.getSelectedCards().length === 2){
       this.getSelectedCards().forEach(removeFromHand.bind(this));
+      cribOwner.crib.sort(sortByValue);
     }
   };
 
@@ -121,6 +122,10 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
     return this.getSelectedCards();
   };
 
+  function sortByValue(a,b){
+    return a.faceValue - b.faceValue;
+  }
+  
   function evaluatePlayForSelectedCard(){
     this.scoreKeeper.evaluatePlay(this, this.board.playedCards, this.board.totalPlayedCardsForRound);
     if(this.board.currentBoardValue === 31){
