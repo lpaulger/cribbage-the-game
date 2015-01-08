@@ -45,6 +45,24 @@ define(['gameStates/PlayState', 'modules/PlayerModule','modules/SettingsModule']
       expect(typeof _playState).toBe('object');
     });
 
+    describe('initialize', function(){
+      describe('and ai turn', function(){
+        beforeEach(function(){
+          spyOn(_bot, 'playCard');
+         _game.currentPlayer = _bot;
+          _playState = new PlayState(_game);
+          spyOn(_playState.mediator, 'publish');
+          spyOn(_playState, 'unbindEvents');
+          _playState.nextState = 'Play';
+        });
+
+        it('should process AI turn', function(){
+          _playState.init();
+          expect(_bot.playCard).toHaveBeenCalled();
+        });
+      });
+    });
+
     describe('Action Clicked', function(){
       describe('and they have no playable cards', function(){
         beforeEach(function(){
