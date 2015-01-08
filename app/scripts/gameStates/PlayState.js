@@ -51,6 +51,7 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule','components/sco
       } else if(this.game.$action.text === '...'){
         playCard.call(this, options.index);
       } else {
+        this.mediator.publish('messages-add', 'No Playable Cards, Press \'Go!\'');
         this.render();
       }
     } catch(e) {
