@@ -37,7 +37,7 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule','components/sco
 
   PlayState.prototype.selectCard = function(options) {
     try {
-      if(Settings.get('action-confirmation')&& this.game.$action.text === '...'){
+      if(Settings.get('action-confirmation')){
         this.p1.selectCard(options.index);
         this.mediator.publish('messages-add', 'Tap OK to continue');
         this.game.$action = {text:'Ok'};
