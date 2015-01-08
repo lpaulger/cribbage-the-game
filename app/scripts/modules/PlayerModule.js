@@ -106,6 +106,9 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
 
   Player.prototype.restoreHand = function(){
     this.hand = this.handInMemory;
+    this.hand.forEach(function(card){
+      delete card.selected;
+    });
   };
 
 
@@ -125,7 +128,7 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
   function sortByValue(a,b){
     return a.faceValue - b.faceValue;
   }
-  
+
   function evaluatePlayForSelectedCard(){
     this.scoreKeeper.evaluatePlay(this, this.board.playedCards, this.board.totalPlayedCardsForRound);
     if(this.board.currentBoardValue === 31){
