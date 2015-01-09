@@ -260,6 +260,27 @@ module.exports = function(grunt) {
     },
     // Put files not handled in other tasks here
     copy: {
+      debug: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= config.app %>',
+          dest: '<%= config.dist %>',
+          src: [
+            '*.{ico,png,txt,html}',
+            '.htaccess',
+            'images/{,*/}*.{webp,gif}',
+            'bower_components/Font-Awesome/fonts/*',
+            'bower_components/{,*/}*.js',
+            'scripts/{,*/}*.{js,html}'
+          ]
+        },{
+          expand: true,
+          cwd: '.tmp/styles/',
+          src: '{,*/}*.css',
+          dest: '<%= config.dist %>/styles/'
+        }]
+      },
       dist: {
         files: [{
           expand: true,
@@ -294,6 +315,30 @@ module.exports = function(grunt) {
             '*.{ico,png,txt}',
             'images/{,*/}*.{webp,gif}',
             'bower_components/Font-Awesome/fonts/*'
+          ]
+        }, {
+          expand: true,
+          cwd: '.tmp/images',
+          dest: '<%= config.cordova %>/images',
+          src: [
+            'generated/*'
+          ]
+        }]
+      },
+      'cordova-debug': {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= config.dist %>',
+          dest: '<%= config.cordova %>',
+          src: [
+            '*.html',
+            'scripts/{,*/}*.{js,html}',
+            'styles/{,*/}*.css',
+            '*.{ico,png,txt}',
+            'images/{,*/}*.{webp,gif}',
+            'bower_components/Font-Awesome/fonts/*',
+            'bower_components/{,*/}*.js'
           ]
         }, {
           expand: true,
@@ -392,8 +437,14 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', function(target){
     if(target === 'cordova'){
-      grunt.task.run(['clean:cordova','build:dist','copy:cordova']);
-    } else {
+      var cordovaTask = 'cordova';
+      var buildTask = 'build:dist';
+      if(grunt.option('debug')){
+        cordovaTask = 'cordova-debug';
+        buildTask = 'build';
+      }
+      grunt.task.run(['clean:cordova', buildTask, 'copy:' + cordovaTask]);
+    } else if(target === 'dist'){
       grunt.task.run([
         'clean:dist',
         'useminPrepare',
@@ -401,10 +452,16 @@ module.exports = function(grunt) {
         'cssmin',
         'concat',
         'uglify',
-        'copy',
+        'copy:dist',
         'requirejs',
         'rev',
         'usemin'
+      ]);
+    } else {
+      grunt.task.run([
+        'clean:dist',
+        'compass:server',
+        'copy:debug'
       ]);
     }
   });
