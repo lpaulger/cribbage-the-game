@@ -44,15 +44,15 @@ define(['modules/StorageModule'], function(Storage){
 
       return _settings;
     },
-    save: function(settings){
-      _settings = settings;
+    save: function(){
+      var tempSettings = JSON.parse(JSON.stringify(_settings));
 
-      _settings.forEach(function(setting){
+      tempSettings.forEach(function(setting){
         delete setting.name;
         delete setting.description;
       });
 
-      Storage.saveSettings(settings);
+      Storage.saveSettings(tempSettings);
     }
   };
 });
