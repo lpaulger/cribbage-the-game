@@ -20,10 +20,10 @@ define(['modules/SettingsModule','modules/StorageModule'], function(Settings, St
         it('should return the defaults', function(){
           var _settings = Settings.load();
           _settings.forEach(function(setting){
-            expect(setting.id).toEqual(Settings._defaultSettings.filter(function(innerSetting){return innerSetting.id === setting.id})[0].id);
-            expect(setting.value).toEqual(Settings._defaultSettings.filter(function(innerSetting){return innerSetting.id === setting.id})[0].value);
-            expect(setting.name).toEqual(Settings._defaultSettings.filter(function(innerSetting){return innerSetting.id === setting.id})[0].name);
-            expect(setting.description).toEqual(Settings._defaultSettings.filter(function(innerSetting){return innerSetting.id === setting.id})[0].description);
+            expect(setting.id).toEqual(Settings._defaultSettings.filter(function(innerSetting){return innerSetting.id === setting.id;})[0].id);
+            expect(setting.value).toEqual(Settings._defaultSettings.filter(function(innerSetting){return innerSetting.id === setting.id;})[0].value);
+            expect(setting.name).toEqual(Settings._defaultSettings.filter(function(innerSetting){return innerSetting.id === setting.id;})[0].name);
+            expect(setting.description).toEqual(Settings._defaultSettings.filter(function(innerSetting){return innerSetting.id === setting.id;})[0].description);
           });
 
         });
