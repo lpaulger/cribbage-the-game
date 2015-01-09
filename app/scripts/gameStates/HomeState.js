@@ -28,6 +28,10 @@ define(['jquery','gameStates/BaseState', 'modules/DeckModule', 'text!templates/h
     $('a.settings-link').on('click', function(){
       this.mediator.publish('transition', 'Settings');
     }.bind(this));
+
+    $(document).off('backbutton').on('backbutton', function(){
+      this.mediator.publish('transition', 'Back');
+    }.bind(this));
   };
 
   return HomeState;
