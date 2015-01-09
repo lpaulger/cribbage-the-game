@@ -12,7 +12,7 @@ define(['jquery'], function($){
       $('#scoreControl .js-score-increase-x2').on('click tap', function(){
         if(player.selectedScore < player.maxPoints){
 
-          player.selectedScore = player.selectedScore === 14 ? 15: (player.selectedScore + 2);
+          player.selectedScore = player.selectedScore === (player.maxPoints-1) ? player.maxPoints: (player.selectedScore + 2);
           $('#scoreControl input').val(player.selectedScore);
         }
       }.bind(this));
