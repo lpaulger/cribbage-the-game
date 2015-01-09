@@ -14,7 +14,7 @@ define(['gameStates/HomeState'], function(HomeState){
       beforeEach(function(){
         homeState = new HomeState();
         spyOn(homeState, 'templates').and.callThrough();
-        spyOn(homeState, 'bindEvents');
+        spyOn(homeState, 'bindEvents').and.callThrough();
       });
 
       it('should render templates', function(){
