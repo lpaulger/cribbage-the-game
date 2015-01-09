@@ -17,7 +17,8 @@ define([], function(){
       handInMemory: game.$player1.handInMemory,
       crib:         game.$player1.crib,
       points:       game.$player1.points,
-      currentPoints:game.$player1.currentPoints
+      currentPoints:game.$player1.currentPoints,
+      selectedScore:game.$player1.selectedScore
     };
   }
 
@@ -38,6 +39,11 @@ define([], function(){
       return game.$cribOwner.name;
   }
 
+  function saveCurrentPlayer(game){
+      if(game.currentPlayer)
+        return game.currentPlayer.name;
+    }
+
   function saveBoard(game){
     return {
       currentBoardValue:       game.$board.currentBoardValue,
@@ -48,6 +54,13 @@ define([], function(){
   }
 
   return {
+    loadSettings: function(){
+      return JSON.parse(get('settings'));
+    },
+
+    saveSettings:function(settings){
+      set('settings', JSON.stringify(settings));
+    },
     loadGame:function(){
       return {
         game: JSON.parse(get('game')),
@@ -67,7 +80,9 @@ define([], function(){
         showTopCard:        game.$showTopCard,
         $board:             saveBoard(game),
         $messages:          game.$messages,
-        $action:            game.$action
+        $action:            game.$action,
+        currentPlayer:      saveCurrentPlayer(game),
+        isScorePoints:      game.isScorePoints
       }));
       set('state', state);
     }

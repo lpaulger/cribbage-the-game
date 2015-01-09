@@ -1,8 +1,18 @@
-define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Card){
+define(['gameStates/CountState', 'modules/CardModule','modules/SettingsModule'], function(CountState, Card, Settings){
   'use strict';
   var _countState, _game, _player1, _player2;
 
   function createBasicGame() {
+    Settings.save([
+      {
+        id: 'manual-count',
+        value: false
+      },
+      {
+        id: 'action-confirmation',
+        value: false
+      }
+    ]);
     _player1 = {
       name: 'bob',
       possessive: 'his',
@@ -25,6 +35,7 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
       ],
       restoreHand: function(){}
     };
+
     _player2 = {
       name: 'sally',
       possessive: 'her',
@@ -104,21 +115,16 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
         describe('and on step 1', function(){
           beforeEach(function(){
             _countState.game.countStateStep = 1;
+            spyOn(_countState, 'render');
           });
 
           afterEach(function(){
             _countState.game.countStateStep = 0;
           });
 
-          it('p2\'s hand should be empty', function(){
+          it('should simply render previous messages', function () {
             _countState.init();
-            expect(_game.$player2.hand.length).toBe(0);
-          });
-
-          it('should show p1\'s hand', function(){
-            _countState.init();
-            expect(_game.$player1HandVisible).toBe(true);
-            expect(_game.$player2HandVisible).toBe(false);
+            expect(_countState.render).toHaveBeenCalled();
           });
         });
       });
@@ -204,7 +210,6 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             expect(_countState.scoreKeeper.evaluateHand.calls.count()).toBe(3);
           });
         });
-
         describe('and its third count', function () {
           beforeEach(function () {
             _game.$cribOwner = _game.$player1;
@@ -343,6 +348,38 @@ define(['gameStates/CountState', 'modules/CardModule'], function(CountState, Car
             _countState.action();
             expect(_countState.game.countStateStep).toEqual(0);
           });
+        });
+      });
+    });
+
+    describe('Manually score points enabled', function(){
+      beforeEach(function(){
+        var settings = [
+          {
+            id:'manual-count',
+            value: true
+          }
+        ];
+        Settings.save(settings);
+      });
+
+      describe('and its third count', function(){
+        beforeEach(function(){
+          _game.$cribOwner = _game.$player1;
+          _countState = new CountState(_game);
+          spyOn(_countState.mediator, 'publish');
+          _countState.init(); //0 -> 1
+          _countState.action();//1 -> 2
+          _countState.action();//2 -> 1 -> 2
+        });
+
+        it('should not remove the players hand after player selects score', function(){
+          expect(_player1.crib.length).toEqual(4);
+          _countState.action();
+          expect(_player1.crib.length).toEqual(0);
+          expect(_player1.hand.length).toEqual(4);
+          _countState.action();
+          expect(_player1.hand.length).toEqual(4);
         });
       });
     });

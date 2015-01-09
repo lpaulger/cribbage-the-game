@@ -1,14 +1,15 @@
 {
   "name": "cribbage-the-game",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "dependencies": {
     "modernizr": "~2.6.2",
     "zepto": "1.1.4",
-    "mustache": "~0.8.1"
+    "mustache": "~0.8.1",
+    "Font-Awesome": "~4.2.0",
+    "almond": "~0.3.0"
   },
   "devDependencies": {
     "requirejs": "~2.1.10",
-    "almond": "~0.3.0",
-    "Font-Awesome": "~4.2.0"
+    "requirejs-text": "~2.0.12"
   }
 }

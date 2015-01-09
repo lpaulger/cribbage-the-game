@@ -8,5 +8,24 @@ define(['gameStates/HomeState'], function(HomeState){
         expect(homeState).toBeDefined();
       });
     });
+
+    describe('render', function(){
+      var homeState;
+      beforeEach(function(){
+        homeState = new HomeState();
+        spyOn(homeState, 'templates').and.callThrough();
+        spyOn(homeState, 'bindEvents').and.callThrough();
+      });
+
+      it('should render templates', function(){
+        homeState.render();
+        expect(homeState.templates).toHaveBeenCalled();
+      });
+
+      it('should bind events', function(){
+        homeState.render();
+        expect(homeState.bindEvents).toHaveBeenCalled();
+      });
+    });
   });
 });

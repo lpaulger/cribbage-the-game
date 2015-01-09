@@ -1,4 +1,6 @@
-define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function($, BaseState, ScoreKeeper){
+define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper','modules/SettingsModule','components/scoreControl',
+  'text!templates/game.visibleHand.html', 'text!templates/game.visibleDeck.html', 'text!templates/game.scoreControl.html'],
+  function($, BaseState, ScoreKeeper, Settings, scoreControlComp, visibleHandHtml, visibleDeckHtml, scoreControlHtml){
   'use strict';
   function CountState(game){
     BaseState.call(this, game, 'Count');
@@ -17,22 +19,53 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
 
   CountState.prototype.templates = function(){
     var templates = BaseState.prototype.templates();
-    templates.deck = $('#visibleDeckTemplate').html();
-    templates.p2Hand = $('#visibleHandTemplate').html();
+    templates.deck = visibleDeckHtml;
+    templates.p2Hand = visibleHandHtml;
+    if(this.game.isScorePoints)
+      templates.scoreControl = scoreControlHtml;
     return templates;
   };
 
 
   CountState.prototype.init = function(){
+    this.p1.maxPoints = 29;
+    this.p1.availablePoints = setAvailablePoints(this.p1.maxPoints);
+    if(this.game.isScorePoints === undefined)
+      this.game.isScorePoints = false;
     this.p1.restoreHand();
     this.p2.restoreHand();
+    if(this.game.countStateStep === 0)
+      processCountStep.call(this);
 
-    processCountStep.call(this);
+    else {
+      this.render();
+    }
   };
 
   CountState.prototype.action = function(){
+    if(this.game.isScorePoints){
+      this.game.countStateStep--;//hack to fix auto incriment
+    }
+
     processCountStep.call(this);
   };
+
+  CountState.prototype.bindEvents = function(){
+    //bind defaults
+    BaseState.prototype.bindEvents.call(this);
+
+    scoreControlComp.init(this.p1);
+  };
+
+  function setAvailablePoints(size){
+    var i = 0;
+    var arrayPoints = [];
+    while(i < size){
+      i++;
+      arrayPoints.push(i);
+    }
+    return arrayPoints;
+  }
 
   function processCountStep(){
     var points = 0;
@@ -69,10 +102,13 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
   }
 
   function processThirdStep(){
-    this.game.$cribOwner.hand = this.game.$cribOwner.crib;
+    this.game.$cribOwner.hand = (this.game.$cribOwner.crib.length === 4) ? this.game.$cribOwner.crib : this.game.$cribOwner.hand;
     this.game.$cribOwner.crib = [];
-    this.scoreKeeper.evaluateHand(this.game.$cribOwner, this.game.topCard);
-    this.game.$action = {text:'Cont.'};
+    if(isPlayerOneCribOwner.call(this)){
+      evaluatePlayerOneScore.call(this);
+    } else {
+      evaluatePlayerTwoScore.call(this);
+    }
     this.game.countStateStep += 1;
     this.render();
   }
@@ -87,17 +123,21 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
     this.game.$showTopCard = false;
     this.game.countStateStep = 0;
     this.render();
-    if(this.game.$cribOwner.isWinner() || this.p2.isWinner())
+    if(this.p1.isWinner() || this.p2.isWinner())
       this.mediator.publish('transition', 'Summary', true);
-    this.mediator.publish('transition', 'Deal');
+    else {
+      this.mediator.publish('transition', 'Deal');
+    }
   }
 
 
   function evaluatePlayerOneScore(points){
     showPlayerOneHand.call(this);
-    this.scoreKeeper.evaluateHand(this.p1, this.game.topCard);
-    if(this.p1.isWinner())
-      this.mediator.publish('transition', 'Summary', true);
+    if(!this.game.isScorePoints){
+      this.scoreKeeper.evaluateHand(this.p1, this.game.topCard);
+      if(this.p1.isWinner())
+        this.mediator.publish('transition', 'Summary', true);
+    }
     return points;
   }
 
@@ -116,6 +156,11 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper'], function(
   function showPlayerOneHand(){
     this.game.$player2HandVisible = false;
     this.game.$player1HandVisible = true;
+    if(Settings.get('manual-count')){
+      this.game.isScorePoints = this.game.isScorePoints ? false : true;
+      if(this.game.isScorePoints)
+        this.p1.selectedScore = 0;
+    }
   }
 
   function showPlayerTwoHand(){

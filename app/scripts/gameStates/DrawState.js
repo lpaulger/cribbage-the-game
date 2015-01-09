@@ -1,4 +1,4 @@
-define(['jquery','gameStates/BaseState'],function($, BaseState){
+define(['gameStates/BaseState', 'text!templates/game.visibleHand.html'],function(BaseState, visibleHandHtml){
   'use strict';
   function DrawState(game){
     BaseState.call(this, game, 'Draw');
@@ -16,13 +16,13 @@ define(['jquery','gameStates/BaseState'],function($, BaseState){
   };
 
   DrawState.prototype.init = function(){
-    this.mediator.publish('messages-add', 'Click the deck to start');
+    this.mediator.publish('messages-add', 'Tap the deck to start');
     this.render();
   };
 
   DrawState.prototype.templates = function(){
     var templates = BaseState.prototype.templates();
-    templates.crib = $('#visibleHandTemplate').html();
+    templates.crib = visibleHandHtml;
     return templates;
   };
 

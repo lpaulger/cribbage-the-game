@@ -37,6 +37,13 @@ define(
           return player.name === options.$cribOwner;
         })[0];
       }
+
+      if(options.currentPlayer){
+        this.currentPlayer = [this.$player1, this.$player2].filter(function(player){
+          return player.name === options.currentPlayer;
+        })[0];
+      }
+
       this.$messages = options.$messages || [];
 
       //countState && DrawState
@@ -44,14 +51,17 @@ define(
       this.$player2HandVisible = options.$player2HandVisible || true;
 
       //countState
-      this.countStateStep = options.countStateStep || undefined;
+      this.countStateStep = options.countStateStep;
 
       //countState && prePlayState
-      this.topCard = options.topCard || undefined;
-      this.$showTopCard = options.$showTopCard || undefined;
+      this.topCard = options.topCard;
+      this.$showTopCard = options.$showTopCard;
 
       //countState && dealState && playState
-      this.$action = options.$action || undefined;
+      this.$action = options.$action;
+
+      //playState
+      this.isScorePoints = options.isScorePoints || false;
     }
 
     return Game;

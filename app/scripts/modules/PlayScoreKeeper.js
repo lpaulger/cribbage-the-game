@@ -125,6 +125,9 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
 
   PlayScoreKeeper.prototype.evaluatePlay = function(player, playCards, totalPlayedCards){
     var points = 0;
+    var pointDifference = 0;
+    var additionalMessage = '';
+
     if(this.is15(playCards))
       points += 2;
     if(this.is31(playCards))
@@ -136,13 +139,26 @@ define(['modules/BaseScoreKeeper'], function(BaseScoreKeeper){
     if(this.isLastCard(totalPlayedCards))
       points += 1;
 
-    if(points === 1)
-      this.mediator.publish('messages-add', player.name + ' scored ' + points + ' point.');
-    else if(points > 1)
-      this.mediator.publish('messages-add', player.name + ' scored ' + points + ' points.');
+    if(!isNaN(player.selectedScore)){
+      pointDifference = player.selectedScore - points;//positive, negative 0
+      if(pointDifference > 0){
+        this.mediator.publish('messages-add', player.name + ' said ' + player.selectedScore + ' points');
+        this.mediator.publish('messages-add', 'the actual points were ' + points);
+        points = (points - pointDifference) >= 0 ? (points - pointDifference) : 0 ;
+        additionalMessage = ' (-' + pointDifference + ')';
+      } else {
+        this.mediator.publish('messages-add', player.name + ' found ' + player.selectedScore + ' of the total ' + points + ' points');
+        additionalMessage = ' (-' + (points - player.selectedScore) + ')';
+        points = player.selectedScore;
+      }
+    }
+
+
     if(points !== 0)
-      player.currentPoints = player.points;
+      player.currentPoints = player.points;//update leading board peg
     player.points += points;
+
+    this.mediator.publish('messages-add', player.name + ' scored ' + points + ' points' + additionalMessage);
   };
 
   return PlayScoreKeeper;

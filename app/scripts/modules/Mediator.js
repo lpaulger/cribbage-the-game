@@ -45,7 +45,7 @@ define(['modules/PubSub', 'modules/GameModule', 'gameStates/StateRegistry', 'mod
     Mediator.prototype.transitionTo = function(stateName, wait){
       var state;
       if(stateName === 'Back'){
-        stateName = Storage.loadGame().state;
+        stateName = Storage.loadGame().state || 'Home';
       }
 
       function process(){
@@ -84,7 +84,7 @@ define(['modules/PubSub', 'modules/GameModule', 'gameStates/StateRegistry', 'mod
     };
 
     Mediator.prototype.saveGame = function(state, game){
-      if(state !== 'Home' && state !== 'Info'){
+      if(state !== 'Home' && state !== 'Info' && state !== 'Settings'){
         Storage.saveGame(game, state);
       }
     };

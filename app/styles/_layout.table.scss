@@ -3,6 +3,23 @@
   bottom: 7.6em;
   height: 6.6em;
   width: 100%;
+
+  > span {
+    position: absolute;
+    right: .5em;
+    width: 4.5em;
+    top: -.7em;
+    text-align: center;
+    color: orange;
+    background: rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+    border-radius: 2em;
+
+    &:nth-child(3){
+      top: 6.3em;
+      color: red;
+    }
+  }
 }
 
 #deck > .deck{
@@ -23,13 +40,16 @@
 
 #count {
   position: absolute;
-  top: -1.1em;
-  left: 1.024em;
+  top: -.5em;
+  width: 7em;
+  text-align: center;
+
   label {
     position: relative;
     padding: 0 .2em;
     display: inline-block;
     background-color: rgba(0,0,0,0.3);
+    border-radius: 2em;
   }
 }
 
@@ -37,25 +57,12 @@
   position: absolute;
   bottom: 0;
   left: 0;
+  text-align: center;
+  width: 7em;
 
   button {
-    height: 2em;
-    width: 3.4em;
-    background-color: rgba(0,0,0,0.3);
-    color: $text-color;
-    border: none;
+    height: 2.4em;
+    width: 2.4em;
     font-size: 2em;
-  }
-
-  span {
-    display: block;
-    text-align: center;
-    font-weight: bold;
-    background: rgba(0,0,0,.4);
-    color: $opponent-color;
-
-    &:nth-child(3){
-      color: $player-color;
-    }
   }
 }

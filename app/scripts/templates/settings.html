@@ -1,0 +1,21 @@
+<a class="link back-link btn"><i class="fa fa-angle-left"></i></a>
+<div id="titleBar">
+  <h1>Settings</h1>
+</div>
+
+<ul id="settingsList">
+  {{#settings}}
+  <li>
+    <h4>{{name}}</h4>
+    <p>{{description}}</p>
+    <span data-id="{{id}}">
+      {{#value}}
+      <i class="fa fa-toggle-on"></i>
+      {{/value}}
+      {{^value}}
+      <i class="fa fa-toggle-off"></i>
+      {{/value}}
+    </span>
+  </li>
+  {{/settings}}
+</ul>

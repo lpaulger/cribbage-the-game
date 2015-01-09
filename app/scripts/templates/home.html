@@ -1,0 +1,16 @@
+<header id="titleBar">
+  <h1>Cribbage</h1>
+  <h4>The Game</h4>
+</header>
+<a class="link settings-link btn"><i class="fa fa-gear"></i></a>
+<div id="homeDeck">
+  <div class="playingCards rotateHand">
+    <ul class="hand">
+      {{#.}}{{> p1Hand}}{{/.}}
+    </ul>
+  </div>
+</div>
+<div id="bottomControls">
+  {{> continue}}
+  <button id="newGameButton">New Game</button>
+</div>

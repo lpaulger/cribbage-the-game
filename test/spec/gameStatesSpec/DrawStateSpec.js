@@ -26,7 +26,7 @@ define(['gameStates/DrawState'], function(DrawState){
 
       it('should publish a message to draw from the deck', function(){
         _draw.init();
-        expect(_draw.mediator.publish).toHaveBeenCalledWith('messages-add', 'Click the deck to start');
+        expect(_draw.mediator.publish).toHaveBeenCalledWith('messages-add', 'Tap the deck to start');
       });
     });
 

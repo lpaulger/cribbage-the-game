@@ -1,0 +1,31 @@
+$setting-value-color: $alternative-color !default;
+
+#settingsList {
+  list-style: none;
+  padding: 0;
+
+  li {
+    position: relative;
+    margin: 1em;
+    padding: .5em 0;
+    border-bottom: 1px solid;
+  }
+
+  h4 {
+    text-align: left;
+    margin: 0 0 1em;
+  }
+
+  p {
+    display: inline-block;
+    margin: 0 3em 0 0;
+  }
+
+  span{
+    position: absolute;
+    right: 0;
+    transform: translateY(-50%);
+    top: 50%;
+    font-size: 2em;
+  }
+}

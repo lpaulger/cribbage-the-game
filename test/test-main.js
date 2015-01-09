@@ -11,6 +11,7 @@ require.config({
 
   // example of using shim, to load non AMD libraries (such as underscore and jquery)
   paths: {
+    'text': '../bower_components/requirejs-text/text',
     'jquery': '../bower_components/zepto/zepto',
     'mustache': '../bower_components/mustache/mustache'
   },

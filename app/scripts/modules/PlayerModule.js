@@ -8,6 +8,7 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
     this.crib = options.crib || [];
     this.currentPoints = options.currentPoints || 0;
     this.points = options.points || 0;
+    this.selectedScore = options.selectedScore;
     this.board = options.board;//required
     this.playRules = new PlayRules({board:options.board});
     this.scoreKeeper = new ScoreKeeper();
@@ -33,6 +34,7 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
 
     if(this.getSelectedCards().length === 2){
       this.getSelectedCards().forEach(removeFromHand.bind(this));
+      cribOwner.crib.sort(sortByValue);
     }
   };
 
@@ -42,17 +44,43 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
     return card;
   };
 
-  Player.prototype.playCard = function(index){
+  Player.prototype.selectCard = function(index){
+    var _tempHand = this.hand.slice();
+    var card = _tempHand.splice(index, 1)[0];//selectCardFromHand
+
+
+    var hand = this.hand;
+
+    if(this.playRules.isCardPlayable(this, card)){
+      if(HandHelper.isOneSelected(hand, index))
+        HandHelper.replaceOldCard(hand, index);
+      else HandHelper.selectCard(hand, index);
+    } else if(!this.playRules.hasPlayableCards(this)){
+      throw new Error('No Playable Cards');
+    } else {
+      throw new Error('Invalid Playable Card');
+    }
+  };
+
+  Player.prototype.placeCardOnTable = function(index){
     var _tempHand = this.hand.slice();
     var card = _tempHand.splice(index, 1)[0];//selectCardFromHand
 
     if(this.playRules.isCardPlayable(this, card)){
       this.board.placeCard(card, this);
-      this.scoreKeeper.evaluatePlay(this, this.board.playedCards, this.board.totalPlayedCardsForRound);
-      if(this.board.currentBoardValue === 31){
-        this.board.resetBoard();
-      }
       this.hand.splice(index, 1);
+    }
+  };
+
+  Player.prototype.playCard = function(index){
+    var _tempHand = this.hand.slice();
+    var card = _tempHand.splice(index, 1)[0];//selectCardFromHand
+    if(this.selectedScore !== undefined){
+      evaluatePlayForSelectedCard.call(this);
+      delete this.selectedScore;
+    } else if(this.playRules.isCardPlayable(this, card)){
+      this.placeCardOnTable(index);
+      evaluatePlayForSelectedCard.call(this);
     } else if(!this.playRules.hasPlayableCards(this)){
       throw new Error('No Playable Cards');
     } else {
@@ -78,7 +106,73 @@ define(['modules/PlayRulesModule', 'modules/PlayScoreKeeper', 'modules/PubSub'],
 
   Player.prototype.restoreHand = function(){
     this.hand = this.handInMemory;
+    this.hand.forEach(function(card){
+      delete card.selected;
+    });
   };
+
+
+
+  Player.prototype.selectCribCard = function(index){
+    var hand = this.hand;
+
+    if(HandHelper.isSelected(hand, index))
+      HandHelper.unSelectCard(hand, index);
+    else if(HandHelper.areTwoCardsSelected(hand, index))
+      HandHelper.replaceOldCard(hand, index);
+    else HandHelper.selectCard(hand, index);
+
+    return this.getSelectedCards();
+  };
+
+  function sortByValue(a,b){
+    return a.faceValue - b.faceValue;
+  }
+
+  function evaluatePlayForSelectedCard(){
+    this.scoreKeeper.evaluatePlay(this, this.board.playedCards, this.board.totalPlayedCardsForRound);
+    if(this.board.currentBoardValue === 31){
+      this.board.resetBoard();
+    }
+  }
+
+  var HandHelper = {
+    selectCard: function(hand, index){
+      hand[index].selected = 'selected';
+      return hand;
+    },
+    unSelectCard: function(hand, index){
+      delete hand[index].selected;
+      return hand;
+    },
+    isSelected: function(hand, index){
+      return hand[index].selected !== undefined;
+    },
+    isOneSelected: function(hand, index){
+      var selectedCards = hand.filter(function(card){
+        return card.selected === 'selected';
+      });
+
+      return selectedCards.length >= 1 && selectedCards.indexOf(index) === -1;
+    },
+    areTwoCardsSelected: function(hand, index){
+      var selectedCards = hand.filter(function(card){
+        return card.selected === 'selected';
+      });
+
+      return selectedCards.length > 1 && selectedCards.indexOf(index) === -1;
+    },
+    replaceOldCard: function(hand, index){
+      var oldCard = hand.filter(function(card){
+              return card.selected === 'selected';
+            })[0];
+
+      this.unSelectCard(hand, hand.indexOf(oldCard));
+      return this.selectCard(hand, index);
+    }
+  };
+
+
 
   return Player;
 });

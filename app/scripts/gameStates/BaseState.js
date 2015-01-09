@@ -1,4 +1,8 @@
-define(['jquery', 'mustache', 'modules/PubSub'],function($, mustache, PubSub){
+define(['jquery', 'mustache', 'modules/PubSub',
+  'text!templates/game.html', 'text!templates/game.visibleHand.html', 'text!templates/game.hiddenHand.html',
+  'text!templates/game.hiddenDeck.html', 'text!templates/game.play.html', 'text!templates/game.scoreboard.html',
+  'text!templates/game.controls.html'],
+  function($, mustache, PubSub, gameHtml, visibleHandHtml, hiddenHandHtml, hiddenDeckHtml, playHtml, scoreboardHtml, controlsHtml){
   'use strict';
   function BaseState(game, name){
     this.game = game;
@@ -13,16 +17,17 @@ define(['jquery', 'mustache', 'modules/PubSub'],function($, mustache, PubSub){
 
   BaseState.prototype.templates = function(){
     return {
-      page: $('#stateTemplate').html(),
-      p1Hand: $('#visibleHandTemplate').html(),
-      p2Hand: $('#hiddenHandTemplate').html(),
-      p1Score: $('#scoreboardTemplate').html(),
-      p2Score: $('#scoreboardTemplate').html(),
+      page: gameHtml,
+      p1Hand: visibleHandHtml,
+      p2Hand: hiddenHandHtml,
+      p1Score: scoreboardHtml,
+      p2Score: scoreboardHtml,
 
-      play: $('#playTemplate').html(),
-      deck: $('#hiddenDeckTemplate').html(),
-      crib: $('#hiddenHandTemplate').html(),
-      controls: $('#controlsTemplate').html(),
+      play: playHtml,
+      deck: hiddenDeckHtml,
+      crib: hiddenHandHtml,
+      controls: controlsHtml,
+      scoreControl: '',
       messages: '{{#$messages}}<li>{{.}}</li>{{/$messages}}'
     };
   };
@@ -90,7 +95,7 @@ define(['jquery', 'mustache', 'modules/PubSub'],function($, mustache, PubSub){
   BaseState.prototype.bindEvents = function(){
     $('#deck').on('click', function(e){
       this.unbindEvents();
-      var cardIndex = [].slice.call(e.target.parentNode.children).indexOf(e.target);
+      var cardIndex = $('#deck ul').children().indexOf(e.target.parentNode);
       $(e.target).addClass('selected');
       this.deck(cardIndex);
     }.bind(this));
@@ -123,8 +128,8 @@ define(['jquery', 'mustache', 'modules/PubSub'],function($, mustache, PubSub){
       this.mediator.publish('transition', 'Info');
     }.bind(this));
 
-    $('a.back-link').on('click', function(){
-      this.mediator.publish('transition', 'Back');
+    $(document).off('backbutton').on('backbutton', function(){
+      this.mediator.publish('transition', 'Home');
     }.bind(this));
   };
 

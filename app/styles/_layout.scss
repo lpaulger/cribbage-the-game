@@ -8,7 +8,7 @@ $text-color: white !default;
 $player-color: red !default;
 $opponent-color: orange !default;
 
-$navigation-home-link-active: $table-background-color !default;
+$navigation-home-link-active: darken($table-background-color, 20%) !default;
 /*
 Variables
 */
@@ -19,9 +19,17 @@ $home-cards-font-size-small: 1em;
 General Layout
 */
 
+@import "buttons";
+
 html, body, #content , #gameContainer{
   height: 100%;
   margin: 0;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 html {
@@ -49,14 +57,15 @@ body {
 Home Page
 */
 
-header {
+header#titleBar {
   h1 {
     font-size: 3em;
     margin-bottom: 0;
+    line-height: 2em;
   }
 
   h4 {
-    margin: 0;
+    margin: -1.5em 0;
   }
 }
 
@@ -109,18 +118,21 @@ a.link{
   margin: .62em .4em;
   font-size: 2em;
 
+  background: none;
+  color: white;
+
+  &:active{
+    background: none;
+    color: darken(white, 30%);
+  }
+
   @media screen and (min-width: $break-mobile-x-small) {
     margin: .62em .7em;
   }
 
-  &:active {
-    color: $navigation-home-link-active;
-  }
-
-  &.help-link {
+  &.help-link, &.settings-link {
     top: 0;
     right: 0;
-    width: .929em;
   }
 }
 
@@ -184,37 +196,11 @@ a.link{
   }
 }
 
+@import "layout.settings";
+
 @import "layout.table";
 
-@mixin player{
-  height: 6.6em;
-  width: 100%;
-  position: absolute;
-}
-
-#player1{
-  @include player;
-  bottom: 0;
-}
-
-#player2{
-  @include player;
-  bottom: 14.6em;
-}
-
-.player {
-  .playingCards {
-    position: relative;
-    .crib{
-      right: 5em;
-      position: absolute;
-      top: 0em;
-    }
-  }
-  .playingCards:first-child{
-    left:0;
-  }
-}
+@import "layout.player";
 
 .player1-board-peg{
   color: $player-color;
@@ -281,6 +267,35 @@ a.link{
     position: absolute;
     bottom: 0;
     width: 100%;
+  }
+}
+
+#scoreControl {
+  position: absolute;
+  height: 3.7em;
+  line-height: 3.7em;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  width: 100%;
+  text-align: center;
+
+  a, input{
+    display: inline-block;
+    font-size: 2em;
+  }
+  input[type=number] {
+    text-align: center;
+    width: 2em;
+    margin: 0 .2em;
+    border-radius: 2em;
+    background: $alternative-color;
+    color: white;
+  }
+
+  input[type=number]::-webkit-outer-spin-button,
+  input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 }
 
