@@ -52,12 +52,6 @@ body {
   position: relative;
 }
 
-@media screen and (orientation: landscape) {
-  #gameContainer {
-    margin-right: 7.8em;
-  }
-}
-
 
 /*
 Home Page
@@ -174,12 +168,6 @@ a.link{
   z-index: 1;
   position: absolute;
 
-  @media screen and (orientation: landscape) {
-    position: relative;
-    width: auto;
-    margin: auto 5em;
-  }
-
   li {
     font-size: 1.3em;
     line-height: 2em;
@@ -226,14 +214,7 @@ a.link{
   height: 6em;
   background-color: $alternative-color;
   font-size: .8em;
-  h1{
-    text-align: center;
-    margin: 0;
-    line-height: 3em;
-  }
-}
 
-#cribbageBoard {
   ul{
     margin: 0 auto;
     width: 16em;
@@ -248,43 +229,28 @@ a.link{
   li {
     float: left;
     list-style-position: inside;
-    list-style: none;
+    width: 0.49em;
     transition: color 0.2s linear;
     position: relative;
     top: 50%;
     transform: translateY(-100%);
-    padding: .6em .1em;
-    font-size: .483em;
 
     &:nth-child(5n){
-      border-right:.2em solid white;
+      border-right:.1em solid white;
+      margin-right: .1em;
     }
 
     &:nth-child(1), &:nth-child(31) {
-      border-left: .2em solid #fff;
+      border-left: .1em solid #fff;
+      padding-left: .1em;
+      margin-left: -.1em;
     }
   }
-  @media screen and (orientation: landscape) {
 
-    font-size: 1.3em;
-    width: 6em;
-    height: 100%;
-    right: 0;
-    position: fixed;
-
-    ul {
-      transform: rotate(-90deg) translateX(1em);
-      margin: 0 -6.3em;
-      padding: 0;
-      position: relative;
-      bottom: -50%;
-      height: 2em;
-
-      &:last-child{
-        left: 2.5em;
-        bottom: calc(-50% + 1.95em);//should be 2em to match height/left. not sure what causes the differntiation
-      }
-    }
+  h1{
+    text-align: center;
+    margin: 0;
+    line-height: 3em;
   }
 }
 
@@ -328,6 +294,39 @@ a.link{
   input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+  }
+}
+
+//Mobile Responsive design
+
+@media screen and (orientation: landscape) {
+  #messageContainer{
+    position: relative;
+    width: auto;
+    margin: auto 5em;
+  }
+
+  #gameContainer {
+    margin-right: 7.8em;
+  }
+
+  #cribbageBoard{
+    font-size: 1.3em;
+    width: 6em;
+    height: 100%;
+    right: 0;
+    position: fixed;
+
+    ul{
+      transform: rotate(-90deg);
+      margin: 0 -.2em;
+      width: 16em;
+      padding: 0;
+      left: -6em;
+      position: relative;
+      bottom: -50%;
+      height: auto;
+    }
   }
 }
 
