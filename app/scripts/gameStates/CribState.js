@@ -8,7 +8,7 @@ define(['gameStates/BaseState'],function(BaseState){
   CribState.prototype.constructor = CribState;
 
   CribState.prototype.init = function(){
-    this.game.$action = {text: 'Pick'};
+    this.game.$action = {text: '...'};
     this.mediator.publish('messages-add', 'Pick two cards for ' + this.game.$cribOwner.possessive + ' crib');
 
     if(this.p2.hand.length === 6){
@@ -23,7 +23,7 @@ define(['gameStates/BaseState'],function(BaseState){
 
     if(selectedCards.length === 2){
       this.mediator.publish('messages-add', 'When you\'re ready, continue');
-      this.game.$action = {text: 'Cont.'};
+      this.game.$action = {text: 'Ok'};
     }
     else if(selectedCards.length === 1)
       this.mediator.publish('messages-add', 'Pick one more card');

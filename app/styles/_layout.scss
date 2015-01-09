@@ -288,6 +288,8 @@ a.link{
     width: 2em;
     margin: 0 .2em;
     border-radius: 2em;
+    background: $alternative-color;
+    color: white;
   }
 
   input[type=number]::-webkit-outer-spin-button,

@@ -1,5 +1,5 @@
-$button-background: white !default;
-$button-color: #333 !default;
+$button-background: $alternative-color !default;
+$button-color: white !default;
 
 
 .btn {
@@ -15,10 +15,6 @@ $button-color: #333 !default;
 
   &:active{
     border: 2px inset;
-    background: darken($button-background, 30%);
+    background: darken($button-background, 10%);
   }
-}
-
-.btn-error {
-  color: red;
 }
