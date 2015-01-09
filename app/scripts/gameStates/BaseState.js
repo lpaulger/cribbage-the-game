@@ -127,6 +127,10 @@ define(['jquery', 'mustache', 'modules/PubSub',
     $('a.help-link').on('click', function(){
       this.mediator.publish('transition', 'Info');
     }.bind(this));
+
+    $(document).off('backbutton').on('backbutton', function(){
+      this.mediator.publish('transition', 'Home');
+    }.bind(this));
   };
 
   BaseState.prototype.unbindEvents = function(){
