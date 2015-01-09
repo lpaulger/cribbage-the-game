@@ -49,7 +49,7 @@ define(['gameStates/PlayState', 'modules/PlayerModule','modules/SettingsModule']
       describe('and ai turn', function(){
         beforeEach(function(){
           spyOn(_bot, 'playCard');
-         _game.currentPlayer = _bot;
+          _game.currentPlayer = _bot;
           _playState = new PlayState(_game);
           spyOn(_playState.mediator, 'publish');
           spyOn(_playState, 'unbindEvents');
