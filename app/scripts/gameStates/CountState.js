@@ -21,7 +21,7 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper','modules/Se
     var templates = BaseState.prototype.templates();
     templates.deck = visibleDeckHtml;
     templates.p2Hand = visibleHandHtml;
-    if(this.isScorePoints)
+    if(this.game.isScorePoints)
       templates.scoreControl = scoreControlHtml;
     return templates;
   };
@@ -30,7 +30,8 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper','modules/Se
   CountState.prototype.init = function(){
     this.p1.maxPoints = 29;
     this.p1.availablePoints = setAvailablePoints(this.p1.maxPoints);
-    this.isScorePoints = false;
+    if(this.game.isScorePoints === undefined)
+      this.game.isScorePoints = false;
     this.p1.restoreHand();
     this.p2.restoreHand();
     if(this.game.countStateStep === 0)
@@ -42,7 +43,7 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper','modules/Se
   };
 
   CountState.prototype.action = function(){
-    if(this.isScorePoints){
+    if(this.game.isScorePoints){
       this.game.countStateStep--;//hack to fix auto incriment
     }
 
@@ -132,7 +133,7 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper','modules/Se
 
   function evaluatePlayerOneScore(points){
     showPlayerOneHand.call(this);
-    if(!this.isScorePoints){
+    if(!this.game.isScorePoints){
       this.scoreKeeper.evaluateHand(this.p1, this.game.topCard);
       if(this.p1.isWinner())
         this.mediator.publish('transition', 'Summary', true);
@@ -156,8 +157,8 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper','modules/Se
     this.game.$player2HandVisible = false;
     this.game.$player1HandVisible = true;
     if(Settings.get('manual-count')){
-      this.isScorePoints = this.isScorePoints ? false : true;
-      if(this.isScorePoints)
+      this.game.isScorePoints = this.game.isScorePoints ? false : true;
+      if(this.game.isScorePoints)
         this.p1.selectedScore = 0;
     }
   }
