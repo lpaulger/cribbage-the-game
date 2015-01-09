@@ -11,8 +11,6 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper','modules/Se
      2  - Dealer counts crib
      */
     game.countStateStep = game.countStateStep || 0;
-    this.p1.maxPoints = 29;
-    this.p1.availablePoints = setAvailablePoints(this.p1.maxPoints);
     this.scoreKeeper = new ScoreKeeper();
   }
 
@@ -30,6 +28,8 @@ define(['jquery', 'gameStates/BaseState', 'modules/CountScoreKeeper','modules/Se
 
 
   CountState.prototype.init = function(){
+    this.p1.maxPoints = 29;
+    this.p1.availablePoints = setAvailablePoints(this.p1.maxPoints);
     this.isScorePoints = false;
     this.p1.restoreHand();
     this.p2.restoreHand();

@@ -5,8 +5,6 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule','components/sco
   function PlayState(game){
     BaseState.call(this, game, 'Play');
     this.nextState = 'Play';
-    this.p1.maxPoints = 15;
-    this.p1.availablePoints = setAvailablePoints(this.p1.maxPoints);
   }
 
   PlayState.prototype = Object.create(BaseState.prototype);
@@ -21,6 +19,8 @@ define(['jquery','gameStates/BaseState','modules/SettingsModule','components/sco
   };
 
   PlayState.prototype.init = function(){
+    this.p1.maxPoints = 15;
+    this.p1.availablePoints = setAvailablePoints(this.p1.maxPoints);
     if(!this.p1.playRules.hasPlayableCards(this.p1))
       this.game.$action = {text:'Go'};
 
