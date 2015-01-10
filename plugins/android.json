@@ -3,9 +3,7 @@
         "installed": [],
         "uninstalled": []
     },
-    "config_munge": {
-        "files": {}
-    },
+    "config_munge": {},
     "installed_plugins": {},
     "dependent_plugins": {}
 }
