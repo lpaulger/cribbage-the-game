@@ -39,7 +39,13 @@ define(['modules/SettingsModule','modules/StorageModule'], function(Settings, St
 
       it('should call saveSettings', function(){
         Settings.save(_settings);
-        expect(Storage.saveSettings).toHaveBeenCalledWith(_settings);
+        var tempSettings = JSON.parse(JSON.stringify(_settings));
+
+        tempSettings.forEach(function(setting){
+          delete setting.name;
+          delete setting.description;
+        });
+        expect(Storage.saveSettings).toHaveBeenCalledWith(tempSettings);
       });
     });
   });

@@ -44,7 +44,8 @@ define(['modules/StorageModule'], function(Storage){
 
       return _settings;
     },
-    save: function(){
+    save: function(settings){
+      _settings = settings;
       var tempSettings = JSON.parse(JSON.stringify(_settings));
 
       tempSettings.forEach(function(setting){
