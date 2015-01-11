@@ -233,7 +233,7 @@ a.link{
     transition: color 0.2s linear;
     position: relative;
     top: 50%;
-    transform: translateY(-100%);
+    @include transform(translateY(-100%));
 
     &:nth-child(5n){
       border-right:.1em solid white;
@@ -320,7 +320,7 @@ a.link{
     position: fixed;
 
     ul{
-      transform: rotate(-90deg);
+      @include transform(rotate(-90deg));
       margin: 0 -.2em;
       width: 16em;
       padding: 0;

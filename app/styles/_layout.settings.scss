@@ -1,3 +1,5 @@
+@import "compass/css3/transform";
+
 $setting-value-color: $alternative-color !default;
 
 #settingsList {
@@ -24,7 +26,7 @@ $setting-value-color: $alternative-color !default;
   span{
     position: absolute;
     right: 0;
-    transform: translateY(-50%);
+    @include transform(translateY(-50%));
     top: 50%;
     font-size: 2em;
   }
