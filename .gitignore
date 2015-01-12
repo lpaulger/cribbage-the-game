@@ -3,7 +3,8 @@ dist
 app/bower_components
 test/coverage
 platforms/*
-!platforms/android/res
+!platforms/android/AndroidManifest.xml
+!platforms/android/res/*/*
 www/*
 secret.txt
 .DS_Store
