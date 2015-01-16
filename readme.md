@@ -59,9 +59,9 @@ Donations are appreciated but not necessary
 </a>
 
 ### resources
-
-http://selfthinker.github.io/CSS-Playing-Cards/ but with a few modifications, primarily converting to sass.
-https://github.com/janl/mustache.js
+* http://selfthinker.github.io/CSS-Playing-Cards/ 
+* http://www.squidfingers.com/patterns/
+* https://github.com/janl/mustache.js
 
 ### Release History
 See the [CHANGELOG](CHANGELOG).
