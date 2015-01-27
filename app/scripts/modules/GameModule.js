@@ -1,6 +1,6 @@
 define(
-  ['modules/DeckModule', 'modules/PlayerModule', 'modules/PlayerAiModule', 'modules/BoardModule', 'modules/PlayScoreKeeper'],
-  function(Deck, Player, PlayerAi, Board, ScoreKeeper){
+  ['modules/DeckModule', 'modules/PlayerModule', 'modules/PlayerAiModule', 'modules/BoardModule', 'modules/PlayScoreKeeper', 'modules/SettingsModule'],
+  function(Deck, Player, PlayerAi, Board, ScoreKeeper, Settings){
 
     'use strict';
     function Game(options){
@@ -45,6 +45,8 @@ define(
       }
 
       this.$messages = options.$messages || [];
+
+      this.$settings = Settings.load();
 
       //countState && DrawState
       this.$player1HandVisible = options.$player1HandVisible || true;

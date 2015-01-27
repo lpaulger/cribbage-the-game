@@ -11,6 +11,16 @@ $setting-value-color: $alternative-color !default;
     margin: 1em;
     padding: .5em 0;
     border-bottom: 1px solid;
+
+    &.type-radio {
+      p {
+        margin: 0 6em 0 0;
+      }
+
+      span {
+        text-align: right;
+      }
+    }
   }
 
   h4 {
@@ -29,5 +39,13 @@ $setting-value-color: $alternative-color !default;
     @include transform(translateY(-50%));
     top: 50%;
     font-size: 2em;
+
+    label {
+      display: block;
+    }
+  }
+
+  input[type=radio]{
+    vertical-align: middle;
   }
 }

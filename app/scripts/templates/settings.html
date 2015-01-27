@@ -5,16 +5,23 @@
 
 <ul id="settingsList">
   {{#settings}}
-  <li>
+  <li class="type-{{type}}">
     <h4>{{name}}</h4>
     <p>{{description}}</p>
     <span data-id="{{id}}">
-      {{#value}}
-      <i class="fa fa-toggle-on"></i>
-      {{/value}}
-      {{^value}}
-      <i class="fa fa-toggle-off"></i>
-      {{/value}}
+      {{#options}}
+        <label for="{{value}}Input">{{value}}
+          <input id="{{value}}Input" type="radio" name="dominant-hand" value="{{value}}" {{checked}}/>
+        </label>
+      {{/options}}
+      {{^options}}
+        {{#value}}
+        <i class="fa fa-toggle-on"></i>
+        {{/value}}
+        {{^value}}
+        <i class="fa fa-toggle-off"></i>
+        {{/value}}
+      {{/options}}
     </span>
   </li>
   {{/settings}}

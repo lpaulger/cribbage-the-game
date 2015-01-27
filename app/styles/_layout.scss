@@ -309,15 +309,24 @@ a.link{
   }
 
   #gameContainer {
-    margin-right: 7.8em;
+    margin-left: 8em;
+    &.left {
+      margin-left: 0;
+      margin-right: 7.8em;
+    }
   }
 
-  #cribbageBoard{
+  #cribbageBoard {
     font-size: 1.3em;
     width: 6em;
     height: 100%;
-    right: 0;
+    left: 0;
     position: fixed;
+
+    #gameContainer.left & {
+      left: initial;
+      right: 0;
+    }
 
     ul{
       @include transform(rotate(-90deg));

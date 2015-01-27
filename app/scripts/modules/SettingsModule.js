@@ -11,6 +11,13 @@ define(['modules/StorageModule'], function(Storage){
       setting.description = self._defaultSettings.filter(function(obj){
         return obj.id === setting.id;
       })[0].description;
+
+      if(setting.options){
+        setting.options.filter(function(obj){
+          delete obj.checked;
+          return obj.value === setting.value;
+        })[0].checked = 'checked';
+      }
     });
   }
 
@@ -19,13 +26,23 @@ define(['modules/StorageModule'], function(Storage){
       id:'action-confirmation',
       name:'Confirm Selection',
       description: 'an additional step to confirm the selected card',
+      type: 'bool',
       value: false
     },
     {
       id:'manual-count',
       name:'Count Manually',
       description: 'Player scores their own points. Announcing \'Go\' will automatically score one (1) point',
+      type: 'bool',
       value: false
+    },
+    {
+      id:'dominant-hand',
+      name: 'Dominant Hand',
+      description: 'The table layout will differ for right handed and left handed players',
+      type: 'radio',
+      value: 'right',
+      options: [{value:'right'}, {value: 'left'}]
     }],
     get: function(settingId){
       if(!_settings)
