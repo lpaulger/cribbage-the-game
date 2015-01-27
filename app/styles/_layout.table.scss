@@ -53,11 +53,11 @@
   top: -.5em;
   width: 7em;
   text-align: center;
-  left: 0;
+  right: 0;
 
   #gameContainer.left & {
-    right: 0;
-    left: initial;
+    left: 0;
+    right: initial;
   }
 
   label {
