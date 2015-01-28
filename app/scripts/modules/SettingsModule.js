@@ -2,25 +2,6 @@ define(['modules/StorageModule'], function(Storage){
   'use strict';
   var _settings;
 
-  function restoreSettingInformation(self){
-    _settings.forEach(function(setting){
-      setting.name = self._defaultSettings.filter(function(obj){
-        return obj.id === setting.id;
-      })[0].name;
-
-      setting.description = self._defaultSettings.filter(function(obj){
-        return obj.id === setting.id;
-      })[0].description;
-
-      if(setting.options){
-        setting.options.filter(function(obj){
-          delete obj.checked;
-          return obj.value === setting.value;
-        })[0].checked = 'checked';
-      }
-    });
-  }
-
   return {
     _defaultSettings: [{
       id:'action-confirmation',
@@ -42,7 +23,7 @@ define(['modules/StorageModule'], function(Storage){
       description: 'The table layout will differ for right handed and left handed players',
       type: 'radio',
       value: 'right',
-      options: [{value:'right'}, {value: 'left'}]
+      options: [{value:'right', checked: 'checked'}, {value: 'left'}]
     }],
     get: function(settingId){
       if(!_settings)
@@ -52,12 +33,30 @@ define(['modules/StorageModule'], function(Storage){
       })[0].value;
     },
     load: function(){
-      var self = this;
-      _settings = Storage.loadSettings();
-      if(!_settings)
-        _settings = this._defaultSettings;
+      var savedSettings = Storage.loadSettings() || [];
 
-      restoreSettingInformation(self);
+      var tempSettings = JSON.parse(JSON.stringify(this._defaultSettings));
+
+      tempSettings.forEach(function(setting){
+        var savedSetting = savedSettings.filter(function(obj){
+          return obj.id === setting.id;
+        })[0];
+
+        if(savedSetting)
+          setting.value = savedSetting.value;
+
+        if(savedSetting && savedSetting.options){
+          savedSetting.options.filter(function(obj){
+            delete obj.checked;
+            return obj.value === savedSetting.value;
+          })[0].checked = 'checked';
+
+          setting.options = savedSetting.options;
+        }
+
+      });
+
+      _settings = tempSettings;
 
       return _settings;
     },

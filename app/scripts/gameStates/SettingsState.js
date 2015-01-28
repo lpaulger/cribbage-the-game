@@ -28,7 +28,7 @@ define(['jquery', 'gameStates/BaseState', 'modules/DeckModule','modules/Settings
       this.mediator.publish('transition', 'Home');
     }.bind(this));
 
-    $('#settingsList li span.type-bool').on('click', function(event){
+    $('#settingsList li span.js-type-bool').on('click', function(event){
       var ele = event.currentTarget;
       var settingVal = ele.attributes['data-id'].value;
 
