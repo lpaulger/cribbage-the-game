@@ -77,14 +77,14 @@ h1, h3, h4 {
   position: relative;
   margin: 0 auto;
   width: 12em;
-  top: 42%;
-  @include translateY(-50%);
+  top: 25%;
+  //@include translateY(-50%);
   > div {
     position: relative;
     font-size: $home-cards-font-size-small;
-    top: 50%;
-    height: 100%;
-    @include translateY(-50%);
+    // top: 50%;
+    // height: 100%;
+    //@include translateY(-50%);
     ul.hand{
       margin-left: -1.5em;
       @include transform(translate(1.9em, .9em) rotate(22deg));
@@ -95,7 +95,7 @@ h1, h3, h4 {
 
 
     width: 20em;
-    top: 50%;
+    top: 25%;
     > div {
       font-size: $home-cards-font-size-large;
     }

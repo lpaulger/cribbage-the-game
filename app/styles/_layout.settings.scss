@@ -19,7 +19,7 @@ $setting-value-color: $alternative-color !default;
       span {
         position: relative;
         display: block;
-        transform: none;
+        font-size: 2em;
         
         &:after{
           content: '';
@@ -46,7 +46,7 @@ $setting-value-color: $alternative-color !default;
     margin: 0 3em 0 0;
   }
 
-  span{
+  li.type-bool span {
     position: absolute;
     right: 0;
     @include transform(translateY(-50%));
