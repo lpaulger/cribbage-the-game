@@ -12,7 +12,7 @@ define(['jquery','gameStates/BaseState', 'modules/DeckModule', 'text!templates/h
   HomeState.prototype.templates = function(){
     var templates = BaseState.prototype.templates();
     templates.page =  homeHtml;
-    templates.continue = !!this.game ? '<button id="continueGameButton">Continue Game</button>' : '';
+    templates.continueButton = !!this.game ? '<button id="continueGameButton">Continue Game</button>' : '';
     return templates;
   };
 
