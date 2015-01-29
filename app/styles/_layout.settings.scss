@@ -14,11 +14,24 @@ $setting-value-color: $alternative-color !default;
 
     &.type-radio {
       p {
-        margin: 0 6em 0 0;
+        margin: 0;
       }
-
       span {
-        text-align: right;
+        position: relative;
+        display: block;
+        transform: none;
+        
+        &:after{
+          content: '';
+          clear: both;
+          display: table;
+        }
+      }
+      label {
+        width: 50%;
+        display: inline-block;
+        float: right;
+        text-align: center;
       }
     }
   }
