@@ -8,7 +8,7 @@
     position: absolute;
     left: .2em;
     width: 4.5em;
-    top: -.85em;
+    top: -.45em;
     text-align: center;
     color: orange;
     background: rgba(0, 0, 0, 0.3);
@@ -44,14 +44,18 @@
 #play {
   position: absolute;
   top: 60%;
-  left: 7em;
+  left: 5em;
   @include translateY(-50%);
+
+  .left & {
+    left: 5.5em;
+  }
 }
 
 #count {
   position: absolute;
   top: -.5em;
-  width: 7em;
+  width: 5.5em;
   text-align: center;
   right: 0;
 
@@ -74,7 +78,7 @@
   bottom: 0;
   right: 0;
   text-align: center;
-  width: 7em;
+  width: 5.5em;
 
   #gameContainer.left & {
     left: 0;
