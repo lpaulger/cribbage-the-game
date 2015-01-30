@@ -233,6 +233,25 @@ $playingCards-hand-bottom-margin: 3.5em !default;
   letter-spacing: -.125em;
 }
 
+@media only screen and (-webkit-device-pixel-ratio: 1),
+only screen and (-moz-device-pixel-ratio: 1),
+only screen and (-o-device-pixel-ratio: 1/1),
+only screen and (-device-pixel-ratio: 1) {
+  /* 8, 9, 10 are the most crowded */
+  .playingCards .card.rank-8 .suit:after,
+  .playingCards .card.rank-9 .suit:after {
+    letter-spacing: -.15em;
+  }
+
+  .playingCards .card.rank-10 .suit:after {
+    letter-spacing: -.2em;
+  }
+
+  .playingCards .card.clubs .suit:after {
+    letter-spacing: -.25em;
+  }
+}
+
 /*____________ symbols in the middle (suits, full) ____________*/
 
 /* diamonds */
@@ -546,22 +565,6 @@ only screen and (-device-pixel-ratio: 1) {
   .playingCards.simpleCards .card .suit:after,
   .playingCards .card.rank-A .suit:after {
     bottom: .35em;
-  }
-  .playingCards.simpleCards .card.diams .suit:after,
-  .playingCards .card.rank-A.diams .suit:after {
-    right: .4em;
-  }
-  .playingCards.simpleCards .card.hearts .suit:after,
-  .playingCards .card.rank-A.hearts .suit:after {
-    right: .35em;
-  }
-  .playingCards.simpleCards .card.spades .suit:after,
-  .playingCards .card.rank-A.spades .suit:after {
-    right: .35em;
-  }
-  .playingCards.simpleCards .card.clubs .suit:after,
-  .playingCards .card.rank-A.clubs .suit:after {
-    right: .3em;
   }
 }
 

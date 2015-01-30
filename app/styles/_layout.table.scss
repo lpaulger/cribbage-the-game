@@ -31,13 +31,14 @@
   position: absolute;
   left: .2em;
 
-  #gameContainer.left & {
+  .left & {
     right: 5em;
     left: initial;
   }
 
   &.strait{
     right: 17em;
+    top: 0.5em;
   }
 }
 

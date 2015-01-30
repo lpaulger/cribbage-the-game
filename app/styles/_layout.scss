@@ -218,6 +218,9 @@ a.link{
   ul{
     margin: 0 auto;
     width: 16em;
+    .old-android & {
+      width: 15.5em;
+    }
     height: 50%;
     padding: 0;
   }
