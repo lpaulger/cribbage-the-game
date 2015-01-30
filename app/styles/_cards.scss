@@ -237,7 +237,8 @@ $playingCards-hand-bottom-margin: 3.5em !default;
 only screen and (-moz-device-pixel-ratio: 1),
 only screen and (-o-device-pixel-ratio: 1/1),
 only screen and (-device-pixel-ratio: 1) {
-  /* 8, 9, 10 are the most crowded */
+  /* 7, 8, 9, 10 are the most crowded */
+  .playingCards .card.rank-7 .suit:after,
   .playingCards .card.rank-8 .suit:after,
   .playingCards .card.rank-9 .suit:after {
     letter-spacing: -.15em;
