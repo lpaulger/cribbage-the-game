@@ -77,14 +77,14 @@ h1, h3, h4 {
   position: relative;
   margin: 0 auto;
   width: 12em;
-  top: 42%;
-  @include translateY(-50%);
+  top: 25%;
+  //@include translateY(-50%);
   > div {
     position: relative;
     font-size: $home-cards-font-size-small;
-    top: 50%;
-    height: 100%;
-    @include translateY(-50%);
+    // top: 50%;
+    // height: 100%;
+    //@include translateY(-50%);
     ul.hand{
       margin-left: -1.5em;
       @include transform(translate(1.9em, .9em) rotate(22deg));
@@ -95,7 +95,7 @@ h1, h3, h4 {
 
 
     width: 20em;
-    top: 50%;
+    top: 25%;
     > div {
       font-size: $home-cards-font-size-large;
     }
@@ -218,6 +218,9 @@ a.link{
   ul{
     margin: 0 auto;
     width: 16em;
+    .old-android & {
+      width: 15.5em;
+    }
     height: 50%;
     padding: 0;
   }
@@ -309,15 +312,24 @@ a.link{
   }
 
   #gameContainer {
-    margin-right: 7.8em;
+    margin-left: 8em;
+    &.left {
+      margin-left: 0;
+      margin-right: 7.8em;
+    }
   }
 
-  #cribbageBoard{
+  #cribbageBoard {
     font-size: 1.3em;
     width: 6em;
     height: 100%;
-    right: 0;
+    left: 0;
     position: fixed;
+
+    #gameContainer.left & {
+      left: initial;
+      right: 0;
+    }
 
     ul{
       @include transform(rotate(-90deg));

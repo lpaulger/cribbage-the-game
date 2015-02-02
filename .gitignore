@@ -3,6 +3,7 @@ dist
 app/bower_components
 test/coverage
 platforms/*
+plugins/*
 !platforms/android/AndroidManifest.xml
 !platforms/android/res/*/*
 www/*

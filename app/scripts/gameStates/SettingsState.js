@@ -28,7 +28,7 @@ define(['jquery', 'gameStates/BaseState', 'modules/DeckModule','modules/Settings
       this.mediator.publish('transition', 'Home');
     }.bind(this));
 
-    $('#settingsList li span').on('click', function(event){
+    $('#settingsList li span.js-type-bool').on('click', function(event){
       var ele = event.currentTarget;
       var settingVal = ele.attributes['data-id'].value;
 
@@ -39,6 +39,18 @@ define(['jquery', 'gameStates/BaseState', 'modules/DeckModule','modules/Settings
       TrueSetting.value = !TrueSetting.value;
       $(ele).children().toggleClass('fa-toggle-off').toggleClass('fa-toggle-on');
 
+      Settings.save(this.data.settings);
+    }.bind(this));
+
+    $('#settingsList li input[type=radio]').on('change', function(event){
+      var ele = event.currentTarget;
+      var settingVal = ele.parentElement.parentElement.attributes['data-id'].value;
+
+      var TrueSetting = this.data.settings.filter(function(setting){
+        return setting.id === settingVal;
+      })[0];
+
+      TrueSetting.value = ele.value;
       Settings.save(this.data.settings);
     }.bind(this));
   };

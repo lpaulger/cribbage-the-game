@@ -1,5 +1,11 @@
 $fa-font-path: '../bower_components/Font-Awesome/fonts';
 @import '../bower_components/Font-Awesome/scss/font-awesome';
+
+$card-font-size: 1em;
+$enable-webkit-background: false;
+$enable-mozilla-background: false;
+$playingCards-hand-bottom-margin: .7em;
+
 @import 'cards';
 
 @media

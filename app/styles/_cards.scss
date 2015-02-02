@@ -7,6 +7,14 @@
  * @link     http://selfthinker.github.com/CSS-Playing-Cards/
  */
 
+$card-font-size: 1.2em !default;
+/* image is "Pattern 069" from http://www.squidfingers.com/patterns/ */
+$card-background-image: 'data:image/gif;base64,R0lGODlhJAAkAJEAAOjFsezdztOKbL5QKCH5BAAAAAAALAAAAAAkACQAAAL/HC4RAqm/mmLHyHmAbczB11Ea8ombJKSgKo6Z17pXFznmS1JptiX0z3vVhpEKDoUIkoa0olGIUeZUk1RI6Yn2mh/FDAt6frOrRRTqXPpsVLYugzxaVy+YcBdnoWPZOT0E4eckQtZFZBjWoHixQFWl6Nhol6R2p1Okt5TGaEWZA6fjiMdhZgPHeWrTWGVq+jTZg1HYyAEWKLYzmyiGKoUimilz+YYryyTlg5RcDJSAbNx0Q7lMcbIGEyzTK8zVdfVaImzs/QV+prYqWWW2ObkoOApM/Em/rUlIm7fijs8a2EEKEaZ3AsMUgneEU6RcpJbZ27aGHkAO2Ors8xQH1IR0Bn5YnOtVAAA7' !default;
+$enable-webkit-background: true !default;
+$enable-mozilla-background: true !default;
+
+$playingCards-hand-bottom-margin: 3.5em !default;
+
 /* card itself
 ********************************************************************/
 
@@ -22,7 +30,7 @@
   padding: .25em;
   margin: 0 .5em .5em 0;
   text-align: center;
-  font-size: 1.1em; /* @change: adjust this value to make bigger or smaller cards */
+  font-size: $card-font-size; /* @change: adjust this value to make bigger or smaller cards */
   font-weight: normal;
   font-family: Arial, sans-serif;
   position: relative;
@@ -34,7 +42,6 @@
 
 .playingCards a.card {
   text-decoration: none;
-  font-size: 1em;
 }
 
 /* selected and hover state */
@@ -44,16 +51,6 @@
 .playingCards a.card.selected {
   bottom: 1em;
 }
-
-.noSelectedState {
-  a.card:hover, a.card:active, a.card:focus,
-  label.card:hover,
-  strong .card,
-  a.card.selected {
-    bottom: 0em;
-  }
-}
-
 .playingCards label.card {
   cursor: pointer;
 }
@@ -62,9 +59,13 @@
   text-indent: -4000px;
   background-color: #ccc;
   background-repeat: repeat;
-  background-image: url(data:image/gif;base64,R0lGODlhJAAkAJEAAOjFsezdztOKbL5QKCH5BAAAAAAALAAAAAAkACQAAAL/HC4RAqm/mmLHyHmAbczB11Ea8ombJKSgKo6Z17pXFznmS1JptiX0z3vVhpEKDoUIkoa0olGIUeZUk1RI6Yn2mh/FDAt6frOrRRTqXPpsVLYugzxaVy+YcBdnoWPZOT0E4eckQtZFZBjWoHixQFWl6Nhol6R2p1Okt5TGaEWZA6fjiMdhZgPHeWrTWGVq+jTZg1HYyAEWKLYzmyiGKoUimilz+YYryyTlg5RcDJSAbNx0Q7lMcbIGEyzTK8zVdfVaImzs/QV+prYqWWW2ObkoOApM/Em/rUlIm7fijs8a2EEKEaZ3AsMUgneEU6RcpJbZ27aGHkAO2Ors8xQH1IR0Bn5YnOtVAAA7); /* image is "Pattern 069" from http://www.squidfingers.com/patterns/ */
-  background-image: -moz-repeating-linear-gradient(34% 6% 135deg, #0F1E59, #75A1BF, #3E3E63 50%);
-  //background-image: -webkit-gradient(radial, center center, 20, center center, 80, from(#3c3), color-stop(0.4, #363), to(#030));
+  background-image: url($card-background-image);
+  @if $enable-webkit-background {
+    background-image: -webkit-gradient(radial, center center, 20, center center, 80, from(#3c3), color-stop(0.4, #363), to(#030));
+  }
+  @if $enable-mozilla-background {
+    background-image: -moz-repeating-linear-gradient(34% 6% 135deg, #0F1E59, #75A1BF, #3E3E63 50%);
+  }
   /* yes, it's intentional that Mozilla, Webkit, Opera and IE all will get different backgrounds ... why not? :) */
 }
 
@@ -230,6 +231,34 @@
 
 .playingCards .card.clubs .suit:after {
   letter-spacing: -.125em;
+}
+
+@media only screen and (-webkit-device-pixel-ratio: 1),
+only screen and (-moz-device-pixel-ratio: 1),
+only screen and (-o-device-pixel-ratio: 1/1),
+only screen and (-device-pixel-ratio: 1) {
+  /* 7, 8, 9, 10 are the most crowded */
+  .playingCards .card.rank-7 .suit:after,
+  .playingCards .card.rank-8 .suit:after,
+  .playingCards .card.rank-9 .suit:after {
+    letter-spacing: -.15em;
+  }
+
+  .playingCards .card.rank-10 .suit:after {
+    letter-spacing: -.2em;
+  }
+
+  .playingCards .card.clubs .suit:after {
+    letter-spacing: -.25em;
+  }
+
+  .playingCards .card.clubs.rank-10 .suit:after,
+  .playingCards .card.hearts.rank-10 .suit:after,
+  .playingCards .card.spades.rank-10 .suit:after,
+  .playingCards .card.diams.rank-10 .suit:after {
+    letter-spacing: -.30em;
+    word-spacing: -.1em;
+  }
 }
 
 /*____________ symbols in the middle (suits, full) ____________*/
@@ -546,22 +575,6 @@ only screen and (-device-pixel-ratio: 1) {
   .playingCards .card.rank-A .suit:after {
     bottom: .35em;
   }
-  .playingCards.simpleCards .card.diams .suit:after,
-  .playingCards .card.rank-A.diams .suit:after {
-    right: .4em;
-  }
-  .playingCards.simpleCards .card.hearts .suit:after,
-  .playingCards .card.rank-A.hearts .suit:after {
-    right: .35em;
-  }
-  .playingCards.simpleCards .card.spades .suit:after,
-  .playingCards .card.rank-A.spades .suit:after {
-    right: .35em;
-  }
-  .playingCards.simpleCards .card.clubs .suit:after,
-  .playingCards .card.rank-A.clubs .suit:after {
-    right: .3em;
-  }
 }
 
 /*____________ smaller cards for use inside text ____________*/
@@ -609,7 +622,7 @@ only screen and (-device-pixel-ratio: 1) {
 }
 
 .playingCards ul.hand {
-  margin-bottom: .7em;
+  margin-bottom: $playingCards-hand-bottom-margin;
 }
 
 .playingCards ul.table li,

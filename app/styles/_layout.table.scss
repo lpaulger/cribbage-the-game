@@ -6,14 +6,19 @@
 
   > span {
     position: absolute;
-    right: .5em;
+    left: .2em;
     width: 4.5em;
-    top: -.7em;
+    top: -.45em;
     text-align: center;
     color: orange;
     background: rgba(0, 0, 0, 0.3);
     font-weight: bold;
     border-radius: 2em;
+
+    #gameContainer.left & {
+      right: .5em;
+      left: initial;
+    }
 
     &:nth-child(3){
       top: 6.3em;
@@ -24,25 +29,41 @@
 
 #deck > .deck{
   position: absolute;
-  right: 5em;
+  left: .2em;
+
+  .left & {
+    right: 5em;
+    left: initial;
+  }
 
   &.strait{
     right: 17em;
+    top: 0.5em;
   }
 }
 
 #play {
   position: absolute;
   top: 60%;
-  left: 7em;
+  left: 5em;
   @include translateY(-50%);
+
+  .left & {
+    left: 5.5em;
+  }
 }
 
 #count {
   position: absolute;
   top: -.5em;
-  width: 7em;
+  width: 5.5em;
   text-align: center;
+  right: 0;
+
+  #gameContainer.left & {
+    left: 0;
+    right: initial;
+  }
 
   label {
     position: relative;
@@ -56,9 +77,13 @@
 #controls {
   position: absolute;
   bottom: 0;
-  left: 0;
+  right: 0;
   text-align: center;
-  width: 7em;
+  width: 5.5em;
+
+  #gameContainer.left & {
+    left: 0;
+  }
 
   button {
     height: 2.4em;

@@ -1,5 +1,5 @@
 {
-  "predef": [ "define", "describe", "it", "beforeEach", "expect", "spyOn", "afterEach", "jasmine", "spyOnEvent", "loadFixtures", "setFixtures", "sandbox"],
+  "predef": [ "define", "describe", "it", "beforeEach", "expect", "spyOn", "afterEach", "jasmine", "spyOnEvent", "loadFixtures", "setFixtures", "sandbox", "cordova", "device"],
   "node": true,
   "browser": true,
   "esnext": true,
