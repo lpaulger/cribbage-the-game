@@ -251,6 +251,14 @@ only screen and (-device-pixel-ratio: 1) {
   .playingCards .card.clubs .suit:after {
     letter-spacing: -.25em;
   }
+
+  .playingCards .card.clubs.rank-10 .suit:after,
+  .playingCards .card.hearts.rank-10 .suit:after,
+  .playingCards .card.spades.rank-10 .suit:after,
+  .playingCards .card.diams.rank-10 .suit:after {
+    letter-spacing: -.30em;
+    word-spacing: -.1em;
+  }
 }
 
 /*____________ symbols in the middle (suits, full) ____________*/
