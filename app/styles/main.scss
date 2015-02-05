@@ -5,6 +5,11 @@ $card-font-size: 1em;
 $enable-webkit-background: false;
 $enable-mozilla-background: false;
 $playingCards-hand-bottom-margin: .7em;
+//responsive portrait
+$break-mobile-x-small: 321px;
+$break-mobile-small: 361px;
+$break-mobile-large: 520px;
+$break-tablet: 768px;
 
 @import 'cards';
 
@@ -32,11 +37,5 @@ only screen and (        min-device-pixel-ratio: 3){
     right: .1em;
   }
 }
-
-//responsive portrait
-$break-mobile-x-small: 321px;
-$break-mobile-small: 361px;
-$break-mobile-large: 520px;
-$break-tablet: 768px;
 
 @import 'layout';
