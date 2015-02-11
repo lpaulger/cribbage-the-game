@@ -3,7 +3,6 @@ define(['modules/PubSub', 'modules/GameModule', 'gameStates/StateRegistry', 'mod
     'use strict';
 
     function Mediator(){
-      this.game = {};
       PubSub.installTo(this);
 
       PubSub.subscribe('App:Start', this.appInit);
@@ -18,6 +17,7 @@ define(['modules/PubSub', 'modules/GameModule', 'gameStates/StateRegistry', 'mod
     }
 
     Mediator.prototype.appInit = function(){
+      this.game = new Game({});
       var data = Storage.loadGame();
       if(data.game)
         this.game = new Game(data.game);
