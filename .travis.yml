@@ -19,7 +19,7 @@ after_success:
 - git config --global user.name "Lucas Paulger"
 - git config --global user.email "lucas.paulger@gmail.com"
 - grunt buildcontrol:pages
-- $TRAVIS_BRANCH == "master" grunt buildcontrol:heroku
+- grunt buildcontrol:heroku
 
 env:
   global:
