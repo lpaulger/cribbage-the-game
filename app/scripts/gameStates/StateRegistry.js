@@ -6,24 +6,20 @@ define(['gameStates/DrawState', 'gameStates/DealState', 'gameStates/CribState',
   function (DrawState, DealState, CribState, PrePlayState, PlayState, CountState, SummaryState, HomeState, InfoState, SettingsState) {
     'use strict';
 
-    function StateManager(){
-      this.states = [];
+    function StateManager(game){
+      this.states = [
+        new DrawState(game),new DealState(game),new CribState(game),new PrePlayState(game),new PlayState(game),
+        new CountState(game),new SummaryState(game),new HomeState(game),new InfoState(game),new SettingsState(game)
+      ];
     }
 
-    StateManager.prototype.initState = function(stateName, game){
+    StateManager.prototype.getState = function(stateName){
       var state;
       state = this.states.filter(function(state){
         return state.name === stateName;
       })[0];
       if(!state){
-        try{
-          /*jshint evil:true */
-          state = eval('new ' + stateName + 'State(game)');
-        } catch (e) {
-          throw new Error(stateName + 'State Not Found');
-        }
-
-        this.states.push(state);
+        throw new Error(stateName + 'State Not Found');
       }
 
       return state;

@@ -105,7 +105,7 @@ define(['modules/Mediator', 'modules/PubSub', 'modules/StorageModule'],
             jasmine.clock().install();
             state = {init:jasmine.createSpy('init')};
             mediator.startGame();
-            spyOn(mediator.stateRegistry, 'initState').and.returnValue(state);
+            spyOn(mediator.stateRegistry, 'getState').and.returnValue(state);
           });
 
           afterEach(function(){
@@ -118,9 +118,9 @@ define(['modules/Mediator', 'modules/PubSub', 'modules/StorageModule'],
             });
 
             it('should wait one second before transitioning', function(){
-              expect(mediator.stateRegistry.initState).not.toHaveBeenCalled();
+              expect(mediator.stateRegistry.getState).not.toHaveBeenCalled();
               jasmine.clock().tick(1001);
-              expect(mediator.stateRegistry.initState).toHaveBeenCalledWith('Draw', mediator.game);
+              expect(mediator.stateRegistry.getState).toHaveBeenCalledWith('Draw');
             });
 
             it('should initialize the loaded state', function(){
@@ -136,7 +136,7 @@ define(['modules/Mediator', 'modules/PubSub', 'modules/StorageModule'],
             });
 
             it('should load the requested state', function(){
-              expect(mediator.stateRegistry.initState).toHaveBeenCalledWith('Draw', mediator.game);
+              expect(mediator.stateRegistry.getState).toHaveBeenCalledWith('Draw');
             });
 
             it('should initialize the loaded state', function(){

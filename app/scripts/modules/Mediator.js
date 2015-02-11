@@ -3,6 +3,7 @@ define(['modules/PubSub', 'modules/GameModule', 'gameStates/StateRegistry', 'mod
     'use strict';
 
     function Mediator(){
+      this.game = {};
       PubSub.installTo(this);
 
       PubSub.subscribe('App:Start', this.appInit);
@@ -17,13 +18,14 @@ define(['modules/PubSub', 'modules/GameModule', 'gameStates/StateRegistry', 'mod
     }
 
     Mediator.prototype.appInit = function(){
-      this.stateRegistry = new StateRegistry();
-
       var data = Storage.loadGame();
-      if(data.game){
+      if(data.game)
         this.game = new Game(data.game);
+      this.stateRegistry = new StateRegistry(this.game);
+
+      if(data.game)
         PubSub.publish('transition', data.state);
-      } else {
+      else {
         PubSub.publish('transition', 'Home');
       }
     };
@@ -31,14 +33,14 @@ define(['modules/PubSub', 'modules/GameModule', 'gameStates/StateRegistry', 'mod
     Mediator.prototype.startGame = function(){
       this.game = new Game({});
       this.game.$board.clearBoard();
-      this.stateRegistry = new StateRegistry();
+      this.stateRegistry = new StateRegistry(this.game);
       PubSub.publish('transition', 'Draw');
     };
 
     Mediator.prototype.continueGame = function(){
       var storage = Storage.loadGame();
       this.game = new Game(storage.game);
-      this.stateRegistry = new StateRegistry();
+      this.stateRegistry = new StateRegistry(this.game);
       PubSub.publish('transition', storage.state);
     };
 
@@ -49,7 +51,7 @@ define(['modules/PubSub', 'modules/GameModule', 'gameStates/StateRegistry', 'mod
       }
 
       function process(){
-        state = this.stateRegistry.initState(stateName, this.game);
+        state = this.stateRegistry.getState(stateName);
         state.init();
       }
 
