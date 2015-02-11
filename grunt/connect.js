@@ -1,3 +1,11 @@
+var mountFolder = function(connect, dir) {
+  return connect.static(require('path').resolve(dir));
+};
+
+var lrSnippet = require('connect-livereload')({
+  port: '<%= config.LIVERELOAD_PORT %>'
+});
+
 module.exports = {
   options: {
     port: 9000,

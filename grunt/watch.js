@@ -1,12 +1,3 @@
-var LIVERELOAD_PORT = 35729;
-var lrSnippet = require('connect-livereload')({
-  port: LIVERELOAD_PORT
-});
-var mountFolder = function(connect, dir) {
-  return connect.static(require('path').resolve(dir));
-};
-
-
 module.exports = {
   files: ['<%= config.app %>/*.html',
     '{.tmp,<%= config.app %>}/styles/{,*/}*.{scss, sass, css}',
@@ -18,7 +9,7 @@ module.exports = {
   options: {
     spawn: false,
     livereload: {
-      port: LIVERELOAD_PORT
+      port: '<%= config.LIVERELOAD_PORT %>'
     }
   }
 };
