@@ -12,7 +12,7 @@ define(['gameStates/HomeState'], function(HomeState){
     describe('render', function(){
       var homeState;
       beforeEach(function(){
-        homeState = new HomeState();
+        homeState = new HomeState({});
         spyOn(homeState, 'templates').and.callThrough();
         spyOn(homeState, 'bindEvents').and.callThrough();
       });
