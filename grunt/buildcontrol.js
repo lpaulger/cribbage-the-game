@@ -13,8 +13,8 @@ module.exports = {
   },
   heroku: {
     options: {
-      remote: 'https://' + process.env.HEROKU_API_KEY + '@heroku.com:cribbage-the-game.git',
-      branch: 'master'
+      remote: 'https://' + process.env.GH_TOKEN + '@github.com/lpaulger/cribbage-the-game.git',
+      branch: 'heroku'
     }
   }
 };
