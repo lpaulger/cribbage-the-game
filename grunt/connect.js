@@ -1,3 +1,5 @@
+'use strict';
+
 var mountFolder = function(connect, dir) {
   return connect.static(require('path').resolve(dir));
 };
@@ -5,6 +7,8 @@ var mountFolder = function(connect, dir) {
 var lrSnippet = require('connect-livereload')({
   port: '<%= config.LIVERELOAD_PORT %>'
 });
+
+var config = require('./config');
 
 module.exports = {
   options: {
@@ -18,7 +22,7 @@ module.exports = {
         return [
           lrSnippet,
           mountFolder(connect, '.tmp'),
-          mountFolder(connect, dirConfig.app)
+          mountFolder(connect, config.app)
         ];
       }
     }
@@ -37,7 +41,7 @@ module.exports = {
     options: {
       middleware: function(connect) {
         return [
-          mountFolder(connect, dirConfig.dist)
+          mountFolder(connect, config.dist)
         ];
       }
     }
