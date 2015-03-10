@@ -11,9 +11,9 @@ define(['gameStates/BaseState', 'text!templates/game.hiddenStraitDeck.html', 'te
   function selectTopCard(index){
     var notCribOwner = (this.game.$cribOwner === this.game.$player1) ? this.game.$player2 : this.game.$player1;
 
-    var card = notCribOwner.selectOneFromDeck(this.game.$deck, index);
+    var card = this.game.$cribOwner.selectOneFromDeck(this.game.$deck, index);
     this.game.topCard = card;
-    if(notCribOwner.isWinner())
+    if(this.game.$cribOwner.isWinner())
       this.mediator.publish('transition', 'Summary');
     else{
       this.game.$showTopCard = true;
@@ -34,13 +34,15 @@ define(['gameStates/BaseState', 'text!templates/game.hiddenStraitDeck.html', 'te
   PrePlayState.prototype.init = function(){
     this.game.$action = {text: '...'};
     if(this.game.$cribOwner !== this.game.$player1){
-      this.mediator.publish('messages-add', 'Cut the deck');
+      this.mediator.publish('messages-add', 'Cut the deck for your opponent');
       this.render();
     } else {
-      this.mediator.publish('messages-add', 'They will cut the deck');
+      this.mediator.publish('messages-add', 'They will cut the deck for you');
       var index = Math.floor(Math.random() * this.game.$deck.cards.length);
       this.render();
-      selectTopCard.call(this, index);
+      setTimeout(function(){
+        selectTopCard.call(this, index);
+      }.bind(this), 1000);
     }
   };
 

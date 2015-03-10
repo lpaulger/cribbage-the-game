@@ -26,6 +26,7 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
       describe('init', function () {
         describe('if Player is CribOwner', function () {
           beforeEach(function () {
+            jasmine.clock().install();
             _player = _cribOwner = {hand:[],isWinner: function(){
               return false;
             }, selectOneFromDeck: jasmine.createSpy('selectOneFromDeck')};
@@ -38,12 +39,17 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
           it('should set message to "They will reveal top card"', function () {
             expect(_game.$messages).toEqual(['default']);
             _prePlayState.init();
-            expect(_prePlayState.mediator.publish).toHaveBeenCalledWith('messages-add', 'They will cut the deck');
+            expect(_prePlayState.mediator.publish).toHaveBeenCalledWith('messages-add', 'They will cut the deck for you');
           });
 
           it('should have the opponent select the card', function(){
             _prePlayState.init();
-            expect(_player2.selectOneFromDeck).toHaveBeenCalled();
+            jasmine.clock().tick(1001);
+            expect(_player.selectOneFromDeck).toHaveBeenCalled();
+          });
+
+          afterEach(function() {
+            jasmine.clock().uninstall();
           });
         });
 
@@ -60,7 +66,7 @@ define(['gameStates/PrePlayState'], function(PrePlayState) {
           it('should set message to "Reveal top card"', function () {
             expect(_game.$messages).toEqual(['default']);
             _prePlayState.init();
-            expect(_prePlayState.mediator.publish).toHaveBeenCalledWith('messages-add', 'Cut the deck');
+            expect(_prePlayState.mediator.publish).toHaveBeenCalledWith('messages-add', 'Cut the deck for your opponent');
           });
         });
       });
