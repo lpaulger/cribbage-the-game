@@ -6,12 +6,12 @@ module.exports = {
       cwd: '<%= config.app %>',
       dest: '<%= config.dist %>',
       src: [
-        '*.{ico,png,txt,html}',
+        '*.{ico,png,txt}',
         '.htaccess',
         'images/{,*/}*.{webp,gif}',
         'bower_components/Font-Awesome/fonts/*',
         'bower_components/{,*/}*.js',
-        'scripts/{,*/}*.{js,html}'
+        'scripts/{,*/}*.{js}'
       ]
     },{
       expand: true,

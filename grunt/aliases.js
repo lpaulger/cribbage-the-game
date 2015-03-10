@@ -1,3 +1,4 @@
+'use strict';
 module.exports = function (grunt, options) {
   // computation...
   return {
@@ -9,7 +10,8 @@ module.exports = function (grunt, options) {
     'build': [
       'clean:dist',
       'compass:server',
-      'copy:debug'
+      'copy:debug',
+      'template:dev'
     ],
     'build:dist': [
       'clean:dist',
@@ -19,6 +21,7 @@ module.exports = function (grunt, options) {
       'concat',
       'uglify',
       'copy:dist',
+      'template:dist',
       'requirejs',
       'rev',
       'usemin'
@@ -45,9 +48,10 @@ module.exports = function (grunt, options) {
       'clean:server',
       'concurrent:server',
       'connect:livereload',
+      'template:dev',
       'open:server',
       'watch'
     ],
-    'serve:dist': ['build', 'open', 'connect:dist:keepalive']
+    'serve:dist': ['build:dist', 'open', 'connect:dist:keepalive']
   };
 };

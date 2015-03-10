@@ -1,15 +1,26 @@
 module.exports = {
-  files: ['<%= config.app %>/*.html',
-    '{.tmp,<%= config.app %>}/styles/{,*/}*.{scss, sass, css}',
-    '{.tmp,<%= config.app %>}/scripts/{,*/}*.js',
-    '<%= config.app %>/scripts/templates/{,*/}*.html',
-    '<%= config.test %>/spec/{,*/}*.js',
-    '<%= config.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'],
-  tasks: ['jshint', 'compass:server'],
-  options: {
-    spawn: false,
-    livereload: {
-      port: '<%= config.LIVERELOAD_PORT %>'
+  css: {
+    files: [
+      '{.tmp,<%= config.app %>}/styles/{,*/}*.{scss, sass, css}',
+      '<%= config.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+    ],
+    tasks: ['compass:server'],
+    options: {
+      livereload: true
+    }
+  },
+  js: {
+    files: ['{.tmp,<%= config.app %>}/scripts/{,*/}*.js', '<%= config.test %>/spec/{,*/}*.js'],
+    tasks: ['jshint'],
+    options: {
+      livereload: true
+    }
+  },
+  html: {
+    files: ['<%= config.app %>/*.html', '<%= config.app %>/scripts/templates/{,*/}*.html'],
+    tasks: ['template:dev'],
+    options: {
+      livereload: true
     }
   }
 };
