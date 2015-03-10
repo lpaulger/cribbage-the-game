@@ -32,7 +32,8 @@ module.exports = {
         'images/{,*/}*.{webp,gif}',
         'bower_components/Font-Awesome/fonts/*',
         'Procfile',
-        'server.js'
+        'server.js',
+        'package.json'
       ]
     }, {
       expand: true,

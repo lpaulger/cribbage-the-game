@@ -15,7 +15,6 @@ module.exports = function(grunt) {
       grunt.log.debug('MATCHING FILES:\n' + output);
       output.forEach(function(filePath){
         var template = grunt.file.read(filePath, 'utf-8');
-        console.log(template);
         var output = grunt.template.process(template, {data:_data.variables});
         filePath = filePath.replace(_data.src, _data.dest);
         grunt.file.write(filePath, output);
