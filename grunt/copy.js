@@ -30,7 +30,9 @@ module.exports = {
         '*.{ico,png,txt}',
         '.htaccess',
         'images/{,*/}*.{webp,gif}',
-        'bower_components/Font-Awesome/fonts/*'
+        'bower_components/Font-Awesome/fonts/*',
+        'Procfile',
+        'server.js'
       ]
     }, {
       expand: true,
