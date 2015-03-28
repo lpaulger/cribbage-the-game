@@ -3,6 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/lpaulger/cribbage-the-game/badge.svg?branch=master)](https://coveralls.io/r/lpaulger/cribbage-the-game?branch=master)
 [![Code Climate](https://codeclimate.com/github/lpaulger/cribbage-the-game/badges/gpa.svg)](https://codeclimate.com/github/lpaulger/cribbage-the-game)
 [![Dev Dependencies](https://david-dm.org/lpaulger/cribbage-the-game/dev-status.svg)](https://david-dm.org/lpaulger/cribbage-the-game#info=devDependencies&view=table)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/lpaulger/cribbage-the-game?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 A simple cribbage game built using javascript, no frameworks and only mustache as a templating library.
 You can view the latest preview here http://lucaspaulger.com/cribbage-the-game/ after each successful build.
