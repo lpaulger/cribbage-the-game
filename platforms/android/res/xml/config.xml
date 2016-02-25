@@ -1,9 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.lucaspaulger.cribbagegame" version="0.1.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.lucaspaulger.cribbagegame" version="0.1.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <preference name="loglevel" value="DEBUG" />
     <feature name="Device">
         <param name="android-package" value="org.apache.cordova.device.Device" />
     </feature>
+    <icon density="mdpi" src="res/mipmap-mdpi/ic_launcher.png" />
+    <icon density="hdpi" src="res/mipmap-hdpi/ic_launcher.png" />
+    <icon density="xhdpi" src="res/mipmap-xhdpi/ic_launcher.png" />
+    <icon density="xxhdpi" src="res/mipmap-xxhdpi/ic_launcher.png" />
+    <icon density="xxxhdpi" src="res/mipmap-xxxhdpi/ic_launcher.png" />
     <name>CribbageTheGame</name>
     <description>
         A simple HTML5/JS Cribbage game
